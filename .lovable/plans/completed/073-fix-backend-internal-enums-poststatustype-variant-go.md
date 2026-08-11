@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/poststatustype/Variant.go`
   `return Invalid, fmt.Errorf("invalid post status: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

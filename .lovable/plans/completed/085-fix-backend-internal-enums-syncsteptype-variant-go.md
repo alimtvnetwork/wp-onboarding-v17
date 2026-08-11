@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/syncsteptype/Variant.go`
   `return Invalid, fmt.Errorf("invalid sync step: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

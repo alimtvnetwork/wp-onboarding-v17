@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/teststatustype/Variant.go`
   `return Invalid, fmt.Errorf("invalid test status: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

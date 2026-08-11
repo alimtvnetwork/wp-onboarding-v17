@@ -2,8 +2,9 @@ package teststatustype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents E2E test result and run status values.
@@ -83,7 +84,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid test status: %q", s)
+	return Invalid, apperror.New("invalid test status: %q", s)
 }
 
 func Values() []string {

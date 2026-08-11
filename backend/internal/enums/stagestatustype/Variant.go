@@ -2,8 +2,9 @@ package stagestatustype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents pipeline stage lifecycle status values.
@@ -89,7 +90,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid stage status: %q", s)
+	return Invalid, apperror.New("invalid stage status: %q", s)
 }
 
 func Values() []string {

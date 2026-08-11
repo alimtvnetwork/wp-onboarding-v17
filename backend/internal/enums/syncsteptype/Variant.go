@@ -2,8 +2,9 @@ package syncsteptype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents sync progress step identifiers.
@@ -80,7 +81,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid sync step: %q", s)
+	return Invalid, apperror.New("invalid sync step: %q", s)
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {

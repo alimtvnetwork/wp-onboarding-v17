@@ -2,8 +2,9 @@ package uploadsourcetype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents the source of a plugin upload.
@@ -79,7 +80,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid upload source: %q", s)
+	return Invalid, apperror.New("invalid upload source: %q", s)
 }
 
 func Values() []string {

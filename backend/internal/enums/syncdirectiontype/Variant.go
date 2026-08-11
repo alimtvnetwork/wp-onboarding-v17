@@ -2,8 +2,9 @@ package syncdirectiontype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents file change direction in sync operations.
@@ -71,7 +72,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid sync direction: %q", s)
+	return Invalid, apperror.New("invalid sync direction: %q", s)
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {

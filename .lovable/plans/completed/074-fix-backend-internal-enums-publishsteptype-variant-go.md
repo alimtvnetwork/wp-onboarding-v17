@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/publishsteptype/Variant.go`
   `return Invalid, fmt.Errorf("invalid publish step: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

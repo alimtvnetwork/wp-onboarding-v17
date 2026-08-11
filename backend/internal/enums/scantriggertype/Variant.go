@@ -2,8 +2,9 @@ package scantriggertype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents watcher scan trigger types.
@@ -65,7 +66,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid scan trigger: %q", s)
+	return Invalid, apperror.New("invalid scan trigger: %q", s)
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {

@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/scantriggertype/Variant.go`
   `return Invalid, fmt.Errorf("invalid scan trigger: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED
+

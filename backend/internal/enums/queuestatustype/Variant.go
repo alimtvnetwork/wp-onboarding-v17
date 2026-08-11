@@ -2,8 +2,9 @@ package queuestatustype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents publish queue item lifecycle status values.
@@ -83,7 +84,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid queue status: %q", s)
+	return Invalid, apperror.New("invalid queue status: %q", s)
 }
 
 func Values() []string {

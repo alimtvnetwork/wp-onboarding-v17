@@ -16,3 +16,6 @@ Target File: `backend/internal/enums/responsemessagetype/Variant.go`
   `InvalidId:              "Invalid ID",`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED (Line 185)
+[x] SKIPPED (False Positive) (Lines 9, 93)

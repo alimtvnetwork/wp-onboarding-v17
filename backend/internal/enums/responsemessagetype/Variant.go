@@ -2,8 +2,9 @@ package responsemessagetype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents standardized API response messages.
@@ -182,7 +183,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid response message: %q", s)
+	return Invalid, apperror.New("invalid response message: %q", s)
 }
 
 func Values() []string {

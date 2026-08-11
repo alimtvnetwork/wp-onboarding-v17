@@ -2,8 +2,9 @@ package snapshotmodetype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents snapshot export modes.
@@ -71,7 +72,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid snapshot mode: %q", s)
+	return Invalid, apperror.New("invalid snapshot mode: %q", s)
 }
 
 func Values() []string {

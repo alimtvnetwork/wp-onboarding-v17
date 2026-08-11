@@ -2,8 +2,9 @@ package snapshoterrortype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents snapshot operation error codes.
@@ -114,7 +115,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid snapshot error: %q", s)
+	return Invalid, apperror.New("invalid snapshot error: %q", s)
 }
 
 func Values() []string {

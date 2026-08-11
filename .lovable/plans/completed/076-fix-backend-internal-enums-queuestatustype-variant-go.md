@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/queuestatustype/Variant.go`
   `return Invalid, fmt.Errorf("invalid queue status: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

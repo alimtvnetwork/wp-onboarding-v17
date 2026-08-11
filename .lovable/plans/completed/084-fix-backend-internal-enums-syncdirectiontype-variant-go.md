@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/syncdirectiontype/Variant.go`
   `return Invalid, fmt.Errorf("invalid sync direction: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED
+

@@ -2,8 +2,9 @@ package responsekeytype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 func (v Variant) String() string {
@@ -83,7 +84,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid response key: %q", s)
+	return Invalid, apperror.New("invalid response key: %q", s)
 }
 
 func Values() []string {

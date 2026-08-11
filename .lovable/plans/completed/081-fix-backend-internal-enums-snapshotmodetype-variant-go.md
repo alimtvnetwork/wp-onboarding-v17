@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/snapshotmodetype/Variant.go`
   `return Invalid, fmt.Errorf("invalid snapshot mode: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED
+

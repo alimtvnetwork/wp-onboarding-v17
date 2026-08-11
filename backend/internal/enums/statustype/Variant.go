@@ -2,8 +2,9 @@ package statustype
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents operation status values.
@@ -73,7 +74,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid status: %q", s)
+	return Invalid, apperror.New("invalid status: %q", s)
 }
 
 func Values() []string {
