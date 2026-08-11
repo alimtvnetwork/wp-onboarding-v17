@@ -44,9 +44,9 @@ trait CloudStorageScheduleHelpersTrait {
             ResponseKeyType::Async->value => false,
         ]);
 
-        $isSuccess = !empty($result[ResponseKeyType::Success->value]);
+        $isFailed = empty($result[ResponseKeyType::Success->value]);
 
-        if (!$isSuccess) {
+        if ($isFailed) {
             throw new RuntimeException(
                 'Full snapshot creation failed: ' . ($result[ResponseKeyType::Error->value] ?? 'Unknown error'),
             );
@@ -76,9 +76,9 @@ trait CloudStorageScheduleHelpersTrait {
             ResponseKeyType::Async->value => false,
         ]);
 
-        $isSuccess = !empty($result[ResponseKeyType::Success->value]);
+        $isFailed = empty($result[ResponseKeyType::Success->value]);
 
-        if (!$isSuccess) {
+        if ($isFailed) {
             throw new RuntimeException(
                 'Incremental backup failed: ' . ($result[ResponseKeyType::Error->value] ?? 'Unknown error'),
             );
@@ -118,9 +118,9 @@ trait CloudStorageScheduleHelpersTrait {
         $splitter = new ZipSplitter();
         $result = $splitter->split($zipPath, $tempDir, $type, $sequence, $label);
 
-        $isSuccess = !empty($result[ResponseKeyType::Success->value]);
+        $isFailed = empty($result[ResponseKeyType::Success->value]);
 
-        if (!$isSuccess) {
+        if ($isFailed) {
             throw new RuntimeException(
                 'ZIP splitting failed: ' . ($result[ResponseKeyType::Error->value] ?? 'Unknown error'),
             );

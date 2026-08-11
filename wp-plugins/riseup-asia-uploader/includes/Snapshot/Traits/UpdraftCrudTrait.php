@@ -89,7 +89,9 @@ trait UpdraftCrudTrait {
 
     public function getAvailableTables(): array {
         global $wpdb;
-        $allTables = $wpdb->get_results("SHOW TABLE STATUS", ARRAY_A);
+        $allTables = \RiseupAsia\Database\WpDbQueryWrapper::execute($wpdb, function($wpdb) {
+            return $wpdb->get_results("SHOW TABLE STATUS", ARRAY_A) ?: [];
+        }, "SHOW TABLE STATUS");
 
         return array_map(function($info) use ($wpdb) {
             $isCoreTable = (strpos($info['Name'], $wpdb->prefix) === 0);

@@ -17,6 +17,7 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use RiseupAsia\Enums\LogLevelType;
 use RiseupAsia\Enums\ResponseKeyType;
+use RiseupAsia\Enums\ResponseMessageType;
 use RiseupAsia\Enums\SnapshotConfigType;
 use RiseupAsia\Enums\TableType;
 use RiseupAsia\Enums\SnapshotStatusType;
@@ -34,7 +35,7 @@ trait CleanerOrphanTrait {
         try {
             $files = $this->db->queryAll('SELECT Filepath, Filename FROM ' . TableType::Snapshots->value) ?: [];
         } catch (Throwable $e) {
-            $result[ResponseKeyType::Errors->value][] = 'DB query failed: ' . $e->getMessage();
+            $result[ResponseKeyType::Errors->value][] = ResponseMessageType::DbQueryFailed->value . ': ' . $e->getMessage();
             $this->logError($e, 'Failed to query snapshots for orphan cleanup');
 
             return $result;

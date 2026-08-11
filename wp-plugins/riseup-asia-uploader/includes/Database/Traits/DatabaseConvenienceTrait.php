@@ -136,20 +136,13 @@ trait DatabaseConvenienceTrait {
             return false;
         }
 
-        try {
+        return \RiseupAsia\Database\QueryLogger::executeSafely(function () use ($sql, $params) {
             $stmt = $this->pdo->prepare($sql);
             if ($stmt && $stmt->execute($params)) {
                 return $stmt;
             }
             return false;
-        } catch (PDOException $e) {
-            $this->fileLogger->error('DB query failed', [
-                'sql'   => $sql,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return false;
-        }
+        }, $sql);
     }
 
     /**

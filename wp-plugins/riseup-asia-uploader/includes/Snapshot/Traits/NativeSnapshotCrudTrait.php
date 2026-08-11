@@ -153,7 +153,9 @@ trait NativeSnapshotCrudTrait {
 
     public function getAvailableTables(): array {
         $tables = [];
-        $allTables = $this->wpdb->get_results("SHOW TABLE STATUS", ARRAY_A);
+        $allTables = \RiseupAsia\Database\WpDbQueryWrapper::execute($this->wpdb, function($wpdb) {
+            return $wpdb->get_results("SHOW TABLE STATUS", ARRAY_A) ?: [];
+        }, "SHOW TABLE STATUS");
         foreach ($allTables as $tableInfo) {
             $isCoreTable = (strpos($tableInfo['Name'], $this->wpdb->prefix) === 0);
 

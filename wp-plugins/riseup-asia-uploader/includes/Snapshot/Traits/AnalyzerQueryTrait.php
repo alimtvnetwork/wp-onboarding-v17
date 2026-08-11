@@ -24,7 +24,9 @@ trait AnalyzerQueryTrait {
      * @return array Table names.
      */
     public function getTables($scope = 'all') { // Default matches SnapshotScopeType::All->value
-        $tables = $this->wpdb->get_col("SHOW TABLES");
+        $tables = \RiseupAsia\Database\WpDbQueryWrapper::execute($this->wpdb, function($wpdb) {
+            return $wpdb->get_col("SHOW TABLES");
+        }, "SHOW TABLES");
         $resolvedScope = SnapshotScopeType::tryFrom($scope);
 
         return array_values($this->filterByScope($tables, $resolvedScope));
@@ -102,7 +104,9 @@ trait AnalyzerQueryTrait {
             $dbName,
         );
 
-        return $this->wpdb->get_results($sql, ARRAY_A) ?: [];
+        return \RiseupAsia\Database\WpDbQueryWrapper::execute($this->wpdb, function($wpdb) use ($sql) {
+            return $wpdb->get_results($sql, ARRAY_A) ?: [];
+        }, $sql);
     }
 
     private function mapDependencyRows(array $rows): array {

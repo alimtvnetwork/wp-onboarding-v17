@@ -41,13 +41,11 @@ final class TypedQuery {
         array $params,
         \Closure $mapper,
     ): DbResult {
-        try {
+        $row = \RiseupAsia\Database\QueryLogger::executeSafely(function() use ($sql, $params) {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return DbResult::error($e);
-        }
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }, $sql);
 
         if ($row === false) {
             return DbResult::empty();
@@ -70,12 +68,14 @@ final class TypedQuery {
         array $params,
         \Closure $mapper,
     ): DbResultSet {
-        try {
+        $rows = \RiseupAsia\Database\QueryLogger::executeSafely(function() use ($sql, $params) {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return DbResultSet::error($e);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }, $sql);
+
+        if ($rows === false) {
+            return DbResultSet::error(new PDOException("Query failed"));
         }
 
         return $this->mapMany($rows, $mapper);
@@ -88,16 +88,20 @@ final class TypedQuery {
      * @param array<mixed> $params
      */
     public function exec(string $sql, array $params = []): DbExecResult {
-        try {
+        $result = \RiseupAsia\Database\QueryLogger::executeSafely(function() use ($sql, $params) {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             $affected = $stmt->rowCount();
             $lastId = (int) $this->pdo->lastInsertId();
 
             return DbExecResult::of($affected, $lastId);
-        } catch (PDOException $e) {
-            return DbExecResult::error($e);
+        }, $sql);
+
+        if ($result === false) {
+            return DbExecResult::error(new PDOException("Exec failed"));
         }
+
+        return $result;
     }
 
     /**
