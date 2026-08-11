@@ -20,3 +20,5 @@ Target File: `backend/internal/api/handlers/AdapterSite.go`
   `func (a *SiteServiceAdapter) GetRemoteDebugRoutes(ctx context.Context, siteId int64) (any, *apperror.AppError) {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] FIXED

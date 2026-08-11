@@ -28,3 +28,5 @@ Target File: `licensing/internal/services/AuditService.go`
   `// marshalDetails converts audit details to JSON, or nil if no details.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+[x] SKIPPED (False Positive)

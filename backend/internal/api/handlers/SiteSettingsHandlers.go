@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"wp-plugin-publish/internal/services/site"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
@@ -29,7 +30,7 @@ func UpdateRemoteSiteSettings(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var body map[string]any // justified: dynamic PHP settings input
+	var body json.RawMessage
 
 	decodeErr := json.NewDecoder(r.Body).Decode(&body)
 	if decodeErr != nil {
@@ -57,7 +58,7 @@ var GetRemoteSiteHealthSummary = handleSiteActionById(
 // GetRemoteDebugRoutes returns registered REST API routes from a remote WordPress site
 var GetRemoteDebugRoutes = handleSiteActionById(
 	apperror.ErrWPConnection,
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) (*site.DebugRoutesData, *apperror.AppError) {
 		return Services.SiteService.GetRemoteDebugRoutes(ctx, siteId)
 	},
 )

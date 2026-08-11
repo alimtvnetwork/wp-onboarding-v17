@@ -3,6 +3,7 @@ package site
 
 import (
 	"context"
+	"encoding/json"
 	"sync"
 
 	ep "wp-plugin-publish/internal/enums/endpointtype"
@@ -61,7 +62,7 @@ func (s *Service) GetRemoteSiteSettings(ctx context.Context, siteId int64) (*wor
 
 // UpdateRemoteSiteSettings updates site settings on a remote WordPress site.
 // Probes all known namespaces in parallel — no sequential ResolveNamespace() overhead.
-func (s *Service) UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body map[string]any) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError) {
+func (s *Service) UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body json.RawMessage) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError) {
 	client, appErr := s.createWPClient(ctx, siteId)
 	if appErr != nil {
 		return nil, appErr

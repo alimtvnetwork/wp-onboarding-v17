@@ -115,12 +115,17 @@ type RollbackCompleteData struct {
 }
 
 // --- E2E test events ---
+// E2EEvent is a marker interface for E2E websocket payloads
+type E2EEvent interface {
+	IsE2EEvent()
+}
 
 // E2ERunStartedData is broadcast when an E2E test run begins.
 type E2ERunStartedData struct {
 	RunId      string
 	TotalTests int
 }
+func (E2ERunStartedData) IsE2EEvent() {}
 
 // E2ETestStartedData is broadcast when an individual E2E test case begins.
 type E2ETestStartedData struct {
@@ -128,6 +133,7 @@ type E2ETestStartedData struct {
 	CaseId   string
 	CaseName string
 }
+func (E2ETestStartedData) IsE2EEvent() {}
 
 // E2ETestCompletedData is broadcast when an individual E2E test case finishes.
 type E2ETestCompletedData struct {
@@ -136,6 +142,7 @@ type E2ETestCompletedData struct {
 	Status     string
 	DurationMs int64
 }
+func (E2ETestCompletedData) IsE2EEvent() {}
 
 // E2ERunCompletedData is broadcast when an E2E test run finishes.
 type E2ERunCompletedData struct {
@@ -144,3 +151,4 @@ type E2ERunCompletedData struct {
 	Passed int    `json:",omitempty"`
 	Failed int    `json:",omitempty"`
 }
+func (E2ERunCompletedData) IsE2EEvent() {}

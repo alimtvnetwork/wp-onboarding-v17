@@ -12,3 +12,5 @@ Target File: `backend/cmd/server/MainInit.go`
   `// printStartupBanner prints the server URL info.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

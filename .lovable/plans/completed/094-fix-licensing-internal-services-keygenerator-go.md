@@ -8,3 +8,5 @@ Target File: `licensing/internal/services/KeyGenerator.go`
   `return "", fmt.Errorf("read random bytes: %w", readErr)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

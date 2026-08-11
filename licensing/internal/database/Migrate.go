@@ -6,27 +6,29 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+
+	"riseup-licensing/pkg/apperror"
 )
 
 //go:embed migrations/*.sql
 var migrationFS embed.FS
 
-// Migrate runs all pending SQL migrations in order.
+// Migrate runs all pending Sql migrations in order.
 // It tracks applied migrations in a `schema_migrations` table.
 func Migrate(db *sql.DB) error {
 	initErr := ensureMigrationsTable(db)
 	if initErr != nil {
-		return fmt.Errorf("ensure migrations table: %w", initErr)
+		return apperror.Wrap(initErr, apperror.ErrInternal, "ensure migrations table")
 	}
 
 	applied, appliedErr := getAppliedMigrations(db)
 	if appliedErr != nil {
-		return fmt.Errorf("get applied migrations: %w", appliedErr)
+		return apperror.Wrap(appliedErr, apperror.ErrInternal, "get applied migrations")
 	}
 
 	files, readErr := listMigrationFiles()
 	if readErr != nil {
-		return fmt.Errorf("list migration files: %w", readErr)
+		return apperror.Wrap(readErr, apperror.ErrInternal, "list migration files")
 	}
 
 	for _, file := range files {
@@ -37,7 +39,7 @@ func Migrate(db *sql.DB) error {
 
 		applyErr := applyMigration(db, file)
 		if applyErr != nil {
-			return fmt.Errorf("apply migration %s: %w", file, applyErr)
+			return apperror.Wrap(applyErr, apperror.ErrInternal, fmt.Sprintf("apply migration %s", file))
 		}
 	}
 
@@ -106,24 +108,24 @@ func listMigrationFiles() ([]string, error) {
 func applyMigration(db *sql.DB, filename string) error {
 	content, readErr := migrationFS.ReadFile("migrations/" + filename)
 	if readErr != nil {
-		return fmt.Errorf("read file: %w", readErr)
+		return apperror.Wrap(readErr, apperror.ErrInternal, "read file")
 	}
 
 	tx, txErr := db.Begin()
 	if txErr != nil {
-		return fmt.Errorf("begin transaction: %w", txErr)
+		return apperror.Wrap(txErr, apperror.ErrInternal, "begin transaction")
 	}
 
 	_, execErr := tx.Exec(string(content))
 	if execErr != nil {
 		tx.Rollback() //nolint:errcheck
-		return fmt.Errorf("exec SQL: %w", execErr)
+		return apperror.Wrap(execErr, apperror.ErrInternal, "exec Sql")
 	}
 
 	_, recordErr := tx.Exec("INSERT INTO schema_migrations (name) VALUES (?)", filename)
 	if recordErr != nil {
 		tx.Rollback() //nolint:errcheck
-		return fmt.Errorf("record migration: %w", recordErr)
+		return apperror.Wrap(recordErr, apperror.ErrInternal, "record migration")
 	}
 
 	return tx.Commit()

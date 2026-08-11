@@ -3,7 +3,6 @@ package services
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	"riseup-licensing/internal/enums/auditactiontype"
@@ -92,7 +91,7 @@ func buildAuditListQuery(filter ListFilter) (string, []any) {
 	return auditListSql, args
 }
 
-// marshalDetails converts audit details to JSON, or nil if no details.
+// marshalDetails converts audit details to Json, or nil if no details.
 func marshalDetails(details any) ([]byte, error) {
 	isNilDetails := details == nil
 
@@ -104,7 +103,7 @@ func marshalDetails(details any) ([]byte, error) {
 	data, marshalErr := json.Marshal(details)
 	if marshalErr != nil {
 
-		return nil, fmt.Errorf("marshal audit details: %w", marshalErr)
+		return nil, apperror.Wrap(marshalErr, apperror.ErrMarshal, "marshal audit details")
 	}
 
 	return data, nil

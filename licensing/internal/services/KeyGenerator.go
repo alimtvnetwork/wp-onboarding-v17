@@ -41,7 +41,7 @@ func generateSegment(length int) (string, error) {
 	_, readErr := rand.Read(buf)
 
 	if readErr != nil {
-		return "", fmt.Errorf("read random bytes: %w", readErr)
+		return "", apperror.Wrap(readErr, apperror.ErrKeyGeneration, "read random bytes")
 	}
 
 	result := make([]byte, length)

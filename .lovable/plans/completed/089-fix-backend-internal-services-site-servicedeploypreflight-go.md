@@ -8,3 +8,5 @@ Target File: `backend/internal/services/site/ServiceDeployPreflight.go`
   `return nil, fmt.Errorf("failed to decrypt credentials: %w", err)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

@@ -80,7 +80,7 @@ func initE2EService(input e2eInput) {
 	}
 	e2eSvc := e2e.New(e2e.Config{
 		DB:               input.DB.DB,
-		Broadcast:        func(event string, data any) { ws.Broadcast(input.WSHub, event, data) },
+		Broadcast:        func(event string, data ws.E2EEvent) { ws.Broadcast(input.WSHub, event, data) },
 		BaseUrl:          fmt.Sprintf("http://localhost:%d", input.Cfg.Server.Port),
 		TestPluginPath:   input.Cfg.E2E.TestPluginPath,
 		TestSiteUrl:      input.Cfg.E2E.TestSiteUrl,
@@ -154,7 +154,7 @@ func launchServer(server *api.Server, cfg *config.Config, log *logger.Logger, vi
 	go openBrowser(cfg.Server.Port, log)
 }
 
-// printStartupBanner prints the server URL info.
+// printStartupBanner prints the server Url info.
 func printStartupBanner(port int, vi *version.Info) {
 	localUrl := fmt.Sprintf("http://localhost:%d", port)
 	fmt.Printf("\n  %s\n", vi.String())

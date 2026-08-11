@@ -3,6 +3,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"wp-plugin-publish/internal/database"
@@ -86,9 +87,9 @@ type SiteServiceInterface interface {
 
 	// Site settings proxy — typed returns
 	GetRemoteSiteSettings(ctx context.Context, siteId int64) (*wordpress.SiteSettingsData, *apperror.AppError)
-	UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body map[string]any) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError) // map[string]any justified: dynamic PHP settings input
+	UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body json.RawMessage) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError)
 	GetRemoteSiteHealthSummary(ctx context.Context, siteId int64) (*wordpress.HealthSummaryData, *apperror.AppError)
-	GetRemoteDebugRoutes(ctx context.Context, siteId int64) (any, *apperror.AppError)
+	GetRemoteDebugRoutes(ctx context.Context, siteId int64) (*site.DebugRoutesData, *apperror.AppError)
 
 	// Dedup registry proxy — typed returns
 	GetRemoteDedupRegistry(ctx context.Context, siteId int64) (*wordpress.DedupRegistryResult, *apperror.AppError)
@@ -347,7 +348,7 @@ func (a *SiteServiceAdapter) GetRemoteSiteSettings(ctx context.Context, siteId i
 	return a.Service.GetRemoteSiteSettings(ctx, siteId)
 }
 
-func (a *SiteServiceAdapter) UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body map[string]any) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError) {
+func (a *SiteServiceAdapter) UpdateRemoteSiteSettings(ctx context.Context, siteId int64, body json.RawMessage) (*wordpress.SiteSettingsUpdateResult, *apperror.AppError) {
 	return a.Service.UpdateRemoteSiteSettings(ctx, siteId, body)
 }
 
@@ -355,7 +356,7 @@ func (a *SiteServiceAdapter) GetRemoteSiteHealthSummary(ctx context.Context, sit
 	return a.Service.GetRemoteSiteHealthSummary(ctx, siteId)
 }
 
-func (a *SiteServiceAdapter) GetRemoteDebugRoutes(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+func (a *SiteServiceAdapter) GetRemoteDebugRoutes(ctx context.Context, siteId int64) (*site.DebugRoutesData, *apperror.AppError) {
 	return a.Service.GetRemoteDebugRoutes(ctx, siteId)
 }
 

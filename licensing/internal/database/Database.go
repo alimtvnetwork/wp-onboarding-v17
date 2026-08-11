@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"riseup-licensing/pkg/apperror"
+
 	_ "modernc.org/sqlite"
 )
 
@@ -17,18 +19,18 @@ func Open(dbPath string) (*sql.DB, error) {
 	mkErr := os.MkdirAll(dir, 0755)
 
 	if mkErr != nil {
-		return nil, fmt.Errorf("create database directory: %w", mkErr)
+		return nil, apperror.Wrap(mkErr, apperror.ErrInternal, "create database directory")
 	}
 
 	db, openErr := sql.Open("sqlite", dbPath)
 	if openErr != nil {
-		return nil, fmt.Errorf("open database: %w", openErr)
+		return nil, apperror.Wrap(openErr, apperror.ErrInternal, "open database")
 	}
 
 	pragmaErr := configurePragmas(db)
 	if pragmaErr != nil {
 		db.Close()
-		return nil, fmt.Errorf("configure pragmas: %w", pragmaErr)
+		return nil, apperror.Wrap(pragmaErr, apperror.ErrInternal, "configure pragmas")
 	}
 
 	return db, nil
@@ -46,7 +48,7 @@ func configurePragmas(db *sql.DB) error {
 	for _, pragma := range pragmas {
 		_, execErr := db.Exec(pragma)
 		if execErr != nil {
-			return fmt.Errorf("exec %q: %w", pragma, execErr)
+			return apperror.Wrap(execErr, apperror.ErrInternal, fmt.Sprintf("exec %q", pragma))
 		}
 	}
 

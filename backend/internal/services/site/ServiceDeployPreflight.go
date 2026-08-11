@@ -259,7 +259,7 @@ func classifyPreflightFailure(statusCode int, fallback string) (string, string) 
 func (s *Service) buildPreflightClient(site models.Site) (*wordpress.Client, error) {
 	password, err := decrypt(site.PasswordEncrypted, s.encryptionKey)
 	if err != nil {
-		return nil, fmt.Errorf("failed to decrypt credentials: %w", err)
+		return nil, apperror.Wrap(err, apperror.ErrValidation, "failed to decrypt credentials")
 	}
 	return s.wpClientFactory(site.Url, site.Username, string(password), nil), nil
 }

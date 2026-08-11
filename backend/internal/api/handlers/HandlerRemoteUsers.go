@@ -15,7 +15,7 @@ import (
 // ListRemoteUsers returns all users from a remote WordPress site
 var ListRemoteUsers = handleSiteActionByIdWithQuery(
 	apperror.ErrWPConnection,
-	func(ctx context.Context, siteId int64, query string) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64, query string) (*wordpress.UserListResponse, *apperror.AppError) {
 		return Services.SiteService.ListRemoteUsers(ctx, siteId, query)
 	},
 )
@@ -207,7 +207,7 @@ func RevokeRemoteAppPassword(w http.ResponseWriter, r *http.Request) {
 // ExportRemoteUsersCsv exports users as CSV from a remote WordPress site
 var ExportRemoteUsersCsv = handleSiteActionByIdWithQuery(
 	apperror.ErrWPConnection,
-	func(ctx context.Context, siteId int64, query string) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64, query string) (*wordpress.UserExportResult, *apperror.AppError) {
 		return Services.SiteService.ExportRemoteUsersCsv(ctx, siteId, query)
 	},
 )
@@ -215,7 +215,7 @@ var ExportRemoteUsersCsv = handleSiteActionByIdWithQuery(
 // ExportRemoteUsersSqlite exports users as SQLite ZIP from a remote WordPress site
 var ExportRemoteUsersSqlite = handleSiteActionById(
 	apperror.ErrWPConnection,
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) (*wordpress.UserExportResult, *apperror.AppError) {
 		return Services.SiteService.ExportRemoteUsersSqlite(ctx, siteId)
 	},
 )

@@ -8,3 +8,4 @@ Target File: `backend/internal/api/handlers/HandlerFactoryGetters.go`
   `// These replace the legacy func() any wrappers.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

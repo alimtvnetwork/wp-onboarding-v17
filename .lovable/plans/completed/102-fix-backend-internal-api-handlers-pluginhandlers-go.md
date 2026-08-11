@@ -32,3 +32,5 @@ Target File: `backend/internal/api/handlers/PluginHandlers.go`
   `// siteMappingsInput is the JSON body for UpdateSiteMappings.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+[x] SKIPPED (False Positive)

@@ -4,7 +4,8 @@ package e2e
 import (
 	"database/sql"
 	"sync"
-
+	
+	"wp-plugin-publish/internal/ws"
 	"wp-plugin-publish/pkg/apperror"
 )
 
@@ -141,7 +142,7 @@ const runDeleteQuery = "DELETE FROM TestRuns WHERE Id = ?"
 // Config holds configuration for the E2E test service
 type Config struct {
 	DB               *sql.DB
-	Broadcast        func(event string, data any)
+	Broadcast        func(event string, data ws.E2EEvent)
 	BaseUrl          string // Backend API base URL (e.g. "http://localhost:8080")
 	TestPluginPath   string // Local path to a test plugin directory
 	TestSiteUrl      string // WordPress test site URL
@@ -154,7 +155,7 @@ type serviceImpl struct {
 	db               *sql.DB
 	mu               sync.RWMutex
 	activeRun        *TestRun
-	broadcast        func(event string, data any)
+	broadcast        func(event string, data ws.E2EEvent)
 	api              *apiClient
 	testPluginPath   string
 	testSiteUrl      string

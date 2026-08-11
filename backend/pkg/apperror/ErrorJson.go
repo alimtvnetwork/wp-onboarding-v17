@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// appErrorJson is an alias used to prevent infinite recursion during JSON marshaling.
+// appErrorJson is an alias used to prevent infinite recursion during Json marshaling.
 type appErrorJson struct {
 	Code       ErrorCode
 	Message    string
@@ -16,7 +16,7 @@ type appErrorJson struct {
 	Cause      string `json:",omitempty"`
 }
 
-// MarshalJSON serializes AppError to JSON, converting Cause to a string message.
+// MarshalJSON serializes AppError to Json, converting Cause to a string message.
 func (e *AppError) MarshalJSON() ([]byte, error) {
 	alias := appErrorJson{
 		Code:       e.Code,
@@ -34,13 +34,13 @@ func (e *AppError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// UnmarshalJSON deserializes JSON into AppError, restoring Cause as a plain error.
+// UnmarshalJSON deserializes Json into AppError, restoring Cause as a plain error.
 func (e *AppError) UnmarshalJSON(data []byte) error {
 	var alias appErrorJson
 	err := json.Unmarshal(data, &alias)
 
 	if err != nil {
-		return fmt.Errorf("apperror.UnmarshalJSON: failed to decode AppError (received %d bytes: %s): %w", len(data), truncateData(data, 200), err)
+		return Wrap(err, ErrValidation, fmt.Sprintf("apperror.UnmarshalJSON: failed to decode AppError (received %d bytes: %s)", len(data), truncateData(data, 200)))
 	}
 
 	e.Code = alias.Code
@@ -57,7 +57,7 @@ func (e *AppError) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// truncateData returns a string preview of raw JSON data, capped at maxLen bytes.
+// truncateData returns a string preview of raw Json data, capped at maxLen bytes.
 func truncateData(data []byte, maxLen int) string {
 	if len(data) <= maxLen {
 		return string(data)

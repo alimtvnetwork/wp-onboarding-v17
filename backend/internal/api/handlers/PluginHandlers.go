@@ -5,6 +5,7 @@ import (
 	"context"
 	"net/http"
 
+	"wp-plugin-publish/internal/models"
 	"wp-plugin-publish/internal/services/plugin"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
@@ -14,7 +15,7 @@ import (
 var GetPlugins = handleListNilSafe(
 	isPluginServiceReady,
 	apperror.ErrWPConnection,
-	func(ctx context.Context) (any, *apperror.AppError) {
+	func(ctx context.Context) ([]models.Plugin, *apperror.AppError) {
 		return Services.PluginService.List(ctx)
 	},
 )
@@ -53,7 +54,7 @@ var GetPlugin = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrWPAPIDisabled,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) (*models.Plugin, *apperror.AppError) {
 		return Services.PluginService.GetById(ctx, id)
 	},
 )
@@ -110,7 +111,7 @@ var GetPluginMappings = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrWPPluginUpload,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) ([]models.PluginMapping, *apperror.AppError) {
 		return Services.PluginService.GetMappings(ctx, id)
 	},
 )
@@ -214,7 +215,7 @@ var GetSiteMappings = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrWPPluginDelete,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) ([]models.PluginMapping, *apperror.AppError) {
 		return Services.PluginService.GetMappingsBySite(ctx, id)
 	},
 )

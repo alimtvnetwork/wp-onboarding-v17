@@ -11,7 +11,7 @@ import (
 	"wp-plugin-publish/pkg/apperror"
 )
 
-// GetById returns a single error by ID
+// GetById returns a single error by Id
 func (s *Service) GetById(id int64) apperror.Result[models.ErrorHistory] {
 	query := `
 		SELECT Id, ErrorId, Code, Level, Message, Details, ContextJson,
@@ -69,7 +69,7 @@ func (s *Service) GetById(id int64) apperror.Result[models.ErrorHistory] {
 	return apperror.Ok(scanned.e)
 }
 
-// GetByErrorId returns a single error by its frontend-generated error ID
+// GetByErrorId returns a single error by its frontend-generated error Id
 func (s *Service) GetByErrorId(errorId string) apperror.Result[models.ErrorHistory] {
 	query := `SELECT Id FROM ErrorHistory WHERE ErrorId = ?`
 	var id int64
@@ -83,7 +83,7 @@ func (s *Service) GetByErrorId(errorId string) apperror.Result[models.ErrorHisto
 			return apperror.Fail[models.ErrorHistory](appErr)
 		}
 
-		appErr := apperror.Wrap(err, apperror.ErrDatabaseQuery, "query error by error ID").
+		appErr := apperror.Wrap(err, apperror.ErrDatabaseQuery, "query error by error Id").
 			WithValue("errorId", errorId)
 
 		return apperror.Fail[models.ErrorHistory](appErr)
@@ -161,7 +161,7 @@ func (s *Service) ClearOlderThan(threshold string) apperror.Result[int64] {
 // parseDurationThreshold converts a human-readable threshold like "7d" or "24h" into a time.Duration.
 func parseDurationThreshold(s string) (time.Duration, error) {
 	if len(s) < 2 {
-		return 0, fmt.Errorf("threshold too short: %q", s)
+		return 0, apperror.New(apperror.ErrValidation, fmt.Sprintf("threshold too short: %q", s))
 	}
 
 	unit := s[len(s)-1]
@@ -170,7 +170,7 @@ func parseDurationThreshold(s string) (time.Duration, error) {
 	var num int
 	_, err := fmt.Sscanf(value, "%d", &num)
 	if err != nil || num <= 0 {
-		return 0, fmt.Errorf("invalid threshold number: %q", value)
+		return 0, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid threshold number: %q", value))
 	}
 
 	switch unit {
@@ -179,7 +179,7 @@ func parseDurationThreshold(s string) (time.Duration, error) {
 	case 'd':
 		return time.Duration(num) * 24 * time.Hour, nil
 	default:
-		return 0, fmt.Errorf("unsupported threshold unit %q, use 'h' or 'd'", string(unit))
+		return 0, apperror.New(apperror.ErrValidation, fmt.Sprintf("unsupported threshold unit %q, use 'h' or 'd'", string(unit)))
 	}
 }
 

@@ -56,3 +56,5 @@ Target File: `backend/internal/api/handlers/HandlerRemoteUsers.go`
   `respondBadRequest(w, apperror.ErrConfigParse, "Invalid site ID")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+[x] SKIPPED (False Positive)

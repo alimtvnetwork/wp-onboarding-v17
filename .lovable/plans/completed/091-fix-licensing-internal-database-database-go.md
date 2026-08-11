@@ -20,3 +20,4 @@ Target File: `licensing/internal/database/Database.go`
   `return fmt.Errorf("exec %q: %w", pragma, execErr)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED
