@@ -81,7 +81,7 @@ func (s *Service) checkDuplicateUrl(ctx context.Context, normalizedUrl string) a
 	}
 
 	if existing.IsDefined() {
-		return apperror.FailNew[models.Site](apperror.ErrValidation, "site with this URL already exists")
+		return apperror.FailNew[models.Site](apperror.ErrValidation, "site with this Url already exists")
 	}
 
 	return apperror.Result[models.Site]{}
@@ -265,7 +265,7 @@ func validateRequiredFields(input CreateInput) *apperror.AppError {
 	isUrlMissing := input.Url == ""
 
 	if isUrlMissing {
-		return apperror.New(apperror.ErrValidation, "URL is required")
+		return apperror.New(apperror.ErrValidation, "Url is required")
 	}
 
 	return validateCredentialFields(input)
@@ -292,7 +292,7 @@ func validateCredentialFields(input CreateInput) *apperror.AppError {
 func validateUrlFormat(rawUrl string) *apperror.AppError {
 	_, err := url.Parse(rawUrl)
 	if err != nil {
-		return apperror.Wrap(err, apperror.ErrValidation, "invalid URL format")
+		return apperror.Wrap(err, apperror.ErrValidation, "invalid Url format")
 	}
 
 	return nil

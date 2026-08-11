@@ -20,3 +20,5 @@ Target File: `backend/internal/services/publish/DetailTypes.go`
   `// ActivateResponseInfo carries API response details.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

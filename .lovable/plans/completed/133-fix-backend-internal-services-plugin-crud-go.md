@@ -16,3 +16,4 @@ Target File: `backend/internal/services/plugin/Crud.go`
   `// encodeExcludePatterns marshals exclude patterns to JSON string.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

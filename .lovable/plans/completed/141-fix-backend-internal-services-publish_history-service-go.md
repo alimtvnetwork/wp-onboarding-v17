@@ -20,3 +20,4 @@ Target File: `backend/internal/services/publish_history/Service.go`
   `var args []any`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

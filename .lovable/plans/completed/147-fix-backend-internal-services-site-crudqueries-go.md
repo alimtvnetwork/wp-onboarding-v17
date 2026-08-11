@@ -12,3 +12,5 @@ Target File: `backend/internal/services/site/CrudQueries.go`
   `// SQL query constants (centralized per coding standard).`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positives: `any` required by sql.Row.Scan, abbreviation in comment)
+

@@ -8,3 +8,4 @@ Target File: `backend/internal/services/publish/ServiceZipSelective.go`
   `// hasHiddenPathSegment returns true if any path segment starts with a dot.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

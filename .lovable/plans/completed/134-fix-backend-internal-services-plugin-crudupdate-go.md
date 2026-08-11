@@ -16,3 +16,4 @@ Target File: `backend/internal/services/plugin/CrudUpdate.go`
   `func appendOptionalFields(updates *[]string, args *[]any, input UpdateInput) {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

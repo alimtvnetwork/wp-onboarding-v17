@@ -8,3 +8,4 @@ Target File: `backend/internal/services/plugin/Ignore.go`
   `// matchesAny returns true if any pattern matches the path.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

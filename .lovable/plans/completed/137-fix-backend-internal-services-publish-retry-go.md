@@ -8,3 +8,5 @@ Target File: `backend/internal/services/publish/Retry.go`
   `func withRetry[T any](ctx context.Context, cfg RetryConfig, operation string, fn func(attempt int) (T, *apperror.AppError)) (T, RetryResult) {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

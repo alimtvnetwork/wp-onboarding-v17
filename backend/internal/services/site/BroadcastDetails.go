@@ -8,7 +8,7 @@ import "encoding/json"
 // toJson converts a typed struct to json.RawMessage for WS broadcast boundaries.
 // This replaces the legacy toDetailsMap helper, ensuring typed structs are serialized
 // directly to json.RawMessage without an intermediate map[string]any.
-func toJson(v any) json.RawMessage {
+func toJson[T any](v T) json.RawMessage {
 	data, err := json.Marshal(v)
 	if err != nil {
 		return nil

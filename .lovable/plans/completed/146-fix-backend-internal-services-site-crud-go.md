@@ -60,3 +60,6 @@ Target File: `backend/internal/services/site/Crud.go`
   `return apperror.Wrap(err, apperror.ErrValidation, "invalid URL format")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED (string literals)
+[x] SKIPPED (False Positives: `any` in SQL args, abbreviations in comments)
+

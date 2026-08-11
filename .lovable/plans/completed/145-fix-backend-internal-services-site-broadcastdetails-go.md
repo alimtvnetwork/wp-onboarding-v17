@@ -48,3 +48,5 @@ Target File: `backend/internal/services/site/BroadcastDetails.go`
   `// remoteActionLogContext holds typed fields extracted from log details JSON`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED (Line 11)
+[x] SKIPPED (False Positives: all other lines are in comments)

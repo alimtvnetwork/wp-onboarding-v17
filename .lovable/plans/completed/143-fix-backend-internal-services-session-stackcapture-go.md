@@ -8,3 +8,5 @@ Target File: `backend/internal/services/session/StackCapture.go`
   `// hasExcludedPrefix checks if the function name starts with any excluded prefix.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] FIXED
+[x] SKIPPED (False Positive)

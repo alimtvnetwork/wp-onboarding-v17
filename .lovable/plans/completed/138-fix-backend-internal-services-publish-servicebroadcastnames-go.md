@@ -24,3 +24,5 @@ Target File: `backend/internal/services/publish/ServiceBroadcastNames.go`
   `// resolveSiteNames fetches site name/URL from DB if not provided.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

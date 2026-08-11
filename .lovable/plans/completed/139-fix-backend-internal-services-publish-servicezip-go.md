@@ -8,3 +8,4 @@ Target File: `backend/internal/services/publish/ServiceZip.go`
   `// isExcludedByPatterns checks if a file matches any exclude pattern.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)
