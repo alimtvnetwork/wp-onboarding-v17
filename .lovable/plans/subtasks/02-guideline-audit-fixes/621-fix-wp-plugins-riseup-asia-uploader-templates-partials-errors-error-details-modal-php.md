@@ -1,0 +1,14 @@
+# Subtask 621: Fix violations in wp-plugins/riseup-asia-uploader/templates/partials/errors/error-details-modal.php
+
+Target File: `wp-plugins/riseup-asia-uploader/templates/partials/errors/error-details-modal.php`
+
+## Violations
+
+- **Line 3**: abbreviations - Invalid abbreviation casing
+  `* Errors Partial — Error details modal (context, stack trace, raw JSON tabs).`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 61**: abbreviations - Invalid abbreviation casing
+  `<?php esc_html_e('Raw JSON', $pluginSlug); ?>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

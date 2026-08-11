@@ -238,14 +238,14 @@ trait LogClearingTrait
     private function isMachineApproved(string $machineName): bool {
         $settingsJson = $this->loadPluginSettings();
         $approvedMachines = $settingsJson['approved_machines'] ?? [];
-        $hasNoApprovedMachines = empty($approvedMachines);
+        $hasApprovedMachines = !empty($approvedMachines);
 
-        if ($hasNoApprovedMachines) {
+        if (!$hasApprovedMachines) {
             $settingsOption = get_option(PluginConfigType::SettingsGroup->value, []);
             $approvedMachines = $settingsOption['approved_machines'] ?? [];
-            $hasNoApprovedMachines = empty($approvedMachines);
+            $hasApprovedMachines = !empty($approvedMachines);
 
-            if ($hasNoApprovedMachines) {
+            if (!$hasApprovedMachines) {
                 return false;
             }
         }
@@ -280,7 +280,7 @@ trait LogClearingTrait
         }
 
         $settings = json_decode($contents, true);
-        $isValidSettings = gettype($settings) === PhpNativeType::PhpArray->value;
+        $isValidSettings = PhpNativeType::tryFrom(gettype($settings))?->isEqual(PhpNativeType::PhpArray) ?? false;
 
         return $isValidSettings ? $settings : [];
     }
@@ -323,7 +323,7 @@ trait LogClearingTrait
         return PluginConfigType::Slug->value . '_clear_token_' . md5(strtolower($machineName));
     }
 
-    /** Resolve the client IP address. */
+    /** Resolve the client Ip address. */
     private function resolveClientIp(): string {
         $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
         $hasForwardedFor = !empty($forwardedFor);

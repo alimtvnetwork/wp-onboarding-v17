@@ -1,0 +1,14 @@
+# Subtask 635: Fix violations in wp-plugins/riseup-asia-uploader/tests/Unit/Licensing/LicenseManagerTest.php
+
+Target File: `wp-plugins/riseup-asia-uploader/tests/Unit/Licensing/LicenseManagerTest.php`
+
+## Violations
+
+- **Line 93**: abbreviations - Invalid abbreviation casing
+  `// API returns invalid → isLicensed falls back to API.`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 170**: abbreviations - Invalid abbreviation casing
+  `// Deactivate call — API returns success.`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

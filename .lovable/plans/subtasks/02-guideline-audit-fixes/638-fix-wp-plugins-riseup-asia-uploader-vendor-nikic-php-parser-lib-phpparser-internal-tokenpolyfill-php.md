@@ -1,0 +1,22 @@
+# Subtask 638: Fix violations in wp-plugins/riseup-asia-uploader/vendor/nikic/php-parser/lib/PhpParser/Internal/TokenPolyfill.php
+
+Target File: `wp-plugins/riseup-asia-uploader/vendor/nikic/php-parser/lib/PhpParser/Internal/TokenPolyfill.php`
+
+## Violations
+
+- **Line 19**: abbreviations - Invalid abbreviation casing
+  `/** @var int The ID of the token. Either a T_* constant of a character code < 256. */`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 40**: abbreviations - Invalid abbreviation casing
+  `* Create a Token with the given ID and text, as well optional line and position information.`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 51**: abbreviations - Invalid abbreviation casing
+  `* Otherwise it will be a T_* style name, or null if the token ID is unknown.`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 64**: abbreviations - Invalid abbreviation casing
+  `* the token ID, a string that matches the token text, or an array of integers/strings. In the`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

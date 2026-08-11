@@ -425,7 +425,7 @@ class FileLogger {
 
         $maxIndex = 0;
         $entries = @scandir($archiveDir);
-        $hasEntries = gettype($entries) === PhpNativeType::PhpArray->value;
+        $hasEntries = PhpNativeType::tryFrom(gettype($entries))?->isEqual(PhpNativeType::PhpArray) ?? false;
 
         if ($hasEntries) {
             foreach ($entries as $entry) {
@@ -512,9 +512,9 @@ class FileLogger {
 
     /** Recursively delete a directory and its contents. */
     private function deleteDirectoryRecursive(string $dir): void {
-        $isNotDirectory = !is_dir($dir);
+        $isDirectory = is_dir($dir);
 
-        if ($isNotDirectory) {
+        if (!$isDirectory) {
             return;
         }
 
@@ -571,7 +571,7 @@ class FileLogger {
             return;
         }
 
-        $hasLogging = isset($settings['logging']) && gettype($settings['logging']) === PhpNativeType::PhpArray->value;
+        $hasLogging = isset($settings['logging']) && (PhpNativeType::tryFrom(gettype($settings['logging']))?->isEqual(PhpNativeType::PhpArray) ?? false);
 
         if ($hasLogging === false) {
             return;
@@ -678,7 +678,7 @@ class FileLogger {
             return;
         }
 
-        $hasHashes = isset($data['hashes']) && gettype($data['hashes']) === PhpNativeType::PhpArray->value;
+        $hasHashes = isset($data['hashes']) && (PhpNativeType::tryFrom(gettype($data['hashes']))?->isEqual(PhpNativeType::PhpArray) ?? false);
         $this->persistentDedupHashes = $hasHashes ? $data['hashes'] : [];
     }
 
@@ -734,7 +734,7 @@ class FileLogger {
         }
     }
 
-    /** Resolve the full path to the dedup registry JSON file. */
+    /** Resolve the full path to the dedup registry Json file. */
     private function getPersistentDedupPath(): ?string {
         $isInitFailed = ($this->isInitialized === false) && ($this->initializePaths() === false);
 

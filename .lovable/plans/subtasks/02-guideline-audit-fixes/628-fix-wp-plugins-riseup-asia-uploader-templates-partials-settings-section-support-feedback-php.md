@@ -1,0 +1,14 @@
+# Subtask 628: Fix violations in wp-plugins/riseup-asia-uploader/templates/partials/settings/section-support-feedback.php
+
+Target File: `wp-plugins/riseup-asia-uploader/templates/partials/settings/section-support-feedback.php`
+
+## Violations
+
+- **Line 44**: abbreviations - Invalid abbreviation casing
+  `<label for="fallback_url"><?php esc_html_e('Fallback Ticket URL', $pluginSlug); ?></label>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 53**: abbreviations - Invalid abbreviation casing
+  `<p class="description"><?php esc_html_e('If email is not configured, users will see a link to this URL for manual ticket submission.', $pluginSlug); ?></p>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

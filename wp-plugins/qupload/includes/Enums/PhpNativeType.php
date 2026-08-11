@@ -31,4 +31,7 @@ enum PhpNativeType: string
     {
         return gettype($value) === $this->value;
     }
+
+    public function isEqual(self $other): bool { return $this === $other; }
 }
+

@@ -1,0 +1,18 @@
+# Subtask 625: Fix violations in wp-plugins/riseup-asia-uploader/templates/partials/settings/section-log-retrieval.php
+
+Target File: `wp-plugins/riseup-asia-uploader/templates/partials/settings/section-log-retrieval.php`
+
+## Violations
+
+- **Line 24**: abbreviations - Invalid abbreviation casing
+  `<?php esc_html_e('PHP Log Retrieval (Remote API)', $pluginSlug); ?>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 27**: abbreviations - Invalid abbreviation casing
+  `<?php esc_html_e('Controls which log files are included when the Go backend requests PHP logs via the /error-logs endpoint. This endpoint returns the raw log file contents as JSON for remote diagnostics.', $pluginSlug); ?>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 105**: abbreviations - Invalid abbreviation casing
+  `<p class="description"><?php esc_html_e('GET request with Basic Auth. Returns JSON with error_log, full_log, and/or stacktrace_log fields.', $pluginSlug); ?></p>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

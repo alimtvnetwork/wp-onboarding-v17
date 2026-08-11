@@ -109,9 +109,9 @@ trait AuthTrait
     }
 
     private function authenticateUser(string $authHeader): WP_User|WP_Error {
-        $isNotBasic = (strpos($authHeader, 'Basic ') !== 0);
+        $isBasic = (strpos($authHeader, 'Basic ') === 0);
 
-        if ($isNotBasic) {
+        if (!$isBasic) {
             $this->fileLogger->warn('Invalid Authorization header format');
 
             return new WP_Error(WpErrorCodeType::RestForbidden->value, 'Authentication required', ['status' => HttpStatusType::Unauthorized->value]);

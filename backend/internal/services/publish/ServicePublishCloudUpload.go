@@ -13,9 +13,9 @@ import (
 // Failures log warnings but do not block the publish pipeline.
 func (s *Service) runCloudUploadStage(pctx *publishContext) {
 	accountIds := pctx.Options.CloudStorageAccountIds
-	hasNoAccounts := len(accountIds) == 0
+	hasAccounts := len(accountIds) > 0
 
-	if hasNoAccounts {
+	if !hasAccounts {
 		s.broadcastCloudUploadSkipped(pctx)
 
 		return

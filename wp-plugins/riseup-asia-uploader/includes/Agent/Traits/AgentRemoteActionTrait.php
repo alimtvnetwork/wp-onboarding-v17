@@ -94,9 +94,9 @@ trait AgentRemoteActionTrait {
 
         $status = wp_remote_retrieve_response_code($response);
         $httpStatus = HttpStatusType::tryFrom($status);
-        $isNotRedirect = ($httpStatus === null || !$httpStatus->isRedirect());
+        $isRedirect = ($httpStatus !== null && $httpStatus->isRedirect());
 
-        if ($isNotRedirect) {
+        if (!$isRedirect) {
             return null;
         }
 
@@ -106,9 +106,9 @@ trait AgentRemoteActionTrait {
         ]);
 
         $location = wp_remote_retrieve_header($response, HttpHeaderType::Location->value);
-        $hasNoLocation = empty($location);
+        $hasLocation = !empty($location);
 
-        if ($hasNoLocation) {
+        if (!$hasLocation) {
             return null;
         }
 

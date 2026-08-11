@@ -1,0 +1,14 @@
+# Subtask 615: Fix violations in wp-plugins/riseup-asia-uploader/includes/Update/Traits/UpdateResolverWpHooksTrait.php
+
+Target File: `wp-plugins/riseup-asia-uploader/includes/Update/Traits/UpdateResolverWpHooksTrait.php`
+
+## Violations
+
+- **Line 106**: abbreviations - Invalid abbreviation casing
+  `'description' => 'Remote plugin management, blog post publishing, and audit logging via REST API.',`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 116**: abbreviations - Invalid abbreviation casing
+  `return [ResponseKeyType::Success->value => false, ResponseKeyType::Message->value => 'No master URL configured'];`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

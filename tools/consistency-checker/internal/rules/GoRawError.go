@@ -60,8 +60,8 @@ func (r *GoRawError) Check(ctx engine.CheckContext) []engine.Finding {
 	for i, line := range ctx.Lines {
 		trimmed := strings.TrimSpace(line)
 
-		isNotFunc := !funcReturningError.MatchString(trimmed)
-		if isNotFunc {
+		isFunc := funcReturningError.MatchString(trimmed)
+		if !isFunc {
 			continue
 		}
 

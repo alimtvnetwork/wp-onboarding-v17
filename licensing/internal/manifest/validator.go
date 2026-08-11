@@ -144,9 +144,9 @@ func validateChunks(m *Manifest) []string {
 func validateSizeConsistency(m *Manifest) []string {
 	var errs []string
 
-	hasNoChunks := len(m.Chunks) == 0
+	hasChunks := len(m.Chunks) > 0
 
-	if hasNoChunks {
+	if !hasChunks {
 		return errs
 	}
 
@@ -178,10 +178,10 @@ func validateSizeConsistency(m *Manifest) []string {
 		lastIndex := len(m.Chunks) - 1
 
 		for i, chunk := range m.Chunks {
-			isNotLast := i < lastIndex
+			isLast := i == lastIndex
 			isOversized := chunk.Size > m.ChunkSize
 
-			if isNotLast && isOversized {
+			if !isLast && isOversized {
 				errs = append(errs, fmt.Sprintf(
 					"chunks[%d]: size %d exceeds declared chunkSize %d",
 					i, chunk.Size, m.ChunkSize,

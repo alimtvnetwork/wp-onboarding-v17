@@ -160,9 +160,9 @@ trait UploadFileSystemTrait
     private function moveExtractedToTarget(string $tempExtractDir, string $targetDir): true|WP_REST_Response
     {
         $extractedEntries = glob($tempExtractDir . '/*');
-        $hasNoContent = $extractedEntries === false || empty($extractedEntries);
+        $hasContent = $extractedEntries !== false && !empty($extractedEntries);
 
-        if ($hasNoContent) {
+        if (!$hasContent) {
             $this->deleteDirectory($tempExtractDir);
 
             return $this->errorResponse('No content found in extracted ZIP', HttpStatusType::ServerError->value);

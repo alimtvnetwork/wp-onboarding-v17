@@ -1,0 +1,14 @@
+# Subtask 624: Fix violations in wp-plugins/riseup-asia-uploader/templates/partials/settings/section-endpoint-config.php
+
+Target File: `wp-plugins/riseup-asia-uploader/templates/partials/settings/section-endpoint-config.php`
+
+## Violations
+
+- **Line 20**: abbreviations - Invalid abbreviation casing
+  `<h2><?php esc_html_e('API Endpoints Configuration', $pluginSlug); ?></h2>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+
+- **Line 22**: abbreviations - Invalid abbreviation casing
+  `<?php esc_html_e('Enable or disable specific API endpoints and configure authentication requirements.', $pluginSlug); ?>`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

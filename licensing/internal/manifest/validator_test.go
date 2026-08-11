@@ -57,9 +57,9 @@ func TestEmptyManifest(t *testing.T) {
 		t.Fatal("expected invalid manifest for empty input")
 	}
 
-	hasNoErrors := len(result.Errors) == 0
+	hasErrors := len(result.Errors) > 0
 
-	if hasNoErrors {
+	if !hasErrors {
 		t.Fatal("expected errors for empty manifest")
 	}
 }
@@ -302,18 +302,18 @@ func TestHandlerValidManifest(t *testing.T) {
 
 	HandleValidateManifest(rec, req)
 
-	isNotOK := rec.Code != http.StatusOK
+	isOK := rec.Code == http.StatusOK
 
-	if isNotOK {
+	if !isOK {
 		t.Errorf("expected 200, got %d", rec.Code)
 	}
 
 	var resp validateManifestResponse
 	json.NewDecoder(rec.Body).Decode(&resp)
 
-	isNotSuccess := !resp.Success
+	isSuccess := resp.Success
 
-	if isNotSuccess {
+	if !isSuccess {
 		t.Errorf("expected success=true, got false")
 	}
 }
@@ -325,9 +325,9 @@ func TestHandlerInvalidManifest(t *testing.T) {
 
 	HandleValidateManifest(rec, req)
 
-	isNotUnprocessable := rec.Code != http.StatusUnprocessableEntity
+	isUnprocessable := rec.Code == http.StatusUnprocessableEntity
 
-	if isNotUnprocessable {
+	if !isUnprocessable {
 		t.Errorf("expected 422, got %d", rec.Code)
 	}
 }
@@ -339,9 +339,9 @@ func TestHandlerBadJSON(t *testing.T) {
 
 	HandleValidateManifest(rec, req)
 
-	isNotBadRequest := rec.Code != http.StatusBadRequest
+	isBadRequest := rec.Code == http.StatusBadRequest
 
-	if isNotBadRequest {
+	if !isBadRequest {
 		t.Errorf("expected 400, got %d", rec.Code)
 	}
 }

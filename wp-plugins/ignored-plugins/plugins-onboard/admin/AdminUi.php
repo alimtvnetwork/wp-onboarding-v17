@@ -31,7 +31,7 @@ class OnboardAdminUI {
     private $oauth;
 
     /**
-     * IP whitelist instance.
+     * Ip whitelist instance.
      *
      * @var OnboardIPWhitelist
      */
@@ -256,9 +256,9 @@ class OnboardAdminUI {
     public function handle_actions() {
         $isPageMissing = !isset($_GET['page']);
         $isOtherPage = !$isPageMissing && strpos($_GET['page'], 'plugins-onboard') === false;
-        $isNotOnboardPage = $isPageMissing || $isOtherPage;
+        $isOnboardPage = !($isPageMissing || $isOtherPage);
 
-        if ($isNotOnboardPage) {
+        if (!$isOnboardPage) {
             return;
         }
 
@@ -308,7 +308,7 @@ class OnboardAdminUI {
     }
 
     /**
-     * Handle IP approval.
+     * Handle Ip approval.
      */
     private function handle_approve_ip() {
         if (!current_user_can('manage_options')) {
@@ -336,7 +336,7 @@ class OnboardAdminUI {
     }
 
     /**
-     * Handle IP rejection.
+     * Handle Ip rejection.
      */
     private function handle_reject_ip() {
         if (!current_user_can('manage_options')) {

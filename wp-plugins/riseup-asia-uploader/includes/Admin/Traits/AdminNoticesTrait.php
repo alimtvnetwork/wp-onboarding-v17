@@ -40,10 +40,10 @@ trait AdminNoticesTrait {
             return;
         }
 
-        $hasNoFailures = ((int) ($diagnostics['failed_count'] ?? 0) === 0);
-        $hasNoRuntimeFailures = (count($diagnostics['runtime_failures'] ?? []) === 0);
+        $hasFailures = ((int) ($diagnostics['failed_count'] ?? 0) > 0);
+        $hasRuntimeFailures = (count($diagnostics['runtime_failures'] ?? []) > 0);
 
-        if ($hasNoFailures && $hasNoRuntimeFailures) {
+        if (!$hasFailures && !$hasRuntimeFailures) {
             return;
         }
 

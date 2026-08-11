@@ -1,0 +1,10 @@
+# Subtask 652: Fix violations in wp-plugins/riseup-asia-uploader/vendor/szepeviktor/phpstan-wordpress/bootstrap.php
+
+Target File: `wp-plugins/riseup-asia-uploader/vendor/szepeviktor/phpstan-wordpress/bootstrap.php`
+
+## Violations
+
+- **Line 50**: abbreviations - Invalid abbreviation casing
+  `// Rewrite API Endpoint Masks.`
+  **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
+

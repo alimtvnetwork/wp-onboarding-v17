@@ -64,9 +64,9 @@ trait LogEmailTrait
 
     /** Validate collected files and send the email. */
     private function validateAndSendLogEmail(string $machineName, string $recipient, array $collected): WP_REST_Response {
-        $hasNoFiles = empty($collected['attachments']);
+        $hasFiles = !empty($collected['attachments']);
 
-        if ($hasNoFiles) {
+        if (!$hasFiles) {
             return $this->buildLogErrorResponse('No log files found', 'no_logs_found', HttpStatusType::NotFound);
         }
 
@@ -314,7 +314,7 @@ trait LogEmailTrait
             PluginConfigType::Name->value . ' — Log File Export',
             str_repeat('=', 50),
             '',
-            'Site URL:        ' . get_site_url(),
+            'Site Url:        ' . get_site_url(),
             'Plugin Version:  ' . PluginConfigType::Version->value,
             'Requested By:    ' . $machineName . ' (' . $clientIp . ')',
             'Timestamp:       ' . gmdate('Y-m-d\TH:i:s\Z'),
@@ -345,7 +345,7 @@ trait LogEmailTrait
     /** Resolve the email recipient from request body or fall back to admin_email. */
     private function resolveEmailRecipient(array $body): string {
         $customRecipient = $body['recipient'] ?? '';
-        $hasCustomRecipient = (gettype($customRecipient) === PhpNativeType::PhpString->value && strlen(trim($customRecipient)) > 0);
+        $hasCustomRecipient = (PhpNativeType::PhpString->isMatches($customRecipient) && strlen(trim($customRecipient)) > 0);
 
         if ($hasCustomRecipient) {
             $sanitized = sanitize_email(trim($customRecipient));
