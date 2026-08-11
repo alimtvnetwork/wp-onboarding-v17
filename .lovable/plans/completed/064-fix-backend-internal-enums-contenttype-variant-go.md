@@ -8,3 +8,4 @@ Target File: `backend/internal/enums/contenttype/Variant.go`
   `return Invalid, fmt.Errorf("invalid content type: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED

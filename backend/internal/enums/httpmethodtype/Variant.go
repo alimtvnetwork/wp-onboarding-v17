@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents an HTTP method (GET, POST, PUT, DELETE, PATCH).
@@ -110,7 +112,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid HTTP method: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid HTTP method: %q", s))
 }
 
 func Values() []string {

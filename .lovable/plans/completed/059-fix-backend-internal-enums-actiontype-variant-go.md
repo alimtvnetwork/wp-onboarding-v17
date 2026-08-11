@@ -12,3 +12,5 @@ Target File: `backend/internal/enums/actiontype/Variant.go`
   `// IsAnyOf returns true if the receiver matches any of the given variants.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] FIXED

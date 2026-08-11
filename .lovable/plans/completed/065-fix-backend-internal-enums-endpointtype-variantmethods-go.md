@@ -8,3 +8,4 @@ Target File: `backend/internal/enums/endpointtype/VariantMethods.go`
   `return Invalid, fmt.Errorf("invalid endpoint: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED

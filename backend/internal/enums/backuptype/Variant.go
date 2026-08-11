@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents snapshot backup strategies.
@@ -71,7 +73,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid backup type: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid backup type: %q", s))
 }
 
 func Values() []string {

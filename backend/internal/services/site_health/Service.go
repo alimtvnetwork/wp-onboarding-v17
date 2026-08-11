@@ -99,7 +99,7 @@ func (s *Service) performHealthProbe(ctx context.Context, site *siteCheckInfo) m
 	req, err := http.NewRequestWithContext(ctx, httpmethod.Get.Value(), statusUrl, nil)
 
 	if err != nil {
-		check.Status = healthstatus.Down.DBValue()
+		check.Status = healthstatus.Down.DbValue()
 		check.ErrorMessage = err.Error()
 
 		return check
@@ -111,7 +111,7 @@ func (s *Service) performHealthProbe(ctx context.Context, site *siteCheckInfo) m
 	check.ResponseMs = elapsed
 
 	if httpErr != nil {
-		check.Status = healthstatus.Down.DBValue()
+		check.Status = healthstatus.Down.DbValue()
 		check.ErrorMessage = httpErr.Error()
 
 		return check
@@ -131,25 +131,25 @@ func applyHttpStatus(check *models.SiteHealthCheck, statusCode int, elapsed int6
 
 	switch {
 	case httpStatus.IsSuccess():
-		check.Status = healthstatus.Healthy.DBValue()
+		check.Status = healthstatus.Healthy.DbValue()
 		check.UploaderOk = true
 	case statusCode == wordpress.HttpStatusUnauthorized.Int() || statusCode == wordpress.HttpStatusForbidden.Int():
-		check.Status = healthstatus.Healthy.DBValue()
+		check.Status = healthstatus.Healthy.DbValue()
 		check.UploaderOk = false
 	case httpStatus.IsServerError():
-		check.Status = healthstatus.Down.DBValue()
+		check.Status = healthstatus.Down.DbValue()
 		check.ErrorMessage = fmt.Sprintf("HTTP %d", statusCode)
 	default:
-		check.Status = healthstatus.Degraded.DBValue()
+		check.Status = healthstatus.Degraded.DbValue()
 		check.ErrorMessage = fmt.Sprintf("HTTP %d", statusCode)
 	}
 
 	isSlowButHealthy :=
-		check.Status == healthstatus.Healthy.DBValue() &&
+		check.Status == healthstatus.Healthy.DbValue() &&
 			elapsed > 5000
 
 	if isSlowButHealthy {
-		check.Status = healthstatus.Degraded.DBValue()
+		check.Status = healthstatus.Degraded.DbValue()
 	}
 }
 

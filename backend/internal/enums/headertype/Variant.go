@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents HTTP header names and values.
@@ -110,7 +112,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid header: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid header: %q", s))
 }
 
 func Values() []string {

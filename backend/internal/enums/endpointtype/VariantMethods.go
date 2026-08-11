@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 func (v Variant) String() string {
@@ -106,7 +108,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid endpoint: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid endpoint: %q", s))
 }
 
 func Values() []string {

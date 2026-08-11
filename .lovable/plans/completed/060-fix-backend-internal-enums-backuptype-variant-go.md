@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/backuptype/Variant.go`
   `return Invalid, fmt.Errorf("invalid backup type: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

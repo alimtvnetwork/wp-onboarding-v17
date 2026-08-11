@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents file change types in sync operations.
@@ -68,7 +70,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid change type: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid change type: %q", s))
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {

@@ -28,7 +28,7 @@ func (h *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Send connection confirmation
 	Broadcast(h, EventConnection, ConnectionConfirmation{
-		Status:   connectionstatus.Connected.DBValue(),
+		Status:   connectionstatus.Connected.DbValue(),
 		ClientId: conn.RemoteAddr().String(),
 	})
 

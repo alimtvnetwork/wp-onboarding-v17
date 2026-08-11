@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents HTTP Content-Type values.
@@ -104,7 +106,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid content type: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid content type: %q", s))
 }
 
 func Values() []string {

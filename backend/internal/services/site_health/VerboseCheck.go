@@ -144,12 +144,12 @@ func deriveOverallStatus(probes []EndpointProbe) string {
 	}
 
 	if hasError {
-		return healthstatus.Down.DBValue()
+		return healthstatus.Down.DbValue()
 	}
 
 	if hasAuthOnly {
-		return healthstatus.Healthy.DBValue()
+		return healthstatus.Healthy.DbValue()
 	}
 
-	return healthstatus.Healthy.DBValue()
+	return healthstatus.Healthy.DbValue()
 }

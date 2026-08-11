@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents site health status values.
@@ -36,8 +38,8 @@ func (v Variant) Label() string {
 	return v.String()
 }
 
-// DBValue returns the lowercase value used in database storage and JSON responses.
-func (v Variant) DBValue() string {
+// DbValue returns the lowercase value used in database storage and Json responses.
+func (v Variant) DbValue() string {
 	return strings.ToLower(v.String())
 }
 
@@ -84,7 +86,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid health status: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid health status: %q", s))
 }
 
 func Values() []string {
@@ -96,7 +98,7 @@ func Values() []string {
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.DBValue())
+	return json.Marshal(v.DbValue())
 }
 
 func (v *Variant) UnmarshalJSON(data []byte) error {

@@ -8,3 +8,4 @@ Target File: `backend/internal/enums/headertype/Variant.go`
   `return Invalid, fmt.Errorf("invalid header: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED

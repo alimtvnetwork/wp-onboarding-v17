@@ -104,7 +104,7 @@ func (s *Service) handleConnectionFailure(ctx context.Context, ref connTestRef, 
 	}
 
 	s.broadcastApiTestFailure(ref, err)
-	s.updateConnectionStatus(ctx, ref.Id, connectionstatus.Disconnected.DBValue())
+	s.updateConnectionStatus(ctx, ref.Id, connectionstatus.Disconnected.DbValue())
 	s.broadcastCompleteStep(ref.Id, stagestatus.Failed.String(), "Connection test failed")
 
 	return result
@@ -130,7 +130,7 @@ func (s *Service) broadcastApiTestFailure(ref connTestRef, err error) {
 func (s *Service) handleConnectionSuccess(ctx context.Context, ref connTestRef, connInfo *wordpress.ConnectionInfo) *ConnectionResult {
 	result := buildSuccessResult(connInfo)
 	s.broadcastApiTestSuccess(ref.Id, connInfo.WPVersion)
-	s.updateConnectionStatus(ctx, ref.Id, connectionstatus.Connected.DBValue())
+	s.updateConnectionStatus(ctx, ref.Id, connectionstatus.Connected.DbValue())
 	s.broadcastCompleteStep(ref.Id, stagestatus.Completed.String(), "Connection test completed successfully")
 	s.log.Info("Site connection tested", "id", ref.Id, "success", result.IsSuccess)
 

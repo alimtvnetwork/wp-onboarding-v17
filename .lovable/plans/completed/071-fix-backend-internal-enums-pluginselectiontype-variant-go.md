@@ -8,3 +8,5 @@ Target File: `backend/internal/enums/pluginselectiontype/Variant.go`
   `return Invalid, fmt.Errorf("invalid plugin selection: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+
+[x] FIXED

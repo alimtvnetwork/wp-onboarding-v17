@@ -22,9 +22,9 @@ const insertCheckSql = `
 
 // buildSummarySql constructs the health summary query using enum values.
 func buildSummarySql() string {
-	healthy := healthstatus.Healthy.DBValue()
-	down := healthstatus.Down.DBValue()
-	unknown := healthstatus.Unknown.DBValue()
+	healthy := healthstatus.Healthy.DbValue()
+	down := healthstatus.Down.DbValue()
+	unknown := healthstatus.Unknown.DbValue()
 
 	return `SELECT
 		s.Id, s.Name, s.Url,
@@ -48,11 +48,11 @@ func computeStats(summaries []models.SiteHealthSummary) models.SiteHealthStats {
 
 	for _, m := range summaries {
 		switch m.CurrentStatus {
-		case healthstatus.Healthy.DBValue():
+		case healthstatus.Healthy.DbValue():
 			stats.HealthySites++
-		case healthstatus.Degraded.DBValue():
+		case healthstatus.Degraded.DbValue():
 			stats.DegradedSites++
-		case healthstatus.Down.DBValue():
+		case healthstatus.Down.DbValue():
 			stats.DownSites++
 		default:
 			stats.UnknownSites++

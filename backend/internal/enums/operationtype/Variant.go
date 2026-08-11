@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
-// Variant represents a WordPress client operation for type-safe API call identification.
+// Variant represents a WordPress client operation for type-safe Api call identification.
 type Variant byte
 
 const (
@@ -286,7 +288,7 @@ func Parse(s string) (Variant, error) {
 		}
 	}
 
-	return Invalid, fmt.Errorf("invalid operation: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid operation: %q", s))
 }
 
 func (v Variant) MarshalJSON() ([]byte, error) {

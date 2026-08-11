@@ -128,7 +128,7 @@ func (s *Service) startAndExecutePublish(
 // initPublishResult creates the initial publish result.
 func (s *Service) initPublishResult() *PublishResult {
 	return &PublishResult{
-		ActivationStatus: healthstatus.Unknown.DBValue(),
+		ActivationStatus: healthstatus.Unknown.DbValue(),
 		Stages:           []Stage{},
 	}
 }

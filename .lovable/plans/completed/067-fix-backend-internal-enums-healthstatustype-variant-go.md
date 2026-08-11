@@ -12,3 +12,4 @@ Target File: `backend/internal/enums/healthstatustype/Variant.go`
   `// DBValue returns the lowercase value used in database storage and JSON responses.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

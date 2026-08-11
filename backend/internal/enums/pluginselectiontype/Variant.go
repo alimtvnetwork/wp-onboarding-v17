@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents snapshot plugin inclusion strategies.
@@ -71,7 +73,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid plugin selection: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid plugin selection: %q", s))
 }
 
 func Values() []string {

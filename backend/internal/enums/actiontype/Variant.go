@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"wp-plugin-publish/pkg/apperror"
 )
 
 // Variant represents a transaction logging action.
@@ -139,7 +141,7 @@ func Parse(s string) (Variant, error) {
 			return Variant(i), nil
 		}
 	}
-	return Invalid, fmt.Errorf("invalid action: %q", s)
+	return Invalid, apperror.New(apperror.ErrValidation, fmt.Sprintf("invalid action: %q", s))
 }
 
 func Values() []string {

@@ -8,3 +8,4 @@ Target File: `backend/internal/enums/connectionsteptype/Variant.go`
   `return Invalid, fmt.Errorf("invalid connection step: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED

@@ -8,3 +8,4 @@ Target File: `backend/internal/enums/httpmethodtype/Variant.go`
   `return Invalid, fmt.Errorf("invalid HTTP method: %q", s)`
   **Instruction**: Replace fmt.Errorf with apperror.Wrap() or apperror.New().
 
+[x] FIXED
