@@ -12,3 +12,6 @@ Target File: `backend/internal/api/handlers/ResponseTypes.go`
   `// ApiIndexResponse is the response shape for the API index endpoint.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)
+

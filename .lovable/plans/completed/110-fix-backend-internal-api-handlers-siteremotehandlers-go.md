@@ -36,3 +36,5 @@ Target File: `backend/internal/api/handlers/SiteRemoteHandlers.go`
   `// DeleteRemotePlugin removes a plugin from a remote WordPress site (POST with JSON body)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED Line 76, 84
+[x] SKIPPED (False Positive) Line 17, 23, 29, 45, 65, 231

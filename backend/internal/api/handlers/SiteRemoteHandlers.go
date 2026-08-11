@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"wp-plugin-publish/internal/envelope"
+	"wp-plugin-publish/internal/services/site"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
@@ -73,7 +74,7 @@ func validateRemotePluginSlug(w http.ResponseWriter, parsed *remotePluginParsed)
 // GetRemotePlugins returns all plugins installed on a remote WordPress site
 var GetRemotePlugins = handleSiteActionById(
 	apperror.ErrWPPluginList,
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) ([]site.RemotePlugin, *apperror.AppError) {
 		return Services.SiteService.GetRemotePlugins(ctx, siteId)
 	},
 )
@@ -81,7 +82,7 @@ var GetRemotePlugins = handleSiteActionById(
 // ForceSyncRemotePlugins clears cache and fetches fresh plugin data
 var ForceSyncRemotePlugins = handleSiteActionById(
 	apperror.ErrWPPluginList,
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) ([]site.RemotePlugin, *apperror.AppError) {
 		return Services.SiteService.ForceSyncRemotePlugins(ctx, siteId)
 	},
 )

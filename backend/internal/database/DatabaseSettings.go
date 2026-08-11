@@ -43,11 +43,11 @@ func (db *DB) SetSeedVersion(version string) *apperror.AppError {
 }
 
 // SetSettingIfNotExists creates a setting only if it doesn't already exist
-func (db *DB) SetSettingIfNotExists(key string, value any) *apperror.AppError {
+func (db *DB) SetSettingIfNotExists(key string, value string) *apperror.AppError {
 	_, err := db.Exec(`
 		INSERT OR IGNORE INTO AppConfig (Key, Value, UpdatedAt) 
 		VALUES (?, ?, datetime('now'))
-	`, key, fmt.Sprintf("%v", value))
+	`, key, value)
 
 	if err != nil {
 		return apperror.Wrap(err, apperror.ErrDatabaseExec, "failed to set setting if not exists").

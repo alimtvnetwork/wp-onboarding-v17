@@ -63,7 +63,7 @@ func getSnapshotIdParam(r *http.Request) (int64, error) {
 
 // GetRemoteSnapshots returns all snapshots from a remote WordPress site.
 var GetRemoteSnapshots = handleSiteActionById("E3020",
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) ([]wordpress.SnapshotRecord, *apperror.AppError) {
 		return Services.SiteService.GetRemoteSnapshots(ctx, siteId)
 	},
 )

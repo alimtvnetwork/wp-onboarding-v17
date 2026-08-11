@@ -8,6 +8,7 @@ import (
 
 	"wp-plugin-publish/internal/database"
 	"wp-plugin-publish/internal/enums/publishtype"
+	"wp-plugin-publish/internal/models"
 	"wp-plugin-publish/internal/services/publish"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/internal/ws"
@@ -77,7 +78,7 @@ func PublishPlugin(w http.ResponseWriter, r *http.Request) {
 // PreviewPublish returns a preview of files that will be published
 var PreviewPublish = handleTwoIds(
 	twoIdConfig{IsReady: isPublishServiceReady, ServiceName: "Publish service", Param1Name: "id", Param2Name: "siteId", ErrCode: "E5007"},
-	func(ctx context.Context, pluginId, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId, siteId int64) (*publish.PublishPreviewResult, *apperror.AppError) {
 		return Services.PublishService.PreviewPublish(ctx, pluginId, siteId)
 	},
 )
@@ -85,7 +86,7 @@ var PreviewPublish = handleTwoIds(
 // ComputeDiff returns a true diff between local and remote files
 var ComputeDiff = handleTwoIds(
 	twoIdConfig{IsReady: isPublishServiceReady, ServiceName: "Publish service", Param1Name: "id", Param2Name: "siteId", ErrCode: "E5008"},
-	func(ctx context.Context, pluginId, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId, siteId int64) (*publish.DiffResult, *apperror.AppError) {
 		return Services.PublishService.ComputeDiff(ctx, pluginId, siteId)
 	},
 )
@@ -97,7 +98,7 @@ var ComputeDiff = handleTwoIds(
 // GetBackups returns backup history for a plugin
 var GetBackups = handleActionById(
 	handlerIdConfig{IsReady: isBackupServiceReady, ServiceName: "Backup service", ParamName: "id", ErrCode: "E6001"},
-	func(ctx context.Context, pluginId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId int64) ([]models.Backup, *apperror.AppError) {
 		return Services.BackupService.List(ctx, pluginId)
 	},
 )

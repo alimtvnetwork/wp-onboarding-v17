@@ -44,3 +44,6 @@ Target File: `backend/internal/api/handlers/SiteHandlers.go`
   `// GetSiteCredentials returns decrypted credentials for API Explorer`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
+

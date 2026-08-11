@@ -9,12 +9,13 @@ import (
 	"wp-plugin-publish/pkg/apperror"
 	"wp-plugin-publish/pkg/pathutil"
 	"wp-plugin-publish/pkg/urlutil"
+	"fmt"
 )
 
 // seedSetting is a typed key-value pair for seeding settings.
 type seedSetting struct {
 	Key   string
-	Value any // restricted to int/string/bool from config fields
+	Value string // restricted to int/string/bool from config fields
 }
 
 // seedDefaultSettings writes all config-driven settings to the database.
@@ -32,29 +33,29 @@ func seedDefaultSettings(db *database.DB, cfg *Config, log *logger.Logger) {
 // buildSettingsList returns the full list of seedable settings from config.
 func buildSettingsList(cfg *Config) []seedSetting {
 	return []seedSetting{
-		{"watcher.pollIntervalMs", cfg.Watcher.PollIntervalMs},
-		{"watcher.debounceMs", cfg.Watcher.DebounceMs},
-		{"backup.retentionDays", cfg.Backup.RetentionDays},
-		{"backup.maxBackupsPerPlugin", cfg.Backup.MaxBackupsPerPlugin},
-		{"backup.autoBackupOnPublish", cfg.Backup.AutoBackupOnPublish},
-		{"logging.level", cfg.Logging.Level},
-		{"logging.retentionDays", cfg.Logging.RetentionDays},
-		{"logging.stackTraceDepth", cfg.Logging.StackTraceDepth},
-		{"logging.phpStackTraceDepth", cfg.Logging.PhpStackTraceDepth},
-		{"responseDebug.includeStackTrace", cfg.ResponseDebug.IncludeStackTrace},
-		{"responseDebug.includeInternalErrors", cfg.ResponseDebug.IncludeInternalErrors},
-		{"responseDebug.includeMethodsStack", cfg.ResponseDebug.IncludeMethodsStack},
-		{"responseDebug.maxStackFrames", cfg.ResponseDebug.MaxStackFrames},
-		{"snapshot.mode", cfg.Snapshot.Mode},
-		{"snapshot.backupType", cfg.Snapshot.BackupType},
-		{"snapshot.workerCount", cfg.Snapshot.WorkerCount},
-		{"snapshot.storagePath", cfg.Snapshot.StoragePath},
-		{"snapshot.includePlugins", cfg.Snapshot.IncludePlugins},
-		{"snapshot.pluginSelection", cfg.Snapshot.PluginSelection},
-		{"snapshot.retentionDays", cfg.Snapshot.RetentionDays},
-		{"snapshot.retentionCount", cfg.Snapshot.RetentionCount},
-		{"snapshot.compression", cfg.Snapshot.Compression},
-		{"snapshot.batchSize", cfg.Snapshot.BatchSize},
+		{"watcher.pollIntervalMs", fmt.Sprintf("%v", cfg.Watcher.PollIntervalMs)},
+		{"watcher.debounceMs", fmt.Sprintf("%v", cfg.Watcher.DebounceMs)},
+		{"backup.retentionDays", fmt.Sprintf("%v", cfg.Backup.RetentionDays)},
+		{"backup.maxBackupsPerPlugin", fmt.Sprintf("%v", cfg.Backup.MaxBackupsPerPlugin)},
+		{"backup.autoBackupOnPublish", fmt.Sprintf("%v", cfg.Backup.AutoBackupOnPublish)},
+		{"logging.level", fmt.Sprintf("%v", cfg.Logging.Level)},
+		{"logging.retentionDays", fmt.Sprintf("%v", cfg.Logging.RetentionDays)},
+		{"logging.stackTraceDepth", fmt.Sprintf("%v", cfg.Logging.StackTraceDepth)},
+		{"logging.phpStackTraceDepth", fmt.Sprintf("%v", cfg.Logging.PhpStackTraceDepth)},
+		{"responseDebug.includeStackTrace", fmt.Sprintf("%v", cfg.ResponseDebug.IncludeStackTrace)},
+		{"responseDebug.includeInternalErrors", fmt.Sprintf("%v", cfg.ResponseDebug.IncludeInternalErrors)},
+		{"responseDebug.includeMethodsStack", fmt.Sprintf("%v", cfg.ResponseDebug.IncludeMethodsStack)},
+		{"responseDebug.maxStackFrames", fmt.Sprintf("%v", cfg.ResponseDebug.MaxStackFrames)},
+		{"snapshot.mode", fmt.Sprintf("%v", cfg.Snapshot.Mode)},
+		{"snapshot.backupType", fmt.Sprintf("%v", cfg.Snapshot.BackupType)},
+		{"snapshot.workerCount", fmt.Sprintf("%v", cfg.Snapshot.WorkerCount)},
+		{"snapshot.storagePath", fmt.Sprintf("%v", cfg.Snapshot.StoragePath)},
+		{"snapshot.includePlugins", fmt.Sprintf("%v", cfg.Snapshot.IncludePlugins)},
+		{"snapshot.pluginSelection", fmt.Sprintf("%v", cfg.Snapshot.PluginSelection)},
+		{"snapshot.retentionDays", fmt.Sprintf("%v", cfg.Snapshot.RetentionDays)},
+		{"snapshot.retentionCount", fmt.Sprintf("%v", cfg.Snapshot.RetentionCount)},
+		{"snapshot.compression", fmt.Sprintf("%v", cfg.Snapshot.Compression)},
+		{"snapshot.batchSize", fmt.Sprintf("%v", cfg.Snapshot.BatchSize)},
 	}
 }
 

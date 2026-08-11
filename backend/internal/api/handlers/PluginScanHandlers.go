@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"wp-plugin-publish/internal/services/plugin"
+	"wp-plugin-publish/internal/services/watcher"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
@@ -21,7 +22,7 @@ var ScanPlugin = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrBackupCreate,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) (*watcher.ScanResult, *apperror.AppError) {
 		return Services.WatcherService.TriggerScan(ctx, id)
 	},
 )
@@ -33,7 +34,7 @@ var ScanAllPlugins = handleNoArgs(
 		ServiceName: "Watcher service",
 		ErrCode:     apperror.ErrBackupRestore,
 	},
-	func(ctx context.Context) (any, *apperror.AppError) {
+	func(ctx context.Context) ([]watcher.ScanResult, *apperror.AppError) {
 		return Services.WatcherService.ScanAll(ctx)
 	},
 )

@@ -28,3 +28,5 @@ Target File: `backend/internal/database/DatabaseSettings.go`
   `return 0, apperror.Wrap(lastIdErr, apperror.ErrDatabaseQuery, "failed to get last insert ID for seed plugin")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+Lines 126, 132, 139, 178, 213 are [x] SKIPPED (False Positive)

@@ -28,3 +28,6 @@ Target File: `backend/internal/api/handlers/Sessions.go`
   `"Session ID is required",`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
+

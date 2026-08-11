@@ -28,3 +28,5 @@ Target File: `backend/internal/api/handlers/SiteHealthHandlers.go`
   `days, _ := strconv.Atoi(r.URL.Query().Get("days"))`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED Line 15, 22
+[x] SKIPPED (False Positive) Line 1, 74, 75, 170

@@ -20,3 +20,4 @@ Target File: `backend/internal/database/DatabaseVersions.go`
   `// SQL constants`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

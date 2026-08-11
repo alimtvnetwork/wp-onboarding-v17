@@ -16,3 +16,5 @@ Target File: `backend/internal/api/handlers/SiteSettingsHandlers.go`
   `// GetRemoteDebugRoutes returns registered REST API routes from a remote WordPress site`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED Line 32, 60
+[x] SKIPPED (False Positive) Line 57

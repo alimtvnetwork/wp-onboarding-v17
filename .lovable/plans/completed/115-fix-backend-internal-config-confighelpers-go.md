@@ -12,3 +12,5 @@ Target File: `backend/internal/config/ConfigHelpers.go`
   `normalizedUrl := urlutil.NormalizeWordPressUrl(site.URL)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+Line 85 is [x] SKIPPED (False Positive)

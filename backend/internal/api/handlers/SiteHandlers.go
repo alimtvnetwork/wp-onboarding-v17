@@ -5,6 +5,8 @@ import (
 	"context"
 	"net/http"
 
+	"wp-plugin-publish/internal/models"
+	"wp-plugin-publish/internal/services/site"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
@@ -33,7 +35,7 @@ type SiteUpdateInput struct {
 var GetSites = handleListNilSafe(
 	isSiteServiceReady,
 	apperror.ErrDatabaseConnect,
-	func(ctx context.Context) (any, *apperror.AppError) {
+	func(ctx context.Context) ([]models.Site, *apperror.AppError) {
 		return Services.SiteService.List(ctx)
 	},
 )
@@ -127,7 +129,7 @@ var GetSite = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrNotFound,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) (*models.Site, *apperror.AppError) {
 		return Services.SiteService.GetById(ctx, id)
 	},
 )
@@ -199,7 +201,7 @@ var TestSiteConnection = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrWPConnection,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) (*site.ConnectionResult, *apperror.AppError) {
 		return Services.SiteService.TestConnection(ctx, id)
 	},
 )
@@ -245,7 +247,7 @@ var GetSiteCredentials = handleActionById(
 		ParamName:   "id",
 		ErrCode:     apperror.ErrDatabaseMigrate,
 	},
-	func(ctx context.Context, id int64) (any, *apperror.AppError) {
+	func(ctx context.Context, id int64) (site.SiteCredentials, *apperror.AppError) {
 		return Services.SiteService.GetCredentials(ctx, id)
 	},
 )

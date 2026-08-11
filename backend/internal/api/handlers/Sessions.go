@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"wp-plugin-publish/internal/services/session"
 	"wp-plugin-publish/internal/wordpress"
 )
 
@@ -16,7 +17,7 @@ func GetSessions(w http.ResponseWriter, r *http.Request) {
 		Services == nil ||
 		Services.SessionService == nil
 	if isMissing {
-		respondSuccess(w, []any{})
+		respondSuccess(w, []*session.SessionSummary{})
 
 		return
 	}

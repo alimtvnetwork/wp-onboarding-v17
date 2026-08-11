@@ -18,7 +18,7 @@ import (
 )
 
 // respondJson writes a raw JSON response (used only for non-envelope responses like file downloads)
-func respondJson(w http.ResponseWriter, status int, data any) {
+func respondJson[T any](w http.ResponseWriter, status int, data T) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(data)
@@ -241,7 +241,7 @@ func isServiceNotReady(w http.ResponseWriter, isReady func() bool, name string) 
 
 // isBodyInvalid decodes a JSON request body into target. Returns true and writes
 // a 400 error response if decoding fails (positive guard for failure).
-func isBodyInvalid(w http.ResponseWriter, r *http.Request, target any) bool {
+func isBodyInvalid[T any](w http.ResponseWriter, r *http.Request, target *T) bool {
 	err := json.NewDecoder(r.Body).Decode(target)
 
 	if err != nil {
@@ -277,7 +277,8 @@ func parseId(w http.ResponseWriter, r *http.Request, paramName string) (int64, b
 
 // decodeJsonSilent decodes a JSON request body without writing an error response.
 // Used for optional body parameters where zero-value defaults are acceptable.
-func decodeJsonSilent(r *http.Request, target any) {
+// Writes nothing to the response (client assumes empty body / default value).
+func decodeJsonSilent[T any](r *http.Request, target *T) {
 	json.NewDecoder(r.Body).Decode(target) //nolint:errcheck // intentionally silent for optional bodies
 }
 

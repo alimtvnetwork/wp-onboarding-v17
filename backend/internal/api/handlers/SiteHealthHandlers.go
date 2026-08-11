@@ -6,20 +6,22 @@ import (
 	"net/http"
 	"strconv"
 
+	"wp-plugin-publish/internal/models"
+	sitehealth "wp-plugin-publish/internal/services/site_health"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
 
 // CheckSiteHealth performs a health check on a single site
 var CheckSiteHealth = handleSiteActionById("E4001",
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) (*models.SiteHealthCheck, *apperror.AppError) {
 		return Services.SiteHealthService.CheckSite(ctx, siteId)
 	},
 )
 
 // VerboseCheckSiteHealth performs a HEAD-based verbose check on a single site
 var VerboseCheckSiteHealth = handleSiteActionById("E4006",
-	func(ctx context.Context, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, siteId int64) (*sitehealth.VerboseCheckResult, *apperror.AppError) {
 		return Services.SiteHealthService.VerboseCheck(ctx, siteId)
 	},
 )

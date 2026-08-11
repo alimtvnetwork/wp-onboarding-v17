@@ -5,6 +5,8 @@ import (
 	"context"
 	"net/http"
 
+	"wp-plugin-publish/internal/services/git"
+	"wp-plugin-publish/internal/services/sync"
 	"wp-plugin-publish/internal/wordpress"
 	"wp-plugin-publish/pkg/apperror"
 )
@@ -20,7 +22,7 @@ var CheckSync = handleTwoIds(
 		Param2Name:  "siteId",
 		ErrCode:     "E4002",
 	},
-	func(ctx context.Context, pluginId, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId, siteId int64) (*sync.SyncResult, *apperror.AppError) {
 		return Services.SyncService.CheckSync(ctx, pluginId, siteId)
 	},
 )
@@ -33,7 +35,7 @@ var CheckAllSites = handleActionById(
 		ParamName:   "id",
 		ErrCode:     "E4003",
 	},
-	func(ctx context.Context, pluginId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId int64) (*sync.BatchSyncResult, *apperror.AppError) {
 		return Services.SyncService.CheckAllSites(ctx, pluginId)
 	},
 )
@@ -47,7 +49,7 @@ var PushSync = handleTwoIds(
 		Param2Name:  "siteId",
 		ErrCode:     "E4004",
 	},
-	func(ctx context.Context, pluginId, siteId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId, siteId int64) (*sync.PushSyncResult, *apperror.AppError) {
 		return Services.SyncService.PushSync(ctx, pluginId, siteId)
 	},
 )
@@ -62,7 +64,7 @@ var GitPull = handleActionById(
 		ParamName:   "id",
 		ErrCode:     "E5001",
 	},
-	func(ctx context.Context, pluginId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId int64) (*git.PullResult, *apperror.AppError) {
 		return Services.GitService.Pull(ctx, pluginId)
 	},
 )
@@ -74,7 +76,7 @@ var GitPullAll = handleNoArgs(
 		ServiceName: "Git service",
 		ErrCode:     "E5002",
 	},
-	func(ctx context.Context) (any, *apperror.AppError) {
+	func(ctx context.Context) (*git.BatchPullResult, *apperror.AppError) {
 		return Services.GitService.PullAll(ctx)
 	},
 )
@@ -87,7 +89,7 @@ var GitStatus = handleActionById(
 		ParamName:   "id",
 		ErrCode:     "E5003",
 	},
-	func(ctx context.Context, pluginId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId int64) (*git.StatusResult, *apperror.AppError) {
 		return Services.GitService.Status(ctx, pluginId)
 	},
 )
@@ -144,7 +146,7 @@ var GitPush = handleActionById(
 		ParamName:   "id",
 		ErrCode:     "E5005",
 	},
-	func(ctx context.Context, pluginId int64) (any, *apperror.AppError) {
+	func(ctx context.Context, pluginId int64) (*git.PushResult, *apperror.AppError) {
 		return Services.GitService.Push(ctx, pluginId)
 	},
 )
