@@ -86,9 +86,7 @@ func (s *Service) broadcastCompletion(pctx *publishContext) {
 
 // resolveCompletionLogLevel returns the appropriate log level for completion.
 func resolveCompletionLogLevel(result *PublishResult) logleveltype.Variant {
-	isFailed := !result.IsSuccess
-
-	if isFailed {
+	if result.IsFail() {
 		return logleveltype.Error
 	}
 
@@ -192,7 +190,7 @@ func applyHistoryResult(entry *models.PublishHistory, result *PublishResult) {
 	entry.SessionId = result.SessionId
 	entry.FilesUpdated = result.FilesUpdated
 	entry.ActivationStatus = result.ActivationStatus
-	entry.RollbackStatus = result.RollbackStatus
+	entry.RollbackStatus = string(result.RollbackStatus)
 	entry.RollbackMessage = result.RollbackMessage
 	entry.ErrorMessage = result.ErrorMessage
 	entry.DurationMs = result.Duration

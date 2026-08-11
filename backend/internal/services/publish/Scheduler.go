@@ -11,6 +11,16 @@ import (
 	"wp-plugin-publish/pkg/apperror"
 )
 
+// JobStatusType represents the outcome status of a scheduled job
+type JobStatusType string
+
+const (
+	JobStatusSuccess JobStatusType = "success"
+	JobStatusPartial JobStatusType = "partial"
+	JobStatusFailed  JobStatusType = "failed"
+	JobStatusNever   JobStatusType = "never"
+)
+
 // ScheduleConfig holds scheduling settings
 type ScheduleConfig struct {
 	IsEnabled bool   // Simplified: "daily:HH:MM", "weekly:DAY:HH:MM"
@@ -30,7 +40,7 @@ type ScheduledJob struct {
 	CreatedAt  time.Time
 	LastRunAt  *time.Time `json:",omitempty"`
 	NextRunAt  *time.Time `json:",omitempty"`
-	LastStatus string     // "success", "partial", "failed", "never"
+	LastStatus JobStatusType
 	IsEnabled  bool
 }
 
@@ -79,7 +89,7 @@ func (s *PublishScheduler) AddJob(job ScheduledJob) (string, error) {
 
 	job.Id = fmt.Sprintf("sj-%d-%d", job.PluginId, time.Now().UnixMilli())
 	job.CreatedAt = time.Now()
-	job.LastStatus = "never"
+	job.LastStatus = JobStatusNever
 	job.IsEnabled = true
 
 	// Calculate next run

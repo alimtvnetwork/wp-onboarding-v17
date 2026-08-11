@@ -14,7 +14,7 @@ func TestAppError_JSONRoundTrip(t *testing.T) {
 		"size": "42",
 	}
 	original.Diagnostic = ErrorDiagnostic{
-		URL:    "https://example.com/api",
+		Url:    "https://example.com/api",
 		Method: "POST",
 	}
 	original.Cause = Wrap(nil, ErrNotFound, "inner cause")
@@ -32,7 +32,9 @@ func TestAppError_JSONRoundTrip(t *testing.T) {
 	assertField(t, "Code", original.Code, restored.Code)
 	assertField(t, "Message", original.Message, restored.Message)
 	assertField(t, "Details", original.Details, restored.Details)
-	assertField(t, "Diagnostic.URL", original.Diagnostic.URL, restored.Diagnostic.URL)
+	if original.Diagnostic.Url != restored.Diagnostic.Url {
+		t.Errorf("URL mismatch: %v vs %v", original.Diagnostic.Url, restored.Diagnostic.Url)
+	}
 	assertField(t, "Diagnostic.Method", original.Diagnostic.Method, restored.Diagnostic.Method)
 
 	if len(restored.Values) != len(original.Values) {

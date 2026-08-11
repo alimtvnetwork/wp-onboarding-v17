@@ -6,8 +6,6 @@ import (
 
 	loglevel "wp-plugin-publish/internal/enums/logleveltype"
 	publishstep "wp-plugin-publish/internal/enums/publishsteptype"
-	stagestatus "wp-plugin-publish/internal/enums/stagestatustype"
-	enumstatus "wp-plugin-publish/internal/enums/statustype"
 	"wp-plugin-publish/pkg/apperror"
 )
 
@@ -26,7 +24,7 @@ func (s *Service) handleRollback(input rollbackInput) {
 	isRollbackDisabled := !input.Pctx.Options.IsRollbackOnFailure
 
 	if isRollbackDisabled {
-		input.Pctx.Result.RollbackStatus = stagestatus.Skipped.String()
+		input.Pctx.Result.RollbackStatus = RollbackStatusSkipped
 		input.Pctx.Result.RollbackMessage = "Rollback disabled by user"
 
 		return
@@ -153,7 +151,7 @@ func (s *Service) reportRollbackOutcome(pctx *publishContext, rollbackStage Stag
 
 // reportRollbackFailed sets the failed rollback status and logs it.
 func (s *Service) reportRollbackFailed(pctx *publishContext, rollbackStage Stage, result *PublishResult) {
-	result.RollbackStatus = enumstatus.Failed.String()
+	result.RollbackStatus = RollbackStatusFailed
 	result.RollbackMessage = rollbackStage.Message
 
 	failCtx := StageContext{
@@ -166,7 +164,7 @@ func (s *Service) reportRollbackFailed(pctx *publishContext, rollbackStage Stage
 
 // reportRollbackSuccess sets the successful rollback status and logs it.
 func (s *Service) reportRollbackSuccess(pctx *publishContext, result *PublishResult) {
-	result.RollbackStatus = enumstatus.Success.String()
+	result.RollbackStatus = RollbackStatusSuccess
 	result.RollbackMessage = "Previous version restored"
 
 	successCtx := StageContext{

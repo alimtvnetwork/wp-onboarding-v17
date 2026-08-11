@@ -60,6 +60,11 @@ type syncManifestResult struct {
 	} `json:"data"` // external key
 }
 
+// IsFail returns true if the remote API returned failure.
+func (r *syncManifestResult) IsFail() bool {
+	return !r.Success
+}
+
 // GetPluginSyncManifest retrieves the cached file manifest for a remote plugin via Riseup Asia Uploader.
 func (c *Client) GetPluginSyncManifest(ctx context.Context, slug string) apperror.Result[[]RemoteFile] {
 	endpoint := "/" + RiseupAsiaNamespace + ep.SyncManifest.String()
@@ -83,7 +88,7 @@ func (c *Client) GetPluginSyncManifest(ctx context.Context, slug string) apperro
 
 	result := decodeResult.Value()
 
-	return validateSuccessAndReturn(result.Success, result.Data.Files, successCheckContext{Operation: "sync manifest", Slug: slug})
+	return validateSuccessAndReturn(result.IsFail(), result.Data.Files, successCheckContext{Operation: "sync manifest", Slug: slug})
 }
 
 // pluginFilesResult is the response shape from the files endpoint.
@@ -92,6 +97,11 @@ type pluginFilesResult struct {
 	Plugin     string       `json:"plugin"`     // external key
 	TotalFiles int          `json:"totalFiles"` // external key
 	Files      []RemoteFile `json:"files"`      // external key
+}
+
+// IsFail returns true if the remote API returned failure.
+func (r *pluginFilesResult) IsFail() bool {
+	return !r.Success
 }
 
 // GetPluginFilesViaRiseup retrieves the list of files for a remote plugin via Riseup Asia Uploader.
@@ -117,7 +127,7 @@ func (c *Client) GetPluginFilesViaRiseup(ctx context.Context, slug string) apper
 
 	result := decodeResult.Value()
 
-	return validateSuccessAndReturn(result.Success, result.Files, successCheckContext{Operation: "plugin files", Slug: slug})
+	return validateSuccessAndReturn(result.IsFail(), result.Files, successCheckContext{Operation: "plugin files", Slug: slug})
 }
 
 // mutationTokenResult is the response from the mutation token endpoint.
@@ -164,6 +174,11 @@ type fileContentResult struct {
 	Content string `json:"content"` // external key
 }
 
+// IsFail returns true if the remote API returned failure.
+func (r *fileContentResult) IsFail() bool {
+	return !r.Success
+}
+
 // GetPluginFileContent retrieves the content of a specific file from a remote plugin.
 func (c *Client) GetPluginFileContent(ctx context.Context, pluginSlug, filePath string) apperror.Result[string] {
 	endpoint := "/" + RiseupAsiaNamespace + ep.File.String()
@@ -186,9 +201,7 @@ func (c *Client) GetPluginFileContent(ctx context.Context, pluginSlug, filePath 
 	}
 
 	result := decodeResult.Value()
-	isFailure := !result.Success
-
-	if isFailure {
+	if result.IsFail() {
 		return apperror.FailNew[string](apperror.ErrWPConnection, "remote API returned failure for file content")
 	}
 
@@ -201,11 +214,9 @@ type successCheckContext struct {
 	Slug      string
 }
 
-// validateSuccessAndReturn checks the success flag and returns data or an error.
-func validateSuccessAndReturn[T any](isSuccess bool, data T, ctx successCheckContext) apperror.Result[T] {
-	isFailure := !isSuccess
-
-	if isFailure {
+// validateSuccessAndReturn checks the fail flag and returns data or an error.
+func validateSuccessAndReturn[T any](isFail bool, data T, ctx successCheckContext) apperror.Result[T] {
+	if isFail {
 		return apperror.FailNew[T](apperror.ErrWPConnection, "remote API returned failure for "+ctx.Operation)
 	}
 

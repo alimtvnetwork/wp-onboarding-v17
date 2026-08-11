@@ -58,7 +58,7 @@ func (m *DBManager) ExportByType(projectSlug string, dbTypes []string, outputPat
 }
 
 // writeFilteredEntries writes matching database files into the zip.
-func (m *DBManager) writeFilteredEntries(zipWriter *zip.Writer, dbs []DatabaseInfo, typeSet map[string]bool, projectSlug string) (int, int64) {
+func (m *DBManager) writeFilteredEntries(zipWriter *zip.Writer, dbs []Database, typeSet map[string]bool, projectSlug string) (int, int64) {
 	var filesCount int
 	var totalBytes int64
 

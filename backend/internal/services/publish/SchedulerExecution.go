@@ -92,7 +92,7 @@ func (s *PublishScheduler) rescheduleJob(job *ScheduledJob) {
 
 	now := time.Now()
 	job.LastRunAt = &now
-	job.LastStatus = "success"
+	job.LastStatus = JobStatusSuccess
 
 	nextRun, err := s.calculateNextRun(job.Schedule)
 	if err == nil {
@@ -135,7 +135,7 @@ func (s *PublishScheduler) collectJobSummaries() []ws.ScheduledJobSummary {
 func buildJobSummary(job *ScheduledJob) ws.ScheduledJobSummary {
 	j := ws.ScheduledJobSummary{
 		Id: job.Id, PluginId: job.PluginId, PluginName: job.PluginName,
-		IsEnabled: job.IsEnabled, Schedule: job.Schedule.CronExpr, LastStatus: job.LastStatus,
+		IsEnabled: job.IsEnabled, Schedule: job.Schedule.CronExpr, LastStatus: string(job.LastStatus),
 	}
 	if job.NextRunAt != nil {
 		j.NextRunAt = job.NextRunAt.Format(time.RFC3339)

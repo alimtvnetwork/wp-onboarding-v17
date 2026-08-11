@@ -91,11 +91,10 @@ func (c *Client) sendMultipartUpload(endpoint string, form *zipMultipartForm) ap
 
 // parseOnboardUploadResponse validates the status code and unmarshals the result.
 func (c *Client) parseOnboardUploadResponse(mpResp *multipartResponse, endpoint, url, pluginSlug string) apperror.Result[*OnboardUploadResult] {
-	isSuccess := mpResp.StatusCode == HttpStatusOk.Int() ||
-		mpResp.StatusCode == HttpStatusCreated.Int()
-	isFailed := !isSuccess
+	isFail := mpResp.StatusCode != HttpStatusOk.Int() &&
+		mpResp.StatusCode != HttpStatusCreated.Int()
 
-	if isFailed {
+	if isFail {
 		return apperror.Fail[*OnboardUploadResult](
 			apperror.New(apperror.ErrWPPluginUpload, "upload plugin zip failed").
 				WithEndpoint(endpoint).

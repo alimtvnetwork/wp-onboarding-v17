@@ -104,6 +104,15 @@ type PublishOptions struct {
 	CloudStorageAccountIds  []int               // cloud storage accounts to upload backup to
 }
 
+// RollbackStatusType represents the outcome status of a rollback
+type RollbackStatusType string
+
+const (
+	RollbackStatusSuccess RollbackStatusType = "success"
+	RollbackStatusFailed  RollbackStatusType = "failed"
+	RollbackStatusSkipped RollbackStatusType = "skipped"
+)
+
 // PublishResult represents the result of a publish operation
 type PublishResult struct {
 	IsSuccess        bool
@@ -111,11 +120,16 @@ type PublishResult struct {
 	FilesUpdated     int
 	BackupId         *int64  `json:",omitempty"`
 	ActivationStatus string  // active, inactive, error
-	RollbackStatus   string  `json:",omitempty"` // "", "success", "failed", "skipped"
+	RollbackStatus   RollbackStatusType `json:",omitempty"` // "", "success", "failed", "skipped"
 	RollbackMessage  string  `json:",omitempty"` // details about rollback
 	Duration         int64   // milliseconds
 	ErrorMessage     string  `json:",omitempty"`
 	Stages           []Stage
+}
+
+// IsFail returns true if the operation did not succeed.
+func (r *PublishResult) IsFail() bool {
+	return !r.IsSuccess
 }
 
 // Stage represents a publish pipeline stage

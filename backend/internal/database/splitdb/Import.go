@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -186,7 +187,11 @@ func (m *DBManager) registerImportedDatabases(projectSlug string) *apperror.AppE
 			return nil
 		}
 
-		return m.registerSingleDatabase(path, project.Id, projectSlug)
+		projectId, err := strconv.ParseInt(project.Id, 10, 64)
+		if err != nil {
+			return err
+		}
+		return m.registerSingleDatabase(path, projectId, projectSlug)
 	})
 
 	if walkErr != nil {
