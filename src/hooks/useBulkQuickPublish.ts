@@ -4,6 +4,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { api, Plugin } from '@/lib/api';
 import { usePublishStore, initializePublishWebSocketListeners } from '@/stores/publishStore';
 import { useExecutionLoggerStore } from '@/hooks/useExecutionLogger';
+import { useErrorStore } from '@/stores/errorStore';
+
+export enum UploadModeType {
+  File = "file",
+  Zip = "zip",
+}
 
 /**
  * Hook for bulk quick publish operations.
@@ -15,6 +21,7 @@ export function useBulkQuickPublish() {
   const startOperation = usePublishStore((state) => state.startOperation);
   const completeOperation = usePublishStore((state) => state.completeOperation);
   const hasActiveOperation = usePublishStore((state) => state.hasActiveOperation);
+  const { captureError, captureException } = useErrorStore();
 
   // Ensure WS listeners are initialized
   initializePublishWebSocketListeners();
@@ -68,10 +75,10 @@ export function useBulkQuickPublish() {
     toast.info(`Publishing ${publishablePlugins.length} plugin(s) to ${totalPairs} site(s)...`);
 
     // Get user preferences
-    let uploadMode: "file" | "zip" = "file";
+    let uploadMode: UploadModeType = UploadModeType.File;
     try {
       const saved = localStorage.getItem("wppp_upload_mode");
-      if (saved === "zip") uploadMode = "zip";
+      if (saved === UploadModeType.Zip) uploadMode = UploadModeType.Zip;
     } catch { /* default */ }
 
     let keepZipFiles = false;
@@ -90,7 +97,7 @@ export function useBulkQuickPublish() {
       }
     } catch { /* default */ }
 
-    const publishMode = uploadMode === "zip" ? "full" : "selected";
+    const publishMode = uploadMode === UploadModeType.Zip ? "full" : "selected";
 
     try {
       const response = await api.bulkPublish({
@@ -128,10 +135,18 @@ export function useBulkQuickPublish() {
       } else {
         // Complete all operations as failed
         const errorMsg = response.error?.message || 'Bulk publish failed';
+        if (response.error) {
+          captureError(response.error, { endpoint: '/publish/bulk', method: 'POST' });
+        }
         completeAllOperationsAsFailed(publishablePlugins, errorMsg, completeOperation);
         toast.error(errorMsg);
       }
     } catch (error: unknown) {
+      captureException(error, {
+        source: "useBulkQuickPublish",
+        endpoint: "/publish/bulk",
+        method: "POST"
+      });
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       completeAllOperationsAsFailed(publishablePlugins, errorMsg, completeOperation);
       toast.error(`Bulk publish failed: ${errorMsg}`);

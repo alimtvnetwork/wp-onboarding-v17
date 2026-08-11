@@ -234,13 +234,19 @@ export type ApiCallMeta = {
 // Domain types
 // ---------------------------------------------------------------------------
 
+export enum ConnectionStatusType {
+  Connected = "connected",
+  Disconnected = "disconnected",
+  Unknown = "unknown",
+}
+
 export interface Site {
   id: number;
   name: string;
   url: string;
   username: string;
   category: string | null;
-  connectionStatus: "connected" | "disconnected" | "unknown";
+  connectionStatus: ConnectionStatusType;
   lastTestedAt: string | null;
   lastSyncAt: string | null;
   createdAt: string;

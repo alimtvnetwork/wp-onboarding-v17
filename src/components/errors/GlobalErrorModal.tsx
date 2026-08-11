@@ -18,6 +18,12 @@ import { DelegatedSection, hasDelegatedContent } from "./DelegatedSection";
 import { DownloadDropdown, CopyDropdown } from "./ErrorModalActions";
 import { useDraggable } from "@/hooks/useDraggable";
 
+export enum ActiveSectionType {
+  Backend = "backend",
+  Frontend = "frontend",
+  Delegated = "delegated"
+}
+
 /**
  * Parse PHP stack trace frames from a raw remoteResponseBody string.
  * The body is typically a JSON string from WordPress containing error data
@@ -84,7 +90,7 @@ export function GlobalErrorModal() {
   const gitCommit = versionInfo?.gitCommit;
   const buildTime = versionInfo?.buildTime;
   
-  const [activeSection, setActiveSection] = useState<"backend" | "frontend" | "delegated">("backend");
+  const [activeSection, setActiveSection] = useState<ActiveSectionType>(ActiveSectionType.Backend);
   const [showRawStack, setShowRawStack] = useState(false);
   const [showInternalFrames, setShowInternalFrames] = useState(false);
   
@@ -130,7 +136,7 @@ export function GlobalErrorModal() {
   };
   
   useEffect(() => {
-    if (isModalOpen && activeSection === "backend" && !errorLogFetched) {
+    if (isModalOpen && activeSection === ActiveSectionType.Backend && !errorLogFetched) {
       fetchErrorLog();
     }
   }, [isModalOpen, activeSection, errorLogFetched]);
@@ -140,7 +146,7 @@ export function GlobalErrorModal() {
       setErrorLogContent(null);
       setErrorLogFetched(false);
       setErrorLogError(null);
-      setActiveSection("backend");
+      setActiveSection(ActiveSectionType.Backend);
       resetPosition();
     }
   }, [isModalOpen, selectedError?.id, resetPosition]);
@@ -278,18 +284,18 @@ export function GlobalErrorModal() {
         <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-background">
           <div className="px-4 pt-3 pb-2 sm:px-6 sm:pt-4 border-b border-border/60 bg-muted/15 shrink-0">
             <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-muted/20 p-1">
-              <Button variant={activeSection === "backend" ? "default" : "ghost"} size="sm"
-                onClick={() => setActiveSection("backend")} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none">
+              <Button variant={activeSection === ActiveSectionType.Backend ? "default" : "ghost"} size="sm"
+                onClick={() => setActiveSection(ActiveSectionType.Backend)} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none">
                 <Server className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Backend
               </Button>
-              <Button variant={activeSection === "frontend" ? "secondary" : "ghost"} size="sm"
-                onClick={() => setActiveSection("frontend")} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none border-border/40">
+              <Button variant={activeSection === ActiveSectionType.Frontend ? "secondary" : "ghost"} size="sm"
+                onClick={() => setActiveSection(ActiveSectionType.Frontend)} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none border-border/40">
                 <Monitor className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Frontend
               </Button>
-              <Button variant={activeSection === "delegated" ? "secondary" : "ghost"} size="sm"
-                onClick={() => setActiveSection("delegated")} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none border border-orange-500/30 text-orange-500 hover:text-orange-400">
+              <Button variant={activeSection === ActiveSectionType.Delegated ? "secondary" : "ghost"} size="sm"
+                onClick={() => setActiveSection(ActiveSectionType.Delegated)} className="gap-1.5 sm:gap-2 text-xs sm:text-sm flex-1 sm:flex-none border border-orange-500/30 text-orange-500 hover:text-orange-400">
                 <Globe className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span className="hidden sm:inline">Delegated Logs</span>
                 <span className="sm:hidden">Delegated</span>
@@ -299,7 +305,7 @@ export function GlobalErrorModal() {
 
           <ScrollArea className="flex-1 min-h-0 touch-pan-y bg-background">
             <div className="p-4 sm:p-6">
-              {activeSection === "backend" ? (
+              {activeSection === ActiveSectionType.Backend ? (
                 <BackendSection 
                   error={selectedError}
                   phpStackFrames={phpStackFrames}
@@ -311,7 +317,7 @@ export function GlobalErrorModal() {
                   copySection={copySection}
                   formatTs={formatTs}
                 />
-              ) : activeSection === "delegated" ? (
+              ) : activeSection === ActiveSectionType.Delegated ? (
                 <DelegatedSection
                   error={selectedError}
                   phpStackFrames={phpStackFrames}

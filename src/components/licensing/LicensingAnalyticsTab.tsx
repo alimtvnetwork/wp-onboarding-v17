@@ -21,7 +21,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Clock, ShieldAlert } from "lucide-react";
-import type { License } from "@/types/licensing";
+import { LicenseStatusType, type License } from "@/types/licensing";
+
+export enum UrgencyType {
+  Red = "red",
+  Amber = "amber",
+  Yellow = "yellow"
+}
 
 interface Props {
   licenses: License[];
@@ -30,10 +36,10 @@ interface Props {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  active: "hsl(var(--success, 142 71% 45%))",
-  expired: "hsl(var(--muted-foreground))",
-  revoked: "hsl(var(--destructive))",
-  suspended: "hsl(var(--warning, 38 92% 50%))",
+  [LicenseStatusType.Active]: "hsl(var(--success, 142 71% 45%))",
+  [LicenseStatusType.Expired]: "hsl(var(--muted-foreground))",
+  [LicenseStatusType.Revoked]: "hsl(var(--destructive))",
+  [LicenseStatusType.Suspended]: "hsl(var(--warning, 38 92% 50%))",
 };
 
 const TYPE_COLORS = [
@@ -86,12 +92,12 @@ export function LicensingAnalyticsTab({ licenses, onExtendLicense, onRevokeLicen
     const timeline = Array.from(dayMap, ([date, count]) => ({ date, count }));
 
     // Expiration Alerts
-    const expiringAlerts: Array<License & { daysLeft: number; urgency: "red" | "amber" | "yellow" }> = [];
+    const expiringAlerts: Array<License & { daysLeft: number; urgency: UrgencyType }> = [];
     licenses.forEach((l) => {
-      if (l.status !== "active" || !l.expires_at) return;
+      if (l.status !== LicenseStatusType.Active || !l.expires_at) return;
       const daysLeft = differenceInDays(parseISO(l.expires_at), now);
       if (daysLeft <= 30 && daysLeft >= 0) {
-        const urgency = daysLeft <= 7 ? "red" : daysLeft <= 14 ? "amber" : "yellow";
+        const urgency = daysLeft <= 7 ? UrgencyType.Red : daysLeft <= 14 ? UrgencyType.Amber : UrgencyType.Yellow;
         expiringAlerts.push({ ...l, daysLeft, urgency });
       }
     });
@@ -252,9 +258,9 @@ export function LicensingAnalyticsTab({ licenses, onExtendLicense, onRevokeLicen
   );
 }
 
-function UrgencyIcon({ urgency }: { urgency: "red" | "amber" | "yellow" }) {
-  if (urgency === "red") return <ShieldAlert className="h-4 w-4 text-destructive" />;
-  if (urgency === "amber") return <AlertTriangle className="h-4 w-4 text-orange-500" />;
+function UrgencyIcon({ urgency }: { urgency: UrgencyType }) {
+  if (urgency === UrgencyType.Red) return <ShieldAlert className="h-4 w-4 text-destructive" />;
+  if (urgency === UrgencyType.Amber) return <AlertTriangle className="h-4 w-4 text-orange-500" />;
   return <Clock className="h-4 w-4 text-yellow-500" />;
 }
 

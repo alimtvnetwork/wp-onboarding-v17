@@ -1,8 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Globe, Package } from "lucide-react";
 
-interface ActivityItem {
-  type: "site" | "plugin";
+export enum ActivityItemType {
+  Site = "site",
+  Plugin = "plugin"
+}
+
+export interface ActivityItem {
+  type: ActivityItemType;
   name: string;
   status: string;
   time: string | null;
@@ -29,7 +34,7 @@ export function RecentActivity({ items }: RecentActivityProps) {
                 key={`${activity.type}-${activity.name}-${idx}`}
                 className="flex items-center gap-2 sm:gap-3 p-2 rounded-lg border-l-2 border-l-transparent transition-colors hover:bg-secondary/50 hover:border-l-primary/60"
               >
-                {activity.type === "site" ? (
+                {activity.type === ActivityItemType.Site ? (
                   <Globe className="h-4 w-4 text-primary shrink-0" />
                 ) : (
                   <Package className="h-4 w-4 text-accent-foreground shrink-0" />

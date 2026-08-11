@@ -1,8 +1,15 @@
+export enum SiteHealthStatusType {
+  Healthy = "healthy",
+  Degraded = "degraded",
+  Down = "down",
+  Unknown = "unknown",
+}
+
 export interface SiteHealthSummary {
   siteId: number;
   siteName: string;
   siteUrl: string;
-  currentStatus: string;
+  currentStatus: SiteHealthStatusType;
   lastCheckedAt?: string;
   avgResponseMs: number;
   uptimePercent: number;

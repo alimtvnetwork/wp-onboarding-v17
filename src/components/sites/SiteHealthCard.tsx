@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RefreshCw, Heart, AlertTriangle, XCircle, HelpCircle, Upload } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import type { SiteHealthSummary } from "@/types/siteHealth";
+import { SiteHealthSummary, SiteHealthStatusType } from "@/types/siteHealth";
 
-const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; icon: typeof Heart; dotClass: string }> = {
-  healthy: { label: "Healthy", variant: "default", icon: Heart, dotClass: "bg-primary" },
-  degraded: { label: "Degraded", variant: "secondary", icon: AlertTriangle, dotClass: "bg-warning" },
-  down: { label: "Down", variant: "destructive", icon: XCircle, dotClass: "bg-destructive" },
-  unknown: { label: "Unknown", variant: "outline", icon: HelpCircle, dotClass: "bg-muted-foreground" },
+const statusConfig: Record<SiteHealthStatusType, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; icon: typeof Heart; dotClass: string }> = {
+  [SiteHealthStatusType.Healthy]: { label: "Healthy", variant: "default", icon: Heart, dotClass: "bg-primary" },
+  [SiteHealthStatusType.Degraded]: { label: "Degraded", variant: "secondary", icon: AlertTriangle, dotClass: "bg-warning" },
+  [SiteHealthStatusType.Down]: { label: "Down", variant: "destructive", icon: XCircle, dotClass: "bg-destructive" },
+  [SiteHealthStatusType.Unknown]: { label: "Unknown", variant: "outline", icon: HelpCircle, dotClass: "bg-muted-foreground" },
 };
 
 interface SiteHealthCardProps {
@@ -19,9 +19,9 @@ interface SiteHealthCardProps {
 }
 
 export function SiteHealthCard({ site, onCheck, isChecking }: SiteHealthCardProps) {
-  const cfg = statusConfig[site.currentStatus] || statusConfig.unknown;
+  const cfg = statusConfig[site.currentStatus] || statusConfig[SiteHealthStatusType.Unknown];
   const StatusIcon = cfg.icon;
-  const isDown = site.currentStatus === "down";
+  const isDown = site.currentStatus === SiteHealthStatusType.Down;
   const consecutiveWarning = site.consecutiveDown >= 3;
 
   return (
@@ -32,7 +32,7 @@ export function SiteHealthCard({ site, onCheck, isChecking }: SiteHealthCardProp
             {/* Live status indicator */}
             <div className="mt-1.5 shrink-0 relative">
               <span className={`block h-3 w-3 rounded-full ${cfg.dotClass}`} />
-              {site.currentStatus === "healthy" && (
+              {site.currentStatus === SiteHealthStatusType.Healthy && (
                 <span className={`absolute inset-0 h-3 w-3 rounded-full ${cfg.dotClass} animate-ping opacity-50`} />
               )}
             </div>

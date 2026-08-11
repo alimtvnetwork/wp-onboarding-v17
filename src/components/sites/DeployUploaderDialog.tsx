@@ -37,6 +37,7 @@ interface DeploySiteResult {
   siteId: number;
   siteName: string;
   isSuccess: boolean;
+  isFail?: boolean;
   message: string;
   isActivated?: boolean;
   error?: string;
@@ -76,7 +77,13 @@ interface PreflightSiteResult {
   error?: string;
 }
 
-type DeployPhase = "preflight" | "zipping" | "uploading" | "verifying" | "complete";
+export enum DeployPhaseType {
+  Preflight = "preflight",
+  Zipping = "zipping",
+  Uploading = "uploading",
+  Verifying = "verifying",
+  Complete = "complete",
+}
 
 interface DeployUploaderDialogProps {
   open: boolean;
@@ -102,7 +109,7 @@ export function DeployUploaderDialog({
   const [currentTab, setCurrentTab] = useState("progress");
   const [preflightResults, setPreflightResults] = useState<PreflightSiteResult[]>(preflightCache);
   const [preflightLoading, setPreflightLoading] = useState(false);
-  const [deployPhase, setDeployPhase] = useState<DeployPhase>("preflight");
+  const [deployPhase, setDeployPhase] = useState<DeployPhaseType>(DeployPhaseType.Preflight);
   const [phaseTimings, setPhaseTimings] = useState<Record<string, { start: number; end?: number }>>({});
   const [, setTimerTick] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -143,9 +150,9 @@ export function DeployUploaderDialog({
 
       const msg = logEntry.message.toLowerCase();
       if (msg.includes("creating plugin zip") || msg.includes("zip archive created")) {
-        transitionPhase("zipping");
+        transitionPhase(DeployPhaseType.Zipping);
       } else if (msg.includes("uploading") || msg.includes("cross-upload") || msg.includes("endpoint")) {
-        transitionPhase("uploading");
+        transitionPhase(DeployPhaseType.Uploading);
       }
 
       // Track per-site completion from WS messages
@@ -171,7 +178,7 @@ export function DeployUploaderDialog({
       setPhaseTimings({});
       setCompletedSiteIds(new Set());
       stopTimer();
-      setDeployPhase("preflight");
+      setDeployPhase(DeployPhaseType.Preflight);
       setExpandedSites(new Set());
 
       // Restore cache
@@ -241,7 +248,7 @@ export function DeployUploaderDialog({
   };
 
   // Helper to transition phases with timing
-  const transitionPhase = (phase: DeployPhase) => {
+  const transitionPhase = (phase: DeployPhaseType) => {
     const now = Date.now();
     setPhaseTimings((prev) => {
       const updated = { ...prev };
@@ -250,7 +257,7 @@ export function DeployUploaderDialog({
         if (!updated[key].end) updated[key] = { ...updated[key], end: now };
       }
       // Start new phase (unless "complete")
-      if (phase !== "complete") {
+      if (phase !== DeployPhaseType.Complete) {
         updated[phase] = { start: now };
       }
       return updated;
@@ -272,7 +279,7 @@ export function DeployUploaderDialog({
     setPhaseTimings({});
     setCompletedSiteIds(new Set());
     startTimer();
-    transitionPhase("zipping");
+    transitionPhase(DeployPhaseType.Zipping);
     setLogs([{
       timestamp: new Date().toISOString(),
       level: "info",
@@ -311,7 +318,7 @@ export function DeployUploaderDialog({
       ]);
 
       // Auto-verify: refresh pre-flight to confirm versions on remote
-      transitionPhase("verifying");
+      transitionPhase(DeployPhaseType.Verifying);
       setLogs((prev) => [...prev, {
         timestamp: new Date().toISOString(),
         level: "info",
@@ -346,7 +353,7 @@ export function DeployUploaderDialog({
         setPreflightLoading(false);
       }
 
-      transitionPhase("complete");
+      transitionPhase(DeployPhaseType.Complete);
       stopTimer();
       setStatus(failed > 0 ? DeployStatus.Error : DeployStatus.Completed);
 
@@ -359,7 +366,7 @@ export function DeployUploaderDialog({
       }
     } catch (error: unknown) {
       setStatus(DeployStatus.Error);
-      transitionPhase("complete");
+      transitionPhase(DeployPhaseType.Complete);
       stopTimer();
       const errorMsg = error instanceof Error ? error.message : "Deployment failed";
       setLogs((prev) => [
@@ -371,7 +378,7 @@ export function DeployUploaderDialog({
   };
 
   const surfacePartialFailure = (deployResults: DeploySiteResult[], siteIds: number[]) => {
-    const failedResults = deployResults.filter((r) => !r.isSuccess);
+    const failedResults = deployResults.filter((r) => r.isFail);
     const summaryLines = failedResults.map((r) => `${r.siteName}: ${r.error || r.message}`);
 
     const remoteResponses = failedResults
@@ -456,22 +463,22 @@ export function DeployUploaderDialog({
 
   const getPhaseProgress = () => {
     switch (deployPhase) {
-      case "preflight": return 0;
-      case "zipping": return 20;
-      case "uploading": return 55;
-      case "verifying": return 85;
-      case "complete": return 100;
+      case DeployPhaseType.Preflight: return 0;
+      case DeployPhaseType.Zipping: return 20;
+      case DeployPhaseType.Uploading: return 55;
+      case DeployPhaseType.Verifying: return 85;
+      case DeployPhaseType.Complete: return 100;
     }
   };
 
   const getPhaseLabel = () => {
     const ver = localWpPluginVersion ? ` v${localWpPluginVersion}` : "";
     switch (deployPhase) {
-      case "preflight": return "Pre-flight checks";
-      case "zipping": return `Creating ZIP archives${ver}...`;
-      case "uploading": return `Uploading${ver} to ${sites.length} site(s)...`;
-      case "verifying": return "Verifying deployed versions...";
-      case "complete": return status === DeployStatus.Completed ? "Deployment complete" : "Deployment finished with errors";
+      case DeployPhaseType.Preflight: return "Pre-flight checks";
+      case DeployPhaseType.Zipping: return `Creating ZIP archives${ver}...`;
+      case DeployPhaseType.Uploading: return `Uploading${ver} to ${sites.length} site(s)...`;
+      case DeployPhaseType.Verifying: return "Verifying deployed versions...";
+      case DeployPhaseType.Complete: return status === DeployStatus.Completed ? "Deployment complete" : "Deployment finished with errors";
     }
   };
 
@@ -483,9 +490,9 @@ export function DeployUploaderDialog({
   ] as const;
 
   const getSubtaskStatus = (key: string) => {
-    const order = ["zipping", "uploading", "verifying", "complete"];
-    const currentIdx = order.indexOf(deployPhase);
-    const taskIdx = order.indexOf(key);
+    const order = [DeployPhaseType.Zipping, DeployPhaseType.Uploading, DeployPhaseType.Verifying, DeployPhaseType.Complete];
+    const currentIdx = order.indexOf(deployPhase as any);
+    const taskIdx = order.indexOf(key as any);
     if (taskIdx < currentIdx) return "done";
     if (taskIdx === currentIdx) return "active";
     return "pending";
@@ -582,7 +589,7 @@ export function DeployUploaderDialog({
                             {sites.map((site) => {
                               const siteResult = results.find((r) => r.siteId === site.id);
                               const isDone = completedSiteIds.has(site.id);
-                              const isFailed = siteResult && !siteResult.isSuccess;
+                              const isFailed = siteResult && siteResult.isFail;
                               return (
                                 <div key={site.id} className="flex items-center gap-2 text-xs">
                                   {isDone ? (

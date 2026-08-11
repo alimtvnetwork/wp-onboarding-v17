@@ -85,13 +85,18 @@ function generateId() {
   return `sched_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
 }
 
+export enum StorageModeType {
+  Single = "single",
+  PerTable = "per-table"
+}
+
 export function SnapshotSettingsTab() {
   const { data: settings } = useSettings();
   const saveSettings = useSaveSettings();
 
   const [enabled, setEnabled] = useState(false);
   const [schedules, setSchedules] = useState<SnapshotSchedule[]>([]);
-  const [storageMode, setStorageMode] = useState<"single" | "per-table">("single");
+  const [storageMode, setStorageMode] = useState<StorageModeType>(StorageModeType.Single);
   const [workerCount, setWorkerCount] = useState(4);
   const [batchSize, setBatchSize] = useState(10);
   const [isDirty, setIsDirty] = useState(false);
@@ -107,7 +112,7 @@ export function SnapshotSettingsTab() {
     if (settings?.snapshots) {
       setEnabled(settings.snapshots.enabled);
       setSchedules(settings.snapshots.schedules || []);
-      setStorageMode(settings.snapshots.storageMode || "single");
+      setStorageMode(settings.snapshots.storageMode as StorageModeType || StorageModeType.Single);
       setWorkerCount(settings.snapshots.workerCount || 4);
       setBatchSize(settings.snapshots.batchSize || 10);
     }
@@ -284,7 +289,7 @@ export function SnapshotSettingsTab() {
           {/* Shared Snapshot Config: Storage Mode, Worker Pool, Retention */}
           <SnapshotConfigPanel
             storageMode={storageMode}
-            onStorageModeChange={(mode) => { setStorageMode(mode); markDirty(); }}
+            onStorageModeChange={(mode) => { setStorageMode(mode as StorageModeType); markDirty(); }}
             workerCount={workerCount}
             onWorkerCountChange={(count) => { setWorkerCount(count); markDirty(); }}
             batchSize={batchSize}
@@ -314,18 +319,32 @@ export function SnapshotSettingsTab() {
 /*  Phase 3: Live Worker-Pool Progress Panel                                  */
 /* -------------------------------------------------------------------------- */
 
+export enum WorkerTableStatusType {
+  Pending = "pending",
+  Running = "running",
+  Completed = "completed",
+  Failed = "failed"
+}
+
 interface WorkerTableStatus {
   table: string;
-  status: "pending" | "running" | "completed" | "failed";
+  status: WorkerTableStatusType;
   rowsProcessed: number;
   totalRows: number;
   workerId?: number;
   error?: string;
 }
 
+export enum SnapshotProgressStatusType {
+  Idle = "idle",
+  Running = "running",
+  Completed = "completed",
+  Failed = "failed"
+}
+
 interface SnapshotProgress {
   snapshotId?: number;
-  status: "idle" | "running" | "completed" | "failed";
+  status: SnapshotProgressStatusType;
   totalTables: number;
   completedTables: number;
   totalRows: number;
@@ -338,7 +357,7 @@ interface SnapshotProgress {
 
 function SnapshotProgressPanel() {
   const [progress, setProgress] = useState<SnapshotProgress>({
-    status: "idle",
+    status: SnapshotProgressStatusType.Idle,
     totalTables: 0,
     completedTables: 0,
     totalRows: 0,
@@ -358,7 +377,7 @@ function SnapshotProgressPanel() {
       };
       setProgress({
         snapshotId: d.snapshotId,
-        status: "running",
+        status: SnapshotProgressStatusType.Running,
         totalTables: d.totalTables,
         completedTables: 0,
         totalRows: d.totalRows,
@@ -366,7 +385,7 @@ function SnapshotProgressPanel() {
         activeWorkers: d.workerCount,
         tables: d.tables.map((t) => ({
           table: t,
-          status: "pending",
+          status: WorkerTableStatusType.Pending,
           rowsProcessed: 0,
           totalRows: 0,
         })),
@@ -380,19 +399,19 @@ function SnapshotProgressPanel() {
         workerId: number;
         rowsProcessed: number;
         totalRows: number;
-        status: "running" | "completed" | "failed";
+        status: WorkerTableStatusType;
         error?: string;
       };
       setProgress((prev) => {
-        if (prev.status !== "running") return prev;
+        if (prev.status !== SnapshotProgressStatusType.Running) return prev;
         const tables = prev.tables.map((t) =>
           t.table === d.table
             ? { ...t, status: d.status, rowsProcessed: d.rowsProcessed, totalRows: d.totalRows, workerId: d.workerId, error: d.error }
             : t
         );
         const processedRows = tables.reduce((sum, t) => sum + t.rowsProcessed, 0);
-        const completedTables = tables.filter((t) => t.status === "completed" || t.status === "failed").length;
-        const activeWorkers = tables.filter((t) => t.status === "running").length;
+        const completedTables = tables.filter((t) => t.status === WorkerTableStatusType.Completed || t.status === WorkerTableStatusType.Failed).length;
+        const activeWorkers = tables.filter((t) => t.status === WorkerTableStatusType.Running).length;
         return { ...prev, tables, processedRows, completedTables, activeWorkers };
       });
     });
@@ -402,10 +421,10 @@ function SnapshotProgressPanel() {
       setProgress((prev) => {
         const tables = prev.tables.map((t) =>
           t.table === d.table
-            ? { ...t, status: "completed" as const, rowsProcessed: d.rowsProcessed }
+            ? { ...t, status: WorkerTableStatusType.Completed, rowsProcessed: d.rowsProcessed }
             : t
         );
-        const completedTables = tables.filter((t) => t.status === "completed" || t.status === "failed").length;
+        const completedTables = tables.filter((t) => t.status === WorkerTableStatusType.Completed || t.status === WorkerTableStatusType.Failed).length;
         return { ...prev, tables, completedTables };
       });
     });
@@ -414,7 +433,7 @@ function SnapshotProgressPanel() {
       const d = data as { snapshotId?: number; success: boolean; error?: string; totalRows: number };
       setProgress((prev) => ({
         ...prev,
-        status: d.success ? "completed" : "failed",
+        status: d.success ? SnapshotProgressStatusType.Completed : SnapshotProgressStatusType.Failed,
         processedRows: d.success ? prev.totalRows : prev.processedRows,
         completedTables: d.success ? prev.totalTables : prev.completedTables,
         activeWorkers: 0,
@@ -430,7 +449,7 @@ function SnapshotProgressPanel() {
     };
   }, []);
 
-  if (progress.status === "idle") {
+  if (progress.status === SnapshotProgressStatusType.Idle) {
     return (
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-medium">
@@ -454,11 +473,11 @@ function SnapshotProgressPanel() {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm font-medium">
-          <Activity className={cn("h-4 w-4", progress.status === "running" && "animate-pulse text-blue-500")} />
+          <Activity className={cn("h-4 w-4", progress.status === SnapshotProgressStatusType.Running && "animate-pulse text-blue-500")} />
           Live Progress
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          {progress.status === "running" && (
+          {progress.status === SnapshotProgressStatusType.Running && (
             <>
               <Server className="h-3.5 w-3.5" />
               <span>{progress.activeWorkers} worker{progress.activeWorkers !== 1 ? "s" : ""} active</span>
@@ -467,9 +486,9 @@ function SnapshotProgressPanel() {
           <span
             className={cn(
               "text-[10px] uppercase font-medium tracking-wider",
-              progress.status === "running" && "text-blue-500",
-              progress.status === "completed" && "text-emerald-500",
-              progress.status === "failed" && "text-destructive",
+              progress.status === SnapshotProgressStatusType.Running && "text-blue-500",
+              progress.status === SnapshotProgressStatusType.Completed && "text-emerald-500",
+              progress.status === SnapshotProgressStatusType.Failed && "text-destructive",
             )}
           >
             {progress.status}
@@ -523,9 +542,9 @@ function SnapshotProgressPanel() {
                     </TableCell>
                     <TableCell className="py-1.5">
                       <div className="flex items-center gap-2">
-                        <Progress value={t.status === "completed" ? 100 : pct} className="h-1.5 flex-1" />
+                        <Progress value={t.status === WorkerTableStatusType.Completed ? 100 : pct} className="h-1.5 flex-1" />
                         <span className="text-[10px] text-muted-foreground w-[30px] text-right">
-                          {t.status === "completed" ? "100%" : `${pct}%`}
+                          {t.status === WorkerTableStatusType.Completed ? "100%" : `${pct}%`}
                         </span>
                       </div>
                     </TableCell>
@@ -533,10 +552,10 @@ function SnapshotProgressPanel() {
                       <span
                         className={cn(
                           "text-[10px] font-medium uppercase",
-                          t.status === "running" && "text-blue-500",
-                          t.status === "completed" && "text-emerald-500",
-                          t.status === "failed" && "text-destructive",
-                          t.status === "pending" && "text-muted-foreground",
+                          t.status === WorkerTableStatusType.Running && "text-blue-500",
+                          t.status === WorkerTableStatusType.Completed && "text-emerald-500",
+                          t.status === WorkerTableStatusType.Failed && "text-destructive",
+                          t.status === WorkerTableStatusType.Pending && "text-muted-foreground",
                         )}
                       >
                         {t.status}
@@ -550,14 +569,14 @@ function SnapshotProgressPanel() {
         </div>
       )}
 
-      {progress.status !== "running" && (
+      {progress.status !== SnapshotProgressStatusType.Running && (
         <Button
           variant="ghost"
           size="sm"
           className="text-xs h-7"
           onClick={() =>
             setProgress({
-              status: "idle",
+              status: SnapshotProgressStatusType.Idle,
               totalTables: 0,
               completedTables: 0,
               totalRows: 0,

@@ -24,11 +24,20 @@ import { ActivationDiagnostics } from "@/components/plugins/ActivationDiagnostic
 import { api, type LogEntryDetails } from "@/lib/api";
 import { compareVersions } from "@/lib/versionUtils";
 
+export enum PublishStageStatusType {
+  Pending = "pending",
+  Running = "running",
+  Success = "success",
+  Error = "error",
+  Skipped = "skipped"
+}
+
 export interface PublishStage {
   name: string;
   label: string;
-  status: "pending" | "running" | "success" | "error" | "skipped";
+  status: PublishStageStatusType;
   message?: string;
+
   startedAt?: string;
   completedAt?: string;
 }
@@ -83,7 +92,7 @@ function buildErrorReport(
   logs: PublishLogEntry[]
 ): string {
   const timestamp = new Date().toISOString();
-  const failedStage = stages.find(s => s.status === "error");
+  const failedStage = stages.find(s => s.status === PublishStageStatusType.Error);
 
   const logLines = logs.map((l) => {
     const base = `[${l.timestamp}] [${l.level.toUpperCase()}] [${l.step}] ${l.message}`;
@@ -143,7 +152,7 @@ const VISIBLE_STAGE_ORDER = [
 
 function buildDefaultStages(): PublishStage[] {
   const stages: PublishStage[] = [
-    { name: "backup", label: "Creating Backup", status: "pending" },
+    { name: "backup", label: "Creating Backup", status: PublishStageStatusType.Pending },
   ];
 
   try {
@@ -151,16 +160,16 @@ function buildDefaultStages(): PublishStage[] {
     if (saved) {
       const ids = JSON.parse(saved) as number[];
       if (ids.length > 0) {
-        stages.push({ name: "cloud_upload", label: "Uploading to Cloud Storage", status: "pending" });
+        stages.push({ name: "cloud_upload", label: "Uploading to Cloud Storage", status: PublishStageStatusType.Pending });
       }
     }
   } catch { /* ignore */ }
 
   stages.push(
-    { name: "package", label: "Packaging Files", status: "pending" },
-    { name: "upload", label: "Uploading to Site", status: "pending" },
-    { name: "activate", label: "Activating Plugin", status: "pending" },
-    { name: "version_check", label: "Verifying Version", status: "pending" },
+    { name: "package", label: "Packaging Files", status: PublishStageStatusType.Pending },
+    { name: "upload", label: "Uploading to Site", status: PublishStageStatusType.Pending },
+    { name: "activate", label: "Activating Plugin", status: PublishStageStatusType.Pending },
+    { name: "version_check", label: "Verifying Version", status: PublishStageStatusType.Pending },
   );
 
   return stages;
@@ -180,7 +189,7 @@ export function PublishProgressDialog({
   const [stages, setStages] = useState<PublishStage[]>(buildDefaultStages);
   const [overallProgress, setOverallProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFail, setIsFail] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [filesUpdated, setFilesUpdated] = useState<number | null>(null);
   const [backendStackTrace, setBackendStackTrace] = useState<string | null>(null);
@@ -265,7 +274,7 @@ export function PublishProgressDialog({
       setStages(buildDefaultStages());
       setOverallProgress(0);
       setIsComplete(false);
-      setIsSuccess(false);
+      setIsFail(false);
       setErrorMessage(null);
       setFilesUpdated(null);
       setBackendStackTrace(null);
@@ -301,7 +310,7 @@ export function PublishProgressDialog({
       const payload = data as { pluginId: number; siteId: number };
       if (payload.pluginId === pluginId && payload.siteId === siteId && !publishCompletedRef.current) {
         setStages(prev => prev.map(s => 
-          s.name === "backup" ? { ...s, status: "running" } : s
+          s.name === "backup" ? { ...s, status: PublishStageStatusType.Running } : s
         ));
         addLog({
           timestamp: new Date().toISOString(),
@@ -331,15 +340,15 @@ export function PublishProgressDialog({
           const currentStageIdx = VISIBLE_STAGE_ORDER.indexOf(payload.stage);
           return prev.map(s => {
             if (s.name === payload.stage) {
-              let mappedStatus: PublishStage["status"] = "running";
-              if (payload.status === "success" || payload.status === "completed") mappedStatus = "success";
-              else if (payload.status === "error" || payload.status === "failed") mappedStatus = "error";
+              let mappedStatus: PublishStageStatusType = PublishStageStatusType.Running;
+              if (payload.status === "success" || payload.status === "completed") mappedStatus = PublishStageStatusType.Success;
+              else if (payload.status === "error" || payload.status === "failed") mappedStatus = PublishStageStatusType.Error;
               return { ...s, status: mappedStatus, message: payload.message };
             }
             // Only auto-complete stages that appear BEFORE the current stage in the pipeline
             const stageIdx = VISIBLE_STAGE_ORDER.indexOf(s.name);
-            if (s.status === "running" && currentStageIdx > stageIdx && stageIdx >= 0) {
-              return { ...s, status: "success" };
+            if (s.status === PublishStageStatusType.Running && currentStageIdx > stageIdx && stageIdx >= 0) {
+              return { ...s, status: PublishStageStatusType.Success };
             }
             return s;
           });
@@ -357,7 +366,7 @@ export function PublishProgressDialog({
         const wasSuccessful = payload.isSuccess ?? payload.success ?? (payload.status === "completed" || payload.status === "success");
         
         setIsComplete(true);
-        setIsSuccess(wasSuccessful);
+        setIsFail(!wasSuccessful);
         setFilesUpdated(payload.filesUpdated ?? null);
         setOverallProgress(100);
         
@@ -386,13 +395,13 @@ export function PublishProgressDialog({
           const base = payload.stages || prev;
           return base.map(s => {
             if (s.name === "version_check") {
-              return { ...s, status: "pending" as const };
+              return { ...s, status: PublishStageStatusType.Pending };
             }
-            if (wasSuccessful && s.status !== "skipped") {
-              return { ...s, status: "success" as const };
+            if (wasSuccessful && s.status !== PublishStageStatusType.Skipped) {
+              return { ...s, status: PublishStageStatusType.Success };
             }
-            if (!wasSuccessful && (s.status === "running" || s.status === "pending")) {
-              return { ...s, status: "error" as const };
+            if (!wasSuccessful && (s.status === PublishStageStatusType.Running || s.status === PublishStageStatusType.Pending)) {
+              return { ...s, status: PublishStageStatusType.Error };
             }
             return s;
           });
@@ -405,7 +414,7 @@ export function PublishProgressDialog({
         // Version verification (delayed, won't conflict since we use functional updater)
         if (wasSuccessful && pluginId && siteId) {
           setStages(prev => prev.map(s => 
-            s.name === "version_check" ? { ...s, status: "running" as const, message: "Checking remote version..." } : s
+            s.name === "version_check" ? { ...s, status: PublishStageStatusType.Running, message: "Checking remote version..." } : s
           ));
           api.previewPublish(pluginId, siteId).then(response => {
             if (response.success && response.data) {
@@ -418,7 +427,7 @@ export function PublishProgressDialog({
               setStages(prev => prev.map(s => 
                 s.name === "version_check" ? { 
                   ...s, 
-                  status: (versionMatch ? "success" : "error") as PublishStage["status"],
+                  status: versionMatch ? PublishStageStatusType.Success : PublishStageStatusType.Error,
                   message: versionMatch 
                     ? `Verified: v${newRemote} deployed` 
                     : `Version mismatch: remote=${newRemote || 'unknown'}, expected=${local}`
@@ -435,7 +444,7 @@ export function PublishProgressDialog({
             }
           }).catch(() => {
             setStages(prev => prev.map(s => 
-              s.name === "version_check" ? { ...s, status: "skipped" as const, message: "Could not verify" } : s
+              s.name === "version_check" ? { ...s, status: PublishStageStatusType.Skipped, message: "Could not verify" } : s
             ));
           });
         }
@@ -477,18 +486,18 @@ export function PublishProgressDialog({
 
   const getStageIcon = (stage: PublishStage) => {
     switch (stage.status) {
-      case "success":
+      case PublishStageStatusType.Success:
         return <Check className="h-4 w-4 text-primary" />;
-      case "error":
+      case PublishStageStatusType.Error:
         return <X className="h-4 w-4 text-destructive" />;
-      case "running":
+      case PublishStageStatusType.Running:
         return <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />;
       default:
         return <div className="h-4 w-4 rounded-full border-2 border-muted-foreground/30" />;
     }
   };
 
-  const activeStageCount = stages.filter(s => s.status === "success" || s.status === "running").length;
+  const activeStageCount = stages.filter(s => s.status === PublishStageStatusType.Success || s.status === PublishStageStatusType.Running).length;
   const totalStages = stages.length;
   
   // Convert logs to BackendLogEntry format for error store
@@ -506,7 +515,7 @@ export function PublishProgressDialog({
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Upload className="h-5 w-5 text-primary" />
-            {isComplete ? (isSuccess ? "Publish Complete" : "Publish Failed") : "Publishing..."}
+            {isComplete ? (!isFail ? "Publish Complete" : "Publish Failed") : "Publishing..."}
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 flex-wrap min-h-0">
             <span className="truncate">Deploying <strong>{pluginName}</strong> to <strong className="truncate max-w-[200px] inline-block align-bottom">{siteName}</strong></span>
@@ -598,10 +607,10 @@ export function PublishProgressDialog({
                       key={stage.name}
                       className={cn(
                         "flex items-center gap-3 p-3 rounded-lg border transition-colors",
-                        stage.status === "running" && "border-primary bg-primary/5",
-                        stage.status === "success" && "border-primary/30 bg-primary/5",
-                        stage.status === "error" && "border-destructive bg-destructive/5",
-                        stage.status === "pending" && "border-border opacity-60"
+                        stage.status === PublishStageStatusType.Running && "border-primary bg-primary/5",
+                        stage.status === PublishStageStatusType.Success && "border-primary/30 bg-primary/5",
+                        stage.status === PublishStageStatusType.Error && "border-destructive bg-destructive/5",
+                        stage.status === PublishStageStatusType.Pending && "border-border opacity-60"
                       )}
                     >
                       {getStageIcon(stage)}
@@ -609,12 +618,12 @@ export function PublishProgressDialog({
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-medium">{stage.label}</p>
                           {/* Show local version on deploy stages, remote on version_check */}
-                          {stage.name !== "version_check" && localVersion && stage.status !== "pending" && (
+                          {stage.name !== "version_check" && localVersion && stage.status !== PublishStageStatusType.Pending && (
                             <Badge className="text-[10px] font-mono h-4 px-1.5 bg-primary/80 text-primary-foreground">
                               v{localVersion}
                             </Badge>
                           )}
-                          {stage.name === "version_check" && remoteVersion && stage.status !== "pending" && (
+                          {stage.name === "version_check" && remoteVersion && stage.status !== PublishStageStatusType.Pending && (
                             <Badge variant="outline" className="text-[10px] font-mono h-4 px-1.5 border-accent text-accent-foreground">
                               v{remoteVersion}
                               <span className="ml-1 text-muted-foreground font-normal">server</span>
@@ -627,12 +636,12 @@ export function PublishProgressDialog({
                           </p>
                         )}
                       </div>
-                      {stage.status === "success" && (
+                      {stage.status === PublishStageStatusType.Success && (
                         <Badge variant="outline" className="text-xs text-primary border-primary/30 flex-shrink-0">
                           Done
                         </Badge>
                       )}
-                      {stage.status === "error" && (
+                      {stage.status === PublishStageStatusType.Error && (
                         <Badge variant="outline" className="text-xs text-destructive border-destructive/30 flex-shrink-0">
                           Failed
                         </Badge>
@@ -642,7 +651,7 @@ export function PublishProgressDialog({
                 </div>
 
                 {/* Success Message */}
-                {isComplete && isSuccess && filesUpdated !== null && (
+                {isComplete && !isFail && filesUpdated !== null && (
                   <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
                     <div className="flex items-center gap-2">
                       <Check className="h-5 w-5 text-primary" />
@@ -665,7 +674,7 @@ export function PublishProgressDialog({
                 )}
 
                 {/* Error Message */}
-                {isComplete && !isSuccess && errorMessage && (
+                {isComplete && isFail && errorMessage && (
                   <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
                     <div className="flex items-start gap-2">
                       <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
@@ -694,7 +703,7 @@ export function PublishProgressDialog({
                         size="sm"
                         className="text-xs text-destructive hover:text-destructive"
                         onClick={() => {
-                          const failedStage = stages.find(s => s.status === "error");
+                          const failedStage = stages.find(s => s.status === PublishStageStatusType.Error);
                           const captured = captureError(
                             {
                               code: "E9001",

@@ -19,10 +19,18 @@ import { SyncTreeView } from "@/components/plugins/SyncTreeView";
 import { api } from "@/lib/api";
 import type { FileChange } from "@/lib/api";
 
+export enum SyncStageStatusType {
+  Pending = "pending",
+  Running = "running",
+  Success = "success",
+  Error = "error",
+  Skipped = "skipped"
+}
+
 export interface SyncStage {
   name: string;
   label: string;
-  status: "pending" | "running" | "success" | "error" | "skipped";
+  status: SyncStageStatusType;
   message?: string;
 }
 
@@ -69,10 +77,10 @@ interface SyncProgressDialogProps {
 }
 
 const DEFAULT_STAGES: SyncStage[] = [
-  { name: "init", label: "Initializing", status: "pending" },
-  { name: "fetch", label: "Fetching Remote Files", status: "pending" },
-  { name: "compare", label: "Comparing Files", status: "pending" },
-  { name: "report", label: "Generating Report", status: "pending" },
+  { name: "init", label: "Initializing", status: SyncStageStatusType.Pending },
+  { name: "fetch", label: "Fetching Remote Files", status: SyncStageStatusType.Pending },
+  { name: "compare", label: "Comparing Files", status: SyncStageStatusType.Pending },
+  { name: "report", label: "Generating Report", status: SyncStageStatusType.Pending },
 ];
 
 function buildErrorReport(
@@ -85,7 +93,7 @@ function buildErrorReport(
   logs: LogEntry[]
 ): string {
   const timestamp = new Date().toISOString();
-  const failedStage = stages.find(s => s.status === "error");
+  const failedStage = stages.find(s => s.status === SyncStageStatusType.Error);
   
   const logSection = logs.length > 0 
     ? `### Execution Logs\n\`\`\`\n${logs.map(l => `[${l.timestamp}] [${l.level.toUpperCase()}] [${l.step}] ${l.message}`).join('\n')}\n\`\`\`\n`
@@ -126,7 +134,7 @@ export function SyncProgressDialog({
   const [stages, setStages] = useState<SyncStage[]>(DEFAULT_STAGES);
   const [overallProgress, setOverallProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFail, setIsFail] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [syncResult, setSyncResult] = useState<{
@@ -144,10 +152,10 @@ export function SyncProgressDialog({
   // Reset state when dialog opens
   useEffect(() => {
     if (open) {
-      setStages(DEFAULT_STAGES.map(s => ({ ...s, status: "pending" })));
+      setStages(DEFAULT_STAGES.map(s => ({ ...s, status: SyncStageStatusType.Pending })));
       setOverallProgress(0);
       setIsComplete(false);
-      setIsSuccess(false);
+      setIsFail(false);
       setErrorMessage(null);
       setLogs([]);
       setSyncResult(null);
@@ -163,7 +171,7 @@ export function SyncProgressDialog({
       const payload = data as { pluginId: number; siteId: number };
       if (payload.pluginId === pluginId && payload.siteId === siteId) {
         setStages(prev => prev.map(s => 
-          s.name === "init" ? { ...s, status: "running" } : s
+          s.name === "init" ? { ...s, status: SyncStageStatusType.Running } : s
         ));
         setLogs(prev => [...prev, {
           timestamp: new Date().toISOString(),
@@ -190,9 +198,9 @@ export function SyncProgressDialog({
 
         // Update stages based on progress
         setStages(prev => prev.map(s => {
-          if (s.name === "init" && s.status === "running") return { ...s, status: "success" };
-          if (s.name === "fetch" && s.status === "pending") return { ...s, status: "success" };
-          if (s.name === "compare") return { ...s, status: "running", message: payload.message };
+          if (s.name === "init" && s.status === SyncStageStatusType.Running) return { ...s, status: SyncStageStatusType.Success };
+          if (s.name === "fetch" && s.status === SyncStageStatusType.Pending) return { ...s, status: SyncStageStatusType.Success };
+          if (s.name === "compare") return { ...s, status: SyncStageStatusType.Running, message: payload.message };
           return s;
         }));
       }
@@ -208,8 +216,8 @@ export function SyncProgressDialog({
         const step = payload.log.step;
         setStages(prev => prev.map(s => {
           if (s.name === step) {
-            let newStatus: SyncStage["status"] = "running";
-            if (payload.log.level === "error") newStatus = "error";
+            let newStatus: SyncStageStatusType = SyncStageStatusType.Running;
+            if (payload.log.level === "error") newStatus = SyncStageStatusType.Error;
             return { ...s, status: newStatus, message: payload.log.message };
           }
           return s;
@@ -222,7 +230,7 @@ export function SyncProgressDialog({
       const payload = data as SyncCompletePayload;
       if (payload.pluginId === pluginId && payload.siteId === siteId) {
         setIsComplete(true);
-        setIsSuccess(payload.success);
+        setIsFail(!payload.success);
         setOverallProgress(100);
         setSyncResult({
           filesChecked: payload.filesChecked,
@@ -251,7 +259,7 @@ export function SyncProgressDialog({
         
         setStages(prev => prev.map(s => ({
           ...s,
-          status: payload.success ? "success" : (s.status === "running" ? "error" : s.status)
+          status: payload.success ? SyncStageStatusType.Success : (s.status === SyncStageStatusType.Running ? SyncStageStatusType.Error : s.status)
         })));
 
         onComplete?.(payload.success);
@@ -268,18 +276,18 @@ export function SyncProgressDialog({
 
   const getStageIcon = (stage: SyncStage) => {
     switch (stage.status) {
-      case "success":
+      case SyncStageStatusType.Success:
         return <Check className="h-4 w-4 text-primary" />;
-      case "error":
+      case SyncStageStatusType.Error:
         return <X className="h-4 w-4 text-destructive" />;
-      case "running":
+      case SyncStageStatusType.Running:
         return <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />;
       default:
         return <div className="h-4 w-4 rounded-full border-2 border-muted-foreground/30" />;
     }
   };
 
-  const activeStageCount = stages.filter(s => s.status === "success" || s.status === "running").length;
+  const activeStageCount = stages.filter(s => s.status === SyncStageStatusType.Success || s.status === SyncStageStatusType.Running).length;
   const totalStages = stages.length;
 
   return (
@@ -288,7 +296,7 @@ export function SyncProgressDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <RefreshCw className="h-5 w-5 text-primary" />
-            {isComplete ? (isSuccess ? "Sync Complete" : "Sync Failed") : "Syncing..."}
+            {isComplete ? (!isFail ? "Sync Complete" : "Sync Failed") : "Syncing..."}
           </DialogTitle>
           <DialogDescription>
             Checking <strong>{pluginName}</strong> against <strong>{siteName}</strong>
@@ -314,10 +322,10 @@ export function SyncProgressDialog({
                 key={stage.name}
                 className={cn(
                   "flex items-center gap-3 p-3 rounded-lg border transition-colors",
-                  stage.status === "running" && "border-primary bg-primary/5",
-                  stage.status === "success" && "border-primary/30 bg-primary/5",
-                  stage.status === "error" && "border-destructive bg-destructive/5",
-                  stage.status === "pending" && "border-border opacity-60"
+                  stage.status === SyncStageStatusType.Running && "border-primary bg-primary/5",
+                  stage.status === SyncStageStatusType.Success && "border-primary/30 bg-primary/5",
+                  stage.status === SyncStageStatusType.Error && "border-destructive bg-destructive/5",
+                  stage.status === SyncStageStatusType.Pending && "border-border opacity-60"
                 )}
               >
                 {getStageIcon(stage)}
@@ -329,12 +337,12 @@ export function SyncProgressDialog({
                     </p>
                   )}
                 </div>
-                {stage.status === "success" && (
+                {stage.status === SyncStageStatusType.Success && (
                   <Badge variant="outline" className="text-xs text-primary border-primary/30">
                     Done
                   </Badge>
                 )}
-                {stage.status === "error" && (
+                {stage.status === SyncStageStatusType.Error && (
                   <Badge variant="outline" className="text-xs text-destructive border-destructive/30">
                     Failed
                   </Badge>
@@ -352,7 +360,7 @@ export function SyncProgressDialog({
           />
 
           {/* Sync Tree View */}
-          {isComplete && isSuccess && syncResult && syncResult.changes && syncResult.changes.length > 0 && (
+          {isComplete && !isFail && syncResult && syncResult.changes && syncResult.changes.length > 0 && (
             <SyncTreeView
               changes={syncResult.changes}
               localFiles={syncResult.localFiles || 0}
@@ -365,7 +373,7 @@ export function SyncProgressDialog({
           )}
 
           {/* In Sync Message */}
-          {isComplete && isSuccess && syncResult && (!syncResult.changes || syncResult.changes.length === 0) && (
+          {isComplete && !isFail && syncResult && (!syncResult.changes || syncResult.changes.length === 0) && (
             <SyncTreeView
               changes={[]}
               localFiles={syncResult.localFiles || syncResult.filesChecked || 0}
@@ -378,7 +386,7 @@ export function SyncProgressDialog({
           )}
 
           {/* Error Message */}
-          {isComplete && !isSuccess && errorMessage && (
+          {isComplete && isFail && errorMessage && (
             <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
               <div className="flex items-start gap-2">
                 <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
@@ -408,14 +416,14 @@ export function SyncProgressDialog({
         </div>
 
         <DialogFooter className="gap-2">
-          {isComplete && isSuccess && syncResult && syncResult.changes && syncResult.changes.length > 0 && (
+          {isComplete && !isFail && syncResult && syncResult.changes && syncResult.changes.length > 0 && (
             <Button
               variant="default"
               onClick={async () => {
                 try {
                   toast.info("Pushing changes to remote...");
                   const res = await api.pushSync(pluginId, siteId);
-                  if (res.data?.isSuccess) {
+                  if (res.data && !res.data.isFail && res.data.isSuccess) {
                     toast.success(`Sync pushed: ${res.data.filesUpdated} updated, ${res.data.filesDeleted} deleted`);
                   } else {
                     toast.error("Push failed: " + (res.data?.errorMessage || "Unknown error"));

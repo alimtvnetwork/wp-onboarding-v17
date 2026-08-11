@@ -43,10 +43,15 @@ interface RemotePluginFileBrowserProps {
   onOpenChange: (open: boolean) => void;
 }
 
+export enum TreeNodeType {
+  File = "file",
+  Folder = "folder",
+}
+
 interface TreeNode {
   name: string;
   path: string;
-  type: "file" | "folder";
+  type: TreeNodeType;
   size?: number;
   hash?: string;
   children?: TreeNode[];
@@ -69,7 +74,7 @@ function buildTree(files: RemotePluginFile[]): TreeNode[] {
         current[part] = {
           name: part,
           path: currentPath,
-          type: isLast ? "file" : "folder",
+          type: isLast ? TreeNodeType.File : TreeNodeType.Folder,
           size: isLast ? file.size : undefined,
           hash: isLast ? file.hash : undefined,
           children: isLast ? undefined : [],
@@ -84,7 +89,7 @@ function buildTree(files: RemotePluginFile[]): TreeNode[] {
         }
         current = childMap;
         // Update the children array reference
-        current[part] = current[part] || { name: part, path: currentPath, type: "folder", children: [] };
+        current[part] = current[part] || { name: part, path: currentPath, type: TreeNodeType.Folder, children: [] };
       }
     }
   }
@@ -93,7 +98,7 @@ function buildTree(files: RemotePluginFile[]): TreeNode[] {
   function toSortedArray(obj: Record<string, TreeNode>): TreeNode[] {
     return Object.values(obj)
       .sort((a, b) => {
-        if (a.type !== b.type) return a.type === "folder" ? -1 : 1;
+        if (a.type !== b.type) return a.type === TreeNodeType.Folder ? -1 : 1;
         return a.name.localeCompare(b.name);
       });
   }
@@ -184,14 +189,14 @@ function TreeNodeItem({
         )}
         style={{ paddingLeft: `${depth * 16 + 8}px` }}
         onClick={() => {
-          if (node.type === "folder") {
+          if (node.type === TreeNodeType.Folder) {
             onToggle(node.path);
           } else {
             onSelect(node);
           }
         }}
       >
-        {node.type === "folder" ? (
+        {node.type === TreeNodeType.Folder ? (
           <>
             {isExpanded ? (
               <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
@@ -211,11 +216,11 @@ function TreeNodeItem({
           </>
         )}
         <span className="text-sm truncate flex-1">{node.name}</span>
-        {node.type === "file" && node.size !== undefined && (
+        {node.type === TreeNodeType.File && node.size !== undefined && (
           <span className="text-xs text-muted-foreground shrink-0">{formatSize(node.size)}</span>
         )}
       </div>
-      {node.type === "folder" && isExpanded && visibleChildren && (
+      {node.type === TreeNodeType.Folder && isExpanded && visibleChildren && (
         <div>
           {visibleChildren.map((child) => (
             <TreeNodeItem
@@ -287,7 +292,7 @@ export function RemotePluginFileBrowser({
   };
 
   const handleSelectFile = async (node: TreeNode) => {
-    if (node.type !== "file") return;
+    if (node.type !== TreeNodeType.File) return;
     setSelectedFile(node);
     setFileContent(null);
     setLoadingContent(true);
@@ -332,7 +337,7 @@ export function RemotePluginFileBrowser({
     const allPaths = new Set<string>();
     const addPaths = (nodes: TreeNode[]) => {
       for (const node of nodes) {
-        if (node.type === "folder") {
+        if (node.type === TreeNodeType.Folder) {
           allPaths.add(node.path);
           if (node.children) addPaths(node.children);
         }

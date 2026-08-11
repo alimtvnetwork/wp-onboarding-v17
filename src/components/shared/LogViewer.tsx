@@ -8,9 +8,16 @@ import { toast } from "sonner";
 import { formatTime24h, toClipboardText, unescapeEmbeddedNewlines } from "@/lib/logText";
 import type { LogEntryDetails } from "@/lib/api";
 
+export enum LevelType {
+  Debug = "debug",
+  Info = "info",
+  Warn = "warn",
+  Error = "error",
+}
+
 export interface LogEntry {
   timestamp: string;
-  level: "debug" | "info" | "warn" | "error";
+  level: LevelType;
   step: string;
   message: string;
   details?: LogEntryDetails;
@@ -83,13 +90,13 @@ export function LogViewer({
 
   const getLevelColor = (level: LogEntry["level"]) => {
     switch (level) {
-      case "error":
+      case LevelType.Error:
         return "text-destructive";
-      case "warn":
+      case LevelType.Warn:
         return "text-warning";
-      case "info":
+      case LevelType.Info:
         return "text-foreground";
-      case "debug":
+      case LevelType.Debug:
         return "text-muted-foreground";
       default:
         return "text-foreground";

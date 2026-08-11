@@ -26,17 +26,31 @@ import {
 import { api, requireSuccess } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
+export enum ChangeType {
+  Added = "added",
+  Modified = "modified",
+  Deleted = "deleted",
+  Unchanged = "unchanged"
+}
+
 interface ContentDiffViewerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   pluginId: number;
   siteId: number;
   filePath: string;
-  changeType: "added" | "modified" | "deleted" | "unchanged";
+  changeType: ChangeType;
+}
+
+export enum DiffLineType {
+  Unchanged = "unchanged",
+  Added = "added",
+  Removed = "removed",
+  Header = "header"
 }
 
 interface DiffLine {
-  type: "unchanged" | "added" | "removed" | "header";
+  type: DiffLineType;
   content: string;
   lineNumber?: number;
   oldLineNumber?: number;
@@ -67,7 +81,7 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
     if (oldIdx >= oldLines.length) {
       // Remaining new lines are additions
       result.push({
-        type: "added",
+        type: DiffLineType.Added,
         content: newLines[newIdx],
         newLineNumber: newLineNum++,
       });
@@ -75,7 +89,7 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
     } else if (newIdx >= newLines.length) {
       // Remaining old lines are removals
       result.push({
-        type: "removed",
+        type: DiffLineType.Removed,
         content: oldLines[oldIdx],
         oldLineNumber: oldLineNum++,
       });
@@ -83,7 +97,7 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
     } else if (oldLines[oldIdx] === newLines[newIdx]) {
       // Lines match
       result.push({
-        type: "unchanged",
+        type: DiffLineType.Unchanged,
         content: oldLines[oldIdx],
         oldLineNumber: oldLineNum++,
         newLineNumber: newLineNum++,
@@ -98,7 +112,7 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
       if (oldLineInNew && oldLineInNew.some(i => i > newIdx)) {
         // Current old line exists later in new - this line was removed
         result.push({
-          type: "removed",
+          type: DiffLineType.Removed,
           content: oldLines[oldIdx],
           oldLineNumber: oldLineNum++,
         });
@@ -106,7 +120,7 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
       } else if (newLineInOld > oldIdx) {
         // Current new line exists later in old - this line was added
         result.push({
-          type: "added",
+          type: DiffLineType.Added,
           content: newLines[newIdx],
           newLineNumber: newLineNum++,
         });
@@ -114,12 +128,12 @@ function computeSimpleDiff(oldContent: string, newContent: string): DiffLine[] {
       } else {
         // Line was modified - show as removed then added
         result.push({
-          type: "removed",
+          type: DiffLineType.Removed,
           content: oldLines[oldIdx],
           oldLineNumber: oldLineNum++,
         });
         result.push({
-          type: "added",
+          type: DiffLineType.Added,
           content: newLines[newIdx],
           newLineNumber: newLineNum++,
         });
@@ -150,7 +164,7 @@ export function ContentDiffViewer({
       const response = await api.getFileDiff(pluginId, siteId, filePath);
       return requireSuccess(response, { endpoint: `/plugins/${pluginId}/sites/${siteId}/file-diff` });
     },
-    enabled: open && changeType === "modified",
+    enabled: open && changeType === ChangeType.Modified,
   });
 
   // For added files, just fetch local content
@@ -160,7 +174,7 @@ export function ContentDiffViewer({
       const response = await api.getLocalFileContent(pluginId, filePath);
       return requireSuccess(response, { endpoint: `/plugins/${pluginId}/file` });
     },
-    enabled: open && (changeType === "added" || changeType === "deleted"),
+    enabled: open && (changeType === ChangeType.Added || changeType === ChangeType.Deleted),
   });
 
   const isLoadingAny = isLoading || localLoading;
@@ -170,8 +184,8 @@ export function ContentDiffViewer({
     ? computeSimpleDiff(data.remoteContent, data.localContent)
     : [];
 
-  const addedCount = diffLines.filter(l => l.type === "added").length;
-  const removedCount = diffLines.filter(l => l.type === "removed").length;
+  const addedCount = diffLines.filter(l => l.type === DiffLineType.Added).length;
+  const removedCount = diffLines.filter(l => l.type === DiffLineType.Removed).length;
 
   const handleCopy = async (content: string) => {
     await navigator.clipboard.writeText(content);
@@ -181,11 +195,11 @@ export function ContentDiffViewer({
 
   const getChangeIcon = () => {
     switch (changeType) {
-      case "added":
+      case ChangeType.Added:
         return <FilePlus className="h-4 w-4 text-green-500" />;
-      case "modified":
+      case ChangeType.Modified:
         return <FileEdit className="h-4 w-4 text-yellow-500" />;
-      case "deleted":
+      case ChangeType.Deleted:
         return <FileX className="h-4 w-4 text-red-500" />;
       default:
         return <FileText className="h-4 w-4" />;
@@ -240,7 +254,7 @@ export function ContentDiffViewer({
         )}
 
         {/* Added file - show local content only */}
-        {!isLoadingAny && changeType === "added" && localData && (
+        {!isLoadingAny && changeType === ChangeType.Added && localData && (
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex items-center justify-between mb-2">
               <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
@@ -260,7 +274,7 @@ export function ContentDiffViewer({
         )}
 
         {/* Deleted file - show remote content only */}
-        {!isLoadingAny && changeType === "deleted" && localData && (
+        {!isLoadingAny && changeType === ChangeType.Deleted && localData && (
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex items-center justify-between mb-2">
               <Badge variant="outline" className="bg-red-500/10 text-red-600 border-red-500/20">
@@ -280,7 +294,7 @@ export function ContentDiffViewer({
         )}
 
         {/* Modified file - show diff */}
-        {!isLoadingAny && changeType === "modified" && data && (
+        {!isLoadingAny && changeType === ChangeType.Modified && data && (
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="flex-1 flex flex-col overflow-hidden">
             <div className="flex items-center justify-between mb-2">
               <TabsList>
@@ -312,8 +326,8 @@ export function ContentDiffViewer({
                       key={i}
                       className={cn(
                         "flex px-2 py-0.5",
-                        line.type === "added" && "bg-green-500/10 text-green-700 dark:text-green-400",
-                        line.type === "removed" && "bg-red-500/10 text-red-700 dark:text-red-400"
+                        line.type === DiffLineType.Added && "bg-green-500/10 text-green-700 dark:text-green-400",
+                        line.type === DiffLineType.Removed && "bg-red-500/10 text-red-700 dark:text-red-400"
                       )}
                     >
                       <span className="w-8 text-muted-foreground select-none text-right pr-2">
@@ -323,7 +337,7 @@ export function ContentDiffViewer({
                         {line.newLineNumber || ""}
                       </span>
                       <span className="w-4 select-none">
-                        {line.type === "added" ? "+" : line.type === "removed" ? "-" : " "}
+                        {line.type === DiffLineType.Added ? "+" : line.type === DiffLineType.Removed ? "-" : " "}
                       </span>
                       <span className="flex-1 whitespace-pre">{line.content}</span>
                     </div>

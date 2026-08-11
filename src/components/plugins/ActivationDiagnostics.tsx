@@ -11,8 +11,15 @@ interface ActivationDiagnosticsProps {
   className?: string;
 }
 
+export enum DiagnosticEntryType {
+  Request = "request",
+  Response = "response",
+  Info = "info",
+  Error = "error"
+}
+
 interface DiagnosticEntry {
-  type: "request" | "response" | "info" | "error";
+  type: DiagnosticEntryType;
   label: string;
   value: string;
   details?: LogEntryDetails;
@@ -37,7 +44,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
         const details = log.details;
         if (details?.resolvedIdentifier) {
           entries.push({
-            type: "info",
+            type: DiagnosticEntryType.Info,
             label: "Resolved Plugin ID",
             value: String(details.resolvedIdentifier),
             details,
@@ -50,7 +57,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
         const match = log.message.match(/Activating plugin:\s*(.+)/);
         if (match) {
           entries.push({
-            type: "request",
+            type: DiagnosticEntryType.Request,
             label: "Activation Target",
             value: match[1],
           });
@@ -62,7 +69,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
         const details = log.details;
         
         entries.push({
-          type: "error",
+          type: DiagnosticEntryType.Error,
           label: "Error Message",
           value: log.message,
         });
@@ -72,14 +79,14 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
           const req = details.request as LogEntryDetails;
           if (req.url) {
             entries.push({
-              type: "request",
+              type: DiagnosticEntryType.Request,
               label: "Request URL",
               value: String(req.url),
             });
           }
           if (req.method) {
             entries.push({
-              type: "request",
+              type: DiagnosticEntryType.Request,
               label: "HTTP Method",
               value: String(req.method),
             });
@@ -91,14 +98,14 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
           const resp = details.response as LogEntryDetails;
           if (resp.status !== undefined) {
             entries.push({
-              type: "response",
+              type: DiagnosticEntryType.Response,
               label: "Response Status",
               value: String(resp.status),
             });
           }
           if (resp.body) {
             entries.push({
-              type: "response",
+              type: DiagnosticEntryType.Response,
               label: "Response Body",
               value: typeof resp.body === "string" 
                 ? resp.body.slice(0, 500) 
@@ -111,7 +118,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
       // Extract success
       if (log.message.includes("activated successfully")) {
         entries.push({
-          type: "info",
+          type: DiagnosticEntryType.Info,
           label: "Status",
           value: "✓ Plugin activated successfully",
         });
@@ -123,7 +130,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
       const errorLogs = logs.filter((l) => l.level === "error");
       for (const log of errorLogs.slice(0, 3)) {
         entries.push({
-          type: "error",
+          type: DiagnosticEntryType.Error,
           label: log.step || "Error",
           value: log.message,
         });
@@ -133,7 +140,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
     return entries;
   }, [logs]);
 
-  const hasErrors = diagnostics.some((d) => d.type === "error");
+  const hasErrors = diagnostics.some((d) => d.type === DiagnosticEntryType.Error);
   const hasSuccess = diagnostics.some((d) => d.value.includes("successfully"));
 
   if (diagnostics.length === 0) {
@@ -183,24 +190,24 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
               key={idx}
               className={cn(
                 "p-2 rounded-md border text-sm",
-                entry.type === "error" && "border-destructive/30 bg-destructive/5",
-                entry.type === "request" && "border-primary/30 bg-primary/5",
-                entry.type === "response" && "border-accent/30 bg-accent/5",
-                entry.type === "info" && "border-border bg-muted/50"
+                entry.type === DiagnosticEntryType.Error && "border-destructive/30 bg-destructive/5",
+                entry.type === DiagnosticEntryType.Request && "border-primary/30 bg-primary/5",
+                entry.type === DiagnosticEntryType.Response && "border-accent/30 bg-accent/5",
+                entry.type === DiagnosticEntryType.Info && "border-border bg-muted/50"
               )}
             >
               <div className="flex items-center gap-2 mb-1">
-                {entry.type === "request" && <Server className="h-3 w-3 text-primary" />}
-                {entry.type === "response" && <ExternalLink className="h-3 w-3 text-accent-foreground" />}
-                {entry.type === "error" && <AlertCircle className="h-3 w-3 text-destructive" />}
-                {entry.type === "info" && <Activity className="h-3 w-3 text-muted-foreground" />}
+                {entry.type === DiagnosticEntryType.Request && <Server className="h-3 w-3 text-primary" />}
+                {entry.type === DiagnosticEntryType.Response && <ExternalLink className="h-3 w-3 text-accent-foreground" />}
+                {entry.type === DiagnosticEntryType.Error && <AlertCircle className="h-3 w-3 text-destructive" />}
+                {entry.type === DiagnosticEntryType.Info && <Activity className="h-3 w-3 text-muted-foreground" />}
                 <Badge
                   variant="outline"
                   className={cn(
                     "text-xs",
-                    entry.type === "error" && "border-destructive/50 text-destructive",
-                    entry.type === "request" && "border-primary/50 text-primary",
-                    entry.type === "response" && "border-accent/50 text-accent-foreground"
+                    entry.type === DiagnosticEntryType.Error && "border-destructive/50 text-destructive",
+                    entry.type === DiagnosticEntryType.Request && "border-primary/50 text-primary",
+                    entry.type === DiagnosticEntryType.Response && "border-accent/50 text-accent-foreground"
                   )}
                 >
                   {entry.label}

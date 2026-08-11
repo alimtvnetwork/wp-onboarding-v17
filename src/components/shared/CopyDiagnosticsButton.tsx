@@ -5,9 +5,22 @@ import { toast } from "sonner";
 import { useVersionInfo } from "@/hooks/useWhatsNew";
 import { getDiagnostics, formatDiagnosticsForCopy } from "@/lib/diagnostics";
 
+export enum VariantType {
+  Default = "default",
+  Ghost = "ghost",
+  Outline = "outline",
+}
+
+export enum SizeType {
+  Default = "default",
+  Sm = "sm",
+  Lg = "lg",
+  Icon = "icon",
+}
+
 interface CopyDiagnosticsButtonProps {
-  variant?: "default" | "ghost" | "outline";
-  size?: "default" | "sm" | "lg" | "icon";
+  variant?: VariantType;
+  size?: SizeType;
   showLabel?: boolean;
   className?: string;
 }
@@ -17,8 +30,8 @@ interface CopyDiagnosticsButtonProps {
  * for faster support and debugging.
  */
 export function CopyDiagnosticsButton({
-  variant = "ghost",
-  size = "sm",
+  variant = VariantType.Ghost,
+  size = SizeType.Sm,
   showLabel = true,
   className,
 }: CopyDiagnosticsButtonProps) {

@@ -157,6 +157,11 @@ function isRemotePluginActive(status?: string | null): boolean {
   return normalizeRemotePluginStatus(status) === RemotePluginStatus.Active;
 }
 
+export enum CacheSourceType {
+  Live = "live",
+  Cached = "cached",
+}
+
 export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPanelProps) {
   const queryClient = useQueryClient();
   const { captureError, captureException, openErrorModal } = useErrorStore();
@@ -214,7 +219,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
 
   const queryKey = ["sites", site.id, "remote-plugins"];
   const [lastFetchedAt, setLastFetchedAt] = useState<Date | null>(null);
-  const [cacheSource, setCacheSource] = useState<"live" | "cached">("cached");
+  const [cacheSource, setCacheSource] = useState<CacheSourceType>(CacheSourceType.Cached);
   const [, setTimeTick] = useState(0);
 
   const { data: plugins, isLoading, isError, error: queryError, refetch, isFetching } = useQuery({
@@ -226,7 +231,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
         throw new Error(msg);
       }
       setLastFetchedAt(new Date());
-      setCacheSource("cached");
+      setCacheSource(CacheSourceType.Cached);
       return response.data as RemotePlugin[];
     },
     enabled: open,
@@ -264,7 +269,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
       toast.success("Plugin list refreshed from site");
       queryClient.setQueryData(queryKey, data);
       setLastFetchedAt(new Date());
-      setCacheSource("live");
+      setCacheSource(CacheSourceType.Live);
     },
     onError: (error) => {
       const captured = captureException(error, {

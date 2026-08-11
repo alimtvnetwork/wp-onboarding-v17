@@ -2,13 +2,18 @@ import { Badge } from "@/components/ui/badge";
 import { PREDEFINED_CATEGORIES, CategoryOption } from "@/hooks/useCategories";
 import { cn } from "@/lib/utils";
 
+export enum SizeType {
+  Sm = "sm",
+  Default = "default",
+}
+
 interface CategoryBadgeProps {
   category: string | null | undefined;
-  size?: "sm" | "default";
+  size?: SizeType;
   className?: string;
 }
 
-export function CategoryBadge({ category, size = "default", className }: CategoryBadgeProps) {
+export function CategoryBadge({ category, size = SizeType.Default, className }: CategoryBadgeProps) {
   if (!category) return null;
 
   const predefined = PREDEFINED_CATEGORIES.find(c => c.value === category);
@@ -27,7 +32,7 @@ export function CategoryBadge({ category, size = "default", className }: Categor
       className={cn(
         colorClass,
         "group-hover:bg-muted group-hover:text-foreground group-hover:border-border",
-        size === "sm" && "text-[10px] px-1.5 py-0",
+        size === SizeType.Sm && "text-[10px] px-1.5 py-0",
         className
       )}
     >

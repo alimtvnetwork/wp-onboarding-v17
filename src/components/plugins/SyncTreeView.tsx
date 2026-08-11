@@ -33,10 +33,15 @@ interface SyncTreeViewProps {
   inSync: boolean;
 }
 
+export enum SyncTreeNodeType {
+  File = "file",
+  Folder = "folder"
+}
+
 interface SyncTreeNode {
   name: string;
   path: string;
-  type: "file" | "folder";
+  type: SyncTreeNodeType;
   change?: FileChange;
   children?: SyncTreeNode[];
   // Aggregated counts for folders
@@ -61,7 +66,7 @@ function buildSyncTree(changes: FileChange[]): SyncTreeNode[] {
         current[part] = {
           name: part,
           path: currentPath,
-          type: isLast ? "file" : "folder",
+          type: isLast ? SyncTreeNodeType.File : SyncTreeNodeType.Folder,
           change: isLast ? change : undefined,
           children: isLast ? undefined : [],
         };
@@ -86,12 +91,12 @@ function buildSyncTree(changes: FileChange[]): SyncTreeNode[] {
 
     // Calculate folder aggregate counts
     for (const node of nodes) {
-      if (node.type === "folder" && node.children) {
+      if (node.type === SyncTreeNodeType.Folder && node.children) {
         node.children = toSortedArray(
           node.children.reduce((acc, c) => ({ ...acc, [c.name]: c }), {} as Record<string, SyncTreeNode>)
         );
         const countAll = (n: SyncTreeNode): { a: number; m: number; d: number } => {
-          if (n.type === "file") {
+          if (n.type === SyncTreeNodeType.File) {
             return {
               a: n.change?.status === "added" ? 1 : 0,
               m: n.change?.status === "modified" ? 1 : 0,
@@ -113,7 +118,7 @@ function buildSyncTree(changes: FileChange[]): SyncTreeNode[] {
       }
     }
     return nodes.sort((a, b) => {
-      if (a.type !== b.type) return a.type === "folder" ? -1 : 1;
+      if (a.type !== b.type) return a.type === SyncTreeNodeType.Folder ? -1 : 1;
       return a.name.localeCompare(b.name);
     });
   }
@@ -238,14 +243,14 @@ function SyncTreeNodeItem({
         )}
         style={{ paddingLeft: `${depth * 16 + 8}px` }}
         onClick={() => {
-          if (node.type === "folder") {
+          if (node.type === SyncTreeNodeType.Folder) {
             onToggle(node.path);
           } else {
             onSelect(node);
           }
         }}
       >
-        {node.type === "folder" ? (
+        {node.type === SyncTreeNodeType.Folder ? (
           <>
             {isExpanded ? (
               <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
@@ -265,7 +270,7 @@ function SyncTreeNodeItem({
           </>
         )}
         <span className="text-sm truncate flex-1">{node.name}</span>
-        {node.type === "folder" && (
+        {node.type === SyncTreeNodeType.Folder && (
           <div className="flex items-center gap-1 shrink-0">
             {(node.addedCount || 0) > 0 && (
               <span className="text-[10px] text-emerald-500">+{node.addedCount}</span>
@@ -278,9 +283,9 @@ function SyncTreeNodeItem({
             )}
           </div>
         )}
-        {node.type === "file" && getStatusBadge(node.change)}
+        {node.type === SyncTreeNodeType.File && getStatusBadge(node.change)}
       </div>
-      {node.type === "folder" && isExpanded && visibleChildren && (
+      {node.type === SyncTreeNodeType.Folder && isExpanded && visibleChildren && (
         <div>
           {visibleChildren.map((child) => (
             <SyncTreeNodeItem
@@ -333,7 +338,7 @@ export function SyncTreeView({
     const allPaths = new Set<string>();
     const addPaths = (nodes: SyncTreeNode[]) => {
       for (const n of nodes) {
-        if (n.type === "folder") {
+        if (n.type === SyncTreeNodeType.Folder) {
           allPaths.add(n.path);
           if (n.children) addPaths(n.children);
         }

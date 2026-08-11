@@ -39,9 +39,16 @@ interface SnapshotComparisonViewProps {
   snapshots: SnapshotRecord[];
 }
 
+export enum TableDiffStatusType {
+  Added = "added",
+  Removed = "removed",
+  Unchanged = "unchanged",
+  Changed = "changed"
+}
+
 interface TableDiff {
   table: string;
-  status: "added" | "removed" | "unchanged" | "changed";
+  status: TableDiffStatusType;
   leftRows?: number;
   rightRows?: number;
   rowDelta?: number;
@@ -70,13 +77,13 @@ function computeDiff(left: SnapshotRecord | undefined, right: SnapshotRecord | u
     const rightRows = rightTables.get(table) ?? 0;
 
     if (inLeft && !inRight) {
-      diffs.push({ table, status: "removed", leftRows, rightRows: undefined });
+      diffs.push({ table, status: TableDiffStatusType.Removed, leftRows, rightRows: undefined });
     } else if (!inLeft && inRight) {
-      diffs.push({ table, status: "added", leftRows: undefined, rightRows });
+      diffs.push({ table, status: TableDiffStatusType.Added, leftRows: undefined, rightRows });
     } else if (leftRows !== rightRows) {
-      diffs.push({ table, status: "changed", leftRows, rightRows, rowDelta: rightRows - leftRows });
+      diffs.push({ table, status: TableDiffStatusType.Changed, leftRows, rightRows, rowDelta: rightRows - leftRows });
     } else {
-      diffs.push({ table, status: "unchanged", leftRows, rightRows });
+      diffs.push({ table, status: TableDiffStatusType.Unchanged, leftRows, rightRows });
     }
   });
 
@@ -108,10 +115,10 @@ export function SnapshotComparisonView({ snapshots }: SnapshotComparisonViewProp
   }, [leftSnap, rightSnap]);
 
   const summary = useMemo(() => {
-    const added = diffs.filter((d) => d.status === "added").length;
-    const removed = diffs.filter((d) => d.status === "removed").length;
-    const changed = diffs.filter((d) => d.status === "changed").length;
-    const unchanged = diffs.filter((d) => d.status === "unchanged").length;
+    const added = diffs.filter((d) => d.status === TableDiffStatusType.Added).length;
+    const removed = diffs.filter((d) => d.status === TableDiffStatusType.Removed).length;
+    const changed = diffs.filter((d) => d.status === TableDiffStatusType.Changed).length;
+    const unchanged = diffs.filter((d) => d.status === TableDiffStatusType.Unchanged).length;
     const totalRowDelta = leftSnap && rightSnap ? (rightSnap.totalRows ?? 0) - (leftSnap.totalRows ?? 0) : 0;
     const sizeDelta = leftSnap && rightSnap ? (rightSnap.fileSize ?? 0) - (leftSnap.fileSize ?? 0) : 0;
     return { added, removed, changed, unchanged, totalRowDelta, sizeDelta };
@@ -234,9 +241,9 @@ export function SnapshotComparisonView({ snapshots }: SnapshotComparisonViewProp
                           key={d.table}
                           className={cn(
                             "text-xs",
-                            d.status === "added" && "bg-emerald-500/5",
-                            d.status === "removed" && "bg-destructive/5",
-                            d.status === "changed" && "bg-amber-500/5",
+                            d.status === TableDiffStatusType.Added && "bg-emerald-500/5",
+                            d.status === TableDiffStatusType.Removed && "bg-destructive/5",
+                            d.status === TableDiffStatusType.Changed && "bg-amber-500/5",
                           )}
                         >
                           <TableCell className="py-1.5 font-mono text-[11px]">
@@ -249,10 +256,10 @@ export function SnapshotComparisonView({ snapshots }: SnapshotComparisonViewProp
                             <span
                               className={cn(
                                 "text-[10px] font-medium uppercase tracking-wider",
-                                d.status === "added" && "text-emerald-600",
-                                d.status === "removed" && "text-destructive",
-                                d.status === "changed" && "text-amber-600",
-                                d.status === "unchanged" && "text-muted-foreground",
+                                d.status === TableDiffStatusType.Added && "text-emerald-600",
+                                d.status === TableDiffStatusType.Removed && "text-destructive",
+                                d.status === TableDiffStatusType.Changed && "text-amber-600",
+                                d.status === TableDiffStatusType.Unchanged && "text-muted-foreground",
                               )}
                             >
                               {d.status}

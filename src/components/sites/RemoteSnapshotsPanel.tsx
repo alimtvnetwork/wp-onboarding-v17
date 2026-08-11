@@ -935,6 +935,16 @@ const INITIAL_PROGRESS: SnapshotProgressState = {
   tables: [],
 };
 
+export enum CreateSnapshotType {
+  Full = "full",
+  Incremental = "incremental",
+}
+
+export enum RestoreModeType {
+  Full = "full",
+  Selective = "selective",
+}
+
 export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapshotsPanelProps) {
   const {
     snapshots,
@@ -970,12 +980,12 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
   const [restoreTarget, setRestoreTarget] = useState<SnapshotRecord | null>(null);
   const [detailTarget, setDetailTarget] = useState<SnapshotRecord | null>(null);
   const [createName, setCreateName] = useState("");
-  const [createType, setCreateType] = useState<"full" | "incremental">("full");
+  const [createType, setCreateType] = useState<CreateSnapshotType>(CreateSnapshotType.Full);
   const [createScope, setCreateScope] = useState<string>("wordpress");
   const [parentSnapshotId, setParentSnapshotId] = useState<string>("");
   const [customTables, setCustomTables] = useState<string[]>([]);
   const [showTablePicker, setShowTablePicker] = useState(false);
-  const [restoreMode, setRestoreMode] = useState<"full" | "selective">("full");
+  const [restoreMode, setRestoreMode] = useState<RestoreModeType>(RestoreModeType.Full);
 
   // Draggable dialog state
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -1103,16 +1113,17 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
   }, [availableTables.length, fetchTables]);
 
   const handleCreate = () => {
-    const opts: CreateSnapshotOptions = {};
+    const opts: CreateSnapshotOptions = {
+      type: createType === CreateSnapshotType.Incremental ? SnapshotTypeValues.Incremental : SnapshotTypeValues.Full,
+      scope: createScope as SnapshotScope,
+    };
     if (createName.trim()) opts.name = createName.trim();
     if (createScope === "custom" && customTables.length > 0) {
       opts.scope = "Custom";
       opts.tables = customTables;
-    } else {
-      opts.scope = createScope as SnapshotScope;
     }
 
-    if (createType === "incremental") {
+    if (createType === CreateSnapshotType.Incremental) {
       if (parentSnapshotId) opts.parentId = Number(parentSnapshotId);
       incrementalBackup(opts);
     } else {
@@ -1131,19 +1142,19 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
   const handleRestore = () => {
     if (restoreTarget) {
       const restoreOpts: { snapshotId: number; opts?: Omit<RestoreSnapshotOptions, "confirm"> } = { snapshotId: restoreTarget.id };
-      if (restoreMode === "selective" && restoreTables.length > 0) {
+      if (restoreMode === RestoreModeType.Selective && restoreTables.length > 0) {
         restoreOpts.opts = { mode: "selective" as const, tables: restoreTables };
       }
       restoreSnapshot(restoreOpts);
       setRestoreTarget(null);
-      setRestoreMode("full");
+      setRestoreMode(RestoreModeType.Full);
       setRestoreTables([]);
     }
   };
 
   const handleOpenRestore = useCallback((s: SnapshotRecord) => {
     setRestoreTarget(s);
-    setRestoreMode("full");
+    setRestoreMode(RestoreModeType.Full);
     // Parse tables from snapshot for selective restore
     const snapshotTables = typeof s.tables === "string"
       ? s.tables.split(",").map((t) => t.trim()).filter(Boolean)
@@ -1227,8 +1238,8 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
                 {/* Row 2: Type + Scope + Create */}
                 <div className="flex items-center gap-2 flex-wrap">
                   <Select value={createType} onValueChange={(v) => {
-                    setCreateType(v as "full" | "incremental");
-                    if (v === "incremental" && completedFullSnapshots.length > 0 && !parentSnapshotId) {
+                    setCreateType(v as CreateSnapshotType);
+                    if (v === CreateSnapshotType.Incremental && completedFullSnapshots.length > 0 && !parentSnapshotId) {
                       setParentSnapshotId(String(completedFullSnapshots[0].id));
                     }
                   }}>
@@ -1236,13 +1247,13 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="full">
+                      <SelectItem value={CreateSnapshotType.Full}>
                         <span className="flex items-center gap-1.5">
                           <Database className="h-3 w-3" />
                           Full Backup
                         </span>
                       </SelectItem>
-                      <SelectItem value="incremental" disabled={completedFullSnapshots.length === 0}>
+                      <SelectItem value={CreateSnapshotType.Incremental} disabled={completedFullSnapshots.length === 0}>
                         <span className="flex items-center gap-1.5">
                           <GitBranch className="h-3 w-3" />
                           Incremental
@@ -1267,14 +1278,14 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
                     size="sm"
                     onClick={handleCreate}
                     disabled={
-                      (createType === "full" ? isFullBackupPending : isIncrementalPending) ||
+                      (createType === CreateSnapshotType.Full ? isFullBackupPending : isIncrementalPending) ||
                       hasRunningSnapshots ||
                       (createScope === "custom" && customTables.length === 0) ||
-                      (createType === "incremental" && !parentSnapshotId)
+                      (createType === CreateSnapshotType.Incremental && !parentSnapshotId)
                     }
                     className="h-8"
                   >
-                    {(createType === "full" ? isFullBackupPending : isIncrementalPending) ? (
+                    {(createType === CreateSnapshotType.Full ? isFullBackupPending : isIncrementalPending) ? (
                       <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />
                     ) : (
                       <Plus className="h-3.5 w-3.5 mr-1" />
@@ -1316,7 +1327,7 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
                 </div>
 
                 {/* Incremental: Parent Snapshot Picker */}
-                {createType === "incremental" && (
+                {createType === CreateSnapshotType.Incremental && (
                   <div className="space-y-1.5 animate-fade-in border rounded-md p-2 bg-accent/20">
                     <Label className="text-xs font-medium flex items-center gap-1.5 text-muted-foreground">
                       <GitBranch className="h-3 w-3" />
@@ -1741,7 +1752,7 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
       </AlertDialog>
 
       {/* Restore Confirmation */}
-      <AlertDialog open={!!restoreTarget} onOpenChange={(o) => { if (!o) { setRestoreTarget(null); setRestoreMode("full"); } }}>
+      <AlertDialog open={!!restoreTarget} onOpenChange={(o) => { if (!o) { setRestoreTarget(null); setRestoreMode(RestoreModeType.Full); } }}>
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle>Restore Snapshot #{restoreTarget?.sequence}</AlertDialogTitle>
@@ -1754,19 +1765,19 @@ export function RemoteSnapshotsPanel({ site, open, onOpenChange }: RemoteSnapsho
             {/* Restore Mode */}
             <div className="space-y-1.5">
               <Label className="text-xs font-medium">Restore Mode</Label>
-              <Select value={restoreMode} onValueChange={(v) => setRestoreMode(v as "full" | "selective")}>
+              <Select value={restoreMode} onValueChange={(v) => setRestoreMode(v as RestoreModeType)}>
                 <SelectTrigger className="h-8 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="full">Full Restore (all tables)</SelectItem>
-                  <SelectItem value="selective">Selective (choose tables)</SelectItem>
+                  <SelectItem value={RestoreModeType.Full}>Full Restore (all tables)</SelectItem>
+                  <SelectItem value={RestoreModeType.Selective}>Selective (choose tables)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Selective Table Picker */}
-            {restoreMode === "selective" && restoreTarget && (
+            {restoreMode === RestoreModeType.Selective && restoreTarget && (
               <div className="border rounded-md p-2 space-y-1.5 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <Label className="text-xs font-medium text-muted-foreground">

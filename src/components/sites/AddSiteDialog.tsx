@@ -28,7 +28,7 @@ import {
   Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { api, ApiError, Plugin } from "@/lib/api";
+import { api, ApiError, Plugin, ConnectionStatusType } from "@/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useErrorStore } from "@/stores/errorStore";
@@ -189,7 +189,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
       category: category || undefined,
       // If connection was tested successfully, pass that info
       ...(credentialsTestResult?.success && {
-        connectionStatus: "connected",
+        connectionStatus: ConnectionStatusType.Connected,
         testedAt: credentialsTestResult.testedAt,
       }),
     };

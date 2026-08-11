@@ -5,6 +5,7 @@ import { api, Plugin } from '@/lib/api';
 import { usePublishStore, initializePublishWebSocketListeners } from '@/stores/publishStore';
 import { useErrorStore } from '@/stores/errorStore';
 import { useExecutionLoggerStore } from '@/hooks/useExecutionLogger';
+import { UploadModeType } from '@/hooks/useBulkQuickPublish';
 
 /**
  * Hook for quick publish operations.
@@ -12,7 +13,7 @@ import { useExecutionLoggerStore } from '@/hooks/useExecutionLogger';
  */
 export function useQuickPublish() {
   const queryClient = useQueryClient();
-  const { captureError, openErrorModal } = useErrorStore();
+  const { captureError, captureException, openErrorModal } = useErrorStore();
   const startOperation = usePublishStore((state) => state.startOperation);
   const hasActiveOperation = usePublishStore((state) => state.hasActiveOperation);
   const completeOperation = usePublishStore((state) => state.completeOperation);
@@ -34,10 +35,10 @@ export function useQuickPublish() {
     execLogger.log({ type: 'handler', name: 'publishToSite', args: `plugin=${plugin.name}, site=${siteName}` });
 
     // Get upload mode from localStorage
-    let uploadMode: "file" | "zip" = "file";
+    let uploadMode: UploadModeType = UploadModeType.File;
     try {
       const saved = localStorage.getItem("wppp_upload_mode");
-      if (saved === "zip") uploadMode = "zip";
+      if (saved === UploadModeType.Zip) uploadMode = UploadModeType.Zip;
     } catch {
       // Default to file mode
     }
@@ -61,7 +62,7 @@ export function useQuickPublish() {
       }
     } catch { /* default */ }
 
-    const publishMode = uploadMode === "zip" ? "full" : "selected";
+    const publishMode = uploadMode === UploadModeType.Zip ? "full" : "selected";
 
     try {
       const response = await api.publishPlugin(plugin.id, siteId, {
@@ -79,6 +80,7 @@ export function useQuickPublish() {
           filesUpdated: response.data?.filesUpdated || 0 
         };
       } else if (response.error) {
+        captureError(response.error, { endpoint: `/plugins/${plugin.id}/publish`, method: "POST" });
         execLogger.endChain(chainId, response.error.message);
         return { 
           success: false, 
@@ -89,6 +91,7 @@ export function useQuickPublish() {
 
       return { success: false, error: 'Unknown error' };
     } catch (error: unknown) {
+      captureException(error, { source: "useQuickPublish", endpoint: `/plugins/${plugin.id}/publish`, method: "POST" });
       const errMsg = error instanceof Error ? error.message : 'Unknown error';
       execLogger.endChain(chainId, errMsg);
       return { 

@@ -14,8 +14,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Ban, CalendarPlus, Download, X } from "lucide-react";
 import { useUpdateLicense } from "@/hooks/useLicensing";
-import type { License } from "@/types/licensing";
+import { LicenseStatusType, type License } from "@/types/licensing";
 import { toast } from "sonner";
+
+export enum BatchActionType {
+  Revoke = "revoke",
+  Extend = "extend"
+}
 
 interface Props {
   selected: License[];
@@ -24,7 +29,7 @@ interface Props {
 }
 
 export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
-  const [confirmAction, setConfirmAction] = useState<"revoke" | "extend" | null>(null);
+  const [confirmAction, setConfirmAction] = useState<BatchActionType | null>(null);
   const updateMutation = useUpdateLicense();
 
   const count = selected.length;
@@ -32,7 +37,7 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
 
   const handleBatchRevoke = async () => {
     for (const license of selected) {
-      await updateMutation.mutateAsync({ id: license.id, input: { status: "revoked" } });
+      await updateMutation.mutateAsync({ id: license.id, input: { status: LicenseStatusType.Revoked } });
     }
     toast.success(`${count} license(s) revoked`);
     onClear();
@@ -43,7 +48,7 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
     // Extend expiry by 30 days — the backend handles the actual extension.
     // Since the current API uses PATCH with status, we send an update signal.
     for (const license of selected) {
-      await updateMutation.mutateAsync({ id: license.id, input: { status: "active" } });
+      await updateMutation.mutateAsync({ id: license.id, input: { status: LicenseStatusType.Active } });
     }
     toast.success(`${count} license(s) extended`);
     onClear();
@@ -84,11 +89,11 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
           <Download className="h-3.5 w-3.5 mr-1.5" />
           Export CSV
         </Button>
-        <Button variant="outline" size="sm" onClick={() => setConfirmAction("extend")}>
+        <Button variant="outline" size="sm" onClick={() => setConfirmAction(BatchActionType.Extend)}>
           <CalendarPlus className="h-3.5 w-3.5 mr-1.5" />
           Extend 30 days
         </Button>
-        <Button variant="destructive" size="sm" onClick={() => setConfirmAction("revoke")}>
+        <Button variant="destructive" size="sm" onClick={() => setConfirmAction(BatchActionType.Revoke)}>
           <Ban className="h-3.5 w-3.5 mr-1.5" />
           Revoke
         </Button>
@@ -101,10 +106,10 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {confirmAction === "revoke" ? "Revoke Licenses" : "Extend Licenses"}
+              {confirmAction === BatchActionType.Revoke ? "Revoke Licenses" : "Extend Licenses"}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {confirmAction === "revoke"
+              {confirmAction === BatchActionType.Revoke
                 ? `This will revoke ${count} license(s). This action cannot be easily undone.`
                 : `This will extend ${count} license(s) by 30 days.`}
             </AlertDialogDescription>
@@ -112,10 +117,10 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={confirmAction === "revoke" ? handleBatchRevoke : handleBatchExtend}
-              className={confirmAction === "revoke" ? "bg-destructive text-destructive-foreground hover:bg-destructive/90" : ""}
+              onClick={confirmAction === BatchActionType.Revoke ? handleBatchRevoke : handleBatchExtend}
+              className={confirmAction === BatchActionType.Revoke ? "bg-destructive text-destructive-foreground hover:bg-destructive/90" : ""}
             >
-              {confirmAction === "revoke" ? "Revoke All" : "Extend All"}
+              {confirmAction === BatchActionType.Revoke ? "Revoke All" : "Extend All"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

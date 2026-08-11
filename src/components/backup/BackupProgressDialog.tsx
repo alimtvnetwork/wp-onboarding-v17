@@ -16,12 +16,25 @@ import { cn } from "@/lib/utils";
 import { LogViewer, LogEntry } from "@/components/shared/LogViewer";
 import { toast } from "sonner";
 
-export type BackupOperation = "Create" | "Restore" | "Export" | "Import";
+export enum BackupOperationType {
+  Create = "Create",
+  Restore = "Restore",
+  Export = "Export",
+  Import = "Import"
+}
+
+export enum BackupStageStatusType {
+  Pending = "pending",
+  Running = "running",
+  Success = "success",
+  Error = "error",
+  Skipped = "skipped"
+}
 
 export interface BackupStage {
   name: string;
   label: string;
-  status: "pending" | "running" | "success" | "error" | "skipped";
+  status: BackupStageStatusType;
   message?: string;
 }
 
@@ -35,63 +48,63 @@ interface BackupLogPayload {
 interface BackupProgressDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  operation: BackupOperation;
+  operation: BackupOperationType;
   pluginName?: string;
   mappingId?: number;
   onComplete?: (success: boolean) => void;
 }
 
-const OPERATION_CONFIG: Record<BackupOperation, {
+const OPERATION_CONFIG: Record<BackupOperationType, {
   title: string;
   icon: typeof Archive;
   stages: BackupStage[];
 }> = {
-  Create: {
+  [BackupOperationType.Create]: {
     title: "Creating Backup",
     icon: Archive,
     stages: [
-      { name: "init", label: "Initializing", status: "pending" },
-      { name: "prepare", label: "Preparing Files", status: "pending" },
-      { name: "write", label: "Writing Backup", status: "pending" },
-      { name: "retention", label: "Cleanup Old Backups", status: "pending" },
-      { name: "complete", label: "Finalizing", status: "pending" },
+      { name: "init", label: "Initializing", status: BackupStageStatusType.Pending },
+      { name: "prepare", label: "Preparing Files", status: BackupStageStatusType.Pending },
+      { name: "write", label: "Writing Backup", status: BackupStageStatusType.Pending },
+      { name: "retention", label: "Cleanup Old Backups", status: BackupStageStatusType.Pending },
+      { name: "complete", label: "Finalizing", status: BackupStageStatusType.Pending },
     ],
   },
-  Restore: {
+  [BackupOperationType.Restore]: {
     title: "Restoring Backup",
     icon: RotateCcw,
     stages: [
-      { name: "init", label: "Initializing", status: "pending" },
-      { name: "locate", label: "Locating Backup", status: "pending" },
-      { name: "upload", label: "Uploading to WordPress", status: "pending" },
-      { name: "activate", label: "Activating Plugin", status: "pending" },
-      { name: "complete", label: "Finalizing", status: "pending" },
+      { name: "init", label: "Initializing", status: BackupStageStatusType.Pending },
+      { name: "locate", label: "Locating Backup", status: BackupStageStatusType.Pending },
+      { name: "upload", label: "Uploading to WordPress", status: BackupStageStatusType.Pending },
+      { name: "activate", label: "Activating Plugin", status: BackupStageStatusType.Pending },
+      { name: "complete", label: "Finalizing", status: BackupStageStatusType.Pending },
     ],
   },
-  Export: {
+  [BackupOperationType.Export]: {
     title: "Exporting",
     icon: Archive,
     stages: [
-      { name: "init", label: "Initializing", status: "pending" },
-      { name: "scan", label: "Scanning Files", status: "pending" },
-      { name: "compress", label: "Compressing", status: "pending" },
-      { name: "complete", label: "Finalizing", status: "pending" },
+      { name: "init", label: "Initializing", status: BackupStageStatusType.Pending },
+      { name: "scan", label: "Scanning Files", status: BackupStageStatusType.Pending },
+      { name: "compress", label: "Compressing", status: BackupStageStatusType.Pending },
+      { name: "complete", label: "Finalizing", status: BackupStageStatusType.Pending },
     ],
   },
-  Import: {
+  [BackupOperationType.Import]: {
     title: "Importing",
     icon: Archive,
     stages: [
-      { name: "init", label: "Initializing", status: "pending" },
-      { name: "open", label: "Opening Archive", status: "pending" },
-      { name: "extract", label: "Extracting Files", status: "pending" },
-      { name: "complete", label: "Finalizing", status: "pending" },
+      { name: "init", label: "Initializing", status: BackupStageStatusType.Pending },
+      { name: "open", label: "Opening Archive", status: BackupStageStatusType.Pending },
+      { name: "extract", label: "Extracting Files", status: BackupStageStatusType.Pending },
+      { name: "complete", label: "Finalizing", status: BackupStageStatusType.Pending },
     ],
   },
 };
 
 function buildErrorReport(
-  operation: BackupOperation,
+  operation: BackupOperationType,
   pluginName: string | undefined,
   mappingId: number | undefined,
   errorMessage: string,
@@ -99,7 +112,7 @@ function buildErrorReport(
   logs: LogEntry[]
 ): string {
   const timestamp = new Date().toISOString();
-  const failedStage = stages.find(s => s.status === "error");
+  const failedStage = stages.find(s => s.status === BackupStageStatusType.Error);
   
   const logSection = logs.length > 0 
     ? `### Execution Logs\n\`\`\`\n${logs.map(l => `[${l.timestamp}] [${l.level.toUpperCase()}] [${l.step}] ${l.message}`).join('\n')}\n\`\`\`\n`
@@ -142,17 +155,17 @@ export function BackupProgressDialog({
   const [stages, setStages] = useState<BackupStage[]>(config.stages);
   const [overallProgress, setOverallProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFail, setIsFail] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
 
   // Reset state when dialog opens
   useEffect(() => {
     if (open) {
-      setStages(config.stages.map(s => ({ ...s, status: "pending" })));
+      setStages(config.stages.map(s => ({ ...s, status: BackupStageStatusType.Pending })));
       setOverallProgress(0);
       setIsComplete(false);
-      setIsSuccess(false);
+      setIsFail(false);
       setErrorMessage(null);
       setLogs([]);
     }
@@ -179,36 +192,36 @@ export function BackupProgressDialog({
       const step = log.step;
       setStages(prev => prev.map(s => {
         if (s.name === step) {
-          let newStatus: BackupStage["status"] = "running";
-          if (log.level === "error") newStatus = "error";
+          let newStatus: BackupStageStatusType = BackupStageStatusType.Running;
+          if (log.level === "error") newStatus = BackupStageStatusType.Error;
           else if (step === "complete" || log.message.toLowerCase().includes("complete") || log.message.toLowerCase().includes("success")) {
-            newStatus = "success";
+            newStatus = BackupStageStatusType.Success;
           }
           return { ...s, status: newStatus, message: log.message };
         }
         // Mark previous stages as complete if we moved past them
         const currentIdx = prev.findIndex(ps => ps.name === step);
         const stageIdx = prev.findIndex(ps => ps.name === s.name);
-        if (currentIdx > stageIdx && s.status === "running") {
-          return { ...s, status: "success" };
+        if (currentIdx > stageIdx && s.status === BackupStageStatusType.Running) {
+          return { ...s, status: BackupStageStatusType.Success };
         }
         return s;
       }));
       
       // Update progress
-      const completedCount = stages.filter(s => s.status === "success").length;
+      const completedCount = stages.filter(s => s.status === BackupStageStatusType.Success).length;
       setOverallProgress(Math.round((completedCount / stages.length) * 100));
       
       // Handle completion
       if (step === "complete") {
-        const success = log.level !== "error";
+        const isLogFail = log.level === "error";
         setIsComplete(true);
-        setIsSuccess(success);
+        setIsFail(isLogFail);
         setOverallProgress(100);
-        if (!success) {
+        if (isLogFail) {
           setErrorMessage(log.message);
         }
-        onComplete?.(success);
+        onComplete?.(!isLogFail);
       }
       
       // Handle errors
@@ -224,18 +237,18 @@ export function BackupProgressDialog({
 
   const getStageIcon = (stage: BackupStage) => {
     switch (stage.status) {
-      case "success":
+      case BackupStageStatusType.Success:
         return <Check className="h-4 w-4 text-primary" />;
-      case "error":
+      case BackupStageStatusType.Error:
         return <X className="h-4 w-4 text-destructive" />;
-      case "running":
+      case BackupStageStatusType.Running:
         return <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />;
       default:
         return <div className="h-4 w-4 rounded-full border-2 border-muted-foreground/30" />;
     }
   };
 
-  const activeStageCount = stages.filter(s => s.status === "success" || s.status === "running").length;
+  const activeStageCount = stages.filter(s => s.status === BackupStageStatusType.Success || s.status === BackupStageStatusType.Running).length;
   const totalStages = stages.length;
 
   return (
@@ -244,7 +257,7 @@ export function BackupProgressDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Icon className="h-5 w-5 text-primary" />
-            {isComplete ? (isSuccess ? `${config.title} Complete` : `${config.title} Failed`) : config.title}
+            {isComplete ? (!isFail ? `${config.title} Complete` : `${config.title} Failed`) : config.title}
           </DialogTitle>
           <DialogDescription>
             {pluginName ? (
@@ -274,10 +287,10 @@ export function BackupProgressDialog({
                 key={stage.name}
                 className={cn(
                   "flex items-center gap-3 p-3 rounded-lg border transition-colors",
-                  stage.status === "running" && "border-primary bg-primary/5",
-                  stage.status === "success" && "border-primary/30 bg-primary/5",
-                  stage.status === "error" && "border-destructive bg-destructive/5",
-                  stage.status === "pending" && "border-border opacity-60"
+                  stage.status === BackupStageStatusType.Running && "border-primary bg-primary/5",
+                  stage.status === BackupStageStatusType.Success && "border-primary/30 bg-primary/5",
+                  stage.status === BackupStageStatusType.Error && "border-destructive bg-destructive/5",
+                  stage.status === BackupStageStatusType.Pending && "border-border opacity-60"
                 )}
               >
                 {getStageIcon(stage)}
@@ -289,12 +302,12 @@ export function BackupProgressDialog({
                     </p>
                   )}
                 </div>
-                {stage.status === "success" && (
+                {stage.status === BackupStageStatusType.Success && (
                   <Badge variant="outline" className="text-xs text-primary border-primary/30">
                     Done
                   </Badge>
                 )}
-                {stage.status === "error" && (
+                {stage.status === BackupStageStatusType.Error && (
                   <Badge variant="outline" className="text-xs text-destructive border-destructive/30">
                     Failed
                   </Badge>
@@ -312,22 +325,22 @@ export function BackupProgressDialog({
           />
 
           {/* Success Message */}
-          {isComplete && isSuccess && (
+          {isComplete && !isFail && (
             <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
               <div className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-primary" />
                 <span className="font-medium">
-                  {operation === "Create" && "Backup created successfully"}
-                  {operation === "Restore" && "Backup restored successfully"}
-                  {operation === "Export" && "Export completed successfully"}
-                  {operation === "Import" && "Import completed successfully"}
+                  {operation === BackupOperationType.Create && "Backup created successfully"}
+                  {operation === BackupOperationType.Restore && "Backup restored successfully"}
+                  {operation === BackupOperationType.Export && "Export completed successfully"}
+                  {operation === BackupOperationType.Import && "Import completed successfully"}
                 </span>
               </div>
             </div>
           )}
 
           {/* Error Message */}
-          {isComplete && !isSuccess && errorMessage && (
+          {isComplete && isFail && errorMessage && (
             <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
               <div className="flex items-start gap-2">
                 <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />

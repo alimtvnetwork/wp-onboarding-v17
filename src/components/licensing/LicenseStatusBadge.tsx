@@ -1,17 +1,17 @@
 // License status badge component.
 
 import { Badge } from "@/components/ui/badge";
-import type { LicenseStatus } from "@/types/licensing";
+import { LicenseStatusType } from "@/types/licensing";
 
-const statusConfig: Record<LicenseStatus, { label: string; variant: "default" | "destructive" | "secondary" | "outline" }> = {
-  active: { label: "Active", variant: "default" },
-  expired: { label: "Expired", variant: "destructive" },
-  suspended: { label: "Suspended", variant: "secondary" },
-  revoked: { label: "Revoked", variant: "destructive" },
+const statusConfig: Record<LicenseStatusType, { label: string; variant: "default" | "destructive" | "secondary" | "outline" }> = {
+  [LicenseStatusType.Active]: { label: "Active", variant: "default" },
+  [LicenseStatusType.Expired]: { label: "Expired", variant: "destructive" },
+  [LicenseStatusType.Suspended]: { label: "Suspended", variant: "secondary" },
+  [LicenseStatusType.Revoked]: { label: "Revoked", variant: "destructive" },
 };
 
 interface Props {
-  status: LicenseStatus;
+  status: LicenseStatusType;
 }
 
 export function LicenseStatusBadge({ status }: Props) {

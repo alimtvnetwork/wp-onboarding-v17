@@ -34,9 +34,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+export enum RetentionModeType {
+  Age = "age",
+  Count = "count",
+  Both = "both"
+}
+
 export interface RetentionConfig {
   enabled: boolean;
-  mode: "age" | "count" | "both";
+  mode: RetentionModeType;
   maxAgeDays: number;
   maxCount: number;
   autoCleanup: boolean;
@@ -67,10 +73,10 @@ export function SnapshotRetentionPolicy({ config, onChange }: Props) {
     setCleaning(true);
     try {
       const opts: CleanupSnapshotOptions = {};
-      if (config.mode === "age" || config.mode === "both") {
+      if (config.mode === RetentionModeType.Age || config.mode === RetentionModeType.Both) {
         opts.maxAgeDays = config.maxAgeDays;
       }
-      if (config.mode === "count" || config.mode === "both") {
+      if (config.mode === RetentionModeType.Count || config.mode === RetentionModeType.Both) {
         opts.maxCount = config.maxCount;
       }
       const res = await api.cleanupRemoteSnapshots(0, opts);
@@ -107,7 +113,7 @@ export function SnapshotRetentionPolicy({ config, onChange }: Props) {
           <div className="space-y-2">
             <Label className="text-xs">Cleanup Mode</Label>
             <div className="grid grid-cols-3 gap-2">
-              {(["age", "count", "both"] as const).map((mode) => (
+              {[RetentionModeType.Age, RetentionModeType.Count, RetentionModeType.Both].map((mode) => (
                 <button
                   key={mode}
                   type="button"
@@ -119,17 +125,17 @@ export function SnapshotRetentionPolicy({ config, onChange }: Props) {
                       : "hover:bg-accent/50"
                   )}
                 >
-                  {mode === "age" && <Clock className="h-3.5 w-3.5" />}
-                  {mode === "count" && <Hash className="h-3.5 w-3.5" />}
-                  {mode === "both" && <Shield className="h-3.5 w-3.5" />}
-                  <span className="capitalize">{mode === "both" ? "Both" : `By ${mode}`}</span>
+                  {mode === RetentionModeType.Age && <Clock className="h-3.5 w-3.5" />}
+                  {mode === RetentionModeType.Count && <Hash className="h-3.5 w-3.5" />}
+                  {mode === RetentionModeType.Both && <Shield className="h-3.5 w-3.5" />}
+                  <span className="capitalize">{mode === RetentionModeType.Both ? "Both" : `By ${mode}`}</span>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Age-based settings */}
-          {(config.mode === "age" || config.mode === "both") && (
+          {(config.mode === RetentionModeType.Age || config.mode === RetentionModeType.Both) && (
             <div className="space-y-2 rounded-lg border p-3 bg-accent/10">
               <div className="flex items-center gap-1.5 text-xs font-medium">
                 <Clock className="h-3.5 w-3.5 text-primary" />
@@ -157,7 +163,7 @@ export function SnapshotRetentionPolicy({ config, onChange }: Props) {
           )}
 
           {/* Count-based settings */}
-          {(config.mode === "count" || config.mode === "both") && (
+          {(config.mode === RetentionModeType.Count || config.mode === RetentionModeType.Both) && (
             <div className="space-y-2 rounded-lg border p-3 bg-accent/10">
               <div className="flex items-center gap-1.5 text-xs font-medium">
                 <Hash className="h-3.5 w-3.5 text-primary" />
@@ -219,10 +225,10 @@ export function SnapshotRetentionPolicy({ config, onChange }: Props) {
                 <AlertDialogDescription className="space-y-2">
                   <span>This will permanently delete snapshots matching the current policy:</span>
                   <ul className="list-disc list-inside text-xs space-y-1 mt-2">
-                    {(config.mode === "age" || config.mode === "both") && (
+                    {(config.mode === RetentionModeType.Age || config.mode === RetentionModeType.Both) && (
                       <li>Snapshots older than <strong>{config.maxAgeDays} days</strong></li>
                     )}
-                    {(config.mode === "count" || config.mode === "both") && (
+                    {(config.mode === RetentionModeType.Count || config.mode === RetentionModeType.Both) && (
                       <li>Keeping only the <strong>{config.maxCount} most recent</strong></li>
                     )}
                   </ul>

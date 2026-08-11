@@ -101,6 +101,7 @@ export type {
   DebugRouteEntry,
 } from './types';
 
+export { ConnectionStatusType } from './types';
 // Envelope utilities
 export { isEnvelope, parseEnvelope, looksLikeJson } from './envelope';
 export type { RawEnvelope } from './envelope';

@@ -19,8 +19,30 @@ const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
+export enum SidebarStateType {
+  Expanded = "expanded",
+  Collapsed = "collapsed",
+}
+
+export enum SidebarSideType {
+  Left = "left",
+  Right = "right",
+}
+
+export enum SidebarVariantType {
+  Sidebar = "sidebar",
+  Floating = "floating",
+  Inset = "inset",
+}
+
+export enum SidebarCollapsibleType {
+  Offcanvas = "offcanvas",
+  Icon = "icon",
+  None = "none",
+}
+
 type SidebarContext = {
-  state: "expanded" | "collapsed";
+  state: SidebarStateType;
   open: boolean;
   setOpen: (open: boolean) => void;
   openMobile: boolean;
@@ -90,7 +112,7 @@ const SidebarProvider = React.forwardRef<
 
   // We add a state so that we can do data-state="expanded" or "collapsed".
   // This makes it easier to style the sidebar with Tailwind classes.
-  const state = open ? "expanded" : "collapsed";
+  const state = open ? SidebarStateType.Expanded : SidebarStateType.Collapsed;
 
   const contextValue = React.useMemo<SidebarContext>(
     () => ({
@@ -131,14 +153,14 @@ SidebarProvider.displayName = "SidebarProvider";
 const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
-    side?: "left" | "right";
-    variant?: "sidebar" | "floating" | "inset";
-    collapsible?: "offcanvas" | "icon" | "none";
+    side?: SidebarSideType;
+    variant?: SidebarVariantType;
+    collapsible?: SidebarCollapsibleType;
   }
->(({ side = "left", variant = "sidebar", collapsible = "offcanvas", className, children, ...props }, ref) => {
+>(({ side = SidebarSideType.Left, variant = SidebarVariantType.Sidebar, collapsible = SidebarCollapsibleType.Offcanvas, className, children, ...props }, ref) => {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
-  if (collapsible === "none") {
+  if (collapsible === SidebarCollapsibleType.None) {
     return (
       <div
         className={cn("flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground", className)}
@@ -175,7 +197,7 @@ const Sidebar = React.forwardRef<
       ref={ref}
       className="group peer hidden text-sidebar-foreground md:block"
       data-state={state}
-      data-collapsible={state === "collapsed" ? collapsible : ""}
+      data-collapsible={state === SidebarStateType.Collapsed ? collapsible : ""}
       data-variant={variant}
       data-side={side}
     >
@@ -185,7 +207,7 @@ const Sidebar = React.forwardRef<
           "relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset"
+          variant === SidebarVariantType.Floating || variant === SidebarVariantType.Inset
             ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
             : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
         )}
@@ -193,11 +215,11 @@ const Sidebar = React.forwardRef<
       <div
         className={cn(
           "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
-          side === "left"
+          side === SidebarSideType.Left
             ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
             : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
           // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset"
+          variant === SidebarVariantType.Floating || variant === SidebarVariantType.Inset
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
             : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
           className,
@@ -468,7 +490,7 @@ const SidebarMenuButton = React.forwardRef<
   return (
     <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent side="right" align="center" hidden={state !== "collapsed" || isMobile} {...tooltip} />
+      <TooltipContent side={SidebarSideType.Right} align="center" hidden={state !== SidebarStateType.Collapsed || isMobile} {...tooltip} />
     </Tooltip>
   );
 });

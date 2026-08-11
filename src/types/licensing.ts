@@ -2,18 +2,33 @@
 
 // ── Enum-aligned string unions ──────────────────────────
 
-export type LicenseStatus = "active" | "expired" | "suspended" | "revoked";
-export type LicenseType = "standard" | "professional" | "enterprise";
-export type ProductType = "riseup-uploader";
-export type AuditAction =
-  | "created"
-  | "activated"
-  | "deactivated"
-  | "validated"
-  | "expired"
-  | "revoked"
-  | "updated"
-  | "deleted";
+export enum LicenseStatusType {
+  Active = "active",
+  Expired = "expired",
+  Suspended = "suspended",
+  Revoked = "revoked"
+}
+
+export enum LicenseType {
+  Standard = "standard",
+  Professional = "professional",
+  Enterprise = "enterprise"
+}
+
+export enum ProductType {
+  RiseupUploader = "riseup-uploader"
+}
+
+export enum AuditActionType {
+  Created = "created",
+  Activated = "activated",
+  Deactivated = "deactivated",
+  Validated = "validated",
+  Expired = "expired",
+  Revoked = "revoked",
+  Updated = "updated",
+  Deleted = "deleted"
+}
 
 // ── Domain models (match Go JSON output) ────────────────
 
@@ -23,7 +38,7 @@ export interface License {
   email: string;
   product: ProductType;
   type: LicenseType;
-  status: LicenseStatus;
+  status: LicenseStatusType;
   max_activations: number;
   notes?: string;
   created_at: string;
@@ -44,7 +59,7 @@ export interface Activation {
 export interface AuditLog {
   id: number;
   license_id?: number | null;
-  action: AuditAction;
+  action: AuditActionType;
   domain?: string;
   ip_address?: string;
   details?: unknown;
@@ -62,7 +77,7 @@ export interface CreateLicenseInput {
 }
 
 export interface UpdateLicenseInput {
-  status?: LicenseStatus;
+  status?: LicenseStatusType;
   type?: LicenseType;
   maxActivations?: number;
   notes?: string;

@@ -40,31 +40,38 @@ function formatBytes(bytes: number): string {
 }
 
 // ── Log-line severity detection ────────────────────────────────
-type Severity = "error" | "warning" | "info" | "debug" | "date" | "plain";
+export enum SeverityType {
+  Error = "error",
+  Warning = "warning",
+  Info = "info",
+  Debug = "debug",
+  Date = "date",
+  Plain = "plain"
+}
 
-const SEV_PATTERNS: [RegExp, Severity][] = [
-  [/\b(fatal|exception|critical)\b/i, "error"],
-  [/\b(error|err|fail(ed|ure)?)\b/i, "error"],
-  [/\b(warn(ing)?)\b/i, "warning"],
-  [/\b(notice|info)\b/i, "info"],
-  [/\b(debug|trace)\b/i, "debug"],
-  [/^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}/, "date"],
+const SEV_PATTERNS: [RegExp, SeverityType][] = [
+  [/\b(fatal|exception|critical)\b/i, SeverityType.Error],
+  [/\b(error|err|fail(ed|ure)?)\b/i, SeverityType.Error],
+  [/\b(warn(ing)?)\b/i, SeverityType.Warning],
+  [/\b(notice|info)\b/i, SeverityType.Info],
+  [/\b(debug|trace)\b/i, SeverityType.Debug],
+  [/^\d{4}[-/]\d{2}[-/]\d{2}[T ]\d{2}:\d{2}/, SeverityType.Date],
 ];
 
-function detectSeverity(line: string): Severity {
+function detectSeverity(line: string): SeverityType {
   for (const [re, sev] of SEV_PATTERNS) {
     if (re.test(line)) return sev;
   }
-  return "plain";
+  return SeverityType.Plain;
 }
 
-const SEV_CLASSES: Record<Severity, string> = {
-  error:   "text-red-400",
-  warning: "text-amber-400",
-  info:    "text-sky-400",
-  debug:   "text-muted-foreground/70",
-  date:    "text-emerald-400",
-  plain:   "text-foreground",
+const SEV_CLASSES: Record<SeverityType, string> = {
+  [SeverityType.Error]:   "text-red-400",
+  [SeverityType.Warning]: "text-amber-400",
+  [SeverityType.Info]:    "text-sky-400",
+  [SeverityType.Debug]:   "text-muted-foreground/70",
+  [SeverityType.Date]:    "text-emerald-400",
+  [SeverityType.Plain]:   "text-foreground",
 };
 
 const FILTER_OPTIONS: { value: string; label: string }[] = [

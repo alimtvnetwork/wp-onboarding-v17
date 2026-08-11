@@ -1,4 +1,4 @@
-import { useTheme, Theme, AccentColor, type SidebarTheme, type FontSize, type BorderRadius } from "@/hooks/useTheme";
+import { useTheme, ThemeType, AccentColorType, SidebarThemeType, FontSizeType, BorderRadiusType } from "@/hooks/useTheme";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -11,38 +11,38 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Monitor, Moon, Sun, Palette, Type, Square, Zap, PanelLeft } from "lucide-react";
 
-const themeOptions: { value: Theme; label: string; icon: React.ReactNode }[] = [
-  { value: "light", label: "Light", icon: <Sun className="h-4 w-4" /> },
-  { value: "dark", label: "Dark", icon: <Moon className="h-4 w-4" /> },
-  { value: "system", label: "System", icon: <Monitor className="h-4 w-4" /> },
-  { value: "high-contrast", label: "High Contrast", icon: <Sun className="h-4 w-4" /> },
-  { value: "high-contrast-dark", label: "High Contrast Dark", icon: <Moon className="h-4 w-4" /> },
+const themeOptions: { value: ThemeType; label: string; icon: React.ReactNode }[] = [
+  { value: ThemeType.Light, label: "Light", icon: <Sun className="h-4 w-4" /> },
+  { value: ThemeType.Dark, label: "Dark", icon: <Moon className="h-4 w-4" /> },
+  { value: ThemeType.System, label: "System", icon: <Monitor className="h-4 w-4" /> },
+  { value: ThemeType.HighContrast, label: "High Contrast", icon: <Sun className="h-4 w-4" /> },
+  { value: ThemeType.HighContrastDark, label: "High Contrast Dark", icon: <Moon className="h-4 w-4" /> },
 ];
 
-const accentColors: { value: AccentColor; label: string; color: string }[] = [
-  { value: "blue", label: "Blue", color: "bg-blue-500" },
-  { value: "indigo", label: "Indigo", color: "bg-indigo-500" },
-  { value: "violet", label: "Violet", color: "bg-violet-500" },
-  { value: "purple", label: "Purple", color: "bg-purple-500" },
-  { value: "pink", label: "Pink", color: "bg-pink-500" },
-  { value: "rose", label: "Rose", color: "bg-rose-500" },
-  { value: "red", label: "Red", color: "bg-red-500" },
-  { value: "orange", label: "Orange", color: "bg-orange-500" },
-  { value: "amber", label: "Amber", color: "bg-amber-500" },
-  { value: "yellow", label: "Yellow", color: "bg-yellow-500" },
-  { value: "lime", label: "Lime", color: "bg-lime-500" },
-  { value: "green", label: "Green", color: "bg-green-500" },
-  { value: "emerald", label: "Emerald", color: "bg-emerald-500" },
-  { value: "teal", label: "Teal", color: "bg-teal-500" },
-  { value: "cyan", label: "Cyan", color: "bg-cyan-500" },
-  { value: "sky", label: "Sky", color: "bg-sky-500" },
+const accentColors: { value: AccentColorType; label: string; color: string }[] = [
+  { value: AccentColorType.Blue, label: "Blue", color: "bg-blue-500" },
+  { value: AccentColorType.Indigo, label: "Indigo", color: "bg-indigo-500" },
+  { value: AccentColorType.Violet, label: "Violet", color: "bg-violet-500" },
+  { value: AccentColorType.Purple, label: "Purple", color: "bg-purple-500" },
+  { value: AccentColorType.Pink, label: "Pink", color: "bg-pink-500" },
+  { value: AccentColorType.Rose, label: "Rose", color: "bg-rose-500" },
+  { value: AccentColorType.Red, label: "Red", color: "bg-red-500" },
+  { value: AccentColorType.Orange, label: "Orange", color: "bg-orange-500" },
+  { value: AccentColorType.Amber, label: "Amber", color: "bg-amber-500" },
+  { value: AccentColorType.Yellow, label: "Yellow", color: "bg-yellow-500" },
+  { value: AccentColorType.Lime, label: "Lime", color: "bg-lime-500" },
+  { value: AccentColorType.Green, label: "Green", color: "bg-green-500" },
+  { value: AccentColorType.Emerald, label: "Emerald", color: "bg-emerald-500" },
+  { value: AccentColorType.Teal, label: "Teal", color: "bg-teal-500" },
+  { value: AccentColorType.Cyan, label: "Cyan", color: "bg-cyan-500" },
+  { value: AccentColorType.Sky, label: "Sky", color: "bg-sky-500" },
 ];
 
-const sidebarThemes: { value: SidebarTheme; label: string; preview: string }[] = [
-  { value: "night-blue", label: "Night Blue", preview: "bg-[#0B1220] border-blue-500" },
-  { value: "midnight-purple", label: "Midnight Purple", preview: "bg-[#120A1F] border-purple-500" },
-  { value: "emerald-dark", label: "Emerald Dark", preview: "bg-[#04140E] border-emerald-500" },
-  { value: "solar-white", label: "Solar White", preview: "bg-white border-orange-400" },
+const sidebarThemes: { value: SidebarThemeType; label: string; preview: string }[] = [
+  { value: SidebarThemeType.NightBlue, label: "Night Blue", preview: "bg-[#0B1220] border-blue-500" },
+  { value: SidebarThemeType.MidnightPurple, label: "Midnight Purple", preview: "bg-[#120A1F] border-purple-500" },
+  { value: SidebarThemeType.EmeraldDark, label: "Emerald Dark", preview: "bg-[#04140E] border-emerald-500" },
+  { value: SidebarThemeType.SolarWhite, label: "Solar White", preview: "bg-white border-orange-400" },
 ];
 
 export function ThemeSelector() {
@@ -79,7 +79,7 @@ export function ThemeSelector() {
         {/* Theme Selection */}
         <div className="space-y-2">
           <Label htmlFor="theme">Theme</Label>
-          <Select value={theme} onValueChange={(v) => setTheme(v as Theme)}>
+          <Select value={theme} onValueChange={(v) => setTheme(v as ThemeType)}>
             <SelectTrigger id="theme" className="w-full">
               <SelectValue placeholder="Select theme" />
             </SelectTrigger>
@@ -146,16 +146,16 @@ export function ThemeSelector() {
             <Type className="h-4 w-4" />
             Font Size
           </Label>
-          <Select value={fontSize} onValueChange={(v) => setFontSize(v as FontSize)}>
+          <Select value={fontSize} onValueChange={(v) => setFontSize(v as FontSizeType)}>
             <SelectTrigger id="fontSize">
               <SelectValue placeholder="Select size" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="x-small">Extra Small</SelectItem>
-              <SelectItem value="small">Small</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="large">Large</SelectItem>
-              <SelectItem value="x-large">Extra Large</SelectItem>
+              <SelectItem value={FontSizeType.XSmall}>Extra Small</SelectItem>
+              <SelectItem value={FontSizeType.Small}>Small</SelectItem>
+              <SelectItem value={FontSizeType.Medium}>Medium</SelectItem>
+              <SelectItem value={FontSizeType.Large}>Large</SelectItem>
+              <SelectItem value={FontSizeType.XLarge}>Extra Large</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -166,16 +166,16 @@ export function ThemeSelector() {
             <Square className="h-4 w-4" />
             Border Radius
           </Label>
-          <Select value={borderRadius} onValueChange={(v) => setBorderRadius(v as BorderRadius)}>
+          <Select value={borderRadius} onValueChange={(v) => setBorderRadius(v as BorderRadiusType)}>
             <SelectTrigger id="borderRadius">
               <SelectValue placeholder="Select radius" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None (Sharp)</SelectItem>
-              <SelectItem value="small">Small</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="large">Large</SelectItem>
-              <SelectItem value="full">Full (Pill)</SelectItem>
+              <SelectItem value={BorderRadiusType.None}>None (Sharp)</SelectItem>
+              <SelectItem value={BorderRadiusType.Small}>Small</SelectItem>
+              <SelectItem value={BorderRadiusType.Medium}>Medium</SelectItem>
+              <SelectItem value={BorderRadiusType.Large}>Large</SelectItem>
+              <SelectItem value={BorderRadiusType.Full}>Full (Pill)</SelectItem>
             </SelectContent>
           </Select>
         </div>

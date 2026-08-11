@@ -9,7 +9,11 @@ interface BackendStatusProps {
   pollInterval?: number;
 }
 
-type DisconnectReason = "html" | "network" | "non2xx";
+export enum DisconnectReasonType {
+  Html = "html",
+  Network = "network",
+  Non2xx = "non2xx"
+}
 
 /**
  * Displays a banner when the backend is disconnected.
@@ -26,7 +30,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
     code: string;
     message: string;
     url: string;
-    reason: DisconnectReason;
+    reason: DisconnectReasonType;
   } | null>(null);
   const { captureError, openErrorModal } = useErrorStore();
 
@@ -53,7 +57,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
           message:
             "Backend returned HTML instead of JSON. This usually means the backend is not running or the API URL is misconfigured.",
           url: healthUrl,
-          reason: "html" as DisconnectReason,
+          reason: DisconnectReasonType.Html,
         };
         setLastError(errorInfo);
         setIsConnected(false);
@@ -72,7 +76,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
           code: "E9003",
           message: `Backend returned HTTP ${response.status}: ${data.error?.message || "Unknown error"}`,
           url: healthUrl,
-          reason: "non2xx" as DisconnectReason,
+          reason: DisconnectReasonType.Non2xx,
         };
         setLastError(errorInfo);
         setIsConnected(false);
@@ -86,7 +90,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
             ? err.message
             : "Network error - backend unreachable",
         url: healthUrl,
-        reason: "network" as DisconnectReason,
+        reason: DisconnectReasonType.Network,
       };
       setLastError(errorInfo);
       setIsConnected(false);
@@ -143,11 +147,11 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
   const getBannerMessage = () => {
     if (!lastError) return "Backend disconnected";
     switch (lastError.reason) {
-      case "html":
+      case DisconnectReasonType.Html:
         return "Backend disconnected — API requests are returning HTML instead of JSON";
-      case "network":
+      case DisconnectReasonType.Network:
         return "Backend unreachable — network error or server not running";
-      case "non2xx":
+      case DisconnectReasonType.Non2xx:
         return `Backend error — ${lastError.message}`;
       default:
         return "Backend disconnected";

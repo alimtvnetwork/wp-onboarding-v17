@@ -3,68 +3,87 @@ import { useSettings } from "./useSettings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api, requireSuccess } from "@/lib/api";
 
-export type Theme = 
-  | "light"
-  | "dark"
-  | "system"
-  | "high-contrast"
-  | "high-contrast-dark";
+export enum ThemeType {
+  Light = "light",
+  Dark = "dark",
+  System = "system",
+  HighContrast = "high-contrast",
+  HighContrastDark = "high-contrast-dark",
+}
 
-export type AccentColor =
-  | "blue"
-  | "indigo"
-  | "violet"
-  | "purple"
-  | "pink"
-  | "rose"
-  | "red"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "teal"
-  | "cyan"
-  | "sky";
+export enum AccentColorType {
+  Blue = "blue",
+  Indigo = "indigo",
+  Violet = "violet",
+  Purple = "purple",
+  Pink = "pink",
+  Rose = "rose",
+  Red = "red",
+  Orange = "orange",
+  Amber = "amber",
+  Yellow = "yellow",
+  Lime = "lime",
+  Green = "green",
+  Emerald = "emerald",
+  Teal = "teal",
+  Cyan = "cyan",
+  Sky = "sky",
+}
 
-export type FontSize = "x-small" | "small" | "medium" | "large" | "x-large";
+export enum FontSizeType {
+  XSmall = "x-small",
+  Small = "small",
+  Medium = "medium",
+  Large = "large",
+  XLarge = "x-large",
+}
 
-export type BorderRadius = "none" | "small" | "medium" | "large" | "full";
+export enum BorderRadiusType {
+  None = "none",
+  Small = "small",
+  Medium = "medium",
+  Large = "large",
+  Full = "full",
+}
 
-export type SidebarTheme = "night-blue" | "midnight-purple" | "emerald-dark" | "solar-white";
+export enum SidebarThemeType {
+  NightBlue = "night-blue",
+  MidnightPurple = "midnight-purple",
+  EmeraldDark = "emerald-dark",
+  SolarWhite = "solar-white",
+}
 
 export interface ThemeConfig {
-  theme: Theme;
-  accentColor: AccentColor;
-  fontSize: FontSize;
-  borderRadius: BorderRadius;
+  theme: ThemeType;
+  accentColor: AccentColorType;
+  fontSize: FontSizeType;
+  borderRadius: BorderRadiusType;
   compactMode: boolean;
   animationsEnabled: boolean;
-  sidebarTheme: SidebarTheme;
+  sidebarTheme: SidebarThemeType;
 }
 
 const defaultThemeConfig: ThemeConfig = {
-  theme: "system",
-  accentColor: "green",
-  fontSize: "medium",
-  borderRadius: "medium",
+  theme: ThemeType.System,
+  accentColor: AccentColorType.Green,
+  fontSize: FontSizeType.Medium,
+  borderRadius: BorderRadiusType.Medium,
   compactMode: false,
   animationsEnabled: true,
-  sidebarTheme: "night-blue",
+  sidebarTheme: SidebarThemeType.NightBlue,
 };
 
 // Get system preference for dark mode
-function getSystemTheme(): "light" | "dark" {
-  if (typeof window === "undefined") return "light";
+function getSystemTheme(): ThemeType.Light | ThemeType.Dark {
+  if (typeof window === "undefined") return ThemeType.Light;
   return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+    ? ThemeType.Dark
+    : ThemeType.Light;
 }
 
 // Resolve theme including system preference
-function resolveTheme(theme: Theme): "light" | "dark" | "high-contrast" | "high-contrast-dark" {
-  if (theme === "system") {
+function resolveTheme(theme: ThemeType): ThemeType.Light | ThemeType.Dark | ThemeType.HighContrast | ThemeType.HighContrastDark {
+  if (theme === ThemeType.System) {
     return getSystemTheme();
   }
 
@@ -83,13 +102,13 @@ export function useTheme() {
     if (settings?.appearance) {
       const appearance = settings.appearance;
       setLocalConfig({
-        theme: (appearance.theme as Theme) || defaultThemeConfig.theme,
-        accentColor: (appearance.accentColor as AccentColor) || defaultThemeConfig.accentColor,
-        fontSize: (appearance.fontSize as FontSize) || defaultThemeConfig.fontSize,
-        borderRadius: (appearance.borderRadius as BorderRadius) || defaultThemeConfig.borderRadius,
+        theme: (appearance.theme as ThemeType) || defaultThemeConfig.theme,
+        accentColor: (appearance.accentColor as AccentColorType) || defaultThemeConfig.accentColor,
+        fontSize: (appearance.fontSize as FontSizeType) || defaultThemeConfig.fontSize,
+        borderRadius: (appearance.borderRadius as BorderRadiusType) || defaultThemeConfig.borderRadius,
         compactMode: appearance.compactMode ?? defaultThemeConfig.compactMode,
         animationsEnabled: appearance.animationsEnabled ?? defaultThemeConfig.animationsEnabled,
-        sidebarTheme: (appearance.sidebarTheme as SidebarTheme) || defaultThemeConfig.sidebarTheme,
+        sidebarTheme: (appearance.sidebarTheme as SidebarThemeType) || defaultThemeConfig.sidebarTheme,
       });
     }
   }, [settings]);
@@ -126,7 +145,7 @@ export function useTheme() {
 
   // Listen for system theme changes
   useEffect(() => {
-    if (localConfig.theme !== "system") return;
+    if (localConfig.theme !== ThemeType.System) return;
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
@@ -155,22 +174,22 @@ export function useTheme() {
     },
   });
 
-  const setTheme = useCallback((theme: Theme) => {
+  const setTheme = useCallback((theme: ThemeType) => {
     setLocalConfig((prev) => ({ ...prev, theme }));
     updateSettingMutation.mutate({ key: "appearance.theme", value: theme });
   }, [updateSettingMutation]);
 
-  const setAccentColor = useCallback((accentColor: AccentColor) => {
+  const setAccentColor = useCallback((accentColor: AccentColorType) => {
     setLocalConfig((prev) => ({ ...prev, accentColor }));
     updateSettingMutation.mutate({ key: "appearance.accentColor", value: accentColor });
   }, [updateSettingMutation]);
 
-  const setFontSize = useCallback((fontSize: FontSize) => {
+  const setFontSize = useCallback((fontSize: FontSizeType) => {
     setLocalConfig((prev) => ({ ...prev, fontSize }));
     updateSettingMutation.mutate({ key: "appearance.fontSize", value: fontSize });
   }, [updateSettingMutation]);
 
-  const setBorderRadius = useCallback((borderRadius: BorderRadius) => {
+  const setBorderRadius = useCallback((borderRadius: BorderRadiusType) => {
     setLocalConfig((prev) => ({ ...prev, borderRadius }));
     updateSettingMutation.mutate({ key: "appearance.borderRadius", value: borderRadius });
   }, [updateSettingMutation]);
@@ -185,7 +204,7 @@ export function useTheme() {
     updateSettingMutation.mutate({ key: "appearance.animationsEnabled", value: String(animationsEnabled) });
   }, [updateSettingMutation]);
 
-  const setSidebarTheme = useCallback((sidebarTheme: SidebarTheme) => {
+  const setSidebarTheme = useCallback((sidebarTheme: SidebarThemeType) => {
     setLocalConfig((prev) => ({ ...prev, sidebarTheme }));
     updateSettingMutation.mutate({ key: "appearance.sidebarTheme", value: sidebarTheme });
   }, [updateSettingMutation]);
