@@ -35,7 +35,7 @@ trait CloudStorageUploadTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $accountId  = (int) ($body[ResponseKeyType::AccountId->value] ?? 0);
@@ -44,9 +44,9 @@ trait CloudStorageUploadTrait {
 
             $account = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',

@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
 
 use WP_REST_Request;
 use WP_REST_Response;
+use Throwable;
 
 use RiseupAsia\Database\Database;
 use RiseupAsia\Database\Orm;
@@ -110,7 +111,7 @@ trait LogClearingTrait
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $token = $body['token'] ?? '';
@@ -261,7 +262,7 @@ trait LogClearingTrait
 
             Orm::forTable(TableType::ErrorSessions->value)->deleteAll();
             $result[ResponseKeyType::ErrorSessions->value] = true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->fileLogger->logException($e, 'Failed to clear database tables during remote log clear');
         }
 
@@ -291,12 +292,12 @@ trait LogClearingTrait
                 ->set('Details', $details)
                 ->set('CreatedAt', $now)
                 ->save();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // Silently fail — we're in the logger scope
         }
     }
 
-    /** Build the JSON details string for the audit entry. */
+    /** Build the Json details string for the audit entry. */
     private function buildAuditDetails(string $clientIp, string $timestamp, array $clearResult): string {
         return json_encode([
             'cleared_files'  => ['log.txt', 'error.txt', 'stacktrace.txt'],
@@ -332,15 +333,15 @@ trait LogClearingTrait
     private function isMachineApproved(string $machineName): bool {
         $settingsJson = $this->loadPluginSettings();
         $approvedMachines = $settingsJson['approved_machines'] ?? [];
-        $hasNoApprovedMachines = empty($approvedMachines);
+        $hasApprovedMachines = !empty($approvedMachines);
 
-        if ($hasNoApprovedMachines) {
+        if (!$hasApprovedMachines) {
             // Fallback: check WP option (populated by remote -am approval)
             $settingsOption = get_option(PluginConfigType::SettingsGroup->value, []);
             $approvedMachines = $settingsOption['approved_machines'] ?? [];
-            $hasNoApprovedMachines = empty($approvedMachines);
+            $hasApprovedMachines = !empty($approvedMachines);
 
-            if ($hasNoApprovedMachines) {
+            if (!$hasApprovedMachines) {
                 return false;
             }
         }
@@ -387,7 +388,7 @@ trait LogClearingTrait
         }
 
         $settings = json_decode($contents, true);
-        $isValidSettings = gettype($settings) === PhpNativeType::PhpArray->value;
+        $isValidSettings = PhpNativeType::PhpArray->isMatches($settings);
 
         return $isValidSettings ? $settings : [];
     }
@@ -430,7 +431,7 @@ trait LogClearingTrait
         return PluginConfigType::Slug->value . '_clear_token_' . md5(strtolower($machineName));
     }
 
-    /** Resolve the client IP address. */
+    /** Resolve the client Ip address. */
     private function resolveClientIp(): string {
         $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
         $hasForwardedFor = !empty($forwardedFor);

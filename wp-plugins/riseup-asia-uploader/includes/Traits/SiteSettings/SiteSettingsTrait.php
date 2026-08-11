@@ -207,8 +207,8 @@ trait SiteSettingsTrait
             return false;
         }
 
-        $isNotWritable = !is_writable($configPath);
-        if ($isNotWritable) {
+        $isWritable = is_writable($configPath);
+        if (!$isWritable) {
             $this->fileLogger->warning('wp-config.php is not writable', ['path' => $configPath]);
             return false;
         }
@@ -332,8 +332,8 @@ trait SiteSettingsTrait
      */
     private function updateHtaccessPhpValue(string $path, string $directive, string $value): bool
     {
-        $isNotWritable = !is_writable($path);
-        if ($isNotWritable) {
+        $isWritable = is_writable($path);
+        if (!$isWritable) {
             return false;
         }
 

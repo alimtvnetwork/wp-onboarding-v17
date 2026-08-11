@@ -36,3 +36,5 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/nikic/php-parser/lib/PhpPar
   `// Now map them to the internal symbol ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive) - Vendor code and standard parsing terminology (non-terminal)

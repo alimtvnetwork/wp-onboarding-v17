@@ -59,7 +59,7 @@ trait LogEmailTrait
         $isBodyInvalid = ($body === null);
 
         if ($isBodyInvalid) {
-            return $this->validationError('Invalid or missing JSON body', $request);
+            return $this->validationError('Invalid or missing Json body', $request);
         }
         $recipient = $this->resolveEmailRecipient($body);
         $includeArchives = (bool) ($body['include_archives'] ?? false);
@@ -72,9 +72,9 @@ trait LogEmailTrait
 
     /** Validate collected files and send the email. */
     private function validateAndSendLogEmail(string $machineName, string $recipient, array $collected): WP_REST_Response {
-        $hasNoFiles = empty($collected['attachments']);
+        $hasFiles = !empty($collected['attachments']);
 
-        if ($hasNoFiles) {
+        if (!$hasFiles) {
             return $this->buildLogErrorResponse('No log files found', 'no_logs_found', HttpStatusType::NotFound);
         }
 
@@ -322,7 +322,7 @@ trait LogEmailTrait
             PluginConfigType::Name->value . ' — Log File Export',
             str_repeat('=', 50),
             '',
-            'Site URL:        ' . get_site_url(),
+            'Site Url:        ' . get_site_url(),
             'Plugin Version:  ' . PluginConfigType::Version->value,
             'PHP Version:     ' . phpversion(),
             'WordPress:       ' . get_bloginfo('version'),

@@ -12,3 +12,5 @@ Target File: `wp-plugins/riseup-asia-uploader/tests/Unit/Enums/HttpStatusTypeTes
   `foreach ($nonRetryable as $code) {`
   **Instruction**: Refactor the boolean variable/function to use a positive semantic name (e.g. isPending instead of isNotReady) and reverse the logic if necessary.
 
+
+[x] FIXED

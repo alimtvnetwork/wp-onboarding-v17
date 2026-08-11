@@ -50,12 +50,12 @@ final class HttpStatusTypeTest extends TestCase
             HttpStatusType::InternalServerError, HttpStatusType::BadGateway,
             HttpStatusType::ServiceUnavailable, HttpStatusType::GatewayTimeout,
         ];
-        $nonRetryable = [HttpStatusType::BadRequest, HttpStatusType::NotFound, HttpStatusType::Ok];
+        $unretryableCodes = [HttpStatusType::BadRequest, HttpStatusType::NotFound, HttpStatusType::Ok];
 
         foreach ($retryable as $code) {
             $this->assertTrue($code->isRetryable(), "{$code->name} should be retryable");
         }
-        foreach ($nonRetryable as $code) {
+        foreach ($unretryableCodes as $code) {
             $this->assertFalse($code->isRetryable(), "{$code->name} should not be retryable");
         }
     }
