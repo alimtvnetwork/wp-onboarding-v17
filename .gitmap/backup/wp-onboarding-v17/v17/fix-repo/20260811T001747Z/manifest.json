@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "repo": "wp-onboarding-v17",
+  "currentVersion": 17,
+  "timestamp": "20260811T001747Z",
+  "gitmapVersion": "v6.91.0",
+  "files": [
+    "CHANGELOG.md",
+    "backend/config.json",
+    "spec/08-error-manage/02-error-modal/copy-formats.md",
+    "spec/08-error-manage/05-response-envelope/envelope-error.json",
+    "src/components/settings/AboutPanel.tsx",
+    "wp-plugins/scripts/wp-plugin-config.json"
+  ]
+}
