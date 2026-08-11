@@ -32,3 +32,5 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/phpunit/phpunit/src/Metadat
   `if ($metadataForClass->isCoversNothing()->isNotEmpty()) {`
   **Instruction**: Refactor the boolean variable/function to use a positive semantic name (e.g. isPending instead of isNotReady) and reverse the logic if necessary.
 
+
+[x] FIXED

@@ -65,7 +65,7 @@ final readonly class DataProvider
             return $this->dataProvidedByTestWithAnnotation($className, $methodName);
         }
 
-        if ($dataProvider->isNotEmpty()) {
+        if (!$dataProvider->isEmpty()) {
             $data = $this->dataProvidedByMethods($className, $methodName, $dataProvider);
         } else {
             $data = $this->dataProvidedByMetadata($testWith);

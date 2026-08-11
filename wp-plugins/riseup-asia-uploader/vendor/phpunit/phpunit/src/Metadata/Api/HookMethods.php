@@ -61,7 +61,7 @@ final class HookMethods
             $metadata = Registry::parser()->forMethod($className, $methodName);
 
             if ($method->isStatic()) {
-                if ($metadata->isBeforeClass()->isNotEmpty()) {
+                if (!$metadata->isBeforeClass()->isEmpty()) {
                     $beforeClass = $metadata->isBeforeClass()->asArray()[0];
                     assert($beforeClass instanceof BeforeClass);
 
@@ -70,7 +70,7 @@ final class HookMethods
                     );
                 }
 
-                if ($metadata->isAfterClass()->isNotEmpty()) {
+                if (!$metadata->isAfterClass()->isEmpty()) {
                     $afterClass = $metadata->isAfterClass()->asArray()[0];
                     assert($afterClass instanceof AfterClass);
 
@@ -80,7 +80,7 @@ final class HookMethods
                 }
             }
 
-            if ($metadata->isBefore()->isNotEmpty()) {
+            if (!$metadata->isBefore()->isEmpty()) {
                 $before = $metadata->isBefore()->asArray()[0];
                 assert($before instanceof Before);
 
@@ -89,7 +89,7 @@ final class HookMethods
                 );
             }
 
-            if ($metadata->isPreCondition()->isNotEmpty()) {
+            if (!$metadata->isPreCondition()->isEmpty()) {
                 $preCondition = $metadata->isPreCondition()->asArray()[0];
                 assert($preCondition instanceof PreCondition);
 
@@ -98,7 +98,7 @@ final class HookMethods
                 );
             }
 
-            if ($metadata->isPostCondition()->isNotEmpty()) {
+            if (!$metadata->isPostCondition()->isEmpty()) {
                 $postCondition = $metadata->isPostCondition()->asArray()[0];
                 assert($postCondition instanceof PostCondition);
 
@@ -107,7 +107,7 @@ final class HookMethods
                 );
             }
 
-            if ($metadata->isAfter()->isNotEmpty()) {
+            if (!$metadata->isAfter()->isEmpty()) {
                 $after = $metadata->isAfter()->asArray()[0];
                 assert($after instanceof After);
 

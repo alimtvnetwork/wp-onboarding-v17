@@ -66,7 +66,7 @@ final class CodeCoverage
         $metadataForClass = Registry::parser()->forClass($className);
         $classShortcut    = null;
 
-        if ($metadataForClass->isCoversDefaultClass()->isNotEmpty()) {
+        if (!$metadataForClass->isCoversDefaultClass()->isEmpty()) {
             if (count($metadataForClass->isCoversDefaultClass()) > 1) {
                 throw new CodeCoverageException(
                     sprintf(
@@ -145,7 +145,7 @@ final class CodeCoverage
         $metadataForClass = Registry::parser()->forClass($className);
         $classShortcut    = null;
 
-        if ($metadataForClass->isUsesDefaultClass()->isNotEmpty()) {
+        if (!$metadataForClass->isUsesDefaultClass()->isEmpty()) {
             if (count($metadataForClass->isUsesDefaultClass()) > 1) {
                 throw new CodeCoverageException(
                     sprintf(
@@ -211,17 +211,17 @@ final class CodeCoverage
         $metadataForClass  = Registry::parser()->forClass($className);
         $metadataForMethod = Registry::parser()->forMethod($className, $methodName);
 
-        if ($metadataForMethod->isCoversNothing()->isNotEmpty()) {
+        if (!$metadataForMethod->isCoversNothing()->isEmpty()) {
             return false;
         }
 
-        if ($metadataForMethod->isCovers()->isNotEmpty() ||
-            $metadataForMethod->isCoversClass()->isNotEmpty() ||
-            $metadataForMethod->isCoversFunction()->isNotEmpty()) {
+        if (!$metadataForMethod->isCovers()->isEmpty() ||
+            !$metadataForMethod->isCoversClass()->isEmpty() ||
+            !$metadataForMethod->isCoversFunction()->isEmpty()) {
             return true;
         }
 
-        if ($metadataForClass->isCoversNothing()->isNotEmpty()) {
+        if (!$metadataForClass->isCoversNothing()->isEmpty()) {
             return false;
         }
 

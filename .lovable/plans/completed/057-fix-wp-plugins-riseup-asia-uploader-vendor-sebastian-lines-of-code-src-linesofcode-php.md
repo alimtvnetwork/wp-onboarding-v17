@@ -48,3 +48,4 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/sebastian/lines-of-code/src
   `$this->nonCommentLinesOfCode() + $other->nonCommentLinesOfCode(),`
   **Instruction**: Refactor the boolean variable/function to use a positive semantic name (e.g. isPending instead of isNotReady) and reverse the logic if necessary.
 
+[x] SKIPPED (False Positive)
