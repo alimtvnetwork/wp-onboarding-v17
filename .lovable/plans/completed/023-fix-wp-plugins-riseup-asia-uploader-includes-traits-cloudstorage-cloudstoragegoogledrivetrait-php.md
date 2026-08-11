@@ -72,3 +72,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `sprintf('Google Drive API error [%d]: %s', $statusCode, $errorMessage),`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

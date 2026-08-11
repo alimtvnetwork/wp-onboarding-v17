@@ -151,9 +151,10 @@ trait CloudStorageBranchTrait {
         $path      = sprintf('/repos/%s/%s/git/refs/heads/%s', urlencode($owner), urlencode($repo), $refPath);
 
         $statusCode = $this->githubApiStatusCode('DELETE', $path, $token);
-        $isNotFound = ($statusCode === HttpStatusType::NotFound->value);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
+        $isMissing  = ($httpStatus?->isEqual(HttpStatusType::NotFound) ?? false);
 
-        if ($isNotFound) {
+        if ($isMissing) {
             $this->fileLogger->debug('[CLOUD-BRANCH] GitHub branch already deleted', ['branch' => $branchName]);
         }
     }
@@ -169,8 +170,9 @@ trait CloudStorageBranchTrait {
         $path    = sprintf('/repos/%s/%s/branches/%s', urlencode($owner), urlencode($repo), $encoded);
 
         $statusCode = $this->githubApiStatusCode('GET', $path, $token);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
 
-        return ($statusCode === HttpStatusType::Ok->value);
+        return ($httpStatus?->isEqual(HttpStatusType::Ok) ?? false);
     }
 
     // ── GitLab branch operations ─────────────────────────────────
@@ -218,9 +220,10 @@ trait CloudStorageBranchTrait {
         $path      = sprintf('/projects/%s/repository/branches/%s', urlencode($projectId), $encoded);
 
         $statusCode = $this->gitlabApiStatusCode('DELETE', $path, $token, $account);
-        $isNotFound = ($statusCode === HttpStatusType::NotFound->value);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
+        $isMissing  = ($httpStatus?->isEqual(HttpStatusType::NotFound) ?? false);
 
-        if ($isNotFound) {
+        if ($isMissing) {
             $this->fileLogger->debug('[CLOUD-BRANCH] GitLab branch already deleted', ['branch' => $branchName]);
         }
     }
@@ -235,11 +238,12 @@ trait CloudStorageBranchTrait {
         $path      = sprintf('/projects/%s/repository/branches/%s', urlencode($projectId), $encoded);
 
         $statusCode = $this->gitlabApiStatusCode('GET', $path, $token, $account);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
 
-        return ($statusCode === HttpStatusType::Ok->value);
+        return ($httpStatus?->isEqual(HttpStatusType::Ok) ?? false);
     }
 
-    /** Build the GitLab project ID from RepoOwner/RepoName. */
+    /** Build the GitLab project Id from RepoOwner/RepoName. */
     private function gitlabProjectId(array $account): string
     {
         $owner = $account['RepoOwner'] ?? '';

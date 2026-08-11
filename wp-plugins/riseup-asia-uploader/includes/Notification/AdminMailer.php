@@ -34,8 +34,8 @@ class AdminMailer {
      * @return bool True if email was sent, false if throttled or disabled.
      */
     public function sendBootErrorReport(array $errors): bool {
-        $hasNoErrors = (count($errors) === 0);
-        if ($hasNoErrors) {
+        $hasErrors = (count($errors) > 0);
+        if (!$hasErrors) {
             return false;
         }
 
@@ -98,7 +98,7 @@ class AdminMailer {
      * Resolve the email recipient — custom email or fallback to admin_email.
      */
     private function resolveRecipient(array $settings): string {
-        $hasCustomEmail = (gettype($settings['email']) === PhpNativeType::PhpString->value && strlen(trim($settings['email'])) > 0);
+        $hasCustomEmail = (PhpNativeType::PhpString->isMatches($settings['email']) && strlen(trim($settings['email'])) > 0);
         if ($hasCustomEmail) {
             return trim($settings['email']);
         }
@@ -125,7 +125,7 @@ class AdminMailer {
         $lines[] = PluginConfigType::Name->value . ' — Boot Error Report';
         $lines[] = str_repeat('=', self::SEPARATOR_WIDTH);
         $lines[] = '';
-        $lines[] = 'Site URL:       ' . get_site_url();
+        $lines[] = 'Site Url:       ' . get_site_url();
         $lines[] = 'Plugin Version: ' . PluginConfigType::Version->value;
         $lines[] = 'PHP Version:    ' . phpversion();
         $lines[] = 'WordPress:      ' . get_bloginfo('version');

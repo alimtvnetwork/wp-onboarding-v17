@@ -1,9 +1,9 @@
 <?php
 /**
- * CloudStorageGitHubTrait — GitHub API operations for cloud storage.
+ * CloudStorageGitHubTrait — GitHub Api operations for cloud storage.
  *
- * Supports PAT authentication, Contents API (files ≤100 MB), and
- * Git Data API (blobs/trees/commits for files >100 MB).
+ * Supports Pat authentication, Contents Api (files ≤100 Mb), and
+ * Git Data Api (blobs/trees/commits for files >100 Mb).
  *
  * @package RiseupAsia\Traits\CloudStorage
  * @since   2.15.0
@@ -54,7 +54,8 @@ trait CloudStorageGitHubTrait {
         $path       = sprintf('/repos/%s/%s', urlencode($owner), urlencode($repo));
         $statusCode = $this->githubApiStatusCode('GET', $path, $token);
 
-        $repoExists = ($statusCode === HttpStatusType::Ok->value);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
+        $repoExists = ($httpStatus?->isEqual(HttpStatusType::Ok) ?? false);
 
         if ($repoExists) {
             return ['exists' => true, 'created' => false];
@@ -73,7 +74,7 @@ trait CloudStorageGitHubTrait {
         return ['exists' => true, 'created' => true];
     }
 
-    /** Upload a file via the Contents API (≤100 MB). */
+    /** Upload a file via the Contents Api (≤100 Mb). */
     private function githubUploadFile(array $account, string $token, string $localPath, string $remotePath): array
     {
         $owner = $account['RepoOwner'] ?? '';
@@ -114,7 +115,7 @@ trait CloudStorageGitHubTrait {
         ];
     }
 
-    /** Upload a large file via the Git Data API (blob → tree → commit). */
+    /** Upload a large file via the Git Data Api (blob → tree → commit). */
     private function githubUploadLargeFile(array $account, string $token, string $localPath, string $remotePath): array
     {
         $owner = $account['RepoOwner'] ?? '';
@@ -211,12 +212,12 @@ trait CloudStorageGitHubTrait {
     }
 
     /**
-     * Fetch raw Contents API response for a directory.
+     * Fetch raw Contents Api response for a directory.
      *
      * @param array  $account Account row.
      * @param string $token   Decrypted access token.
      * @param string $dir     Directory path.
-     * @return array Raw API response items.
+     * @return array Raw Api response items.
      */
     private function githubListContents(array $account, string $token, string $dir): array
     {
@@ -226,9 +227,10 @@ trait CloudStorageGitHubTrait {
         $path = sprintf('/repos/%s/%s/contents/%s', urlencode($owner), urlencode($repo), $dir);
 
         $statusCode = $this->githubApiStatusCode('GET', $path, $token);
-        $isNotFound = ($statusCode === HttpStatusType::NotFound->value);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
+        $isMissing  = ($httpStatus?->isEqual(HttpStatusType::NotFound) ?? false);
 
-        if ($isNotFound) {
+        if ($isMissing) {
             return [];
         }
 
@@ -262,8 +264,8 @@ trait CloudStorageGitHubTrait {
     /**
      * Delete a folder and all its contents from the repository in a single commit.
      *
-     * Uses the Git Data API (tree → commit → ref update) to remove all files
-     * under the given path atomically, avoiding per-file API calls.
+     * Uses the Git Data Api (tree → commit → ref update) to remove all files
+     * under the given path atomically, avoiding per-file Api calls.
      *
      * @param array  $account Account row.
      * @param string $token   Decrypted access token.
@@ -277,9 +279,9 @@ trait CloudStorageGitHubTrait {
 
         // 1. List all files in the folder recursively
         $filePaths = $this->githubListFolderFilesRecursive($account, $token, $path);
-        $hasNoFiles = empty($filePaths);
+        $isEmpty = empty($filePaths);
 
-        if ($hasNoFiles) {
+        if ($isEmpty) {
             return;
         }
 
@@ -341,9 +343,10 @@ trait CloudStorageGitHubTrait {
 
         $contentsPath = sprintf('/repos/%s/%s/contents/%s', urlencode($owner), urlencode($repo), $dir);
         $statusCode   = $this->githubApiStatusCode('GET', $contentsPath, $token);
-        $isNotFound   = ($statusCode === HttpStatusType::NotFound->value);
+        $httpStatus   = HttpStatusType::tryFrom($statusCode);
+        $isMissing    = ($httpStatus?->isEqual(HttpStatusType::NotFound) ?? false);
 
-        if ($isNotFound) {
+        if ($isMissing) {
             return [];
         }
 
@@ -390,7 +393,7 @@ trait CloudStorageGitHubTrait {
         return $options;
     }
 
-    /** Make a GitHub API request and return decoded body. */
+    /** Make a GitHub Api request and return decoded body. */
     private function githubApiRequest(string $method, string $path, string $token, ?array $body = null): array
     {
         $url     = self::GITHUB_API . $path;
@@ -400,7 +403,7 @@ trait CloudStorageGitHubTrait {
         $isWpError = is_wp_error($response);
 
         if ($isWpError) {
-            throw new RuntimeException('GitHub API request failed: ' . $response->get_error_message());
+            throw new RuntimeException('GitHub Api request failed: ' . $response->get_error_message());
         }
 
         $statusCode  = wp_remote_retrieve_response_code($response);
@@ -411,7 +414,7 @@ trait CloudStorageGitHubTrait {
             $resetAt = wp_remote_retrieve_header($response, 'X-RateLimit-Reset');
 
             throw new RuntimeException(
-                sprintf('GitHub API rate limited. Resets at %s', date('Y-m-d H:i:s', (int) $resetAt)),
+                sprintf('GitHub Api rate limited. Resets at %s', date('Y-m-d H:i:s', (int) $resetAt)),
             );
         }
 
@@ -419,14 +422,14 @@ trait CloudStorageGitHubTrait {
 
         if ($isClientError) {
             throw new RuntimeException(
-                sprintf('GitHub API error [%d]: %s', $statusCode, $decoded['message'] ?? 'Unknown error'),
+                sprintf('GitHub Api error [%d]: %s', $statusCode, $decoded['message'] ?? 'Unknown error'),
             );
         }
 
         return $decoded;
     }
 
-    /** Get the HTTP status code for a GitHub API request. */
+    /** Get the Http status code for a GitHub Api request. */
     private function githubApiStatusCode(string $method, string $path, string $token): int
     {
         $url      = self::GITHUB_API . $path;
@@ -446,7 +449,8 @@ trait CloudStorageGitHubTrait {
     private function githubGetFileSha(string $contentsPath, string $token): string
     {
         $statusCode = $this->githubApiStatusCode('GET', $contentsPath, $token);
-        $fileExists = ($statusCode === HttpStatusType::Ok->value);
+        $httpStatus = HttpStatusType::tryFrom($statusCode);
+        $fileExists = ($httpStatus?->isEqual(HttpStatusType::Ok) ?? false);
 
         if (!$fileExists) {
             return '';

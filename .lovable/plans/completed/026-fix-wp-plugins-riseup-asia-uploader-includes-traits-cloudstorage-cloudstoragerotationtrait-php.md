@@ -32,3 +32,6 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `return $this->validationError('Invalid or missing JSON body', $request);`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
+[x] SKIPPED (False Positive)

@@ -100,3 +100,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `/** Get the HTTP status code for a GitHub API request. */`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

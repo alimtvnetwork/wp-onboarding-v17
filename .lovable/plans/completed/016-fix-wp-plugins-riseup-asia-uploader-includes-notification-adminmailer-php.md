@@ -20,3 +20,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Notification/AdminMailer.
   `$lines[] = 'Site URL:       ' . get_site_url();`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

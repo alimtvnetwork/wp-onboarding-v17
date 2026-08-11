@@ -79,8 +79,8 @@ final class RiseupAsiaAutoloader {
         );
 
         foreach ($iterator as $fileInfo) {
-            $isNotPhp = ($fileInfo->getExtension() !== 'php');
-            if ($isNotPhp) {
+            $isPhp = ($fileInfo->getExtension() === 'php');
+            if (!$isPhp) {
                 continue;
             }
 

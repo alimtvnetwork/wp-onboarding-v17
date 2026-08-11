@@ -51,9 +51,9 @@ trait CloudStorageAccountCrudTrait {
             $id      = (int) $request->get_param('id');
             $account = $this->getCloudStorageAccountById($id);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -75,7 +75,7 @@ trait CloudStorageAccountCrudTrait {
             $isBodyMissing = ($params === null);
 
             if ($isBodyMissing) {
-                return $this->validationError('Request body must be a JSON object', $request);
+                return $this->validationError('Request body must be a Json object', $request);
             }
 
             $validation = $this->validateAccountFields($params);
@@ -123,9 +123,9 @@ trait CloudStorageAccountCrudTrait {
             $id       = (int) $request->get_param('id');
             $existing = $this->getCloudStorageAccountById($id);
 
-            $isNotFound = ($existing === false);
+            $isFound = ($existing !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -136,7 +136,7 @@ trait CloudStorageAccountCrudTrait {
             $isBodyInvalid = ($params === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
             $sets   = [];
             $values = [];
@@ -170,9 +170,9 @@ trait CloudStorageAccountCrudTrait {
             $id       = (int) $request->get_param('id');
             $existing = $this->getCloudStorageAccountById($id);
 
-            $isNotFound = ($existing === false);
+            $isFound = ($existing !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -210,15 +210,15 @@ trait CloudStorageAccountCrudTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $accountId = (int) ($body[ResponseKeyType::AccountId->value] ?? 0);
             $account   = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -306,7 +306,7 @@ trait CloudStorageAccountCrudTrait {
         return $row;
     }
 
-    /** Format account row for API response (mask tokens, never expose plaintext). */
+    /** Format account row for Api response (mask tokens, never expose plaintext). */
     private function formatAccountForResponse(array|false $row): array
     {
         $isNull = ($row === false);

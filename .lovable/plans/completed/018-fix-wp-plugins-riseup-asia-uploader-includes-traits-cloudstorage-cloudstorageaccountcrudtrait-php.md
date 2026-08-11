@@ -52,3 +52,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `/** Format account row for API response (mask tokens, never expose plaintext). */`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

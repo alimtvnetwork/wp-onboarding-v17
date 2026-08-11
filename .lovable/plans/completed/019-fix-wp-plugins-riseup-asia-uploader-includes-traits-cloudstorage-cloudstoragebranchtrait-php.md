@@ -40,3 +40,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `/** Build the GitLab project ID from RepoOwner/RepoName. */`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

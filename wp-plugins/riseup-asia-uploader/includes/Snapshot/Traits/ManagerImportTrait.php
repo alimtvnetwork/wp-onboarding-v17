@@ -51,9 +51,9 @@ trait ManagerImportTrait {
         }
 
         $ext = strtolower(pathinfo($uploadedPath, PATHINFO_EXTENSION));
-        $isNotZip = ($ext !== 'zip');
+        $isZip = ($ext === 'zip');
 
-        if ($isNotZip) {
+        if (!$isZip) {
             return ResultHelper::error(ResponseMessageType::InvalidFileTypeZip->value);
         }
 

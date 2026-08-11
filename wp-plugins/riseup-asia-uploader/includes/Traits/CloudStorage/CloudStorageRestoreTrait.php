@@ -44,9 +44,9 @@ trait CloudStorageRestoreTrait {
             $backupId = (int) ($body[ResponseKeyType::BackupId->value] ?? 0);
             $backup   = $this->getBackupHistoryById($backupId);
 
-            $isNotFound = ($backup === false);
+            $isFound = ($backup !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Backup not found',
@@ -183,9 +183,9 @@ trait CloudStorageRestoreTrait {
     private function restoreIncrementalWithBase(array $account, array $backup, string $tempDir): void
     {
         $baseFullId = $backup['BaseFullBackupId'] ?? null;
-        $hasNoBase  = ($baseFullId === null);
+        $hasBase  = ($baseFullId !== null);
 
-        if ($hasNoBase) {
+        if (!$hasBase) {
             throw new RuntimeException('Incremental backup has no base full backup reference');
         }
 

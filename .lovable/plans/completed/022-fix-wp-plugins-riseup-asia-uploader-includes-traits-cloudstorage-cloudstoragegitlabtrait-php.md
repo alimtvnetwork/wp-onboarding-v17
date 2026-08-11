@@ -128,3 +128,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/CloudStorage/Cloud
   `/** Resolve a namespace (group) to its numeric ID. Returns 0 if not a group. */`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

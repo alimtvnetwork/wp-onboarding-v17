@@ -65,9 +65,9 @@ trait CloudStorageHistoryTrait {
             $table = TableType::CloudStorageBackupHistory->value;
             $row   = $this->db->queryOne("SELECT * FROM {$table} WHERE Id = :id", ['id' => $id]);
 
-            $isNotFound = ($row === false);
+            $isFound = ($row !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Backup record not found',
@@ -89,9 +89,9 @@ trait CloudStorageHistoryTrait {
             $table = TableType::CloudStorageBackupHistory->value;
             $row   = $this->db->queryOne("SELECT * FROM {$table} WHERE Id = :id", ['id' => $id]);
 
-            $isNotFound = ($row === false);
+            $isFound = ($row !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Backup record not found',
@@ -109,7 +109,7 @@ trait CloudStorageHistoryTrait {
 
     // ── Internal helpers ─────────────────────────────────────────
 
-    /** Insert a new backup history record. Returns the new row ID. */
+    /** Insert a new backup history record. Returns the new row Id. */
     private function insertBackupHistory(array $data): int
     {
         $table = TableType::CloudStorageBackupHistory->value;
@@ -177,7 +177,7 @@ trait CloudStorageHistoryTrait {
         );
     }
 
-    /** Get a backup history record by ID. */
+    /** Get a backup history record by Id. */
     private function getBackupHistoryById(int $id): array|false
     {
         $table = TableType::CloudStorageBackupHistory->value;

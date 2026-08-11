@@ -1,10 +1,10 @@
 <?php
 /**
- * CloudStorageGitLabTrait — GitLab API operations for cloud storage.
+ * CloudStorageGitLabTrait — GitLab Api operations for cloud storage.
  *
  * Supports PAT authentication via PRIVATE-TOKEN header, self-hosted GitLab
- * instances via BaseUrl, Repository Files API (create/update), and
- * Commits API for large file uploads.
+ * instances via BaseUrl, Repository Files Api (create/update), and
+ * Commits Api for large file uploads.
  *
  * @package RiseupAsia\Traits\CloudStorage
  * @since   2.15.0
@@ -53,7 +53,7 @@ trait CloudStorageGitLabTrait {
         $projectPath = urlencode($namespace . '/' . $projectName);
 
         $statusCode   = $this->gitlabApiStatusCode('GET', $apiBase, '/projects/' . $projectPath, $token);
-        $projectExists = ($statusCode === HttpStatusType::Ok->value);
+        $projectExists = HttpStatusType::Ok->isEqual($statusCode);
 
         if ($projectExists) {
             return ['exists' => true, 'created' => false];
@@ -78,7 +78,7 @@ trait CloudStorageGitLabTrait {
         return ['exists' => true, 'created' => true];
     }
 
-    /** Upload a file via the Repository Files API. */
+    /** Upload a file via the Repository Files Api. */
     private function gitlabUploadFile(array $account, string $token, string $localPath, string $remotePath): array
     {
         $apiBase     = $this->gitlabGetApiBase($account);
@@ -107,7 +107,7 @@ trait CloudStorageGitLabTrait {
             $token,
         );
 
-        $fileExists = ($existsStatus === HttpStatusType::Ok->value);
+        $fileExists = HttpStatusType::Ok->isEqual($existsStatus);
         $method     = $fileExists ? 'PUT' : 'POST';
 
         $this->gitlabApiRequest($method, $apiBase, $fileUrl, $token, $fileBody);
@@ -185,7 +185,7 @@ trait CloudStorageGitLabTrait {
      * @param array  $account Account row.
      * @param string $token   Decrypted access token.
      * @param string $dir     Directory path.
-     * @return array Raw API response items.
+     * @return array Raw Api response items.
      */
     private function gitlabListTree(array $account, string $token, string $dir): array
     {
@@ -196,9 +196,9 @@ trait CloudStorageGitLabTrait {
 
         $treePath   = sprintf('/projects/%s/repository/tree?path=%s&ref=main', $projectPath, urlencode($dir));
         $statusCode = $this->gitlabApiStatusCode('GET', $apiBase, $treePath, $token);
-        $isNotFound = ($statusCode === HttpStatusType::NotFound->value);
+        $isFound    = !HttpStatusType::NotFound->isEqual($statusCode);
 
-        if ($isNotFound) {
+        if (!$isFound) {
             return [];
         }
 
@@ -234,7 +234,7 @@ trait CloudStorageGitLabTrait {
     /**
      * Delete a folder and all its contents from the repository in a single commit.
      *
-     * Uses the GitLab Commits API with multiple `delete` actions to remove
+     * Uses the GitLab Commits Api with multiple `delete` actions to remove
      * all files under the given path atomically.
      *
      * @param array  $account Account row.
@@ -250,13 +250,13 @@ trait CloudStorageGitLabTrait {
 
         // 1. List all files under the path recursively via repository tree
         $filePaths = $this->gitlabListFolderFilesRecursive($apiBase, $projectPath, $token, $path);
-        $hasNoFiles = empty($filePaths);
+        $hasFiles  = !empty($filePaths);
 
-        if ($hasNoFiles) {
+        if (!$hasFiles) {
             return;
         }
 
-        // 2. Build delete actions for the Commits API
+        // 2. Build delete actions for the Commits Api
         $actions = [];
 
         foreach ($filePaths as $filePath) {
@@ -282,10 +282,10 @@ trait CloudStorageGitLabTrait {
     }
 
     /**
-     * Recursively list all file paths under a directory via the repository tree API.
+     * Recursively list all file paths under a directory via the repository tree Api.
      *
-     * @param string $apiBase     API base URL.
-     * @param string $projectPath URL-encoded project path.
+     * @param string $apiBase     Api base Url.
+     * @param string $projectPath Url-encoded project path.
      * @param string $token       Decrypted access token.
      * @param string $dir         Directory path.
      * @return array<string> Flat list of file paths.
@@ -303,9 +303,9 @@ trait CloudStorageGitLabTrait {
         );
 
         $statusCode = $this->gitlabApiStatusCode('GET', $apiBase, $treePath, $token);
-        $isNotFound = ($statusCode === HttpStatusType::NotFound->value);
+        $isFound    = !HttpStatusType::NotFound->isEqual($statusCode);
 
-        if ($isNotFound) {
+        if (!$isFound) {
             return [];
         }
 
@@ -325,7 +325,7 @@ trait CloudStorageGitLabTrait {
 
     // ── GitLab Private Helpers ─────────────────────────────────────
 
-    /** Derive the API base URL from account BaseUrl (supports self-hosted). */
+    /** Derive the Api base Url from account BaseUrl (supports self-hosted). */
     private function gitlabGetApiBase(array $account): string
     {
         $baseUrl = $account['BaseUrl'] ?? '';
@@ -354,7 +354,7 @@ trait CloudStorageGitLabTrait {
         return $options;
     }
 
-    /** Make a GitLab API request and return decoded body. */
+    /** Make a GitLab Api request and return decoded body. */
     private function gitlabApiRequest(string $method, string $apiBase, string $path, string $token, ?array $body = null): array
     {
         $url     = $apiBase . $path;
@@ -364,7 +364,7 @@ trait CloudStorageGitLabTrait {
         $isWpError = is_wp_error($response);
 
         if ($isWpError) {
-            throw new RuntimeException('GitLab API request failed: ' . $response->get_error_message());
+            throw new RuntimeException('GitLab Api request failed: ' . $response->get_error_message());
         }
 
         $statusCode    = (int) wp_remote_retrieve_response_code($response);
@@ -375,14 +375,14 @@ trait CloudStorageGitLabTrait {
             $errorMessage = $decoded['message'] ?? $decoded['error'] ?? 'Unknown error';
 
             throw new RuntimeException(
-                sprintf('GitLab API error [%d]: %s', $statusCode, $errorMessage),
+                sprintf('GitLab Api error [%d]: %s', $statusCode, $errorMessage),
             );
         }
 
         return $decoded;
     }
 
-    /** Make a GitLab API request and return the raw response body (for binary file downloads). */
+    /** Make a GitLab Api request and return the raw response body (for binary file downloads). */
     private function gitlabApiRequestRaw(string $method, string $path, string $token, array $account): string
     {
         $apiBase  = $this->gitlabGetApiBase($account);
@@ -393,7 +393,7 @@ trait CloudStorageGitLabTrait {
         $isWpError = is_wp_error($response);
 
         if ($isWpError) {
-            throw new RuntimeException('GitLab raw API request failed: ' . $response->get_error_message());
+            throw new RuntimeException('GitLab raw Api request failed: ' . $response->get_error_message());
         }
 
         $statusCode    = (int) wp_remote_retrieve_response_code($response);
@@ -401,14 +401,14 @@ trait CloudStorageGitLabTrait {
 
         if ($isClientError) {
             throw new RuntimeException(
-                sprintf('GitLab raw API error [%d] for %s', $statusCode, $path),
+                sprintf('GitLab raw Api error [%d] for %s', $statusCode, $path),
             );
         }
 
         return wp_remote_retrieve_body($response);
     }
 
-    /** Get the HTTP status code for a GitLab API request. */
+    /** Get the Http status code for a GitLab Api request. */
     private function gitlabApiStatusCode(string $method, string $apiBase, string $path, string $token): int
     {
         $url      = $apiBase . $path;
@@ -424,13 +424,13 @@ trait CloudStorageGitLabTrait {
         return (int) wp_remote_retrieve_response_code($response);
     }
 
-    /** Resolve a namespace (group) to its numeric ID. Returns 0 if not a group. */
+    /** Resolve a namespace (group) to its numeric Id. Returns 0 if not a group. */
     private function gitlabResolveNamespaceId(string $apiBase, string $token, string $namespace): int
     {
         $statusCode = $this->gitlabApiStatusCode('GET', $apiBase, '/groups/' . urlencode($namespace), $token);
-        $isNotGroup = ($statusCode !== HttpStatusType::Ok->value);
+        $isGroup    = HttpStatusType::Ok->isEqual($statusCode);
 
-        if ($isNotGroup) {
+        if (!$isGroup) {
             return 0;
         }
 

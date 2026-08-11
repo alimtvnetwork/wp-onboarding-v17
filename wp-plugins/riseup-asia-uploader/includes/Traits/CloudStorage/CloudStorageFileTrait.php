@@ -30,9 +30,9 @@ trait CloudStorageFileTrait {
             $path      = $request->get_param('path') ?? '';
             $account   = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -65,16 +65,16 @@ trait CloudStorageFileTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $accountId  = (int) ($body[ResponseKeyType::AccountId->value] ?? 0);
             $remotePath = $body[ResponseKeyType::RemotePath->value] ?? '';
             $account    = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',

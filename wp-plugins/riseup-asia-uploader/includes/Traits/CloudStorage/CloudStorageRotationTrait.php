@@ -30,9 +30,9 @@ trait CloudStorageRotationTrait {
             $accountId = (int) $request->get_param('account_id');
             $account   = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -82,9 +82,9 @@ trait CloudStorageRotationTrait {
             $accountId = (int) ($body[ResponseKeyType::AccountId->value] ?? 0);
             $account   = $this->getCloudStorageAccountById($accountId);
 
-            $isNotFound = ($account === false);
+            $isFound = ($account !== false);
 
-            if ($isNotFound) {
+            if (!$isFound) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Account not found',
@@ -131,9 +131,9 @@ trait CloudStorageRotationTrait {
             [$provider],
         );
 
-        $isNotFound = ($settings === false);
+        $isFound = ($settings !== false);
 
-        if ($isNotFound) {
+        if (!$isFound) {
             return [];
         }
 

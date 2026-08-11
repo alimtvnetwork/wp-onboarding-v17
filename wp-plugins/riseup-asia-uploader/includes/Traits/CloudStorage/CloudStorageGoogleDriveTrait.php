@@ -1,6 +1,6 @@
 <?php
 /**
- * CloudStorageGoogleDriveTrait — Google Drive v3 API operations.
+ * CloudStorageGoogleDriveTrait — Google Drive v3 Api operations.
  *
  * @package RiseupAsia\Traits\CloudStorage
  * @since   2.15.0
@@ -47,7 +47,7 @@ trait CloudStorageGoogleDriveTrait {
         ];
     }
 
-    /** Ensure a backup folder exists; create if missing. Returns folder ID. */
+    /** Ensure a backup folder exists; create if missing. Returns folder Id. */
     private function googleDriveEnsureFolder(array $account, string $token): string
     {
         $folderId = $account['FolderId'] ?? '';
@@ -59,7 +59,7 @@ trait CloudStorageGoogleDriveTrait {
 
             $response   = wp_remote_get($checkUrl, $options);
             $statusCode = (int) wp_remote_retrieve_response_code($response);
-            $isFound    = ($statusCode === HttpStatusType::Ok->value);
+            $isFound    = HttpStatusType::Ok->isEqual($statusCode);
 
             if ($isFound) {
                 $data      = json_decode(wp_remote_retrieve_body($response), true) ?? [];
@@ -161,9 +161,9 @@ trait CloudStorageGoogleDriveTrait {
 
         // Resolve the target folder by walking the path
         $parentId = $this->googleDriveResolveFolderByPath($validToken, $rootFolderId, $dir);
-        $isNotFound = empty($parentId);
+        $isFound  = !empty($parentId);
 
-        if ($isNotFound) {
+        if (!$isFound) {
             return [];
         }
 
@@ -192,7 +192,7 @@ trait CloudStorageGoogleDriveTrait {
         return $dirs;
     }
 
-    /** Delete a file from Google Drive by file ID. */
+    /** Delete a file from Google Drive by file Id. */
     private function googleDriveDeleteFile(array $account, string $token, string $fileId): bool
     {
         $validToken = $this->googleDriveEnsureValidToken($account);
@@ -202,12 +202,12 @@ trait CloudStorageGoogleDriveTrait {
 
         $response   = wp_remote_request($url, $options);
         $statusCode = (int) wp_remote_retrieve_response_code($response);
-        $isDeleted  = ($statusCode === HttpStatusType::NoContent->value);
+        $isDeleted  = HttpStatusType::NoContent->isEqual($statusCode);
 
         return $isDeleted;
     }
 
-    /** Delete a folder by resolving its path, then deleting by ID (cascades to children). */
+    /** Delete a folder by resolving its path, then deleting by Id (cascades to children). */
     private function googleDriveDeleteFolder(array $account, string $token, string $path): void
     {
         $validToken  = $this->googleDriveEnsureValidToken($account);
@@ -219,9 +219,9 @@ trait CloudStorageGoogleDriveTrait {
         }
 
         $folderId = $this->googleDriveResolveFolderByPath($validToken, $rootFolderId, $path);
-        $isNotFound = empty($folderId);
+        $isFound  = !empty($folderId);
 
-        if ($isNotFound) {
+        if (!$isFound) {
             $this->fileLogger->info('[CLOUD-GDRIVE] Folder not found for deletion', ['path' => $path]);
 
             return;
@@ -232,7 +232,7 @@ trait CloudStorageGoogleDriveTrait {
 
         $response   = wp_remote_request($url, $options);
         $statusCode = (int) wp_remote_retrieve_response_code($response);
-        $isDeleted  = ($statusCode === HttpStatusType::NoContent->value);
+        $isDeleted  = HttpStatusType::NoContent->isEqual($statusCode);
 
         if ($isDeleted) {
             $this->fileLogger->info('[CLOUD-GDRIVE] Deleted folder', [
@@ -242,7 +242,7 @@ trait CloudStorageGoogleDriveTrait {
         }
     }
 
-    /** Resolve a folder ID by walking a slash-separated path from a parent folder. */
+    /** Resolve a folder Id by walking a slash-separated path from a parent folder. */
     private function googleDriveResolveFolderByPath(string $token, string $parentId, string $relativePath): string
     {
         $segments  = explode('/', trim($relativePath, '/'));
@@ -345,7 +345,7 @@ trait CloudStorageGoogleDriveTrait {
         return $newAccessToken;
     }
 
-    /** Create a folder in Google Drive. Returns the folder ID. */
+    /** Create a folder in Google Drive. Returns the folder Id. */
     private function googleDriveCreateFolder(string $token, string $folderName): string
     {
         $metadata = wp_json_encode([
@@ -468,19 +468,19 @@ trait CloudStorageGoogleDriveTrait {
         return $options;
     }
 
-    /** Parse a Google Drive API response and throw on error. */
+    /** Parse a Google Drive Api response and throw on error. */
     private function googleDriveParseResponse($response): array
     {
         $isWpError = is_wp_error($response);
 
         if ($isWpError) {
-            throw new RuntimeException('Google Drive API request failed: ' . $response->get_error_message());
+            throw new RuntimeException('Google Drive Api request failed: ' . $response->get_error_message());
         }
 
         $statusCode = (int) wp_remote_retrieve_response_code($response);
         $decoded    = json_decode(wp_remote_retrieve_body($response), true) ?? [];
 
-        $isNoContent = ($statusCode === HttpStatusType::NoContent->value);
+        $isNoContent = HttpStatusType::NoContent->isEqual($statusCode);
 
         if ($isNoContent) {
             return [];
@@ -492,7 +492,7 @@ trait CloudStorageGoogleDriveTrait {
             $errorMessage = $decoded['error']['message'] ?? $decoded['error'] ?? 'Unknown error';
 
             throw new RuntimeException(
-                sprintf('Google Drive API error [%d]: %s', $statusCode, $errorMessage),
+                sprintf('Google Drive Api error [%d]: %s', $statusCode, $errorMessage),
             );
         }
 

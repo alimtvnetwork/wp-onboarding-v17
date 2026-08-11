@@ -77,9 +77,9 @@ trait CloudStorageScheduleTrait {
 
         $settings = $this->getActiveCloudBackupSettings();
 
-        $hasNoSettings = ($settings === false);
+        $hasSettings = ($settings !== false);
 
-        if ($hasNoSettings) {
+        if (!$hasSettings) {
             return;
         }
 
@@ -294,9 +294,9 @@ trait CloudStorageScheduleTrait {
 
         // Find the latest full backup for this account
         $latestFull = $this->getLatestFullBackup($accountId);
-        $hasNoFullBackup = ($latestFull === false);
+        $hasFullBackup = ($latestFull !== false);
 
-        if ($hasNoFullBackup) {
+        if (!$hasFullBackup) {
             $this->fileLogger->info('[CLOUD-BACKUP] No full backup found, running full backup instead', [
                 'accountId' => $accountId,
             ]);

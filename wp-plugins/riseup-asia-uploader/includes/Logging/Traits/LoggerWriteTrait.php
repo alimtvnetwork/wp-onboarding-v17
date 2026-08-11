@@ -134,7 +134,7 @@ trait LoggerWriteTrait {
 
         $maxIndex = 0;
         $entries = @scandir($archiveDir);
-        $hasEntries = gettype($entries) === PhpNativeType::PhpArray->value;
+        $hasEntries = PhpNativeType::PhpArray->isMatches($entries);
 
         if ($hasEntries) {
             foreach ($entries as $entry) {
@@ -221,9 +221,9 @@ trait LoggerWriteTrait {
 
     /** Recursively delete a directory and its contents. */
     private function deleteDirectoryRecursive(string $dir): void {
-        $isNotDirectory = !is_dir($dir);
+        $isDirectory = is_dir($dir);
 
-        if ($isNotDirectory) {
+        if (!$isDirectory) {
             return;
         }
 

@@ -83,9 +83,9 @@ class BootErrorCollector {
      * Called automatically on PHP shutdown if errors were collected.
      */
     public function flush(): void {
-        $hasNoErrors = (count($this->errors) === 0);
+        $hasErrors = (count($this->errors) > 0);
 
-        if ($hasNoErrors) {
+        if (!$hasErrors) {
             return;
         }
 
