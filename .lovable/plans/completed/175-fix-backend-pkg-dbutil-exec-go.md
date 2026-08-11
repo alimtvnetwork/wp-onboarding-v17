@@ -8,3 +8,4 @@ Target File: `backend/pkg/dbutil/Exec.go`
   `func Exec(ctx context.Context, db *DB, query string, args ...any) ExecResult {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

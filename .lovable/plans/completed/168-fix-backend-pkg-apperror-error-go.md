@@ -8,3 +8,5 @@ Target File: `backend/pkg/apperror/Error.go`
   `// HasDiagnostic returns true if any diagnostic field is set.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

@@ -54,7 +54,7 @@ type Client struct {
 // Message represents a WebSocket message
 type Message struct {
 	Type      string
-	Data      any
+	Data      json.RawMessage
 	Timestamp string
 	SessionId string `json:",omitempty"`
 }
@@ -253,9 +253,10 @@ func Broadcast[T any](h *Hub, eventType string, data T) {
 
 // BroadcastWithSession sends a typed message with an optional session ID.
 func BroadcastWithSession[T any](input BroadcastInput[T]) {
+	dataBytes, _ := json.Marshal(input.Data)
 	input.Hub.broadcast <- &Message{
 		Type:      input.EventType,
-		Data:      input.Data,
+		Data:      dataBytes,
 		Timestamp: utcTimestamp(),
 		SessionId: input.SessionId,
 	}

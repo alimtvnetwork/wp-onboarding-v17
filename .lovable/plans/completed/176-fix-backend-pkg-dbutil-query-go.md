@@ -24,3 +24,4 @@ Target File: `backend/pkg/dbutil/Query.go`
   `func collectRows[T any](rows *sql.Rows, scan RowsScanner[T]) ResultSet[T] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

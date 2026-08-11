@@ -16,3 +16,4 @@ Target File: `backend/pkg/dbutil/Db.go`
   `func (d *DB) ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error) {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

@@ -8,3 +8,4 @@ Target File: `backend/internal/ws/EventTypes.go`
   `// instead of map[string]any literals, per the Generic Enforce Pattern (GE-1).`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

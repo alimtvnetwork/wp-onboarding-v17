@@ -8,3 +8,5 @@ Target File: `backend/pkg/apperror/Match.go`
   `func Recover(panicValue any) *AppError {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

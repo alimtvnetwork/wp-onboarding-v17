@@ -24,3 +24,4 @@ Target File: `backend/internal/wordpress/UploaderLifecycle.go`
   `// decodeApiResponseTyped unmarshals raw JSON bytes into *T, returning apperror.Result.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

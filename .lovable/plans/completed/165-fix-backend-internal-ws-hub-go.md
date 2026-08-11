@@ -24,3 +24,4 @@ Target File: `backend/internal/ws/Hub.go`
   `// BroadcastWithSession sends a typed message with an optional session ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

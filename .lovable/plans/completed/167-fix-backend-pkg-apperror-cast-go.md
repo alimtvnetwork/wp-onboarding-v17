@@ -20,3 +20,5 @@ Target File: `backend/pkg/apperror/Cast.go`
   `func CastSlice[T any](value any) ResultSlice[T] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

@@ -24,3 +24,4 @@ Target File: `backend/pkg/apperror/ResultMap.go`
   `func FailMapNew[K comparable, V any](code ErrorCode, message string) ResultMap[K, V] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

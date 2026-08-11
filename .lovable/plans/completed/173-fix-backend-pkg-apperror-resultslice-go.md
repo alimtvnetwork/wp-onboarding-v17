@@ -24,3 +24,4 @@ Target File: `backend/pkg/apperror/ResultSlice.go`
   `func FailSliceNew[T any](code ErrorCode, message string) ResultSlice[T] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

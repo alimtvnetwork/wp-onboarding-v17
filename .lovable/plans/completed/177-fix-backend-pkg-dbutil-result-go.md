@@ -16,3 +16,4 @@ Target File: `backend/pkg/dbutil/Result.go`
   `func NewResultError[T any](err *apperror.AppError, stack string) Result[T] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)
