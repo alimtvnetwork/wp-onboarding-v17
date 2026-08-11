@@ -65,9 +65,9 @@ func TestRequestMutationToken_UsesOnboardNamespace(t *testing.T) {
 		if r.URL.Query().Get("action") != "upload" {
 			t.Fatalf("unexpected action: %s", r.URL.Query().Get("action"))
 		}
-		_ = json.NewEncoder(w).Encode(map[string]any{
-			"mutation_token": "abc123",
-			"expires_in":     1200,
+		_ = json.NewEncoder(w).Encode(mutationTokenResult{
+			MutationToken: "abc123",
+			ExpiresIn:     1200,
 		})
 	}))
 	defer server.Close()
@@ -95,9 +95,9 @@ func TestUploadPluginZip_PostsToOnboardUploadEndpoint(t *testing.T) {
 			if r.URL.Query().Get("action") != "upload" {
 				t.Fatalf("unexpected action: %s", r.URL.Query().Get("action"))
 			}
-			_ = json.NewEncoder(w).Encode(map[string]any{
-				"mutation_token": "abc123",
-				"expires_in":     1200,
+			_ = json.NewEncoder(w).Encode(mutationTokenResult{
+				MutationToken: "abc123",
+				ExpiresIn:     1200,
 			})
 			return
 		case "/wp-json/onboard-plugin/v1/mutations/abc123/plugins/upload":
@@ -161,18 +161,22 @@ func TestUploadPluginViaUploader_PostsToUploaderEndpoint(t *testing.T) {
 			t.Fatalf("unexpected content-type: %s", r.Header.Get("Content-Type"))
 		}
 
-		var body map[string]any
+		var body struct {
+			PluginName string `json:"plugin_name"`
+			PluginData string `json:"plugin_data"`
+			Activate   bool   `json:"activate"`
+		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			t.Fatalf("decode body: %v", err)
 		}
 
-		if body["plugin_name"] != "test-plugin.zip" {
-			t.Fatalf("unexpected plugin_name: %v", body["plugin_name"])
+		if body.PluginName != "test-plugin.zip" {
+			t.Fatalf("unexpected plugin_name: %v", body.PluginName)
 		}
-		if body["plugin_data"] == nil || body["plugin_data"] == "" {
+		if body.PluginData == "" {
 			t.Fatalf("expected plugin_data to be set")
 		}
-		if body["activate"] != true {
+		if !body.Activate {
 			t.Fatalf("expected activate=true")
 		}
 
@@ -208,9 +212,9 @@ func TestEnablePlugin_UsesOnboardNamespaceAndEnableRoute(t *testing.T) {
 			if r.URL.Query().Get("action") != "enable" {
 				t.Fatalf("unexpected action: %s", r.URL.Query().Get("action"))
 			}
-			_ = json.NewEncoder(w).Encode(map[string]any{
-				"mutation_token": "abc123",
-				"expires_in":     1200,
+			_ = json.NewEncoder(w).Encode(mutationTokenResult{
+				MutationToken: "abc123",
+				ExpiresIn:     1200,
 			})
 			return
 		case "/wp-json/onboard-plugin/v1/mutations/abc123/plugins/category-generator/enable":
@@ -243,15 +247,18 @@ func TestEnablePluginViaUploader_UsesUploaderNamespace(t *testing.T) {
 			t.Fatalf("unexpected method: %s", r.Method)
 		}
 
-		var body map[string]any
+		var body struct {
+			Plugin     string `json:"plugin"`
+			PluginSlug string `json:"plugin_slug"`
+		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			t.Fatalf("decode body: %v", err)
 		}
-		if body["plugin"] != "my-plugin" {
-			t.Fatalf("expected plugin=my-plugin, got: %#v", body["plugin"])
+		if body.Plugin != "my-plugin" {
+			t.Fatalf("expected plugin=my-plugin, got: %#v", body.Plugin)
 		}
-		if body["plugin_slug"] != "my-plugin" {
-			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body["plugin_slug"])
+		if body.PluginSlug != "my-plugin" {
+			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body.PluginSlug)
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -277,15 +284,18 @@ func TestDisablePluginViaUploader_UsesUploaderNamespace(t *testing.T) {
 			t.Fatalf("unexpected method: %s", r.Method)
 		}
 
-		var body map[string]any
+		var body struct {
+			Plugin     string `json:"plugin"`
+			PluginSlug string `json:"plugin_slug"`
+		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			t.Fatalf("decode body: %v", err)
 		}
-		if body["plugin"] != "my-plugin" {
-			t.Fatalf("expected plugin=my-plugin, got: %#v", body["plugin"])
+		if body.Plugin != "my-plugin" {
+			t.Fatalf("expected plugin=my-plugin, got: %#v", body.Plugin)
 		}
-		if body["plugin_slug"] != "my-plugin" {
-			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body["plugin_slug"])
+		if body.PluginSlug != "my-plugin" {
+			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body.PluginSlug)
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -310,15 +320,18 @@ func TestCheckPluginExistsViaUploader_SendsBothSlugFields(t *testing.T) {
 			t.Fatalf("unexpected method: %s", r.Method)
 		}
 
-		var body map[string]any
+		var body struct {
+			Plugin     string `json:"plugin"`
+			PluginSlug string `json:"plugin_slug"`
+		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			t.Fatalf("decode body: %v", err)
 		}
-		if body["plugin"] != "my-plugin" {
-			t.Fatalf("expected plugin=my-plugin, got: %#v", body["plugin"])
+		if body.Plugin != "my-plugin" {
+			t.Fatalf("expected plugin=my-plugin, got: %#v", body.Plugin)
 		}
-		if body["plugin_slug"] != "my-plugin" {
-			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body["plugin_slug"])
+		if body.PluginSlug != "my-plugin" {
+			t.Fatalf("expected plugin_slug=my-plugin, got: %#v", body.PluginSlug)
 		}
 
 		w.Header().Set("Content-Type", "application/json")

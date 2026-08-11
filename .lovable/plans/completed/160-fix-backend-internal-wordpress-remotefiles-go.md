@@ -56,3 +56,4 @@ Target File: `backend/internal/wordpress/RemoteFiles.go`
   `return apperror.FailNew[T](apperror.ErrWPConnection, "remote API returned failure for "+ctx.Operation)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

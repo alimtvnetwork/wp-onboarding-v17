@@ -12,3 +12,5 @@ Target File: `backend/internal/services/site/RemoteSiteSettings.go`
   `// Prefer the richer /site-health-summary if any namespace returned it`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

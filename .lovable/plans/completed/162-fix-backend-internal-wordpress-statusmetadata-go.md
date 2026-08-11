@@ -32,3 +32,4 @@ Target File: `backend/internal/wordpress/StatusMetadata.go`
   `func formatStatusValue(value any) string {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] FIXED

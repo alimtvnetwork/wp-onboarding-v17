@@ -12,3 +12,5 @@ Target File: `backend/internal/services/sync/ServiceHelpers.go`
   `// fetchAndParseManifest calls the remote API and converts the manifest to FileEntry map.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

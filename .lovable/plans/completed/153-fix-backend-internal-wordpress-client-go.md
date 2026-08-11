@@ -36,3 +36,5 @@ Target File: `backend/internal/wordpress/Client.go`
   `// rawGet performs an authenticated GET request to an arbitrary full URL on the same WordPress host.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

@@ -50,7 +50,7 @@ func (c *Client) GetStatusMetadataByNamespace(namespace string) apperror.Result[
 }
 
 func parseStatusMetadata(data []byte) (*StatusMetadata, error) {
-	var body any
+	var body map[string]json.RawMessage
 	if err := json.Unmarshal(data, &body); err != nil {
 		return nil, err
 	}
@@ -75,39 +75,32 @@ func parseStatusMetadata(data []byte) (*StatusMetadata, error) {
 	return metadata, nil
 }
 
-func getStatusPayload(body any) any {
-	obj, ok := body.(map[string]any)
-	if !ok {
-		return body
-	}
-
-	if results, exists := obj["Results"]; exists {
-		switch value := results.(type) {
-		case []any:
-			if len(value) > 0 {
-				return value[0]
-			}
-		default:
-			return value
+func getStatusPayload(body map[string]json.RawMessage) map[string]json.RawMessage {
+	if resultsRaw, exists := body["Results"]; exists {
+		var results []map[string]json.RawMessage
+		if err := json.Unmarshal(resultsRaw, &results); err == nil && len(results) > 0 {
+			return results[0]
 		}
 	}
 
-	if result, exists := obj["Result"]; exists {
-		return result
+	if resultRaw, exists := body["Result"]; exists {
+		var result map[string]json.RawMessage
+		if err := json.Unmarshal(resultRaw, &result); err == nil {
+			return result
+		}
 	}
 
 	return body
 }
 
-func getStatusString(obj any, keys ...string) string {
-	mapped, ok := obj.(map[string]any)
-	if !ok {
+func getStatusString(mapped map[string]json.RawMessage, keys ...string) string {
+	if mapped == nil {
 		return ""
 	}
 
 	for _, key := range keys {
-		if value, exists := mapped[key]; exists {
-			formatted := formatStatusValue(value)
+		if raw, exists := mapped[key]; exists {
+			formatted := formatStatusValue(raw)
 			if formatted != "" {
 				return formatted
 			}
@@ -117,18 +110,28 @@ func getStatusString(obj any, keys ...string) string {
 	return ""
 }
 
-func formatStatusValue(value any) string {
-	switch typed := value.(type) {
-	case nil:
+func formatStatusValue(raw json.RawMessage) string {
+	if len(raw) == 0 || string(raw) == "null" {
 		return ""
-	case string:
-		return typed
-	case bool:
-		if typed {
+	}
+
+	var str string
+	if err := json.Unmarshal(raw, &str); err == nil {
+		return str
+	}
+
+	var b bool
+	if err := json.Unmarshal(raw, &b); err == nil {
+		if b {
 			return "True"
 		}
 		return "False"
-	default:
-		return fmt.Sprint(typed)
 	}
+
+	var num float64
+	if err := json.Unmarshal(raw, &num); err == nil {
+		return fmt.Sprint(num)
+	}
+
+	return string(raw)
 }

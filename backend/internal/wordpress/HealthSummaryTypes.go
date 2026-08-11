@@ -2,6 +2,8 @@
 // Matches the PHP plugin's SiteHealthSummaryTrait output and frontend's SiteHealthSummaryResponse.
 package wordpress
 
+import "encoding/json"
+
 // HealthSummaryData is the typed response from the PHP site-health-summary endpoint.
 type HealthSummaryData struct {
 	System          HealthSystem       `json:"system"`
@@ -137,8 +139,8 @@ func BuildOutdatedSiteSettings() *SiteSettingsData {
 
 // SiteSettingsUpdateResult is the typed response from the PHP site-settings PUT endpoint.
 type SiteSettingsUpdateResult struct {
-	IsSuccess bool              `json:"success"`
-	Updated   map[string]any    `json:"updated"` // justified: dynamic key-value pairs from PHP
-	Settings  SiteSettingsData  `json:"settings"`
+	IsSuccess bool                     `json:"success"`
+	Updated   map[string]json.RawMessage `json:"updated"` // justified: dynamic key-value pairs from PHP
+	Settings  SiteSettingsData         `json:"settings"`
 	Warnings  []string          `json:"warnings,omitempty"`
 }

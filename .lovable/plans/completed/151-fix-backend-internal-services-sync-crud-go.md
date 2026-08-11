@@ -12,3 +12,5 @@ Target File: `backend/internal/services/sync/Crud.go`
   `// SQL query constants (centralized per coding standard).`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)
