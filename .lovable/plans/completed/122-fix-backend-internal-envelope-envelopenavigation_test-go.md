@@ -32,3 +32,5 @@ Target File: `backend/internal/envelope/EnvelopeNavigation_test.go`
   `t.Fatal("expected Status block in JSON")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

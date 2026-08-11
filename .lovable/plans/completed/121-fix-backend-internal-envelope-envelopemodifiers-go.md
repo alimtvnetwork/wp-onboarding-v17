@@ -12,3 +12,5 @@ Target File: `backend/internal/envelope/EnvelopeModifiers.go`
   `// WithSessionId attaches a session ID to the response attributes for frontend diagnostics.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

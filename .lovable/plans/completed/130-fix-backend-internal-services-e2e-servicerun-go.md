@@ -8,3 +8,5 @@ Target File: `backend/internal/services/e2e/ServiceRun.go`
   `// resolveRunStatus returns "Failed" if any test failed, else "Passed".`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

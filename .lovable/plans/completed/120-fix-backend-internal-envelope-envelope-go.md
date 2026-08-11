@@ -64,3 +64,4 @@ Target File: `backend/internal/envelope/Envelope.go`
   `// requestPath is the base URL path (e.g., "/api/v1/plugins") used to generate navigation URLs.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

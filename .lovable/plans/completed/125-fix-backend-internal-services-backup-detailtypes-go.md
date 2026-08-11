@@ -12,3 +12,5 @@ Target File: `backend/internal/services/backup/DetailTypes.go`
   `func toDetails[T any](v T) json.RawMessage {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+
+[x] SKIPPED (False Positive)

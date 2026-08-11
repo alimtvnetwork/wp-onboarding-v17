@@ -12,3 +12,5 @@ Target File: `backend/internal/services/e2e/TestHelpers.go`
   `// extractId pulls an int64 id from an API response.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

@@ -122,7 +122,7 @@ func TestNavigation_FirstPage(t *testing.T) {
 		t.Error("expected no prev page on first page")
 	}
 	if nav.NextPage == nil || !strings.Contains(*nav.NextPage, "page=2") {
-		t.Error("expected NextPage URL containing page=2")
+		t.Error("expected NextPage Url containing page=2")
 	}
 	if !strings.HasPrefix(nav.CloserLinks[0], "/api/v1/items?page=1") {
 		t.Errorf("expected first closer link to start with path, got %q", nav.CloserLinks[0])
@@ -137,7 +137,7 @@ func TestNavigation_LastPage(t *testing.T) {
 		t.Error("expected no next page on last page")
 	}
 	if nav.PrevPage == nil || !strings.Contains(*nav.PrevPage, "page=9") {
-		t.Error("expected PrevPage URL containing page=9")
+		t.Error("expected PrevPage Url containing page=9")
 	}
 }
 
@@ -166,15 +166,21 @@ func TestWrite(t *testing.T) {
 	}
 
 	// Decode as generic map to verify JSON structure
-	var decoded map[string]any
+	var decoded map[string]json.RawMessage
 	if err := json.NewDecoder(w.Body).Decode(&decoded); err != nil {
 		t.Fatalf("failed to decode response: %v", err)
 	}
-	status, ok := decoded["Status"].(map[string]any)
+	statusRaw, ok := decoded["Status"]
 	if !ok {
-		t.Fatal("expected Status block in JSON")
+		t.Fatal("expected Status block in Json")
 	}
-	if status["IsSuccess"] != true {
+	var status struct {
+		IsSuccess bool `json:"IsSuccess"`
+	}
+	if err := json.Unmarshal(statusRaw, &status); err != nil {
+		t.Fatalf("failed to decode status: %v", err)
+	}
+	if !status.IsSuccess {
 		t.Error("expected decoded IsSuccess=true")
 	}
 }
@@ -189,7 +195,7 @@ func TestJSON_Serialization_PascalCase(t *testing.T) {
 		t.Fatalf("marshal failed: %v", err)
 	}
 
-	var decoded map[string]any
+	var decoded map[string]json.RawMessage
 	json.Unmarshal(b, &decoded) //nolint:errcheck
 
 	for _, key := range []string{"Status", "Attributes", "Results", "Errors"} {

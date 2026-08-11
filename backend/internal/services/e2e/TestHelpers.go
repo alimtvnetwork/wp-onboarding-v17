@@ -138,7 +138,7 @@ func expectSuccess(resp *apiResponse) *apperror.AppError {
 		fmt.Sprintf("expected success, got HTTP %d: %s", resp.StatusCode, resp.RawBody))
 }
 
-func toJson(v any) string {
+func toJson[T any](v T) string {
 	b, _ := json.Marshal(v)
 
 	return string(b)
