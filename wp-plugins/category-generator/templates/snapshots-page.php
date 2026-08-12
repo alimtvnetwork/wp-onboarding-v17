@@ -92,6 +92,3 @@ $auto_snapshot_enabled = $settings->get(CG_Constants::SETTING_AUTO_SNAPSHOT, fal
 
 <!-- Styles -->
 <?php include CG_PLUGIN_PATH . 'templates/partials/snapshot-styles.php'; ?>
-
-<!-- Scripts -->
-<?php include CG_PLUGIN_PATH . 'templates/partials/snapshot-scripts.php'; ?>

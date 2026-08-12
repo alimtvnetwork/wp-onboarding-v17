@@ -45,4 +45,3 @@ $category_tree = cg_build_category_tree($template_categories);
 <?php include CG_PLUGIN_PATH . 'templates/partials/templates-modal-edit.php'; ?>
 <?php include CG_PLUGIN_PATH . 'templates/partials/templates-modal-category.php'; ?>
 <?php include CG_PLUGIN_PATH . 'templates/partials/templates-styles.php'; ?>
-<?php include CG_PLUGIN_PATH . 'templates/partials/templates-scripts.php'; ?>

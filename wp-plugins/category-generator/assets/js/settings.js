@@ -1,26 +1,13 @@
-<?php
-/**
- * Settings Page - Scripts
- * 
- * @package Category_Generator_Area
- */
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-?>
-
-<script>
 jQuery(document).ready(function($) {
-    const RESET_CONFIRM_TEXT = '<?php echo esc_js(CG_Constants::RESET_CONFIRM_TEXT); ?>';
-    const NOTICE_DURATION = <?php echo CG_Constants::NOTICE_DURATION; ?>;
+    const RESET_CONFIRM_TEXT = cgAdmin.constants.RESET_CONFIRM_TEXT;
+    const NOTICE_DURATION = cgAdmin.constants.NOTICE_DURATION;
     
     // Tab switching
-    $('.<?php echo esc_js(CG_CSS::LAYOUT_TAB); ?>').on('click', function() {
+    $('.' + cgAdmin.css.layout.tab).on('click', function() {
         const tab = $(this).data('tab');
-        $('.<?php echo esc_js(CG_CSS::LAYOUT_TAB); ?>').removeClass('active');
+        $('.' + cgAdmin.css.layout.tab).removeClass('active');
         $(this).addClass('active');
-        $('.<?php echo esc_js(CG_CSS::LAYOUT_TAB_CONTENT); ?>').removeClass('active');
+        $('.' + cgAdmin.css.layout.tabContent).removeClass('active');
         $('#tab-' + tab).addClass('active');
     });
     
@@ -37,7 +24,7 @@ jQuery(document).ready(function($) {
         
         const formData = $(this).serializeArray();
         const data = {
-            action: '<?php echo esc_js(CG_Constants::AJAX_SAVE_SETTINGS); ?>',
+            action: cgAdmin.constants.AJAX_SAVE_SETTINGS,
             nonce: cgAdmin.nonce
         };
         
@@ -51,11 +38,11 @@ jQuery(document).ready(function($) {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    const $notice = $('<div class="cg-save-notice">✓ <?php echo esc_js(__('Settings saved successfully!', 'category-generator')); ?></div>');
+                    const $notice = $('<div class="cg-save-notice">✓ ' + cgAdmin.strings.settingsSaved + '</div>');
                     $('body').append($notice);
                     setTimeout(function() { $notice.fadeOut(300, function() { $(this).remove(); }); }, NOTICE_DURATION);
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error saving settings', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorSavingSettings);
                 }
             }
         });
@@ -68,7 +55,7 @@ jQuery(document).ready(function($) {
         const key = $('#new_api_key').val();
         
         if (!name || !url) {
-            alert('<?php echo esc_js(__('Please enter Api name and Url', 'category-generator')); ?>');
+            alert(cgAdmin.strings.enterApiNameUrl);
             return;
         }
         
@@ -76,7 +63,7 @@ jQuery(document).ready(function($) {
             url: cgAdmin.ajaxUrl,
             type: 'POST',
             data: {
-                action: '<?php echo esc_js(CG_Constants::AJAX_ADD_REMOTE_API); ?>',
+                action: cgAdmin.constants.AJAX_ADD_REMOTE_API,
                 nonce: cgAdmin.nonce,
                 name: name,
                 url: url,
@@ -86,7 +73,7 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     location.reload();
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error adding Api', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorAddingApi);
                 }
             }
         });
@@ -97,22 +84,22 @@ jQuery(document).ready(function($) {
         const apiId = $(this).data('id');
         const $btn = $(this);
         
-        $btn.prop('disabled', true).text('<?php echo esc_js(__('Importing...', 'category-generator')); ?>');
+        $btn.prop('disabled', true).text(cgAdmin.strings.importing);
         
         $.ajax({
             url: cgAdmin.ajaxUrl,
             type: 'POST',
             data: {
-                action: '<?php echo esc_js(CG_Constants::AJAX_IMPORT_REMOTE); ?>',
+                action: cgAdmin.constants.AJAX_IMPORT_REMOTE,
                 nonce: cgAdmin.nonce,
                 api_id: apiId
             },
             success: function(response) {
-                $btn.prop('disabled', false).text('<?php echo esc_js(__('Import Templates', 'category-generator')); ?>');
+                $btn.prop('disabled', false).text(cgAdmin.strings.importTemplates);
                 if (response.success) {
-                    alert('<?php echo esc_js(__('Imported', 'category-generator')); ?> ' + response.data.count + ' <?php echo esc_js(__('templates successfully!', 'category-generator')); ?>');
+                    alert(cgAdmin.strings.imported + ' ' + response.data.count + ' ' + cgAdmin.strings.templatesSuccessfully);
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Import failed', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.importFailed);
                 }
             }
         });
@@ -120,7 +107,7 @@ jQuery(document).ready(function($) {
     
     // Delete Api
     $(document).on('click', '.cg-delete-api', function() {
-        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete this Api?', 'category-generator')); ?>')) return;
+        if (!confirm(cgAdmin.strings.confirmDeleteApi)) return;
         
         const apiId = $(this).data('id');
         
@@ -128,7 +115,7 @@ jQuery(document).ready(function($) {
             url: cgAdmin.ajaxUrl,
             type: 'POST',
             data: {
-                action: '<?php echo esc_js(CG_Constants::AJAX_DELETE_REMOTE_API); ?>',
+                action: cgAdmin.constants.AJAX_DELETE_REMOTE_API,
                 nonce: cgAdmin.nonce,
                 api_id: apiId
             },
@@ -142,12 +129,12 @@ jQuery(document).ready(function($) {
     
     // Export before reset
     $('#cg-export-before-reset').on('click', function() {
-        window.location.href = cgAdmin.ajaxUrl + '?action=<?php echo esc_js(CG_Constants::AJAX_EXPORT_DATA); ?>&nonce=' + cgAdmin.nonce + '&type=all';
+        window.location.href = cgAdmin.ajaxUrl + '?action=' + cgAdmin.constants.AJAX_EXPORT_DATA + '&nonce=' + cgAdmin.nonce + '&type=all';
     });
     
     // Download database
     $('#cg-download-db-btn').on('click', function() {
-        window.location.href = cgAdmin.ajaxUrl + '?action=<?php echo esc_js(CG_Constants::AJAX_DOWNLOAD_DATABASE); ?>&nonce=' + cgAdmin.nonce;
+        window.location.href = cgAdmin.ajaxUrl + '?action=' + cgAdmin.constants.AJAX_DOWNLOAD_DATABASE + '&nonce=' + cgAdmin.nonce;
     });
     
     // Open restore modal
@@ -155,7 +142,7 @@ jQuery(document).ready(function($) {
         $('#cg-restore-file').val('');
         $('#cg-restore-file-info').hide();
         $('#cg-confirm-restore-btn').prop('disabled', true);
-        $('#<?php echo esc_js(CG_CSS::ID_SETTINGS_RESTORE_MODAL); ?>').fadeIn(200);
+        $('#' + cgAdmin.ids.settingsRestoreModal).fadeIn(200);
     });
     
     // Handle file selection for restore
@@ -178,11 +165,11 @@ jQuery(document).ready(function($) {
         if (!file) return;
         
         const formData = new FormData();
-        formData.append('action', '<?php echo esc_js(CG_Constants::AJAX_RESTORE_DATABASE); ?>');
+        formData.append('action', cgAdmin.constants.AJAX_RESTORE_DATABASE);
         formData.append('nonce', cgAdmin.nonce);
         formData.append('database_file', file);
         
-        $(this).prop('disabled', true).text('<?php echo esc_js(__('Restoring...', 'category-generator')); ?>');
+        $(this).prop('disabled', true).text(cgAdmin.strings.restoring);
         
         $.ajax({
             url: cgAdmin.ajaxUrl,
@@ -192,11 +179,11 @@ jQuery(document).ready(function($) {
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    alert('<?php echo esc_js(__('Database restored successfully! Page will reload.', 'category-generator')); ?>');
+                    alert(cgAdmin.strings.dbRestored);
                     location.reload();
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error restoring database', 'category-generator')); ?>');
-                    $('#cg-confirm-restore-btn').prop('disabled', false).text('<?php echo esc_js(__('Restore Database', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorRestoringDb);
+                    $('#cg-confirm-restore-btn').prop('disabled', false).text(cgAdmin.strings.restoreDatabase);
                 }
             }
         });
@@ -206,7 +193,7 @@ jQuery(document).ready(function($) {
     $('#cg-reset-database-btn').on('click', function() {
         $('#cg-reset-confirm-text').val('');
         $('#cg-confirm-reset-btn').prop('disabled', true);
-        $('#<?php echo esc_js(CG_CSS::ID_SETTINGS_RESET_MODAL); ?>').fadeIn(200);
+        $('#' + cgAdmin.ids.settingsResetModal).fadeIn(200);
     });
     
     // Enable reset button when correct text is typed
@@ -220,39 +207,38 @@ jQuery(document).ready(function($) {
         const exportFirst = $('#cg-export-before-confirm').is(':checked');
         
         if (exportFirst) {
-            window.location.href = cgAdmin.ajaxUrl + '?action=<?php echo esc_js(CG_Constants::AJAX_EXPORT_DATA); ?>&nonce=' + cgAdmin.nonce + '&type=all';
+            window.location.href = cgAdmin.ajaxUrl + '?action=' + cgAdmin.constants.AJAX_EXPORT_DATA + '&nonce=' + cgAdmin.nonce + '&type=all';
         }
         
-        $(this).prop('disabled', true).text('<?php echo esc_js(__('Resetting...', 'category-generator')); ?>');
+        $(this).prop('disabled', true).text(cgAdmin.strings.resetting);
         
         $.ajax({
             url: cgAdmin.ajaxUrl,
             type: 'POST',
             data: {
-                action: '<?php echo esc_js(CG_Constants::AJAX_RESET_DATABASE); ?>',
+                action: cgAdmin.constants.AJAX_RESET_DATABASE,
                 nonce: cgAdmin.nonce
             },
             success: function(response) {
                 if (response.success) {
-                    alert('<?php echo esc_js(__('Database reset successfully! Page will reload.', 'category-generator')); ?>');
+                    alert(cgAdmin.strings.dbReset);
                     location.reload();
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error resetting database', 'category-generator')); ?>');
-                    $('#cg-confirm-reset-btn').prop('disabled', false).text('<?php echo esc_js(__('Yes, Reset Everything', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorResettingDb);
+                    $('#cg-confirm-reset-btn').prop('disabled', false).text(cgAdmin.strings.yesResetEverything);
                 }
             }
         });
     });
     
     // Close modals
-    $('.<?php echo esc_js(CG_CSS::MODAL_CLOSE); ?>').on('click', function() {
-        $(this).closest('.<?php echo esc_js(CG_CSS::MODAL); ?>').fadeOut(200);
+    $('.' + cgAdmin.css.modal.close).on('click', function() {
+        $(this).closest('.' + cgAdmin.css.modal.base).fadeOut(200);
     });
     
-    $('.<?php echo esc_js(CG_CSS::MODAL); ?>').on('click', function(e) {
+    $('.' + cgAdmin.css.modal.base).on('click', function(e) {
         if (e.target === this) {
             $(this).fadeOut(200);
         }
     });
 });
-</script>

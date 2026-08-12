@@ -36,6 +36,3 @@ $inner_templates = $this->db->get_inner_templates();
 
 <!-- Styles -->
 <?php include CG_PLUGIN_PATH . 'templates/partials/history-styles.php'; ?>
-
-<!-- Scripts -->
-<?php include CG_PLUGIN_PATH . 'templates/partials/history-scripts.php'; ?>

@@ -1,32 +1,13 @@
-<?php
-/**
- * History Page Scripts Partial
- * 
- * JavaScript for the history page.
- * 
- * @package Category_Generator_Area
- */
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-$js_constants = CG_Constants::get_js_constants();
-$js_css = CG_CSS::get_js_classes();
-$js_ids = CG_CSS::get_js_ids();
-$has_yoast = defined('WPSEO_VERSION');
-?>
-<script>
 jQuery(document).ready(function($) {
     // Constants from PHP
-    var CG_CONST = <?php echo json_encode($js_constants); ?>;
-    var CG_CSS = <?php echo json_encode($js_css); ?>;
-    var CG_IDS = <?php echo json_encode($js_ids); ?>;
+    var CG_CONST = cgAdmin.constants;
+    var CG_CSS = cgAdmin.css;
+    var CG_IDS = cgAdmin.ids;
     
     let currentPage = 1;
-    let perPage = CG_CONST.pagination.default;
-    const hasYoast = <?php echo $has_yoast ? 'true' : 'false'; ?>;
-    const colSpan = hasYoast ? CG_CONST.columns.historyWithYoast : CG_CONST.columns.historyDefault;
+    let perPage = CG_CONST.PAGINATION_DEFAULT;
+    const hasYoast = cgAdmin.hasYoast;
+    const colSpan = hasYoast ? CG_CONST.HISTORY_COLUMNS_WITH_YOAST : CG_CONST.HISTORY_COLUMNS_DEFAULT;
     
     function getPerPage() {
         const val = $('#' + CG_IDS.history.perPage).val();
@@ -69,17 +50,17 @@ jQuery(document).ready(function($) {
         let html = '';
         history.forEach(function(item) {
             const hasSchema = item.has_schema == 1 ? 'Yes' : 'No';
-            const editUrl = '<?php echo admin_url('term.php?taxonomy='); ?>' + item.taxonomy + '&tag_ID=' + item.term_id;
-            const metaTitle = item.meta_title ? escapeHtml(item.meta_title.substring(0, CG_CONST.truncate.short)) + (item.meta_title.length > CG_CONST.truncate.short ? '...' : '') : '-';
-            const metaDesc = item.meta_description ? escapeHtml(item.meta_description.substring(0, CG_CONST.truncate.medium)) + (item.meta_description.length > CG_CONST.truncate.medium ? '...' : '') : '-';
+            const editUrl = cgAdmin.adminUrl + 'term.php?taxonomy=' + item.taxonomy + '&tag_ID=' + item.term_id;
+            const metaTitle = item.meta_title ? escapeHtml(item.meta_title.substring(0, CG_CONST.TRUNCATE_SHORT)) + (item.meta_title.length > CG_CONST.TRUNCATE_SHORT ? '...' : '') : '-';
+            const metaDesc = item.meta_description ? escapeHtml(item.meta_description.substring(0, CG_CONST.TRUNCATE_MEDIUM)) + (item.meta_description.length > CG_CONST.TRUNCATE_MEDIUM ? '...' : '') : '-';
             
             let yoastCol = '';
             if (hasYoast) {
                 const score = item.yoast_score || 0;
                 let scoreClass = CG_CSS.yoast.na;
                 let scoreTitle = 'Not analyzed';
-                if (score >= CG_CONST.yoastScore.good) { scoreClass = CG_CSS.yoast.good; scoreTitle = 'Good (' + score + ')'; }
-                else if (score >= CG_CONST.yoastScore.ok) { scoreClass = CG_CSS.yoast.ok; scoreTitle = 'Needs improvement (' + score + ')'; }
+                if (score >= CG_CONST.YOAST_SCORE_GOOD) { scoreClass = CG_CSS.yoast.good; scoreTitle = 'Good (' + score + ')'; }
+                else if (score >= CG_CONST.YOAST_SCORE_OK) { scoreClass = CG_CSS.yoast.ok; scoreTitle = 'Needs improvement (' + score + ')'; }
                 else if (score > 0) { scoreClass = CG_CSS.yoast.bad; scoreTitle = 'Poor (' + score + ')'; }
                 yoastCol = '<td><span class="' + CG_CSS.yoast.score + ' ' + scoreClass + '" title="' + scoreTitle + '"></span></td>';
             }
@@ -146,9 +127,9 @@ jQuery(document).ready(function($) {
         const count = getSelectedIds().length;
         $('#' + CG_IDS.history.selectedCount).text(count);
         if (count > 0) {
-            $('#' + CG_IDS.history.bulkActionsBar).slideDown(CG_CONST.animation.fadeDuration);
+            $('#' + CG_IDS.history.bulkActionsBar).slideDown(CG_CONST.ANIMATION_FADE_DURATION);
         } else {
-            $('#' + CG_IDS.history.bulkActionsBar).slideUp(CG_CONST.animation.fadeDuration);
+            $('#' + CG_IDS.history.bulkActionsBar).slideUp(CG_CONST.ANIMATION_FADE_DURATION);
         }
     }
     
@@ -180,28 +161,28 @@ jQuery(document).ready(function($) {
         const termData = getSelectedTermIds();
         
         if (ids.length === 0) {
-            alert('<?php _e('Please select at least one item.', 'category-generator'); ?>');
+            alert(cgAdmin.strings.selectAtLeastOne);
             return;
         }
         
         if (action === 'snapshot') {
-            const name = prompt('<?php _e('Enter snapshot name:', 'category-generator'); ?>', 'Bulk Snapshot - ' + ids.length + ' items');
+            const name = prompt(cgAdmin.strings.enterSnapshotName, 'Bulk Snapshot - ' + ids.length + ' items');
             if (!name) return;
             
             $.ajax({
                 url: cgAdmin.ajaxUrl,
                 type: 'POST',
-                data: { action: 'cg_create_snapshot', nonce: cgAdmin.nonce, name: name, notes: 'Created from history bulk action with ' + ids.length + ' selected items' },
+                data: { action: 'cg_create_snapshot', nonce: cgAdmin.nonce, name: name, notes: cgAdmin.strings.createdFromHistoryBulk + ids.length + ' items' },
                 success: function(response) {
                     if (response.success) {
-                        alert('<?php _e('Snapshot created successfully!', 'category-generator'); ?>');
+                        alert(cgAdmin.strings.snapshotCreated);
                     } else {
-                        alert('<?php _e('Error:', 'category-generator'); ?> ' + (response.data.message || 'Unknown error'));
+                        alert(cgAdmin.strings.errorPrefix + ' ' + (response.data.message || 'Unknown error'));
                     }
                 }
             });
         } else if (action === 'delete-logs') {
-            if (!confirm('<?php _e('Are you sure you want to remove these history logs? This will NOT delete the actual categories.', 'category-generator'); ?>')) return;
+            if (!confirm(cgAdmin.strings.confirmDeleteLogs)) return;
             
             $.ajax({
                 url: cgAdmin.ajaxUrl,
@@ -209,16 +190,16 @@ jQuery(document).ready(function($) {
                 data: { action: 'cg_bulk_delete_history', nonce: cgAdmin.nonce, ids: ids },
                 success: function(response) {
                     if (response.success) {
-                        alert('<?php _e('Deleted', 'category-generator'); ?> ' + response.data.deleted + ' <?php _e('log(s).', 'category-generator'); ?>');
+                        alert(cgAdmin.strings.deleted + ' ' + response.data.deleted + ' ' + cgAdmin.strings.logs);
                         loadHistory(currentPage, $('#' + CG_IDS.history.search).val());
                     } else {
-                        alert('<?php _e('Error:', 'category-generator'); ?> ' + (response.data.message || 'Unknown error'));
+                        alert(cgAdmin.strings.errorPrefix + ' ' + (response.data.message || 'Unknown error'));
                     }
                 }
             });
         } else if (action === 'delete-all') {
-            if (!confirm('<?php _e('⚠️ WARNING: This will delete history logs AND their corresponding WordPress categories. This action cannot be undone!', 'category-generator'); ?>')) return;
-            if (!confirm('<?php _e('Please confirm again that you want to permanently delete these categories from WordPress.', 'category-generator'); ?>')) return;
+            if (!confirm(cgAdmin.strings.confirmDeleteAll)) return;
+            if (!confirm(cgAdmin.strings.confirmDeleteAllAgain)) return;
             
             $.ajax({
                 url: cgAdmin.ajaxUrl,
@@ -226,10 +207,10 @@ jQuery(document).ready(function($) {
                 data: { action: 'cg_bulk_delete_history_and_categories', nonce: cgAdmin.nonce, ids: ids, terms: termData },
                 success: function(response) {
                     if (response.success) {
-                        alert('<?php _e('Deleted', 'category-generator'); ?> ' + response.data.logs_deleted + ' <?php _e('log(s) and', 'category-generator'); ?> ' + response.data.terms_deleted + ' <?php _e('category(ies).', 'category-generator'); ?>');
+                        alert(cgAdmin.strings.deleted + ' ' + response.data.logs_deleted + ' ' + cgAdmin.strings.logsAnd + ' ' + response.data.terms_deleted + ' ' + cgAdmin.strings.categories);
                         loadHistory(currentPage, $('#' + CG_IDS.history.search).val());
                     } else {
-                        alert('<?php _e('Error:', 'category-generator'); ?> ' + (response.data.message || 'Unknown error'));
+                        alert(cgAdmin.strings.errorPrefix + ' ' + (response.data.message || 'Unknown error'));
                     }
                 }
             });
@@ -245,13 +226,13 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     const item = response.data;
                     let html = 
-                        '<div class="cg-view-section"><h4><?php _e('Category Name', 'category-generator'); ?></h4><code>' + escapeHtml(item.category_name) + '</code></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Slug', 'category-generator'); ?></h4><code>' + escapeHtml(item.slug || '-') + '</code></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Title / Area', 'category-generator'); ?></h4><code>' + escapeHtml(item.title) + '</code> / <code>' + escapeHtml(item.area || '-') + '</code></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Meta Title', 'category-generator'); ?></h4><pre>' + escapeHtml(item.meta_title || '-') + '</pre></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Meta Description', 'category-generator'); ?></h4><pre>' + escapeHtml(item.meta_description || '-') + '</pre></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Has Schema', 'category-generator'); ?></h4><span class="' + CG_CSS.badge.base + ' ' + CG_CSS.badge[item.has_schema == 1 ? 'yes' : 'no'] + '">' + (item.has_schema == 1 ? 'Yes' : 'No') + '</span></div>' +
-                        '<div class="cg-view-section"><h4><?php _e('Created', 'category-generator'); ?></h4>' + item.created_at + '</div>';
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.categoryName + '</h4><code>' + escapeHtml(item.category_name) + '</code></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.slug + '</h4><code>' + escapeHtml(item.slug || '-') + '</code></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.titleArea + '</h4><code>' + escapeHtml(item.title) + '</code> / <code>' + escapeHtml(item.area || '-') + '</code></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.metaTitle + '</h4><pre>' + escapeHtml(item.meta_title || '-') + '</pre></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.metaDescription + '</h4><pre>' + escapeHtml(item.meta_description || '-') + '</pre></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.hasSchema + '</h4><span class="' + CG_CSS.badge.base + ' ' + CG_CSS.badge[item.has_schema == 1 ? 'yes' : 'no'] + '">' + (item.has_schema == 1 ? 'Yes' : 'No') + '</span></div>' +
+                        '<div class="cg-view-section"><h4>' + cgAdmin.strings.created + '</h4>' + item.created_at + '</div>';
                     $('#cg-history-view-content').html(html);
                     $('#cg-history-view-modal').show();
                 }
@@ -263,8 +244,8 @@ jQuery(document).ready(function($) {
     function openInjectModal(historyId) {
         $('#cg-inject-history-id').val(historyId);
         $('#cg-inject-template-select').val('');
-        $('#cg-inject-template-preview').html('<em><?php _e('Select a template to see preview', 'category-generator'); ?></em>');
-        $('#cg-inject-content').val('<?php _e('Loading...', 'category-generator'); ?>');
+        $('#cg-inject-template-preview').html('<em>' + cgAdmin.strings.selectTemplatePreview + '</em>');
+        $('#cg-inject-content').val(cgAdmin.strings.loading);
         
         $.ajax({
             url: cgAdmin.ajaxUrl,
@@ -304,7 +285,7 @@ jQuery(document).ready(function($) {
         const content = $('#cg-inject-content').val();
         
         if (!templateId) {
-            alert('<?php _e('Please select an inner template.', 'category-generator'); ?>');
+            alert(cgAdmin.strings.selectInnerTemplate);
             return;
         }
         
@@ -333,15 +314,15 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    alert('<?php _e('Template injected successfully!', 'category-generator'); ?>');
+                    alert(cgAdmin.strings.templateInjected);
                     $('#cg-inject-modal').hide();
                     loadHistory(currentPage, $('#' + CG_IDS.history.search).val());
                 } else {
-                    alert(response.data.message || '<?php _e('Error injecting template', 'category-generator'); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorInjectingTemplate);
                 }
             },
             error: function() {
-                alert('<?php _e('Error injecting template', 'category-generator'); ?>');
+                alert(cgAdmin.strings.errorInjectingTemplate);
             }
         });
     }
@@ -362,7 +343,7 @@ jQuery(document).ready(function($) {
         if (content) {
             $('#cg-inject-template-preview').text(content);
         } else {
-            $('#cg-inject-template-preview').html('<em><?php _e('Select a template to see preview', 'category-generator'); ?></em>');
+            $('#cg-inject-template-preview').html('<em>' + cgAdmin.strings.selectTemplatePreview + '</em>');
         }
     });
     
@@ -381,7 +362,7 @@ jQuery(document).ready(function($) {
     $('#cg-history-import-btn').on('click', function() { $('#cg-history-import-modal').show(); });
     $('#cg-history-import-submit').on('click', function() {
         const file = $('#cg-history-import-file')[0].files[0];
-        if (!file) { alert('<?php _e('Please select a file', 'category-generator'); ?>'); return; }
+        if (!file) { alert(cgAdmin.strings.selectFile); return; }
         
         const formData = new FormData();
         formData.append('action', 'cg_import_data');
@@ -398,11 +379,11 @@ jQuery(document).ready(function($) {
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    alert('<?php _e('Import completed:', 'category-generator'); ?> ' + response.data.message);
+                    alert(cgAdmin.strings.importCompleted + ' ' + response.data.message);
                     $('#cg-history-import-modal').hide();
                     loadHistory();
                 } else {
-                    alert('<?php _e('Error:', 'category-generator'); ?> ' + response.data.message);
+                    alert(cgAdmin.strings.errorPrefix + ' ' + response.data.message);
                 }
             }
         });
@@ -417,13 +398,13 @@ jQuery(document).ready(function($) {
         try {
             const raw = localStorage.getItem(CG_COLUMNS_STORAGE_KEY);
             if (raw === null) return CG_DEFAULT_HIDDEN.slice();
-            const parsed = Json.parse(raw);
+            const parsed = JSON.parse(raw);
             return Array.isArray(parsed) ? parsed : [];
         } catch (e) { return CG_DEFAULT_HIDDEN.slice(); }
     }
     
     function saveHiddenColumns(hidden) {
-        try { localStorage.setItem(CG_COLUMNS_STORAGE_KEY, Json.stringify(hidden)); } catch (e) {}
+        try { localStorage.setItem(CG_COLUMNS_STORAGE_KEY, JSON.stringify(hidden)); } catch (e) {}
     }
     
     function applyColumnVisibility() {
@@ -491,4 +472,3 @@ jQuery(document).ready(function($) {
     
     loadHistory();
 });
-</script>

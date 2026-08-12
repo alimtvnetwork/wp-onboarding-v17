@@ -25,4 +25,3 @@ if (!defined('ABSPATH')) {
 </div>
 
 <?php include CG_PLUGIN_PATH . 'templates/partials/business-profile-styles.php'; ?>
-<?php include CG_PLUGIN_PATH . 'templates/partials/business-profile-scripts.php'; ?>

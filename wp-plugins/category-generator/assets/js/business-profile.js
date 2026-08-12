@@ -1,25 +1,12 @@
-<?php
-/**
- * Business Profile Page - Scripts
- * 
- * @package Category_Generator_Area
- */
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-?>
-
-<script>
 jQuery(document).ready(function($) {
-    const NOTICE_DURATION = <?php echo CG_Constants::NOTICE_DURATION; ?>;
+    const NOTICE_DURATION = cgAdmin.constants.NOTICE_DURATION;
     
     $('#cg-business-profile-form').on('submit', function(e) {
         e.preventDefault();
         
         const formData = $(this).serializeArray();
         const data = {
-            action: '<?php echo esc_js(CG_Constants::AJAX_SAVE_BUSINESS_PROFILE); ?>',
+            action: cgAdmin.constants.AJAX_SAVE_BUSINESS_PROFILE,
             nonce: cgAdmin.nonce
         };
         
@@ -34,7 +21,7 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     // Show success message
-                    const $notice = $('<div class="cg-save-notice">✓ <?php echo esc_js(__('Business Profile saved successfully!', 'category-generator')); ?></div>');
+                    const $notice = $('<div class="cg-save-notice">✓ ' + cgAdmin.strings.profileSaved + '</div>');
                     $('body').append($notice);
                     setTimeout(function() {
                         $notice.fadeOut(300, function() {
@@ -42,13 +29,12 @@ jQuery(document).ready(function($) {
                         });
                     }, NOTICE_DURATION);
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error saving profile', 'category-generator')); ?>');
+                    alert(response.data.message || cgAdmin.strings.errorSavingProfile);
                 }
             },
             error: function() {
-                alert('<?php echo esc_js(__('Error saving profile. Please try again.', 'category-generator')); ?>');
+                alert(cgAdmin.strings.errorSavingProfileAgain);
             }
         });
     });
 });
-</script>

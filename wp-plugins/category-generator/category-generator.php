@@ -379,10 +379,81 @@ class Category_Generator_Pro {
             true
         );
         
+        if ($hook === 'toplevel_page_category-generator') {
+            wp_enqueue_script(
+                'cg-admin-snapshot',
+                CG_PLUGIN_URL . 'assets/js/admin-snapshot.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-snapshots') {
+            wp_enqueue_script(
+                'cg-snapshot',
+                CG_PLUGIN_URL . 'assets/js/snapshot.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-history') {
+            wp_enqueue_script(
+                'cg-history',
+                CG_PLUGIN_URL . 'assets/js/history.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-templates') {
+            wp_enqueue_script(
+                'cg-templates',
+                CG_PLUGIN_URL . 'assets/js/templates.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-inner-templates') {
+            wp_enqueue_script(
+                'cg-inner-templates',
+                CG_PLUGIN_URL . 'assets/js/inner-templates.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-business-profile') {
+            wp_enqueue_script(
+                'cg-business-profile',
+                CG_PLUGIN_URL . 'assets/js/business-profile.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-settings') {
+            wp_enqueue_script(
+                'cg-settings',
+                CG_PLUGIN_URL . 'assets/js/settings.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        } elseif ($hook === 'category-generator_page_cg-tests') {
+            wp_enqueue_script(
+                'cg-tests',
+                CG_PLUGIN_URL . 'assets/js/tests.js',
+                ['jquery', 'category-generator-admin'],
+                CG_PLUGIN_VERSION,
+                true
+            );
+        }
+        
         wp_localize_script('category-generator-admin', 'cgAdmin', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
+            'adminUrl' => admin_url(),
+            'hasYoast' => defined('WPSEO_VERSION'),
             'nonce' => wp_create_nonce('cg_nonce'),
             'currentPage' => $hook,
+            'constants' => class_exists('CG_Constants') ? (new ReflectionClass('CG_Constants'))->getConstants() : [],
+            'css' => class_exists('CG_CSS') ? CG_CSS::get_js_classes() : [],
+            'ids' => class_exists('CG_CSS') ? CG_CSS::get_js_ids() : [],
             'strings' => [
                 'generating' => __('Generating categories...', 'category-generator'),
                 'success' => __('Categories created successfully!', 'category-generator'),
@@ -391,9 +462,101 @@ class Category_Generator_Pro {
                 'saved' => __('Saved successfully!', 'category-generator'),
                 'deleted' => __('Deleted successfully!', 'category-generator'),
                 'loading' => __('Loading...', 'category-generator'),
+                'createdFromGenerate' => __('Created from Generate page', 'category-generator'),
+                'snapshotCreated' => __('Snapshot created!', 'category-generator'),
+                'failedCreateSnapshot' => __('Failed to create snapshot', 'category-generator'),
+                'requestFailed' => __('Request failed', 'category-generator'),
+                'confirmRestore' => __('Restore this snapshot? This will merge categories from the snapshot.', 'category-generator'),
+                'snapshotRestored' => __('Snapshot restored!', 'category-generator'),
+                'failedRestoreSnapshot' => __('Failed to restore snapshot', 'category-generator'),
+                'profileSaved' => __('Business Profile saved successfully!', 'category-generator'),
+                'errorSavingProfile' => __('Error saving profile', 'category-generator'),
+                'errorSavingProfileAgain' => __('Error saving profile. Please try again.', 'category-generator'),
+                'confirmClearHistory' => __('Are you sure you want to clear all history? This cannot be undone.', 'category-generator'),
+                'clearing' => __('Clearing...', 'category-generator'),
+                'historyCleared' => __('History cleared successfully!', 'category-generator'),
+                'errorClearingHistory' => __('Error clearing history', 'category-generator'),
+                'confirmDeleteSelected' => __('Are you sure you want to delete the selected items?', 'category-generator'),
+                'deleting' => __('Deleting...', 'category-generator'),
+                'itemsDeleted' => __('Items deleted successfully!', 'category-generator'),
+                'errorDeletingItems' => __('Error deleting items', 'category-generator'),
+                'settingsSaved' => __('Settings saved successfully!', 'category-generator'),
+                'errorSavingSettings' => __('Error saving settings', 'category-generator'),
+                'confirmReset' => __('Are you sure you want to reset all settings to defaults? This cannot be undone.', 'category-generator'),
+                'settingsReset' => __('Settings reset to defaults', 'category-generator'),
+                'errorGeneratingCategories' => __('Error generating categories', 'category-generator'),
+                'selectAtLeastOne' => __('Please select at least one item.', 'category-generator'),
+                'enterSnapshotName' => __('Enter snapshot name:', 'category-generator'),
+                'errorPrefix' => __('Error:', 'category-generator'),
+                'confirmDeleteLogs' => __('Are you sure you want to remove these history logs? This will NOT delete the actual categories.', 'category-generator'),
+                'deleted' => __('Deleted', 'category-generator'),
+                'logs' => __('log(s).', 'category-generator'),
+                'confirmDeleteAll' => __('⚠️ WARNING: This will delete history logs AND their corresponding WordPress categories. This action cannot be undone!', 'category-generator'),
+                'confirmDeleteAllAgain' => __('Please confirm again that you want to permanently delete these categories from WordPress.', 'category-generator'),
+                'logsAnd' => __('log(s) and', 'category-generator'),
+                'categories' => __('category(ies).', 'category-generator'),
+                'categoryName' => __('Category Name', 'category-generator'),
+                'slug' => __('Slug', 'category-generator'),
+                'titleArea' => __('Title / Area', 'category-generator'),
+                'metaTitle' => __('Meta Title', 'category-generator'),
+                'metaDescription' => __('Meta Description', 'category-generator'),
+                'hasSchema' => __('Has Schema', 'category-generator'),
+                'created' => __('Created', 'category-generator'),
+                'selectTemplatePreview' => __('Select a template to see preview', 'category-generator'),
+                'templateInjected' => __('Template injected successfully!', 'category-generator'),
+                'errorInjectingTemplate' => __('Error injecting template', 'category-generator'),
+                'selectFile' => __('Please select a file', 'category-generator'),
+                'importCompleted' => __('Import completed:', 'category-generator'),
+                'selectInnerTemplate' => __('Please select an inner template.', 'category-generator'),
+                'enterApiNameUrl' => __('Please enter Api name and Url', 'category-generator'),
+                'errorAddingApi' => __('Error adding Api', 'category-generator'),
+                'importing' => __('Importing...', 'category-generator'),
+                'importTemplates' => __('Import Templates', 'category-generator'),
+                'imported' => __('Imported', 'category-generator'),
+                'templatesSuccessfully' => __('templates successfully!', 'category-generator'),
+                'importFailed' => __('Import failed', 'category-generator'),
+                'confirmDeleteApi' => __('Are you sure you want to delete this Api?', 'category-generator'),
+                'restoring' => __('Restoring...', 'category-generator'),
+                'dbRestored' => __('Database restored successfully! Page will reload.', 'category-generator'),
+                'errorRestoringDb' => __('Error restoring database', 'category-generator'),
+                'restoreDatabase' => __('Restore Database', 'category-generator'),
+                'resetting' => __('Resetting...', 'category-generator'),
+                'dbReset' => __('Database reset successfully! Page will reload.', 'category-generator'),
+                'errorResettingDb' => __('Error resetting database', 'category-generator'),
+                'yesResetEverything' => __('Yes, Reset Everything', 'category-generator'),
+                'enterSnapshotNameAlert' => __('Please enter a snapshot name', 'category-generator'),
+                'creating' => __('Creating...', 'category-generator'),
+                'requestFailedAgain' => __('Request failed. Please try again.', 'category-generator'),
+                'takeSnapshot' => __('Take Snapshot', 'category-generator'),
+                'snapshotRestoredSuccessfully' => __('Snapshot restored successfully!', 'category-generator'),
+                'restoreSnapshot' => __('Restore Snapshot', 'category-generator'),
+                'confirmDeleteSnapshot' => __('Are you sure you want to delete this snapshot?', 'category-generator'),
+                'failedDeleteSnapshot' => __('Failed to delete snapshot', 'category-generator'),
+                'addNewTemplate' => __('Add New Template', 'category-generator'),
+                'editTemplate' => __('Edit Template', 'category-generator'),
+                'confirmDeleteTemplate' => __('Are you sure you want to delete this template?', 'category-generator'),
+                'errorDeletingTemplate' => __('Error deleting template', 'category-generator'),
+                'errorSavingTemplate' => __('Error saving template', 'category-generator'),
+                'addRootCategory' => __('Add Root Category', 'category-generator'),
+                'addCategory' => __('Add Category', 'category-generator'),
+                'addSubcategory' => __('Add Subcategory', 'category-generator'),
+                'enterCategoryName' => __('Please enter a category name', 'category-generator'),
+                'errorSavingCategory' => __('Error saving category', 'category-generator'),
+                'confirmDeleteCategory' => __('Are you sure? This will also delete all child categories.', 'category-generator'),
+                'cloneFailed' => __('Clone failed', 'category-generator'),
+                'fillRequiredFields' => __('Please fill in all required fields', 'category-generator'),
+                'saveFailed' => __('Save failed', 'category-generator'),
+                'importCompletedImported' => __('Import completed! Imported:', 'category-generator'),
+                'skipped' => __('Skipped:', 'category-generator'),
+                'addInnerTemplate' => __('Add Inner Template', 'category-generator'),
+                'editInnerTemplate' => __('Edit Inner Template', 'category-generator'),
+                'runningTests' => __('Running tests...', 'category-generator'),
+                'errorRunningTests' => __('Error running tests:', 'category-generator'),
+                'unknownError' => __('Unknown error', 'category-generator'),
+                'networkErrorAgain' => __('Network error. Please try again.', 'category-generator'),
+                'noTestsMatchFilter' => __('No tests match the current filter', 'category-generator'),
             ]
         ]);
-    }
     
     /**
      * Render admin page

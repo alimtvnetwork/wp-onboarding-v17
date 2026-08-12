@@ -415,6 +415,3 @@ $auto_snapshot_enabled = $settings->get('auto_snapshot_before_generate', false);
 
 <!-- Admin Styles -->
 <?php include CG_PLUGIN_PATH . 'templates/partials/admin-styles.php'; ?>
-
-<!-- Snapshot Scripts -->
-<?php include CG_PLUGIN_PATH . 'templates/partials/admin-snapshot-scripts.php'; ?>

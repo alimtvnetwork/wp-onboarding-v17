@@ -46,4 +46,3 @@ $remote_apis = $settings->get_remote_apis();
 
 <?php include CG_PLUGIN_PATH . 'templates/partials/settings-modals.php'; ?>
 <?php include CG_PLUGIN_PATH . 'templates/partials/settings-styles.php'; ?>
-<?php include CG_PLUGIN_PATH . 'templates/partials/settings-scripts.php'; ?>
