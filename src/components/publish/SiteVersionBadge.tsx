@@ -1,6 +1,6 @@
 /**
  * SiteVersionBadge - Composes local + remote version badges.
- * Local version renders instantly from props (no API wait).
+ * Local version renders instantly from props (no Api wait).
  * Remote version loads independently via RemoteVersionBadge.
  */
 
@@ -11,7 +11,7 @@ import { RemoteVersionBadge } from "./RemoteVersionBadge";
 interface SiteVersionBadgeProps {
   pluginId: number;
   siteId: number;
-  /** Local version — rendered instantly, no API call needed */
+  /** Local version — rendered instantly, no Api call needed */
   localVersion?: string;
   className?: string;
 }
@@ -28,7 +28,7 @@ export function SiteVersionBadge({ pluginId, siteId, localVersion, className = "
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {/* Local version — always instant */}
-      {localVersion ? (
+      {localVersion !== undefined && localVersion !== "" ? (
         <Badge className="text-[10px] font-mono h-5 px-1.5 bg-primary">
           v{localVersion}
         </Badge>

@@ -98,3 +98,6 @@
 - [Task 416](completed/416-fix-src-components-plugins-remotelogspanel-tsx.md) - Completed
 - [Task 417](completed/417-fix-src-components-plugins-scandirectorypanel-tsx.md) - Completed
 - [Task 418](completed/418-fix-src-components-plugins-syncprogressdialog-tsx.md) - Completed
+- [Task 419](completed/419-fix-src-components-plugins-demoremotelogsdata-ts.md) - Completed
+- [Task 420](completed/420-fix-src-components-publish-siteversionbadge-tsx.md) - Completed
+- [Task 421](completed/421-fix-src-components-settings-aboutpanel-tsx.md) - Completed

@@ -11,7 +11,7 @@ import type {
 const DEMO_INFO_CONTENT = `[2026-03-25T08:12:01Z] INFO  Application started — version 1.62.3
 [2026-03-25T08:12:02Z] INFO  Database connection established (PDO, SQLite)
 [2026-03-25T08:12:02Z] INFO  Cron scheduler initialized — next run in 3600s
-[2026-03-25T08:12:05Z] INFO  REST API routes registered: /logs/status, /logs/retrieve, /logs/clear
+[2026-03-25T08:12:05Z] INFO  Rest Api routes registered: /logs/status, /logs/retrieve, /logs/clear
 [2026-03-25T08:14:33Z] INFO  Incoming upload request — file: invoice_march.pdf (245 KB)
 [2026-03-25T08:14:34Z] INFO  Upload validated — MIME: application/pdf, hash: a3f8c2…
 [2026-03-25T08:14:35Z] INFO  File stored successfully — /uploads/2026/03/invoice_march.pdf
@@ -29,10 +29,10 @@ const DEMO_INFO_CONTENT = `[2026-03-25T08:12:01Z] INFO  Application started — 
 [2026-03-25T10:45:12Z] INFO  File stored successfully — /uploads/2026/03/receipt_007.jpg
 [2026-03-25T10:45:13Z] INFO  Transaction #4822 created — status: pending`;
 
-const DEMO_ERROR_CONTENT = `[2026-03-24T14:02:11Z] ERROR  Failed to connect to remote API: cURL error 28 — Connection timed out after 30001ms
+const DEMO_ERROR_CONTENT = `[2026-03-24T14:02:11Z] ERROR  Failed to connect to remote Api: Curl error 28 — Connection timed out after 30001ms
 [2026-03-24T14:02:11Z] ERROR  Retry 1/3 scheduled in 5s
-[2026-03-24T14:02:16Z] ERROR  Retry 1/3 — still failing: cURL error 28
-[2026-03-24T14:02:21Z] ERROR  Retry 2/3 — still failing: cURL error 28
+[2026-03-24T14:02:16Z] ERROR  Retry 1/3 — still failing: Curl error 28
+[2026-03-24T14:02:21Z] ERROR  Retry 2/3 — still failing: Curl error 28
 [2026-03-24T14:02:26Z] ERROR  Retry 3/3 — giving up. Transaction #4815 marked as failed.
 [2026-03-24T16:33:45Z] ERROR  PDO exception: SQLSTATE[HY000] [14] unable to open database file
 [2026-03-24T16:33:45Z] ERROR  Database recovery: attempting reconnect…
@@ -46,7 +46,7 @@ const DEMO_ERROR_CONTENT = `[2026-03-24T14:02:11Z] ERROR  Failed to connect to r
 
 const DEMO_STACKTRACE_CONTENT = `[2026-03-24T14:02:26Z] FATAL  Uncaught exception in TransactionProcessor::execute()
 
-Exception: Remote API unreachable after 3 retries
+Exception: Remote Api unreachable after 3 retries
   thrown in /var/www/html/wp-content/plugins/riseup-asia-uploader/includes/Services/TransactionProcessor.php on line 142
 
 Stack trace:

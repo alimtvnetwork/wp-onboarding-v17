@@ -5,11 +5,18 @@ import { ExternalLink, GitCommit, Clock, Terminal, FileText } from "lucide-react
 import { useVersionInfo } from "@/hooks/useWhatsNew";
 import { CopyDiagnosticsButton } from "@/components/shared/CopyDiagnosticsButton";
 
+const DEFAULT_APP_NAME = "WP Plugin Publish";
+const DEFAULT_APP_VERSION = "0.0.0";
+const GIT_COMMIT_START_INDEX = 0;
+const GIT_COMMIT_END_INDEX = 7;
+const APP_CHANGELOG_URL = "https://github.com/riseup-asia/wp-onboarding-v17/blob/main/CHANGELOG.md";
+const SCRIPT_CHANGELOG_URL = "https://github.com/riseup-asia/wp-onboarding-v17/blob/main/spec/powershell-integration/CHANGELOG.md";
+
 export function AboutPanel() {
   const { data: versionInfo } = useVersionInfo();
 
-  const appName = versionInfo?.appName || "WP Plugin Publish";
-  const appVersion = versionInfo?.version || "0.0.0";
+  const appName = versionInfo?.appName || DEFAULT_APP_NAME;
+  const appVersion = versionInfo?.version || DEFAULT_APP_VERSION;
   const gitCommit = versionInfo?.gitCommit;
   const buildTime = versionInfo?.buildTime;
   const scriptVersion = versionInfo?.scriptVersion;
@@ -40,7 +47,7 @@ export function AboutPanel() {
                   Git Commit
                 </span>
                 <code className="bg-muted px-1.5 py-0.5 rounded text-xs">
-                  {gitCommit.substring(0, 7)}
+                  {gitCommit.substring(GIT_COMMIT_START_INDEX, GIT_COMMIT_END_INDEX)}
                 </code>
               </div>
             )}
@@ -81,7 +88,7 @@ export function AboutPanel() {
               asChild
             >
               <a
-                href="https://github.com/riseup-asia/wp-onboarding-v17/blob/main/CHANGELOG.md"
+                href={APP_CHANGELOG_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -96,7 +103,7 @@ export function AboutPanel() {
               asChild
             >
               <a
-                href="https://github.com/riseup-asia/wp-onboarding-v17/blob/main/spec/powershell-integration/CHANGELOG.md"
+                href={SCRIPT_CHANGELOG_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -115,7 +122,7 @@ export function AboutPanel() {
           <div>
             <p className="text-sm font-medium">Diagnostics</p>
             <p className="text-xs text-muted-foreground">
-              Copy API URLs and version info for support
+              Copy Api Urls and version info for support
             </p>
           </div>
           <CopyDiagnosticsButton variant="outline" size="sm" />
