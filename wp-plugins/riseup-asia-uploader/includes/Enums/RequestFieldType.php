@@ -18,6 +18,7 @@ if (!defined('ABSPATH')) {
 enum RequestFieldType: string
 {
     case PluginZip     = 'plugin_zip';
+    case Plugin        = 'plugin';
     case Slug          = 'slug';
     case Activate      = 'activate';
     case UploadSource  = 'upload_source';

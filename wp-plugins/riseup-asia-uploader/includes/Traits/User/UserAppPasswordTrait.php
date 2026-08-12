@@ -16,8 +16,25 @@ use WP_REST_Request;
 use WP_REST_Response;
 use WP_Application_Passwords;
 use RiseupAsia\Helpers\EnvelopeBuilder;
+use RiseupAsia\Enums\HttpStatusType;
+use RiseupAsia\Enums\ResponseKeyType;
 
 trait UserAppPasswordTrait {
+
+    private const MSG_INVALID_BODY = 'Invalid or missing Json body';
+    private const DEFAULT_APP_NAME = 'Api Access';
+    private const MSG_USER_ID_REQUIRED = 'UserId is required';
+    private const MSG_USER_NOT_FOUND = 'User not found';
+    private const MSG_CREATE_FAILED = 'App password creation failed: ';
+    private const MSG_CREATE_SUCCESS = 'Application password created';
+
+    private const MSG_REVOKE_MISSING = 'UserId and Uuid are required';
+    private const MSG_REVOKE_FAILED = 'Revocation failed: ';
+    private const MSG_REVOKE_SUCCESS = 'Application password revoked';
+
+    private const WP_ARGS_NAME = 'name';
+    private const WP_RES_UUID = 'uuid';
+    private const KEY_PASSWORD = 'Password';
 
     /**
      * Handle POST /users/app-password — create an application password.
@@ -31,26 +48,26 @@ trait UserAppPasswordTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError(self::MSG_INVALID_BODY, $request);
             }
 
-            $userId = (int) ($body['UserId'] ?? 0);
-            $name   = sanitize_text_field($body['Name'] ?? 'API Access');
+            $userId = (int) ($body[ResponseKeyType::UserId->value] ?? 0);
+            $name   = sanitize_text_field($body[ResponseKeyType::Name->value] ?? self::DEFAULT_APP_NAME);
 
             $isUserIdMissing = ($userId <= 0);
 
             if ($isUserIdMissing) {
-                return EnvelopeBuilder::error('UserId is required', 400)
+                return EnvelopeBuilder::error(self::MSG_USER_ID_REQUIRED, HttpStatusType::BadRequest->value)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
             }
 
             $user = get_userdata($userId);
-            $isUserFound = ($user !== false);
+            $isUserNotFound = ($user === false);
 
-            if (!$isUserFound) {
-                return EnvelopeBuilder::error('User not found', 404)
+            if ($isUserNotFound) {
+                return EnvelopeBuilder::error(self::MSG_USER_NOT_FOUND, HttpStatusType::NotFound->value)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -58,7 +75,7 @@ trait UserAppPasswordTrait {
 
             $result = WP_Application_Passwords::create_new_application_password(
                 $userId,
-                ['name' => $name],
+                [self::WP_ARGS_NAME => $name],
             );
 
             $isError = is_wp_error($result);
@@ -69,7 +86,7 @@ trait UserAppPasswordTrait {
                     'error'  => $result->get_error_message(),
                 ]);
 
-                return EnvelopeBuilder::error('App password creation failed: ' . $result->get_error_message(), 400)
+                return EnvelopeBuilder::error(self::MSG_CREATE_FAILED . $result->get_error_message(), HttpStatusType::BadRequest->value)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -81,12 +98,12 @@ trait UserAppPasswordTrait {
                 'by'     => wp_get_current_user()->user_login,
             ]);
 
-            return EnvelopeBuilder::success('Application password created', 201)
+            return EnvelopeBuilder::success(self::MSG_CREATE_SUCCESS, HttpStatusType::Created->value)
                 ->setSingleResult([
-                    'UserId'   => $userId,
-                    'Name'     => $name,
-                    'Password' => $result[0],
-                    'Uuid'     => $result[1]['uuid'],
+                    ResponseKeyType::UserId->value => $userId,
+                    ResponseKeyType::Name->value   => $name,
+                    self::KEY_PASSWORD             => $result[0],
+                    ResponseKeyType::Uuid->value   => $result[1][self::WP_RES_UUID],
                 ])
                 ->autoDetectRequestedAt()
                 ->setDelegatedAt(home_url())
@@ -106,16 +123,16 @@ trait UserAppPasswordTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError(self::MSG_INVALID_BODY, $request);
             }
 
-            $userId = (int) ($body['UserId'] ?? 0);
-            $uuid   = sanitize_text_field($body['Uuid'] ?? '');
+            $userId = (int) ($body[ResponseKeyType::UserId->value] ?? 0);
+            $uuid   = sanitize_text_field($body[ResponseKeyType::Uuid->value] ?? '');
 
             $isMissing = ($userId <= 0 || empty($uuid));
 
             if ($isMissing) {
-                return EnvelopeBuilder::error('UserId and Uuid are required', 400)
+                return EnvelopeBuilder::error(self::MSG_REVOKE_MISSING, HttpStatusType::BadRequest->value)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -131,7 +148,7 @@ trait UserAppPasswordTrait {
                     'error'  => $deleted->get_error_message(),
                 ]);
 
-                return EnvelopeBuilder::error('Revocation failed: ' . $deleted->get_error_message(), 400)
+                return EnvelopeBuilder::error(self::MSG_REVOKE_FAILED . $deleted->get_error_message(), HttpStatusType::BadRequest->value)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -143,8 +160,8 @@ trait UserAppPasswordTrait {
                 'by'     => wp_get_current_user()->user_login,
             ]);
 
-            return EnvelopeBuilder::success('Application password revoked')
-                ->setSingleResult(['Revoked' => true])
+            return EnvelopeBuilder::success(self::MSG_REVOKE_SUCCESS)
+                ->setSingleResult([ResponseKeyType::Revoked->value => true])
                 ->autoDetectRequestedAt()
                 ->setDelegatedAt(home_url())
                 ->toResponse();

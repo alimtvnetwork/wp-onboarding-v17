@@ -20,6 +20,7 @@ use RiseupAsia\Database\FileCache;
 use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\ResponseKeyType;
 use RiseupAsia\Enums\ResponseMessageType;
+use RiseupAsia\Enums\RequestFieldType;
 use RiseupAsia\Helpers\BooleanHelpers;
 use RiseupAsia\Helpers\DateHelper;
 use RiseupAsia\Helpers\PathHelper;
@@ -30,10 +31,10 @@ trait SyncManifestTrait
     public function handleSyncManifest(WP_REST_Request $request): WP_REST_Response {
         return $this->safeExecute(function() use ($request) {
             $body = $this->extractValidBody($request);
-            $slug = ($body !== null && isset($body['plugin'])) ? sanitize_text_field($body['plugin']) : $request->get_param('slug');
+            $slug = ($body !== null && isset($body[RequestFieldType::Plugin->value])) ? sanitize_text_field($body[RequestFieldType::Plugin->value]) : $request->get_param(RequestFieldType::Slug->value);
 
             if (empty($slug)) {
-                return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+                return $this->errorResponse('Plugin slug is required in Json body', HttpStatusType::BadRequest->value);
             }
 
             return $this->generateSyncManifest($slug);

@@ -22,7 +22,7 @@ use RiseupAsia\Enums\UploadSourceType;
 trait UploadParserTrait {
 
     /**
-     * Parse upload input from multipart or base64 JSON request.
+     * Parse upload input from multipart or base64 Json request.
      *
      * @param WP_REST_Request $request Request object.
      * @return array|WP_REST_Response Parsed input array, or error response.
@@ -51,14 +51,14 @@ trait UploadParserTrait {
 
         if ($upload['error'] !== UPLOAD_ERR_OK) {
             $this->fileLogger->error('Multipart upload error', ['code' => $upload['error']]);
-            return $this->errorResponse('File upload failed (error code: ' . $upload['error'] . ')', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(ResponseMessageType::UploadFailed->value . ' (error code: ' . $upload['error'] . ')', HttpStatusType::BadRequest->value);
         }
 
         $zipContent = file_get_contents($upload['tmp_name']);
 
         if ($zipContent === false) {
             $this->fileLogger->error('Failed to read uploaded file');
-            return $this->errorResponse('Failed to read uploaded file', HttpStatusType::InternalServerError->value);
+            return $this->errorResponse(ResponseMessageType::UploadedFileMissing->value, HttpStatusType::InternalServerError->value);
         }
 
         $bodyParams = $request->get_body_params();
@@ -67,7 +67,7 @@ trait UploadParserTrait {
     }
 
     /**
-     * Parse base64 JSON upload (legacy).
+     * Parse base64 Json upload (legacy).
      *
      * @param WP_REST_Request $request Request object.
      * @return array|WP_REST_Response Parsed input or error response.
@@ -77,15 +77,15 @@ trait UploadParserTrait {
 
         if (empty($data[RequestFieldType::PluginZip->value])) {
             $this->fileLogger->warn('Upload failed: plugin_zip required');
-            return $this->errorResponse(ResponseMessageType::InvalidRequest->value . ': ' . RequestFieldType::PluginZip->value . ' is required (send as multipart file or base64 JSON)', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(ResponseMessageType::InvalidRequest->value . ': ' . RequestFieldType::PluginZip->value . ' is required (send as multipart file or base64 Json)', HttpStatusType::BadRequest->value);
         }
 
-        $this->fileLogger->info('Processing base64 JSON upload');
+        $this->fileLogger->info('Processing base64 Json upload');
         $zipContent = base64_decode($data[RequestFieldType::PluginZip->value]);
 
         if ($zipContent === false) {
             $this->fileLogger->error('Invalid base64 data');
-            return $this->errorResponse('Invalid base64 data', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(ResponseMessageType::InvalidRequestBody->value . ': Invalid base64 data', HttpStatusType::BadRequest->value);
         }
 
         return $this->buildUploadParams($zipContent, $data);
@@ -95,7 +95,7 @@ trait UploadParserTrait {
      * Build normalized upload parameters from raw data.
      *
      * @param string $zipContent Raw ZIP bytes.
-     * @param array  $data       Form/JSON params.
+     * @param array  $data       Form/Json params.
      * @return array Normalized upload parameters.
      */
     private function buildUploadParams($zipContent, $data) {
