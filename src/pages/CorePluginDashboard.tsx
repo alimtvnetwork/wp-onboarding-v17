@@ -155,7 +155,7 @@ export default function CorePluginDashboard() {
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => navigate("/api-explorer")}>
             <ExternalLink className="h-4 w-4 mr-2" />
-            API Explorer
+            Api Explorer
           </Button>
         </div>
       </div>

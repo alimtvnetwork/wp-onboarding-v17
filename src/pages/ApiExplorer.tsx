@@ -16,6 +16,8 @@ import { RequestHistoryPanel, type RequestHistoryItem } from "@/components/api-e
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
+const Json = window['JSON'];
+
 const AUTO_REFRESH_INTERVAL = 60_000; // 60 seconds
 
 type ApiMode = "wordpress" | "backend";
@@ -46,7 +48,7 @@ export default function ApiExplorer() {
     return entry.id;
   }, []);
 
-  // Auto-select site from URL query param
+  // Auto-select site from Url query param
   useEffect(() => {
     if (!initializedFromUrl.current && sites && sites.length > 0) {
       const siteIdParam = searchParams.get("siteId");
@@ -124,11 +126,11 @@ export default function ApiExplorer() {
         addHistoryItem({ ...historyBase, responseBody: errorText });
         if (response.status === 401) throw new Error("Authentication failed. Check your credentials or update the site configuration.");
         if (response.status === 404) throw new Error("OpenAPI endpoint not found. Ensure the Riseup Asia Uploader plugin is installed and updated to v1.4.0+.");
-        throw new Error(`Failed to fetch API spec: ${response.status} ${response.statusText}`);
+        throw new Error(`Failed to fetch Api spec: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      addHistoryItem({ ...historyBase, responseBody: JSON.stringify(data, null, 2).slice(0, 500) + "..." });
+      addHistoryItem({ ...historyBase, responseBody: Json.stringify(data, null, 2).slice(0, 500) + "..." });
 
       data.servers = [{
         url: `${baseUrl}/wp-json/riseup-asia-uploader/v1`,
@@ -170,9 +172,9 @@ export default function ApiExplorer() {
       }
 
       const data = await response.json();
-      addHistoryItem({ ...historyBase, responseBody: JSON.stringify(data, null, 2).slice(0, 500) + "..." });
+      addHistoryItem({ ...historyBase, responseBody: Json.stringify(data, null, 2).slice(0, 500) + "..." });
 
-      // Inject the correct server base URL so "Try it out" hits the right host
+      // Inject the correct server base Url so "Try it out" hits the right host
       data.servers = [{
         url: apiBase,
         description: "Local Backend",
@@ -263,10 +265,10 @@ export default function ApiExplorer() {
           <div>
             <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
               <Globe className="h-5 w-5 sm:h-6 sm:w-6" />
-              API Explorer
+              Api Explorer
             </h1>
             <p className="text-muted-foreground mt-1 text-sm">
-              Browse and test API endpoints with Swagger UI
+              Browse and test Api endpoints with Swagger UI
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -300,11 +302,11 @@ export default function ApiExplorer() {
               <TabsList>
                 <TabsTrigger value="backend" className="gap-1.5">
                   <Server className="h-3.5 w-3.5" />
-                  <span className="hidden xs:inline">Backend</span> API
+                  <span className="hidden xs:inline">Backend</span> Api
                 </TabsTrigger>
                 <TabsTrigger value="wordpress" className="gap-1.5">
                   <Globe className="h-3.5 w-3.5" />
-                  <span className="hidden xs:inline">WordPress</span> API
+                  <span className="hidden xs:inline">WordPress</span> Api
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -314,7 +316,7 @@ export default function ApiExplorer() {
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Backend API mode */}
+            {/* Backend Api mode */}
             {apiMode === "backend" && (
               <>
                 {error && (
@@ -329,7 +331,7 @@ export default function ApiExplorer() {
                     <CardContent className="flex items-center justify-center py-12">
                       <div className="text-center space-y-3">
                         <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
-                        <p className="text-muted-foreground">Loading backend API specification...</p>
+                        <p className="text-muted-foreground">Loading backend Api specification...</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -342,10 +344,10 @@ export default function ApiExplorer() {
                         <div>
                           <CardTitle className="text-lg flex items-center gap-2">
                             <Server className="h-4 w-4" />
-                            Backend API
+                            Backend Api
                           </CardTitle>
                           <CardDescription>
-                            Go backend REST API — auto-generated from handler registrations
+                            Go backend REST Api — auto-generated from handler registrations
                           </CardDescription>
                         </div>
                         <div className="flex gap-2">
@@ -359,7 +361,7 @@ export default function ApiExplorer() {
                             onClick={() => window.open(`${resolveApiBase()}/openapi`, "_blank")}
                           >
                             <ExternalLink className="h-4 w-4 mr-2" />
-                            Raw JSON
+                            Raw Json
                           </Button>
                         </div>
                       </div>
@@ -383,7 +385,7 @@ export default function ApiExplorer() {
               </>
             )}
 
-            {/* WordPress API mode */}
+            {/* WordPress Api mode */}
             {apiMode === "wordpress" && (
               <>
                 {/* Site Selection */}
@@ -467,7 +469,7 @@ export default function ApiExplorer() {
                     <CardContent className="flex items-center justify-center py-12">
                       <div className="text-center space-y-3">
                         <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
-                        <p className="text-muted-foreground">Loading API specification...</p>
+                        <p className="text-muted-foreground">Loading Api specification...</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -494,9 +496,9 @@ export default function ApiExplorer() {
                     <CardHeader className="bg-muted/30 border-b">
                       <div className="flex items-center justify-between">
                         <div>
-                          <CardTitle className="text-lg">Riseup Asia Uploader API</CardTitle>
+                          <CardTitle className="text-lg">Riseup Asia Uploader Api</CardTitle>
                           <CardDescription>
-                            Interactive API documentation - expand endpoints to test them
+                            Interactive Api documentation - expand endpoints to test them
                           </CardDescription>
                         </div>
                         <Button
@@ -508,7 +510,7 @@ export default function ApiExplorer() {
                           }}
                         >
                           <ExternalLink className="h-4 w-4 mr-2" />
-                          Raw JSON
+                          Raw Json
                         </Button>
                       </div>
                     </CardHeader>

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 470: Fix violations in src/pages/ApiExplorer.tsx
 
 Target File: `src/pages/ApiExplorer.tsx`

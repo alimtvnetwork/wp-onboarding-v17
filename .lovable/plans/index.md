@@ -148,3 +148,6 @@
 - [Task 467](completed/467-fix-src-lib-retry-ts.md) - Completed
 - [Task 468](completed/468-fix-src-lib-ws-ts.md) - Completed
 - [Task 469](completed/469-fix-src-pages-activityfeed-tsx.md) - Completed
+- [Task 470](completed/470-fix-src-pages-apiexplorer-tsx.md) - Completed
+- [Task 471](completed/471-fix-src-pages-coreplugindashboard-tsx.md) - Completed
+- [Task 472](completed/472-fix-src-pages-errors-tsx.md) - Completed

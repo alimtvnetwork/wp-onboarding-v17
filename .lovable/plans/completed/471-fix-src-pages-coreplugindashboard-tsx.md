@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 471: Fix violations in src/pages/CorePluginDashboard.tsx
 
 Target File: `src/pages/CorePluginDashboard.tsx`

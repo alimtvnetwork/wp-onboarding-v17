@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 472: Fix violations in src/pages/Errors.tsx
 
 Target File: `src/pages/Errors.tsx`

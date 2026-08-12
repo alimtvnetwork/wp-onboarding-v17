@@ -46,7 +46,7 @@ export default function Errors() {
 
   // Merge all error sources into a unified list
   const displayErrors = useMemo<DisplayError[]>(() => {
-    // 1. API errors (primary)
+    // 1. Api errors (primary)
     if (apiErrors && apiErrors.length > 0) {
       return apiErrors.map((e) => ({
         ...e,
@@ -151,7 +151,7 @@ ${error.stackTrace ? `\n**Stack Trace:**\n\`\`\`\n${error.stackTrace}\n\`\`\`` :
       {!hasApiErrors && displayErrors.length > 0 && (
         <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 px-3 py-2 rounded-md">
           <AlertCircle className="h-3.5 w-3.5" />
-          Showing {displayErrors.length} error(s) from local session — backend API unavailable
+          Showing {displayErrors.length} error(s) from local session — backend Api unavailable
         </div>
       )}
 
@@ -268,7 +268,7 @@ ${error.stackTrace ? `\n**Stack Trace:**\n\`\`\`\n${error.stackTrace}\n\`\`\`` :
         </div>
       )}
 
-      {/* Envelope Pagination — only when API data is available */}
+      {/* Envelope Pagination — only when Api data is available */}
       {hasApiErrors && (
         <EnvelopePagination
           meta={envelopeMeta ? { attributes: envelopeMeta.attributes, navigation: envelopeMeta.navigation } : null}
