@@ -104,3 +104,6 @@
 - [Task 422](completed/422-fix-src-components-settings-googleoauthsettingspanel-tsx.md) - Completed
 - [Task 423](completed/423-fix-src-components-shared-backendstatus-tsx.md) - Completed
 - [Task 424](completed/424-fix-src-components-shared-copydiagnosticsbutton-tsx.md) - Completed
+- [Task 425](completed/425-fix-src-components-shared-envelopepagination-tsx.md) - Completed
+- [Task 426](completed/426-fix-src-components-shared-jsonhighlighter-tsx.md) - Completed
+- [Task 427](completed/427-fix-src-components-shared-logviewer-tsx.md) - Completed

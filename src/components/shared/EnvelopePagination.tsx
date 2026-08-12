@@ -2,6 +2,24 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { EnvelopeAttributes, EnvelopeNavigation } from "@/lib/api";
 
+const FALLBACK_TOTAL_PAGES = 1;
+const FALLBACK_CURRENT_PAGE = 1;
+const FALLBACK_TOTAL_RECORDS = 0;
+const FALLBACK_PER_PAGE = 0;
+const DEFAULT_WINDOW_SIZE = 5;
+const RADIX_DECIMAL = 10;
+const MIN_PAGE_NUMBER = 1;
+const RECORD_OFFSET = 1;
+
+enum ButtonVariantType {
+  Ghost = "ghost",
+  Default = "default",
+}
+
+enum ButtonSizeType {
+  Icon = "icon",
+}
+
 export interface PaginationMeta {
   attributes?: EnvelopeAttributes;
   navigation?: EnvelopeNavigation;
@@ -18,25 +36,33 @@ interface EnvelopePaginationProps {
  * Renders nothing when pagination data is absent or there's only one page.
  */
 export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePaginationProps) {
-  if (!meta?.attributes) return null;
+  const isMetaAbsent = meta === null || meta === undefined || meta.attributes === undefined;
+  if (isMetaAbsent) return null;
 
-  const { TotalRecords, PerPage, TotalPages, CurrentPage } = meta.attributes;
-  const totalPages = TotalPages ?? 1;
-  const currentPage = CurrentPage ?? 1;
+  const { TotalRecords, PerPage, TotalPages, CurrentPage } = meta.attributes!;
+  const totalPages = TotalPages ?? FALLBACK_TOTAL_PAGES;
+  const currentPage = CurrentPage ?? FALLBACK_CURRENT_PAGE;
 
-  if (totalPages <= 1) return null;
+  const isSinglePageOrLess = totalPages <= MIN_PAGE_NUMBER;
+  if (isSinglePageOrLess) return null;
 
-  const totalRecords = TotalRecords ?? 0;
-  const perPage = PerPage ?? 0;
-  const nav = meta.navigation;
+  const totalRecords = TotalRecords ?? FALLBACK_TOTAL_RECORDS;
+  const perPage = PerPage ?? FALLBACK_PER_PAGE;
+  const nav = meta!.navigation;
 
   // Build visible page numbers from Navigation.CloserLinks or generate a sliding window
-  const pages: number[] = nav?.CloserLinks?.length
-    ? nav.CloserLinks.map(extractPageFromUrl).filter((p): p is number => p !== null)
+  const hasCloserLinks = nav?.CloserLinks !== undefined && nav.CloserLinks.length > 0;
+  const pages: number[] = hasCloserLinks
+    ? nav!.CloserLinks!.map(extractPageFromUrl).filter((p): p is number => p !== null)
     : buildPageWindow(currentPage, totalPages);
 
-  const startRecord = (currentPage - 1) * perPage + 1;
+  const startRecord = (currentPage - MIN_PAGE_NUMBER) * perPage + RECORD_OFFSET;
   const endRecord = Math.min(currentPage * perPage, totalRecords);
+
+  const hasPrevPage = nav?.PrevPage !== undefined && nav.PrevPage !== null;
+  const hasNextPage = nav?.NextPage !== undefined && nav.NextPage !== null;
+  const isFirstPage = currentPage <= MIN_PAGE_NUMBER;
+  const isLastPage = currentPage >= totalPages;
 
   return (
     <div className={`flex items-center justify-between text-sm text-muted-foreground ${className ?? ""}`}>
@@ -46,11 +72,11 @@ export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePa
       <div className="flex items-center gap-1">
         {/* First page */}
         <Button
-          variant="ghost"
-          size="icon"
+          variant={ButtonVariantType.Ghost}
+          size={ButtonSizeType.Icon}
           className="h-8 w-8"
-          disabled={currentPage <= 1}
-          onClick={() => onPageChange(1)}
+          disabled={isFirstPage}
+          onClick={() => onPageChange(MIN_PAGE_NUMBER)}
           aria-label="First page"
         >
           <ChevronsLeft className="h-4 w-4" />
@@ -58,25 +84,25 @@ export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePa
 
         {/* Previous */}
         <Button
-          variant="ghost"
-          size="icon"
+          variant={ButtonVariantType.Ghost}
+          size={ButtonSizeType.Icon}
           className="h-8 w-8"
-          disabled={!nav?.PrevPage}
-          onClick={() => nav?.PrevPage && onPageChange(extractPageFromUrl(nav.PrevPage) ?? currentPage - 1)}
+          disabled={hasPrevPage === false}
+          onClick={() => hasPrevPage && onPageChange(extractPageFromUrl(nav!.PrevPage!) ?? currentPage - MIN_PAGE_NUMBER)}
           aria-label="Previous page"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
         {/* Page numbers */}
-        {pages[0] > 1 && (
+        {pages[0] > MIN_PAGE_NUMBER && (
           <span className="px-1 text-muted-foreground/60">…</span>
         )}
         {pages.map((p) => (
           <Button
             key={p}
-            variant={p === currentPage ? "default" : "ghost"}
-            size="icon"
+            variant={p === currentPage ? ButtonVariantType.Default : ButtonVariantType.Ghost}
+            size={ButtonSizeType.Icon}
             className="h-8 w-8 text-xs"
             onClick={() => onPageChange(p)}
           >
@@ -89,11 +115,11 @@ export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePa
 
         {/* Next */}
         <Button
-          variant="ghost"
-          size="icon"
+          variant={ButtonVariantType.Ghost}
+          size={ButtonSizeType.Icon}
           className="h-8 w-8"
-          disabled={!nav?.NextPage}
-          onClick={() => nav?.NextPage && onPageChange(extractPageFromUrl(nav.NextPage) ?? currentPage + 1)}
+          disabled={hasNextPage === false}
+          onClick={() => hasNextPage && onPageChange(extractPageFromUrl(nav!.NextPage!) ?? currentPage + MIN_PAGE_NUMBER)}
           aria-label="Next page"
         >
           <ChevronRight className="h-4 w-4" />
@@ -101,10 +127,10 @@ export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePa
 
         {/* Last page */}
         <Button
-          variant="ghost"
-          size="icon"
+          variant={ButtonVariantType.Ghost}
+          size={ButtonSizeType.Icon}
           className="h-8 w-8"
-          disabled={currentPage >= totalPages}
+          disabled={isLastPage}
           onClick={() => onPageChange(totalPages)}
           aria-label="Last page"
         >
@@ -115,23 +141,26 @@ export function EnvelopePagination({ meta, onPageChange, className }: EnvelopePa
   );
 }
 
-/** Extract page number from a URL string like "/api/v1/plugins?page=3&perPage=10" */
+/** Extract page number from a Url string like "/api/v1/plugins?page=3&perPage=10" */
 function extractPageFromUrl(url: string): number | null {
   try {
     const match = url.match(/[?&]page=(\d+)/);
-    return match ? parseInt(match[1], 10) : null;
+    const hasMatch = match !== null;
+    return hasMatch ? parseInt(match[1], RADIX_DECIMAL) : null;
   } catch {
     return null;
   }
 }
 
 /** Generate a sliding window of page numbers centered on current page */
-function buildPageWindow(current: number, total: number, windowSize = 5): number[] {
+function buildPageWindow(current: number, total: number, windowSize = DEFAULT_WINDOW_SIZE): number[] {
   const half = Math.floor(windowSize / 2);
-  let start = Math.max(1, current - half);
-  let end = Math.min(total, start + windowSize - 1);
-  if (end - start + 1 < windowSize) {
-    start = Math.max(1, end - windowSize + 1);
+  let start = Math.max(MIN_PAGE_NUMBER, current - half);
+  const end = Math.min(total, start + windowSize - MIN_PAGE_NUMBER);
+  
+  const isEndTooSmall = end - start + MIN_PAGE_NUMBER < windowSize;
+  if (isEndTooSmall) {
+    start = Math.max(MIN_PAGE_NUMBER, end - windowSize + MIN_PAGE_NUMBER);
   }
 
   const pages: number[] = [];
