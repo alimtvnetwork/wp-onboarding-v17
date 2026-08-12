@@ -208,3 +208,6 @@
 - [Task 527](completed/527-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-oauth-php.md) - Completed
 - [Task 528](completed/528-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-pluginmanager-php.md) - Completed
 - [Task 529](completed/529-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-ratelimiter-php.md) - Completed
+- [Task 530](completed/530-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-securityutils-php.md) - Completed
+- [Task 531](completed/531-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-snapshot-php.md) - Completed
+- [Task 532](completed/532-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-tokenencryption-php.md) - Completed

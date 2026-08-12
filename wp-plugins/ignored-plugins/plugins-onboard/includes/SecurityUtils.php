@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 
 if (!function_exists('onboard_get_client_ip')) {
 /**
- * Get client IP address.
+ * Get client Ip address.
  *
  * @return string
  */
@@ -54,9 +54,9 @@ function onboard_is_https() {
 
 if (!function_exists('onboard_is_valid_ip')) {
 /**
- * Validate IP address format.
+ * Validate Ip address format.
  *
- * @param string $ip IP address.
+ * @param string $ip Ip address.
  * @return bool
  */
 function onboard_is_valid_ip($ip) {
@@ -66,9 +66,9 @@ function onboard_is_valid_ip($ip) {
 
 if (!function_exists('onboard_ip_in_cidr')) {
 /**
- * Check if IP is in CIDR range.
+ * Check if Ip is in CIDR range.
  *
- * @param string $ip   IP address.
+ * @param string $ip   Ip address.
  * @param string $cidr CIDR notation (e.g., 192.168.1.0/24).
  * @return bool
  */

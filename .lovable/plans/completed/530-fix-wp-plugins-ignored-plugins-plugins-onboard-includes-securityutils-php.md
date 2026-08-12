@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 530: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/SecurityUtils.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/SecurityUtils.php`

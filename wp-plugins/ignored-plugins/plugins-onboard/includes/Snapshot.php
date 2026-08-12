@@ -54,8 +54,8 @@ class OnboardSnapshot {
      *
      * @param string      $plugin_slug    Plugin slug.
      * @param string      $trigger_action Trigger action (pre_enable, pre_disable, etc.).
-     * @param string|null $app_id         Application ID.
-     * @param string|null $ip_address     IP address.
+     * @param string|null $app_id         Application Id.
+     * @param string|null $ip_address     Ip address.
      * @return array|WP_Error Snapshot data or error.
      */
     public function create($plugin_slug, $trigger_action, $app_id = null, $ip_address = null) {

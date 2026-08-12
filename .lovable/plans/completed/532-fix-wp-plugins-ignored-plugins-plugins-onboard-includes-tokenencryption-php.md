@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 532: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/TokenEncryption.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/TokenEncryption.php`

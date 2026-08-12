@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 531: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/Snapshot.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/Snapshot.php`

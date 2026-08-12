@@ -70,7 +70,7 @@ class OnboardTokenEncryption {
      * @return string
      */
     private static function get_encryption_key() {
-        // Use WordPress AUTH_KEY and site URL to generate a unique key.
+        // Use WordPress AUTH_KEY and site Url to generate a unique key.
         $base = defined('AUTH_KEY') ? AUTH_KEY : 'onboard-default-key';
         $fallback_url = defined('ONBOARD_DEMO_WEBSITE') ? ONBOARD_DEMO_WEBSITE : 'https://riseup-asia.com';
         $site_url = get_option('siteurl', $fallback_url);
@@ -180,7 +180,7 @@ class OnboardTokenEncryption {
     }
 
     /**
-     * Base64 URL-safe encode.
+     * Base64 Url-safe encode.
      *
      * @param string $data Data to encode.
      * @return string
@@ -190,7 +190,7 @@ class OnboardTokenEncryption {
     }
 
     /**
-     * Base64 URL-safe decode.
+     * Base64 Url-safe decode.
      *
      * @param string $data Data to decode.
      * @return string
