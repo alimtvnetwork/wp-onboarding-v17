@@ -282,3 +282,7 @@
 - [Task 640](completed/02-guideline-audit-fixes/640-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-lexer-php.md) - Completed
 - [Task 641](completed/02-guideline-audit-fixes/641-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-phpversion-php.md) - Completed
 
+- [Task 642](completed/02-guideline-audit-fixes/642-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-compatibility_tokens-php.md) - Completed
+- [Task 643](completed/02-guideline-audit-fixes/643-fix-wp-plugins-riseup-asia-uploader-vendor-php-stubs-wordpress-stubs-wordpress-stubs-php.md) - Completed
+- [Task 644](completed/02-guideline-audit-fixes/644-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-php-code-coverage-src-exception-testidmissingexception-php.md) - Completed
+

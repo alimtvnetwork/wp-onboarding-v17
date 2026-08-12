@@ -29,14 +29,14 @@ if (!\function_exists('PhpParser\defineCompatibilityTokens')) {
 
         // PHP-Parser might be used together with another library that also emulates some or all
         // of these tokens. Perform a sanity-check that all already defined tokens have been
-        // assigned a unique ID.
+        // assigned a unique Id.
         $usedTokenIds = [];
         foreach ($compatTokens as $token) {
             if (\defined($token)) {
                 $tokenId = \constant($token);
                 if (!\is_int($tokenId)) {
                     throw new \Error(sprintf(
-                        'Token %s has ID of type %s, should be int. ' .
+                        'Token %s has Id of type %s, should be int. ' .
                         'You may be using a library with broken token emulation',
                         $token, \gettype($tokenId)
                     ));
@@ -44,7 +44,7 @@ if (!\function_exists('PhpParser\defineCompatibilityTokens')) {
                 $clashingToken = $usedTokenIds[$tokenId] ?? null;
                 if ($clashingToken !== null) {
                     throw new \Error(sprintf(
-                        'Token %s has same ID as token %s, ' .
+                        'Token %s has same Id as token %s, ' .
                         'you may be using a library with broken token emulation',
                         $token, $clashingToken
                     ));
