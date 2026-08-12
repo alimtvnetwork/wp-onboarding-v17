@@ -16,3 +16,6 @@
 - [Task 329](completed/329-fix-backend-internal-services-site-crudcredentials-go.md) - Completed
 - [Task 330](completed/330-fix-backend-internal-services-site-remotedebugroutes-go.md) - Completed
 - [Task 331](completed/331-fix-backend-internal-services-site-service-go.md) - Completed
+- [Task 332](completed/332-fix-backend-internal-services-site-serviceconnection-go.md) - Completed
+- [Task 333](completed/333-fix-backend-internal-services-site-serviceconnectioncredentials-go.md) - Completed
+- [Task 334](completed/334-fix-backend-internal-services-site-serviceconnectionexec-go.md) - Completed

@@ -120,7 +120,7 @@ func collectPhpErrorEntries(entries []wordpress.RemoteErrorSessionEntry) []PhpEr
 // buildPhpErrorEntry converts a single remote error entry to a PhpErrorEntry.
 func buildPhpErrorEntry(entry wordpress.RemoteErrorSessionEntry) PhpErrorEntry {
 	phpErr := PhpErrorEntry{
-		Id:        entry.ID,
+		Id:        entry.Id,
 		Level:     entry.Level,
 		Message:   entry.Message,
 		File:      entry.File,

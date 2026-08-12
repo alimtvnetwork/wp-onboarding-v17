@@ -118,7 +118,7 @@ func (s *Service) buildErrorLogEntry(ref *remoteActionRef, details *ExtractedErr
 
 	timestamp := time.Now().UTC().Format("2006-01-02 15:04:05")
 	entry := fmt.Sprintf("\n[%s] REMOTE PLUGIN %s FAILED\n", timestamp, strings.ToUpper(ref.Action))
-	entry += fmt.Sprintf("  Site Request URL: %s\n  Site ID: %d\n  Site Name: %s\n  Site Base URL: %s\n", delegatedUrl, ref.SiteId, ref.Site.Name, ref.Site.Url)
+	entry += fmt.Sprintf("  Site Request Url: %s\n  Site Id: %d\n  Site Name: %s\n  Site Base Url: %s\n", delegatedUrl, ref.SiteId, ref.Site.Name, ref.Site.Url)
 	entry += fmt.Sprintf("  Plugin Identifier: %s\n  Requested Action: %s\n", pluginIdentifier, ref.Action)
 	entry += fmt.Sprintf("  Delegated Request:\n    Method: %s\n    Endpoint: %s\n    Request Body:\n      %s\n", method, details.Endpoint, requestBody)
 	entry += formatResponseSection(details)
@@ -137,7 +137,7 @@ func (s *Service) buildErrorLogEntry(ref *remoteActionRef, details *ExtractedErr
 }
 
 
-// resolveMethodAndUrl derives the HTTP method and delegated URL from error details.
+// resolveMethodAndUrl derives the HTTP method and delegated Url from error details.
 func resolveMethodAndUrl(details *ExtractedErrorDetails, siteUrl string) (string, string) {
 	method := details.Method
 	isMethodEmpty := method == ""

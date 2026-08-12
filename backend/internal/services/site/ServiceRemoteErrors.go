@@ -24,7 +24,7 @@ func (s *Service) buildPhpStackFrames(details *ExtractedErrorDetails) []session.
 	return frames
 }
 
-// extractErrorDetails extracts PHP stack trace frames and other details from WordPress API errors.
+// extractErrorDetails extracts Php stack trace frames and other details from WordPress Api errors.
 // Accepts *apperror.AppError and unwraps the cause chain to find the underlying WordPress ApiError.
 func (s *Service) extractErrorDetails(appErr *apperror.AppError) *ExtractedErrorDetails {
 	details := &ExtractedErrorDetails{Error: appErr.Error()}
@@ -44,13 +44,13 @@ func (s *Service) extractErrorDetails(appErr *apperror.AppError) *ExtractedError
 	return details
 }
 
-// populateApiErrorFields copies API error fields into the details struct.
+// populateApiErrorFields copies Api error fields into the details struct.
 func (s *Service) populateApiErrorFields(details *ExtractedErrorDetails, apiErr *wordpress.ApiError) {
 	copyRequiredApiFields(details, apiErr)
 	copyOptionalApiFields(details, apiErr)
 }
 
-// copyRequiredApiFields copies the always-present API error fields.
+// copyRequiredApiFields copies the always-present Api error fields.
 func copyRequiredApiFields(details *ExtractedErrorDetails, apiErr *wordpress.ApiError) {
 	details.Method = apiErr.Method
 	details.Endpoint = apiErr.Endpoint
@@ -60,7 +60,7 @@ func copyRequiredApiFields(details *ExtractedErrorDetails, apiErr *wordpress.Api
 	details.ResponseBody = apiErr.ResponseBody
 }
 
-// copyOptionalApiFields copies conditionally-present API error fields.
+// copyOptionalApiFields copies conditionally-present Api error fields.
 func copyOptionalApiFields(details *ExtractedErrorDetails, apiErr *wordpress.ApiError) {
 	hasStackTrace := apiErr.StackTrace != ""
 
@@ -81,7 +81,7 @@ func copyOptionalApiFields(details *ExtractedErrorDetails, apiErr *wordpress.Api
 	}
 }
 
-// parseErrorResponseEnvelope parses the JSON response body for structured error details.
+// parseErrorResponseEnvelope parses the Json response body for structured error details.
 func (s *Service) parseErrorResponseEnvelope(details *ExtractedErrorDetails, responseBody string) {
 	var envResp errorResponseEnvelope
 

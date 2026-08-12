@@ -71,7 +71,7 @@ func (c *Client) FetchRemoteErrorLogs() apperror.Result[*RemoteErrorLogsResult] 
 
 // RemoteErrorSessionEntry represents a single structured error from the plugin's SQLite DB.
 type RemoteErrorSessionEntry struct {
-	ID               int                  `json:"id"`                        // external key (Riseup Asia Uploader API)
+	Id               int                  `json:"id"`                        // external key (Riseup Asia Uploader API)
 	Level            string               `json:"level"`                     // external key
 	Message          string               `json:"message"`                   // external key
 	File             string               `json:"file"`                      // external key
