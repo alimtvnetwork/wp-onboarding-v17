@@ -1,6 +1,6 @@
 <?php
 /**
- * UserFieldMapperTrait — Maps WP_User to JSON response structure.
+ * UserFieldMapperTrait — Maps WP_User to Json response structure.
  *
  * @package RiseupAsia\Traits\User
  * @since   2.13.0
@@ -16,33 +16,39 @@ use WP_User;
 
 trait UserFieldMapperTrait {
 
+    private const META_FIRST_NAME = 'first_name';
+    private const META_LAST_NAME = 'last_name';
+    private const META_NICKNAME = 'nickname';
+    private const META_DESCRIPTION = 'description';
+    private const ROLE_SUBSCRIBER = 'subscriber';
+
     /**
      * Build full user response [for single GET].
      */
     private function mapUserToResponse(WP_User $user): array
     {
         $roles = $user->roles;
-        $primaryRole = !empty($roles) ? reset($roles) : 'subscriber';
+        $primaryRole = count($roles) > 0 ? reset($roles) : self::ROLE_SUBSCRIBER;
 
         $response = [
-            'Id'           => $user->ID,
+            'Id'           => $user->id,
             'Username'     => $user->user_login,
             'Email'        => $user->user_email,
-            'FirstName'    => get_user_meta($user->ID, 'first_name', true) ?: '',
-            'LastName'     => get_user_meta($user->ID, 'last_name', true) ?: '',
+            'FirstName'    => (string) get_user_meta($user->id, self::META_FIRST_NAME, true),
+            'LastName'     => (string) get_user_meta($user->id, self::META_LAST_NAME, true),
             'DisplayName'  => $user->display_name,
-            'Nickname'     => get_user_meta($user->ID, 'nickname', true) ?: '',
+            'Nickname'     => (string) get_user_meta($user->id, self::META_NICKNAME, true),
             'Website'      => $user->user_url,
-            'Bio'          => get_user_meta($user->ID, 'description', true) ?: '',
+            'Bio'          => (string) get_user_meta($user->id, self::META_DESCRIPTION, true),
             'Role'         => $primaryRole,
             'RegisteredAt' => $user->user_registered,
-            'Social'       => $this->readSocialMeta($user->ID),
+            'Social'       => $this->readSocialMeta($user->id),
         ];
 
-        $yoast = $this->readYoastMeta($user->ID);
+        $yoast = $this->readYoastMeta($user->id);
         $hasYoast = ($yoast !== null);
 
-        if ($hasYoast) {
+        if ($hasYoast === true) {
             $response['Yoast'] = $yoast;
         }
 
@@ -55,10 +61,10 @@ trait UserFieldMapperTrait {
     private function mapUserToSummary(WP_User $user): array
     {
         $roles = $user->roles;
-        $primaryRole = !empty($roles) ? reset($roles) : 'subscriber';
+        $primaryRole = count($roles) > 0 ? reset($roles) : self::ROLE_SUBSCRIBER;
 
         return [
-            'Id'           => $user->ID,
+            'Id'           => $user->id,
             'Username'     => $user->user_login,
             'Email'        => $user->user_email,
             'DisplayName'  => $user->display_name,

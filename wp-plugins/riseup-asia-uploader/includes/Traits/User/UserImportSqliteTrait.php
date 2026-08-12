@@ -22,6 +22,13 @@ use RiseupAsia\Enums\UserMetaKeyType;
 use RiseupAsia\Helpers\EnvelopeBuilder;
 
 trait UserImportSqliteTrait {
+    private const ERR_ZIP_REQUIRED = 'ZIP file is required';
+    private const ERR_INVALID_ZIP = 'Invalid ZIP file';
+    private const ERR_SQLITE_NOT_FOUND = 'SQLite database not found in ZIP';
+    private const MSG_IMPORT_COMPLETE = 'Import complete';
+    private const PREFIX_ERROR = 'error:';
+    private const STATUS_CREATED = 'created';
+    private const STATUS_UPDATED = 'updated';
 
     /**
      * Handle POST /users/import-sqlite — import users from SQLite ZIP.
@@ -35,7 +42,7 @@ trait UserImportSqliteTrait {
             $hasFile = isset($files['file']['tmp_name']) && !empty($files['file']['tmp_name']);
 
             if (!$hasFile) {
-                return EnvelopeBuilder::error('ZIP file is required', 400)
+                return EnvelopeBuilder::error(self::ERR_ZIP_REQUIRED, 400)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -50,7 +57,7 @@ trait UserImportSqliteTrait {
             $isOpened = $zip->open($files['file']['tmp_name']);
 
             if ($isOpened !== true) {
-                return EnvelopeBuilder::error('Invalid ZIP file', 400)
+                return EnvelopeBuilder::error(self::ERR_INVALID_ZIP, 400)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -63,7 +70,7 @@ trait UserImportSqliteTrait {
             $isDbFound = file_exists($dbPath);
 
             if (!$isDbFound) {
-                return EnvelopeBuilder::error('SQLite database not found in ZIP', 400)
+                return EnvelopeBuilder::error(self::ERR_SQLITE_NOT_FOUND, 400)
                     ->autoDetectRequestedAt()
                     ->setDelegatedAt(home_url())
                     ->toResponse();
@@ -84,7 +91,7 @@ trait UserImportSqliteTrait {
                 'by'      => wp_get_current_user()->user_login,
             ]);
 
-            return EnvelopeBuilder::success('Import complete')
+            return EnvelopeBuilder::success(self::MSG_IMPORT_COMPLETE)
                 ->setSingleResult($result)
                 ->autoDetectRequestedAt()
                 ->setDelegatedAt(home_url())
@@ -114,8 +121,8 @@ trait UserImportSqliteTrait {
             }
 
             if ($isExisting) {
-                $updateResult = $this->updateUserFromSqlite($existingUser->ID, $sqliteUser, $pdo);
-                $isError = str_starts_with($updateResult, 'error:');
+                $updateResult = $this->updateUserFromSqlite($existingUser->id, $sqliteUser, $pdo);
+                $isError = str_starts_with($updateResult, self::PREFIX_ERROR);
 
                 if ($isError) {
                     $errors[] = ['Username' => $username, 'Error' => substr($updateResult, 6)];
@@ -124,7 +131,7 @@ trait UserImportSqliteTrait {
                 }
             } else {
                 $createResult = $this->createUserFromSqlite($sqliteUser, $pdo);
-                $isError = str_starts_with($createResult, 'error:');
+                $isError = str_starts_with($createResult, self::PREFIX_ERROR);
 
                 if ($isError) {
                     $errors[] = ['Username' => $username, 'Error' => substr($createResult, 6)];
@@ -171,18 +178,18 @@ trait UserImportSqliteTrait {
 
         if ($hasPasswordHash) {
             global $wpdb;
-            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['ID' => $newUserId]);
+            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $newUserId]);
             wp_cache_delete($newUserId, 'users');
         }
 
         $this->importSqliteMeta($newUserId, $sqliteUser, $pdo);
 
-        return 'created';
+        return self::STATUS_CREATED;
     }
 
     private function updateUserFromSqlite(int $userId, array $sqliteUser, PDO $pdo): string
     {
-        $userdata = ['ID' => $userId];
+        $userdata = ['Id' => $userId];
 
         $hasEmail = !empty($sqliteUser['email']);
         if ($hasEmail) { $userdata['user_email'] = sanitize_email($sqliteUser['email']); }
@@ -209,13 +216,13 @@ trait UserImportSqliteTrait {
 
         if ($hasPasswordHash) {
             global $wpdb;
-            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['ID' => $userId]);
+            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $userId]);
             wp_cache_delete($userId, 'users');
         }
 
         $this->importSqliteMeta($userId, $sqliteUser, $pdo);
 
-        return 'updated';
+        return self::STATUS_UPDATED;
     }
 
     private function importSqliteMeta(int $wpUserId, array $sqliteUser, PDO $pdo): void
