@@ -26,7 +26,7 @@ trait DatabaseMigrationsV20Trait {
         $table    = TableType::CloudStorageBackupHistory->value;
         $accounts = TableType::CloudStorageAccounts->value;
 
-        $sql = <<<SQL
+        $sql = <<<Sql
             CREATE TABLE IF NOT EXISTS {$table} (
                 Id               INTEGER PRIMARY KEY AUTOINCREMENT,
                 AccountId        INTEGER NOT NULL,
@@ -47,7 +47,7 @@ trait DatabaseMigrationsV20Trait {
                 FOREIGN KEY (AccountId) REFERENCES {$accounts}(Id) ON DELETE CASCADE,
                 FOREIGN KEY (BaseFullBackupId) REFERENCES {$table}(Id) ON DELETE SET NULL
             )
-        SQL;
+        Sql;
 
         $this->pdo->exec($sql);
 

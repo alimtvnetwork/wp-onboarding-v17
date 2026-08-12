@@ -8,7 +8,7 @@
 
 namespace RiseupAsia\Database\Traits;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -24,7 +24,7 @@ trait DatabaseMigrationsV18Trait {
         $this->fileLogger->info('Applying migration v18: CloudStorageSettings table');
         $table = TableType::CloudStorageSettings->value;
 
-        $sql = <<<SQL
+        $sql = <<<Sql
             CREATE TABLE IF NOT EXISTS {$table} (
                 Id                INTEGER PRIMARY KEY AUTOINCREMENT,
                 Provider          TEXT    NOT NULL UNIQUE,
@@ -38,19 +38,19 @@ trait DatabaseMigrationsV18Trait {
                 UpdatedAt         TEXT    NOT NULL DEFAULT (datetime('now')),
                 FOREIGN KEY (DefaultAccountId) REFERENCES CloudStorageAccounts(Id) ON DELETE SET NULL
             )
-        SQL;
+        Sql;
 
         $this->pdo->exec($sql);
 
         $this->pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_css_provider ON {$table}(Provider)");
 
-        $seedSql = <<<SQL
+        $seedSql = <<<Sql
             INSERT OR IGNORE INTO {$table} (Provider, IsEnabled, RetentionCount, BackupPrefix)
             VALUES
                 ('GitHub', 0, 10, 'wp-backup'),
                 ('GitLab', 0, 10, 'wp-backup'),
                 ('GoogleDrive', 0, 10, 'wp-backup')
-        SQL;
+        Sql;
 
         $this->pdo->exec($seedSql);
 
