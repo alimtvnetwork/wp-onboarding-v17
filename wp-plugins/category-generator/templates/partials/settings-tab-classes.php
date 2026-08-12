@@ -43,7 +43,7 @@ if (!defined('ABSPATH')) {
             <input type="text" name="schema_wrapper_class" id="schema_wrapper_class" 
                    value="<?php echo esc_attr($settings->get('schema_wrapper_class', CG_Constants::DEFAULT_SCHEMA_WRAPPER_CLASS)); ?>"
                    placeholder="<?php echo esc_attr(CG_Constants::DEFAULT_SCHEMA_WRAPPER_CLASS); ?>">
-            <span class="<?php echo esc_attr(CG_CSS::TEXT_HINT); ?>"><?php _e('Applied to the div containing JSON-LD schema', 'category-generator'); ?></span>
+            <span class="<?php echo esc_attr(CG_CSS::TEXT_HINT); ?>"><?php _e('Applied to the div containing Json-LD schema', 'category-generator'); ?></span>
         </div>
     </div>
 </div>

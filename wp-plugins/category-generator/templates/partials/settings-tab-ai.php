@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 <div class="<?php echo esc_attr(CG_CSS::LAYOUT_TAB_CONTENT); ?>" id="tab-ai">
     <div class="<?php echo esc_attr(CG_CSS::LAYOUT_CARD); ?>">
         <h2><?php _e('AI Provider Configuration', 'category-generator'); ?></h2>
-        <p class="<?php echo esc_attr(CG_CSS::TEXT_DESCRIPTION); ?>"><?php _e('Configure AI providers for generating content. API keys are stored securely.', 'category-generator'); ?></p>
+        <p class="<?php echo esc_attr(CG_CSS::TEXT_DESCRIPTION); ?>"><?php _e('Configure AI providers for generating content. Api keys are stored securely.', 'category-generator'); ?></p>
         
         <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
             <label for="ai_provider"><?php _e('Primary AI Provider', 'category-generator'); ?></label>
@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
                 <h3><?php echo esc_html($provider['name']); ?></h3>
                 
                 <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                    <label><?php _e('API Key / Token', 'category-generator'); ?></label>
+                    <label><?php _e('Api Key / Token', 'category-generator'); ?></label>
                     <input type="password" name="ai_key_<?php echo esc_attr($key); ?>" 
                            value="<?php echo esc_attr($settings->get("ai_key_{$key}", '')); ?>"
                            placeholder="sk-..." autocomplete="new-password">
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
                 
                 <?php if ($key === 'custom'): ?>
                 <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                    <label><?php _e('Custom API URL', 'category-generator'); ?></label>
+                    <label><?php _e('Custom Api Url', 'category-generator'); ?></label>
                     <input type="url" name="custom_ai_url" 
                            value="<?php echo esc_attr($settings->get('custom_ai_url', '')); ?>"
                            placeholder="https://api.example.com/v1/chat/completions">

@@ -178,3 +178,6 @@
 - [Task 497](completed/497-fix-wp-plugins-category-generator-templates-partials-history-scripts-php.md) - Completed
 - [Task 498](completed/498-fix-wp-plugins-category-generator-templates-partials-history-table-php.md) - Completed
 - [Task 499](completed/499-fix-wp-plugins-category-generator-templates-partials-settings-scripts-php.md) - Completed
+- [Task 500](completed/500-fix-wp-plugins-category-generator-templates-partials-settings-tab-ai-php.md) - Completed
+- [Task 501](completed/501-fix-wp-plugins-category-generator-templates-partials-settings-tab-classes-php.md) - Completed
+- [Task 502](completed/502-fix-wp-plugins-category-generator-templates-partials-settings-tab-remote-php.md) - Completed

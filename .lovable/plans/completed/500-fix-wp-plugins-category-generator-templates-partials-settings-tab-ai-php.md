@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 500: Fix violations in wp-plugins/category-generator/templates/partials/settings-tab-ai.php
 
 Target File: `wp-plugins/category-generator/templates/partials/settings-tab-ai.php`

@@ -45,26 +45,26 @@ if (!defined('ABSPATH')) {
         </div>
         
         <div class="cg-add-api-section">
-            <h3><?php _e('Add New API', 'category-generator'); ?></h3>
+            <h3><?php _e('Add New Api', 'category-generator'); ?></h3>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="new_api_name"><?php _e('API Name', 'category-generator'); ?></label>
+                <label for="new_api_name"><?php _e('Api Name', 'category-generator'); ?></label>
                 <input type="text" id="new_api_name" placeholder="My Template Server">
             </div>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="new_api_url"><?php _e('API URL', 'category-generator'); ?></label>
+                <label for="new_api_url"><?php _e('Api Url', 'category-generator'); ?></label>
                 <input type="url" id="new_api_url" placeholder="https://templates.example.com/api/v1/templates">
             </div>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="new_api_key"><?php _e('API Key (optional)', 'category-generator'); ?></label>
+                <label for="new_api_key"><?php _e('Api Key (optional)', 'category-generator'); ?></label>
                 <input type="password" id="new_api_key" placeholder="Optional authentication key">
             </div>
             
             <button type="button" class="<?php echo esc_attr(CG_CSS::BTN_PRIMARY); ?>" id="cg-add-api-btn">
                 <span class="dashicons dashicons-plus-alt2"></span>
-                <?php _e('Add API', 'category-generator'); ?>
+                <?php _e('Add Api', 'category-generator'); ?>
             </button>
         </div>
     </div>
