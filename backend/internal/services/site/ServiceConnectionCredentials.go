@@ -41,7 +41,7 @@ func (s *Service) broadcastCredentialsStart(normalizedUrl, originalUrl string) {
 		SiteId:  0,
 		Step:    "normalize",
 		Status:  stagestatus.Completed.String(),
-		Message: fmt.Sprintf("Normalized URL: %s", normalizedUrl),
+		Message: fmt.Sprintf("Normalized Url: %s", normalizedUrl),
 		Details: normalizeDetails,
 	}
 	s.broadcastProgress(normalizeProgress)

@@ -110,7 +110,7 @@ func (s *Service) handleConnectionFailure(ctx context.Context, ref connTestRef, 
 	return result
 }
 
-// broadcastApiTestFailure broadcasts the API test failure step.
+// broadcastApiTestFailure broadcasts the Api test failure step.
 func (s *Service) broadcastApiTestFailure(ref connTestRef, err error) {
 	failDetails := toJson(ConnectionFailureDetails{
 		Url:      ref.Site.Url,
@@ -147,14 +147,14 @@ func buildSuccessResult(connInfo *wordpress.ConnectionInfo) *ConnectionResult {
 	}
 }
 
-// broadcastApiTestSuccess broadcasts the API test success step.
+// broadcastApiTestSuccess broadcasts the Api test success step.
 func (s *Service) broadcastApiTestSuccess(id int64, wpVersion string) {
 	successDetails := toJson(ConnectionSuccessDetails{WPVersion: wpVersion})
 	apiSuccessProgress := ConnectionProgressInput{
 		SiteId:  id,
 		Step:    connectionstep.ApiTest.String(),
 		Status:  stagestatus.Completed.String(),
-		Message: fmt.Sprintf("WordPress %s detected, REST API accessible", wpVersion),
+		Message: fmt.Sprintf("WordPress %s detected, Rest Api accessible", wpVersion),
 		Details: successDetails,
 	}
 	s.broadcastProgress(apiSuccessProgress)

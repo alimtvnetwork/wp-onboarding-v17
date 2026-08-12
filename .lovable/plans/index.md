@@ -13,3 +13,6 @@
 - [Task 326](completed/326-fix-backend-internal-services-request_session-store-go.md) - Completed
 - [Task 327](completed/327-fix-backend-internal-services-session-servicelifecycle-go.md) - Completed
 - [Task 328](completed/328-fix-backend-internal-services-session-servicequery-go.md) - Completed
+- [Task 329](completed/329-fix-backend-internal-services-site-crudcredentials-go.md) - Completed
+- [Task 330](completed/330-fix-backend-internal-services-site-remotedebugroutes-go.md) - Completed
+- [Task 331](completed/331-fix-backend-internal-services-site-service-go.md) - Completed
