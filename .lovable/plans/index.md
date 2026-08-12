@@ -95,3 +95,6 @@
 - [Task 413](completed/413-fix-src-components-plugins-inlineerrordiagnostic-tsx.md) - Completed
 - [Task 414](completed/414-fix-src-components-plugins-logcontentviewer-tsx.md) - Completed
 - [Task 415](completed/415-fix-src-components-plugins-publishprogressdialog-tsx.md) - Completed
+- [Task 416](completed/416-fix-src-components-plugins-remotelogspanel-tsx.md) - Completed
+- [Task 417](completed/417-fix-src-components-plugins-scandirectorypanel-tsx.md) - Completed
+- [Task 418](completed/418-fix-src-components-plugins-syncprogressdialog-tsx.md) - Completed

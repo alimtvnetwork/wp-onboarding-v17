@@ -211,7 +211,7 @@
                {scanResult.detectionCreated && (
                  <Badge variant="secondary" className="text-xs">
                    <FileJson className="h-3 w-3 mr-1" />
-                   JSON Created
+                   Json Created
                  </Badge>
                )}
              </div>

@@ -69,6 +69,9 @@ import { useDraggable } from "@/hooks/useDraggable";
 import { DedupRegistryPanel } from "@/components/debug/DedupRegistryPanel";
 
 
+const Json = globalThis.JSON;
+const Url = globalThis.URL;
+
 interface RemoteLogsPanelProps {
   siteId: number;
   siteName?: string;
@@ -220,8 +223,8 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
         const storedStatus = sessionStorage.getItem("remoteLogs:demoStatus");
         const storedRetrieve = sessionStorage.getItem("remoteLogs:demoRetrieve");
         if (storedStatus && storedRetrieve) {
-          setStatus(JSON.parse(storedStatus));
-          setRetrieveData(JSON.parse(storedRetrieve));
+          setStatus(Json.parse(storedStatus));
+          setRetrieveData(Json.parse(storedRetrieve));
           setIsDemoMode(true);
           toast.success("Demo mode auto-activated from Settings", {
             description: "Showing sample log data — no backend required.",
@@ -327,14 +330,14 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
         // Build a synthetic ApiError with response context so the Delegated Logs tab
         // shows the actual response body and endpoint info (see issue 018).
         const delegatedAt = response.envelope?.attributes?.RequestDelegatedAt;
-        const responseBodyStr = JSON.stringify(data, null, 2);
+        const responseBodyString = Json.stringify(data, null, 2);
         const mismatchApiError: import("@/lib/api/types").ApiError = {
           code: "E9003",
           message: "Remote logs status reported files, but retrieve returned no readable log content.",
           details: `Retrieve returned ${data.plugins?.length ?? 0} plugin(s) but none had readable log content. Status reported ${status?.files?.length ?? 0} file(s).`,
           context: {
             source: "RemoteLogsPanel",
-            remoteResponseBody: responseBodyStr,
+            remoteResponseBody: responseBodyString,
             ...(delegatedAt ? { requestDelegatedAt: delegatedAt } : {}),
             delegatedRequestServer: {
               DelegatedEndpoint: endpoint,
@@ -406,12 +409,12 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
     }
 
     const blob = new Blob([parts.join("\n")], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
+    const url = Url.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `logs-site-${siteId}-${new Date().toISOString().slice(0, 10)}.txt`;
     a.click();
-    URL.revokeObjectURL(url);
+    Url.revokeObjectURL(url);
     toast.success("Logs downloaded");
   };
 
@@ -747,7 +750,7 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
                             <Code2 className="h-3.5 w-3.5 text-muted-foreground" />
                             <span className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">Raw Payload</span>
                             <Badge variant="outline" className="text-[10px] font-mono px-1.5 h-4">
-                              {JSON.stringify(retrieveData).length.toLocaleString()} chars
+                              {Json.stringify(retrieveData).length.toLocaleString()} chars
                             </Badge>
                           </div>
                           <Button
@@ -755,7 +758,7 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
                             variant="ghost"
                             className="h-6 px-2 text-[11px]"
                             onClick={() => {
-                              navigator.clipboard.writeText(JSON.stringify(retrieveData, null, 2));
+                              navigator.clipboard.writeText(Json.stringify(retrieveData, null, 2));
                               toast.success("Raw payload copied to clipboard");
                             }}
                           >
@@ -764,7 +767,7 @@ export function RemoteLogsPanel({ siteId, siteName, autoOpen = false, onClose }:
                         </div>
                         <ScrollArea className="h-[300px] rounded-lg border border-border/40 bg-background/80">
                           <pre className="p-3 text-[11px] font-mono text-muted-foreground whitespace-pre-wrap break-all leading-relaxed">
-                            {JSON.stringify(retrieveData, null, 2)}
+                            {Json.stringify(retrieveData, null, 2)}
                           </pre>
                         </ScrollArea>
                       </div>
