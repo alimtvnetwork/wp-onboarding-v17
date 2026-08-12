@@ -16,3 +16,4 @@ Target File: `backend/internal/services/plugin/Mappings.go`
   `// loadMappingById fetches a mapping by its ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

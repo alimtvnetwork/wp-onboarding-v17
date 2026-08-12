@@ -8,3 +8,4 @@ Target File: `backend/internal/services/plugin/Scanner.go`
   `// writeDetectedFile marshals and writes the detected plugin JSON.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

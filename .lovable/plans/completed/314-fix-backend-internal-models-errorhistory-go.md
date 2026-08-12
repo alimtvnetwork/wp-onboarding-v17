@@ -8,3 +8,5 @@ Target File: `backend/internal/models/ErrorHistory.go`
   `// ParseJsonFields parses the JSON string fields into their structured counterparts`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

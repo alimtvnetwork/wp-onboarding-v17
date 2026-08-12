@@ -8,3 +8,4 @@ Target File: `backend/internal/services/publish/ServicePublishUpload.go`
   `// buildActivateEndpointUrl constructs the activation endpoint URL.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

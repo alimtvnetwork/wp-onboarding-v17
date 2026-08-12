@@ -8,3 +8,4 @@ Target File: `backend/internal/services/publish/ServiceHelpers.go`
   `// querySite fetches a site by ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

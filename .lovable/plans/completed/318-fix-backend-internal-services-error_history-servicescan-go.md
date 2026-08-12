@@ -12,3 +12,5 @@ Target File: `backend/internal/services/error_history/ServiceScan.go`
   `// populateFromNullFields assigns nullable SQL fields to the ErrorHistory struct.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

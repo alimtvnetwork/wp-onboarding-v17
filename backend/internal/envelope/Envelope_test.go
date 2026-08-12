@@ -85,17 +85,17 @@ func TestList(t *testing.T) {
 		t.Fatal("expected navigation to be present")
 	}
 	if resp.Navigation.NextPage == nil || !strings.Contains(*resp.Navigation.NextPage, "page=4") {
-		t.Error("expected NextPage URL containing page=4")
+		t.Error("expected NextPage Url containing page=4")
 	}
 	if resp.Navigation.PrevPage == nil || !strings.Contains(*resp.Navigation.PrevPage, "page=2") {
-		t.Error("expected PrevPage URL containing page=2")
+		t.Error("expected PrevPage Url containing page=2")
 	}
 	if len(resp.Navigation.CloserLinks) != 5 {
 		t.Errorf("expected 5 closer links, got %d", len(resp.Navigation.CloserLinks))
 	}
 	for _, link := range resp.Navigation.CloserLinks {
 		if !strings.HasPrefix(link, "/api/v1/plugins?page=") {
-			t.Errorf("expected URL string, got %q", link)
+			t.Errorf("expected Url string, got %q", link)
 		}
 	}
 }

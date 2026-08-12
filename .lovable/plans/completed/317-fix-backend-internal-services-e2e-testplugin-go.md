@@ -8,3 +8,5 @@ Target File: `backend/internal/services/e2e/TestPlugin.go`
   `// verifyAndStorePlugin confirms the plugin list is non-empty and stores the cleanup ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

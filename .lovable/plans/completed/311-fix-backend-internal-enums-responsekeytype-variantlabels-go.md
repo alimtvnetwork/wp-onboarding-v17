@@ -32,3 +32,5 @@ Target File: `backend/internal/enums/responsekeytype/VariantLabels.go`
   `Api:                   "API",`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
