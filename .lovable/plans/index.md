@@ -294,3 +294,6 @@
 - [Task 649](completed/02-guideline-audit-fixes/649-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-runner-filter-namefilteriterator-php.md) - Completed
 - [Task 650](completed/02-guideline-audit-fixes/650-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-util-json-php.md) - Completed
 
+- [Task 651](completed/02-guideline-audit-fixes/651-fix-wp-plugins-riseup-asia-uploader-vendor-staabm-side-effects-detector-lib-functionmetadata-php.md) - Completed
+- [Task 652](completed/02-guideline-audit-fixes/652-fix-wp-plugins-riseup-asia-uploader-vendor-szepeviktor-phpstan-wordpress-bootstrap-php.md) - Completed
+

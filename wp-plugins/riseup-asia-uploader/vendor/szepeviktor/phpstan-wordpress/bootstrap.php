@@ -47,7 +47,7 @@ define('FS_TIMEOUT', 30);
 define('FS_CHMOD_DIR', 0755);
 define('FS_CHMOD_FILE', 0644);
 
-// Rewrite API Endpoint Masks.
+// Rewrite Api Endpoint Masks.
 define('EP_NONE', 0);
 define('EP_PERMALINK', 1);
 define('EP_ATTACHMENT', 2);
