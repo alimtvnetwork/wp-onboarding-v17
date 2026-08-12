@@ -8,3 +8,4 @@ Target File: `backend/internal/api/handlers/OpenapiHandler.go`
   `// ServeOpenApiSpec returns the OpenAPI 3.0 specification as JSON`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

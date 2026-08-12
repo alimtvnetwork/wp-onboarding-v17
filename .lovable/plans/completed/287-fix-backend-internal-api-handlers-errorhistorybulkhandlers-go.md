@@ -24,3 +24,4 @@ Target File: `backend/internal/api/handlers/ErrorHistoryBulkHandlers.go`
   `respondBadRequest(w, apperror.ErrConfigParse, "At least one error ID is required")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

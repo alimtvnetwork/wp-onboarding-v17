@@ -65,7 +65,7 @@ func BulkBootstrapUploader(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(input.SiteIds) == 0 {
-		respondError(w, wordpress.HttpStatusBadRequest, apperror.ErrConfigParse, "At least one site ID is required")
+		respondError(w, wordpress.HttpStatusBadRequest, apperror.ErrConfigParse, "At least one site Id is required")
 
 		return
 	}

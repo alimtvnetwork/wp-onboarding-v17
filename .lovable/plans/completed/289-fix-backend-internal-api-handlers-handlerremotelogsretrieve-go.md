@@ -12,3 +12,4 @@ Target File: `backend/internal/api/handlers/HandlerRemoteLogsRetrieve.go`
   `q := r.URL.Query()`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

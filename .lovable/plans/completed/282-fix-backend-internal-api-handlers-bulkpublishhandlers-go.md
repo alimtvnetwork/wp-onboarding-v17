@@ -12,3 +12,5 @@ Target File: `backend/internal/api/handlers/BulkPublishHandlers.go`
   `return apperror.New(apperror.ErrValidation, "siteIds is required and must contain at least one ID")`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

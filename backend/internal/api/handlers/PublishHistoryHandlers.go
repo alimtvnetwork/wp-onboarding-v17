@@ -104,7 +104,7 @@ func GetPublishHistoryById(w http.ResponseWriter, r *http.Request) {
 			w,
 			wordpress.HttpStatusBadRequest,
 			"E1002",
-			"Invalid ID",
+			"Invalid Id",
 		)
 
 		return
@@ -174,7 +174,7 @@ func DeletePublishHistoryEntry(w http.ResponseWriter, r *http.Request) {
 			w,
 			wordpress.HttpStatusBadRequest,
 			"E1002",
-			"Invalid ID",
+			"Invalid Id",
 		)
 
 		return

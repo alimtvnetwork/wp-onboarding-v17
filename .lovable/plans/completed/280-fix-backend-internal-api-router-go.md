@@ -12,3 +12,5 @@ Target File: `backend/internal/api/Router.go`
   `requestedPath := filepath.Clean(r.URL.Path)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

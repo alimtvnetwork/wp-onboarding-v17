@@ -8,3 +8,4 @@ Target File: `backend/internal/api/handlers/ErrorBundleHandlers.go`
   `GeneratedAt string   `json:"generatedAt"` // external key (export manifest JSON file)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)
