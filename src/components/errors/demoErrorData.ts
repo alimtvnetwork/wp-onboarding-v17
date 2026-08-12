@@ -5,6 +5,8 @@ import type { CapturedError } from "@/stores/errorStore";
  * of the Global Error Modal — Backend, Frontend, and Delegated.
  * Used when no live Go backend is available.
  */
+const Json = JSON;
+
 export function createDemoError(): CapturedError {
   const now = new Date().toISOString();
 
@@ -116,7 +118,7 @@ export function createDemoError(): CapturedError {
         ],
         AdditionalMessages: "The remote plugin may have a missing dependency or incompatible PHP version. Check the site's PHP error log for details.",
       },
-      RemoteResponseBody: JSON.stringify({
+      RemoteResponseBody: Json.stringify({
         code: "internal_server_error",
         message: "PHP Fatal error: Class 'RiseupAsia\\Uploader\\Core' not found",
         data: { status: 500 },
@@ -144,7 +146,7 @@ export function createDemoError(): CapturedError {
       source: "App.showGlobalError",
       triggerComponent: "PluginCard",
       triggerAction: "activate_clicked",
-      remoteResponseBody: JSON.stringify({
+      remoteResponseBody: Json.stringify({
         code: "internal_server_error",
         message: "PHP Fatal error: Class 'RiseupAsia\\Uploader\\Core' not found",
         data: { status: 500 },
@@ -255,7 +257,7 @@ export function createDemoDelegatedError(): CapturedError {
         ],
         AdditionalMessages: "Check the database connection settings in wp-config.php — the MySQL/MariaDB server may be unreachable.",
       },
-      RemoteResponseBody: JSON.stringify(wpResponseBody),
+      RemoteResponseBody: Json.stringify(wpResponseBody),
     },
     envelopeMethodsStack: {
       Backend: [
@@ -292,7 +294,7 @@ export function createDemoDelegatedError(): CapturedError {
       source: "App.showGlobalError",
       triggerComponent: "Sites",
       triggerAction: "load_providers",
-      remoteResponseBody: JSON.stringify(wpResponseBody),
+      remoteResponseBody: Json.stringify(wpResponseBody),
       requestDelegatedAt: "https://demoat.attoproperty.com.au/wp-json/riseup-asia-api/v1/snapshots/providers",
       delegatedRequestServer: {
         DelegatedEndpoint: "https://demoat.attoproperty.com.au/wp-json/riseup-asia-api/v1/snapshots/providers",

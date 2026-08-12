@@ -83,3 +83,6 @@
 - [Task 401](completed/401-fix-src-components-errors-requestdetails-tsx.md) - Completed
 - [Task 402](completed/402-fix-src-components-errors-sessionlogstab-tsx.md) - Completed
 - [Task 403](completed/403-fix-src-components-errors-delegatedlogformatter-ts.md) - Completed
+- [Task 405](completed/405-fix-src-components-errors-errorlogadapter-ts.md) - Completed
+- [Task 404](completed/404-fix-src-components-errors-demoerrordata-ts.md) - Completed
+- [Task 406](completed/406-fix-src-components-errors-errorreportgenerator-ts.md) - Completed
