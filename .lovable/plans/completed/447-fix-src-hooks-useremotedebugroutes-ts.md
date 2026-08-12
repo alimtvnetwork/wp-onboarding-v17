@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 447: Fix violations in src/hooks/useRemoteDebugRoutes.ts
 
 Target File: `src/hooks/useRemoteDebugRoutes.ts`

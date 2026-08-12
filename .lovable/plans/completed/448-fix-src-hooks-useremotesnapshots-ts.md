@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 448: Fix violations in src/hooks/useRemoteSnapshots.ts
 
 Target File: `src/hooks/useRemoteSnapshots.ts`

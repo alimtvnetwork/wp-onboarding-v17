@@ -124,3 +124,6 @@
 - [Task 434](completed/434-fix-src-components-sites-remotesnapshotspanel-tsx.md) - Completed
 - [Task 435](completed/435-fix-src-components-sites-sitecard-tsx.md) - Completed
 - [Task 445](completed/445-fix-src-hooks-usepluginformpersistence-ts.md) - Completed
+- [Task 446](completed/446-fix-src-hooks-usequickpublish-ts.md) - Completed
+- [Task 447](completed/447-fix-src-hooks-useremotedebugroutes-ts.md) - Completed
+- [Task 448](completed/448-fix-src-hooks-useremotesnapshots-ts.md) - Completed

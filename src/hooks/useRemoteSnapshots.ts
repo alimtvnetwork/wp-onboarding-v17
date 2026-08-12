@@ -8,7 +8,7 @@ import { useMemo, useCallback, useEffect } from "react";
 const POLL_INTERVAL = POLL_INTERVAL_RUNNING_SNAPSHOT_MS;
 
 /**
- * Custom error that preserves the full API error response for rich error capture.
+ * Custom error that preserves the full Api error response for rich error capture.
  */
 class SnapshotApiError extends Error {
   readonly apiResponse: ApiResponse<unknown>;

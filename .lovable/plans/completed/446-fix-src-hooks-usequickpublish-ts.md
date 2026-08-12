@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 446: Fix violations in src/hooks/useQuickPublish.ts
 
 Target File: `src/hooks/useQuickPublish.ts`
