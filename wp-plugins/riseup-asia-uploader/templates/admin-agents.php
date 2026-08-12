@@ -43,12 +43,12 @@ $pluginSlug = PluginConfigType::Slug->value;
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="agent_url"><?php esc_html_e('Site URL', $pluginSlug); ?> <span class="required">*</span></label>
+                        <label for="agent_url"><?php esc_html_e('Site Url', $pluginSlug); ?> <span class="required">*</span></label>
                     </th>
                     <td>
                         <input type="url" id="agent_url" name="url" class="regular-text" required 
                                placeholder="https://example.com">
-                        <p class="description"><?php esc_html_e('The WordPress site URL (without /wp-admin)', $pluginSlug); ?></p>
+                        <p class="description"><?php esc_html_e('The WordPress site Url (without /wp-admin)', $pluginSlug); ?></p>
                     </td>
                 </tr>
                 <tr>
@@ -74,13 +74,13 @@ $pluginSlug = PluginConfigType::Slug->value;
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="agent_redirect_url"><?php esc_html_e('Redirect URL (Optional)', $pluginSlug); ?></label>
+                        <label for="agent_redirect_url"><?php esc_html_e('Redirect Url (Optional)', $pluginSlug); ?></label>
                     </th>
                     <td>
                         <input type="url" id="agent_redirect_url" name="redirect_url" class="regular-text" 
                                placeholder="https://redirect.example.com/site">
                         <p class="description">
-                            <?php esc_html_e('If the site URL may change, provide a 301 redirect URL that will resolve to the current location.', $pluginSlug); ?>
+                            <?php esc_html_e('If the site Url may change, provide a 301 redirect Url that will resolve to the current location.', $pluginSlug); ?>
                         </p>
                     </td>
                 </tr>
@@ -116,7 +116,7 @@ $pluginSlug = PluginConfigType::Slug->value;
             <thead>
                 <tr>
                     <th class="column-name"><?php esc_html_e('Name', $pluginSlug); ?></th>
-                    <th class="column-url"><?php esc_html_e('URL', $pluginSlug); ?></th>
+                    <th class="column-url"><?php esc_html_e('Url', $pluginSlug); ?></th>
                     <th class="column-status"><?php esc_html_e('Status', $pluginSlug); ?></th>
                     <th class="column-sync"><?php esc_html_e('Last Sync', $pluginSlug); ?></th>
                     <th class="column-actions"><?php esc_html_e('Actions', $pluginSlug); ?></th>

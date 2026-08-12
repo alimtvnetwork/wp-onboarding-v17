@@ -103,7 +103,7 @@ trait UpdateResolverWpHooksTrait {
             'tested' => $updateInfo['tested'] ?? get_bloginfo('version'),
             'download_link' => $updateInfo['package'] ?? '',
             'sections' => [
-                'description' => 'Remote plugin management, blog post publishing, and audit logging via REST API.',
+                'description' => 'Remote plugin management, blog post publishing, and audit logging via Rest Api.',
                 'changelog' => $updateInfo['changelog'] ?? 'See plugin repository for changelog.',
             ],
         ];
@@ -113,7 +113,7 @@ trait UpdateResolverWpHooksTrait {
         $settings = $this->getSettings();
 
         if (empty($settings['master_url'])) {
-            return [ResponseKeyType::Success->value => false, ResponseKeyType::Message->value => 'No master URL configured'];
+            return [ResponseKeyType::Success->value => false, ResponseKeyType::Message->value => 'No master Url configured'];
         }
 
         $this->fileLogger->info('Testing update server connection');

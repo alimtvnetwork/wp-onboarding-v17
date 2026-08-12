@@ -29,6 +29,7 @@ if (!defined('SECURE_AUTH_KEY')) {
 // Stub WP_User if not available
 if (!class_exists('WP_User')) {
     class WP_User {
+        // phpcs:ignore
         public int $ID = 0;
         public string $user_login = '';
         public string $user_email = '';

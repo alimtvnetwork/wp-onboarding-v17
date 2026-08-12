@@ -246,3 +246,7 @@
 - [Task 613](completed/02-guideline-audit-fixes/613-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverintegritytrait-php.md) - Completed
 - [Task 614](completed/02-guideline-audit-fixes/614-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverurltrait-php.md) - Completed
 
+- [Task 615](completed/02-guideline-audit-fixes/615-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverwphookstrait-php.md) - Completed
+- [Task 616](completed/02-guideline-audit-fixes/616-fix-wp-plugins-riseup-asia-uploader-phpstan-bootstrap-php.md) - Completed
+- [Task 617](completed/02-guideline-audit-fixes/617-fix-wp-plugins-riseup-asia-uploader-templates-admin-agents-php.md) - Completed
+
