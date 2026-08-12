@@ -31,7 +31,7 @@ func ExtractExitError(err error) *exec.ExitError {
 	return exitErr
 }
 
-// APIError contains rich request/response context for failed WordPress REST calls.
+// ApiError contains rich request/response context for failed WordPress Rest calls.
 // It intentionally keeps Error() short/stable (so user-facing messages remain readable)
 // while exposing full diagnostics via fields.
 type ApiError struct {
@@ -40,7 +40,7 @@ type ApiError struct {
 	Endpoint      string
 	Url           string
 	StatusCode    int
-	RequestBody   string // The JSON body sent in the request
+	RequestBody   string // The Json body sent in the request
 	ResponseBody  string
 	PluginSlugIn  string
 	PluginIdUsed  string
@@ -52,7 +52,7 @@ func (e *ApiError) Error() string {
 	isOperationMissing := op == ""
 
 	if isOperationMissing {
-		op = "WordPress API request failed"
+		op = "WordPress Api request failed"
 	}
 
 	req := ""
@@ -102,9 +102,9 @@ type ConnectionInfo struct {
 	CanWritePosts    bool
 }
 
-// PluginInfo represents a WordPress plugin (parsed from WordPress REST API)
+// PluginInfo represents a WordPress plugin (parsed from WordPress Rest Api)
 type PluginInfo struct {
-	Plugin      string `json:"plugin"`       // external key (WordPress REST API)
+	Plugin      string `json:"plugin"`       // external key (WordPress Rest Api)
 	Status      string `json:"status"`       // external key
 	Name        string `json:"name"`         // external key
 	PluginUri   string `json:"plugin_uri"`   // external key

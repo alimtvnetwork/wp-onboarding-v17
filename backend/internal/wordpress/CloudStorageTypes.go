@@ -72,7 +72,7 @@ type CloudStorageSettings struct {
 	IncrementalBackupTimeUtc    string `json:"IncrementalBackupTimeUtc"`
 	// Google Drive rotation extensions
 	MaxBackupCount  int    `json:"MaxBackupCount,omitempty"`
-	MaxTotalSizeMB  int    `json:"MaxTotalSizeMB,omitempty"`
+	MaxTotalSizeMb  int    `json:"MaxTotalSizeMb,omitempty"`
 	ArchiveFolderId string `json:"ArchiveFolderId,omitempty"`
 	RotationPolicy  string `json:"RotationPolicy,omitempty"` // delete_oldest | archive_oldest | keep_full_delete_incremental
 }
@@ -80,9 +80,9 @@ type CloudStorageSettings struct {
 // RotationStatus represents the current rotation state for an account.
 type RotationStatus struct {
 	CurrentCount  int     `json:"CurrentCount"`
-	CurrentSizeMB float64 `json:"CurrentSizeMB"`
+	CurrentSizeMb float64 `json:"CurrentSizeMb"`
 	MaxCount      int     `json:"MaxCount"`
-	MaxSizeMB     int     `json:"MaxSizeMB"`
+	MaxSizeMb     int     `json:"MaxSizeMb"`
 	IsOverLimit   bool    `json:"IsOverLimit"`
 	NextAction    string  `json:"NextAction"`
 }

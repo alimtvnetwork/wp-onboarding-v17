@@ -31,3 +31,6 @@
 - [Task 344](completed/344-fix-backend-internal-services-site_health-queries-go.md) - Completed
 - [Task 345](completed/345-fix-backend-internal-services-version-service-go.md) - Completed
 - [Task 346](completed/346-fix-backend-internal-wordpress-clientconnectionaccess-go.md) - Completed
+- [Task 347](completed/347-fix-backend-internal-wordpress-clientconnectionsteps-go.md) - Completed
+- [Task 348](completed/348-fix-backend-internal-wordpress-clientconnectiontypes-go.md) - Completed
+- [Task 349](completed/349-fix-backend-internal-wordpress-clientpluginbackup-go.md) - Completed

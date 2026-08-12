@@ -56,7 +56,7 @@ func (c *Client) GetPlugin(slug string) apperror.Result[PluginInfo] {
 }
 
 // ResolvePluginIdentifier attempts to map a short slug (e.g. "akismet") to the full plugin
-// identifier used by WP REST API (e.g. "akismet/akismet.php").
+// identifier used by Wp Rest Api (e.g. "akismet/akismet.php").
 // If slug already looks like a full identifier (contains "/"), it is returned as-is.
 func (c *Client) ResolvePluginIdentifier(slug string) apperror.Result[string] {
 	slug = strings.TrimSpace(slug)
