@@ -39,3 +39,4 @@ dist/
 *.zip
 .gitmap/release-assets
 release-assets
+.lovable/temp/
