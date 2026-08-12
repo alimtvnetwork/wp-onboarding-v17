@@ -121,3 +121,6 @@
 - [Task 442](completed/442-fix-src-hooks-useclicktracker-ts.md) - Completed
 - [Task 443](completed/443-fix-src-hooks-useerrorhistory-ts.md) - Completed
 - [Task 444](completed/444-fix-src-hooks-useexecutionlogger-ts.md) - Completed
+- [Task 434](completed/434-fix-src-components-sites-remotesnapshotspanel-tsx.md) - Completed
+- [Task 435](completed/435-fix-src-components-sites-sitecard-tsx.md) - Completed
+- [Task 445](completed/445-fix-src-hooks-usepluginformpersistence-ts.md) - Completed

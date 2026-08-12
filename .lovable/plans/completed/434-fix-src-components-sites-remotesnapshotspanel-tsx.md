@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 434: Fix violations in src/components/sites/RemoteSnapshotsPanel.tsx
 
 Target File: `src/components/sites/RemoteSnapshotsPanel.tsx`

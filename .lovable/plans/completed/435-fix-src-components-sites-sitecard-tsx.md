@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 435: Fix violations in src/components/sites/SiteCard.tsx
 
 Target File: `src/components/sites/SiteCard.tsx`

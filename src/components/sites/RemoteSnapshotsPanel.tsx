@@ -69,6 +69,8 @@ import { useErrorStore } from "@/stores/errorStore";
 import { InlineErrorDiagnostic, extractDiagnostic } from "@/components/plugins/InlineErrorDiagnostic";
 import { wsClient, WS_EVENTS } from "@/lib/ws";
 
+const Url = window['URL'];
+
 interface RemoteSnapshotsPanelProps {
   site: Site;
   open: boolean;
@@ -207,13 +209,13 @@ function SnapshotRow({
                     try {
                       const { blob, filename, cached, size } = await api.downloadSnapshotZip(siteId, snapshot.id);
                       // Trigger browser download
-                      const url = URL.createObjectURL(blob);
+                      const url = Url.createObjectURL(blob);
                       const a = document.createElement("a");
                       a.href = url;
                       a.download = filename;
                       document.body.appendChild(a);
                       a.click();
-                      URL.revokeObjectURL(url);
+                      Url.revokeObjectURL(url);
                       a.remove();
                       toast.success(
                         `ZIP downloaded${cached ? " (cached)" : ""} — ${formatBytes(size)}`,
@@ -324,13 +326,13 @@ function SnapshotDetailContent({ snapshot, siteId }: { snapshot: SnapshotRecord;
       const { blob, filename, cached, size } = await api.downloadSnapshotZip(siteId, snapshot.id);
       setZipMeta({ cached, size, filename });
       // Trigger browser download
-      const url = URL.createObjectURL(blob);
+      const url = Url.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
+      Url.revokeObjectURL(url);
       a.remove();
       toast.success(`ZIP downloaded${cached ? " (cached)" : ""} — ${formatBytes(size)}`);
     } catch (err: unknown) {

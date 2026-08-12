@@ -261,7 +261,7 @@ export function SiteCard({ site, onEdit, onDelete }: SiteCardProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => navigate(`/api-explorer?siteId=${site.id}`)} disabled={site.connectionStatus !== ConnectionStatus.Connected}>
-                  <FlaskConical className="h-4 w-4 mr-2" /> API Explorer
+                  <FlaskConical className="h-4 w-4 mr-2" /> Api Explorer
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate(`/publish-history?siteId=${site.id}&siteName=${encodeURIComponent(site.name)}`)}>
                   <Activity className="h-4 w-4 mr-2" /> Activity
