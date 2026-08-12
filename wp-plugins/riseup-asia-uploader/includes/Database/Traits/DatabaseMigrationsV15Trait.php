@@ -21,14 +21,14 @@ use RiseupAsia\Enums\TableType;
 trait DatabaseMigrationsV15Trait {
 
     /** Fix abbreviation casing: RestAPI → RestApi, AdminUI → AdminUi, WPCLI → WpCli */
-    private const V15_FIX_UPLOAD_SOURCE_QUERY = <<<'SQL'
+    private const V15_FIX_UPLOAD_SOURCE_QUERY = <<<'Sql'
         UPDATE %s SET UploadSource = CASE UploadSource
             WHEN 'RestAPI' THEN 'RestApi'
             WHEN 'AdminUI' THEN 'AdminUi'
             WHEN 'WPCLI'   THEN 'WpCli'
         END
         WHERE UploadSource IN ('RestAPI', 'AdminUI', 'WPCLI')
-    SQL;
+    Sql;
 
     private function migrateV15UploadSourceAbbreviationFix(int $current): void {
         if ($current >= 15) {

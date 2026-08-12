@@ -11,7 +11,7 @@
 
 namespace RiseupAsia\Database\Traits;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -20,10 +20,16 @@ use RiseupAsia\Enums\TableType;
 
 trait DatabaseMigrationsV14Trait {
 
-    // ── SQL Constants ────────────────────────────────────────────────
+    private const COLUMN_TRIGGERED_BY = 'TriggeredBy';
+    private const COLUMN_UPLOAD_SOURCE = 'UploadSource';
+    private const COLUMN_TRIGGER_SOURCE = 'TriggerSource';
+    private const MIGRATION_VERSION_14 = 14;
+    private const PRAGMA_COLUMN_NAME_INDEX = 1;
+
+    // ── Sql Constants ────────────────────────────────────────────────
 
     /** Transactions.TriggeredBy: snake_case/lowercase → PascalCase (TriggerSourceType) */
-    private const V14_TRANSACTIONS_TRIGGERED_BY_QUERY = <<<'SQL'
+    private const V14_TRANSACTIONS_TRIGGERED_BY_QUERY = <<<'Sql'
         UPDATE %s SET TriggeredBy = CASE TriggeredBy
             WHEN 'api'        THEN 'Api'
             WHEN 'dashboard'  THEN 'Dashboard'
@@ -32,10 +38,10 @@ trait DatabaseMigrationsV14Trait {
             WHEN 'cli'        THEN 'Cli'
         END
         WHERE TriggeredBy IN ('api', 'dashboard', 'agent_push', 'cron', 'cli')
-    SQL;
+    Sql;
 
     /** Transactions.UploadSource: snake_case → PascalCase (UploadSourceType) */
-    private const V14_TRANSACTIONS_UPLOAD_SOURCE_QUERY = <<<'SQL'
+    private const V14_TRANSACTIONS_UPLOAD_SOURCE_QUERY = <<<'Sql'
         UPDATE %s SET UploadSource = CASE UploadSource
             WHEN 'upload_script' THEN 'Script'
             WHEN 'rest_api'      THEN 'RestApi'
@@ -43,10 +49,10 @@ trait DatabaseMigrationsV14Trait {
             WHEN 'wp_cli'        THEN 'WpCli'
         END
         WHERE UploadSource IN ('upload_script', 'rest_api', 'admin_ui', 'wp_cli')
-    SQL;
+    Sql;
 
     /** Snapshots.TriggeredBy: lowercase → PascalCase (SnapshotTriggerType) */
-    private const V14_SNAPSHOTS_TRIGGERED_BY_QUERY = <<<'SQL'
+    private const V14_SNAPSHOTS_TRIGGERED_BY_QUERY = <<<'Sql'
         UPDATE %s SET TriggeredBy = CASE TriggeredBy
             WHEN 'manual'    THEN 'Manual'
             WHEN 'scheduled' THEN 'Scheduled'
@@ -54,10 +60,10 @@ trait DatabaseMigrationsV14Trait {
             WHEN 'api'       THEN 'Api'
         END
         WHERE TriggeredBy IN ('manual', 'scheduled', 'cron', 'api')
-    SQL;
+    Sql;
 
     /** Snapshots.TriggerSource: snake_case/lowercase → PascalCase (TriggerSourceType) */
-    private const V14_SNAPSHOTS_TRIGGER_SOURCE_QUERY = <<<'SQL'
+    private const V14_SNAPSHOTS_TRIGGER_SOURCE_QUERY = <<<'Sql'
         UPDATE %s SET TriggerSource = CASE TriggerSource
             WHEN 'api'        THEN 'Api'
             WHEN 'dashboard'  THEN 'Dashboard'
@@ -66,14 +72,14 @@ trait DatabaseMigrationsV14Trait {
             WHEN 'cli'        THEN 'Cli'
         END
         WHERE TriggerSource IN ('api', 'dashboard', 'agent_push', 'cron', 'cli')
-    SQL;
+    Sql;
 
     // ── Helpers ────────────────────────────────────────────────────────
 
-    /** Execute SQL only if the target column exists in the table. */
+    /** Execute Sql only if the target column exists in the table. */
     private function execIfColumnExists(string $table, string $column, string $sql): void {
         $stmt = $this->pdo->query("PRAGMA table_info($table)");
-        $columns = $stmt->fetchAll(\PDO::FETCH_COLUMN, 1);
+        $columns = $stmt->fetchAll(\PDO::FETCH_COLUMN, self::PRAGMA_COLUMN_NAME_INDEX);
         $hasColumn = in_array($column, $columns, true);
 
         if ($hasColumn === false) {
@@ -88,7 +94,7 @@ trait DatabaseMigrationsV14Trait {
     // ── Migration Entry Point ────────────────────────────────────────
 
     private function migrateV14PascalCaseRemainingValues(int $current): void {
-        if ($current >= 14) {
+        if ($current >= self::MIGRATION_VERSION_14) {
             return;
         }
 
@@ -101,16 +107,16 @@ trait DatabaseMigrationsV14Trait {
 
         try {
             // 1. Transactions.TriggeredBy
-            $this->execIfColumnExists($txn, 'TriggeredBy', sprintf(self::V14_TRANSACTIONS_TRIGGERED_BY_QUERY, $txn));
+            $this->execIfColumnExists($txn, self::COLUMN_TRIGGERED_BY, sprintf(self::V14_TRANSACTIONS_TRIGGERED_BY_QUERY, $txn));
 
             // 2. Transactions.UploadSource
-            $this->execIfColumnExists($txn, 'UploadSource', sprintf(self::V14_TRANSACTIONS_UPLOAD_SOURCE_QUERY, $txn));
+            $this->execIfColumnExists($txn, self::COLUMN_UPLOAD_SOURCE, sprintf(self::V14_TRANSACTIONS_UPLOAD_SOURCE_QUERY, $txn));
 
             // 3. Snapshots.TriggeredBy
-            $this->execIfColumnExists($snapshots, 'TriggeredBy', sprintf(self::V14_SNAPSHOTS_TRIGGERED_BY_QUERY, $snapshots));
+            $this->execIfColumnExists($snapshots, self::COLUMN_TRIGGERED_BY, sprintf(self::V14_SNAPSHOTS_TRIGGERED_BY_QUERY, $snapshots));
 
             // 4. Snapshots.TriggerSource
-            $this->execIfColumnExists($snapshots, 'TriggerSource', sprintf(self::V14_SNAPSHOTS_TRIGGER_SOURCE_QUERY, $snapshots));
+            $this->execIfColumnExists($snapshots, self::COLUMN_TRIGGER_SOURCE, sprintf(self::V14_SNAPSHOTS_TRIGGER_SOURCE_QUERY, $snapshots));
 
             $this->pdo->commit();
         } catch (Throwable $e) {
@@ -118,6 +124,7 @@ trait DatabaseMigrationsV14Trait {
             $this->fileLogger->logCriticalException($e, 'Migration v14 failed — rolled back');
         }
 
-        $this->recordMigration(14);
+        $this->recordMigration(self::MIGRATION_VERSION_14);
     }
 }
+
