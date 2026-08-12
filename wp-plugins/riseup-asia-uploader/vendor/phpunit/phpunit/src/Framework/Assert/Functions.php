@@ -2805,7 +2805,7 @@ if (!function_exists('PHPUnit\Framework\assertThat')) {
 
 if (!function_exists('PHPUnit\Framework\assertJson')) {
     /**
-     * Asserts that a string is a valid JSON string.
+     * Asserts that a string is a valid Json string.
      *
      * @throws ExpectationFailedException
      *
@@ -2821,7 +2821,7 @@ if (!function_exists('PHPUnit\Framework\assertJson')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonStringEqualsJsonString')) {
     /**
-     * Asserts that two given JSON encoded objects or arrays are equal.
+     * Asserts that two given Json encoded objects or arrays are equal.
      *
      * @throws ExpectationFailedException
      *
@@ -2837,7 +2837,7 @@ if (!function_exists('PHPUnit\Framework\assertJsonStringEqualsJsonString')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonStringNotEqualsJsonString')) {
     /**
-     * Asserts that two given JSON encoded objects or arrays are not equal.
+     * Asserts that two given Json encoded objects or arrays are not equal.
      *
      * @throws ExpectationFailedException
      *
@@ -2853,7 +2853,7 @@ if (!function_exists('PHPUnit\Framework\assertJsonStringNotEqualsJsonString')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonStringEqualsJsonFile')) {
     /**
-     * Asserts that the generated JSON encoded object and the content of the given file are equal.
+     * Asserts that the generated Json encoded object and the content of the given file are equal.
      *
      * @throws ExpectationFailedException
      *
@@ -2869,7 +2869,7 @@ if (!function_exists('PHPUnit\Framework\assertJsonStringEqualsJsonFile')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonStringNotEqualsJsonFile')) {
     /**
-     * Asserts that the generated JSON encoded object and the content of the given file are not equal.
+     * Asserts that the generated Json encoded object and the content of the given file are not equal.
      *
      * @throws ExpectationFailedException
      *
@@ -2885,7 +2885,7 @@ if (!function_exists('PHPUnit\Framework\assertJsonStringNotEqualsJsonFile')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonFileEqualsJsonFile')) {
     /**
-     * Asserts that two JSON files are equal.
+     * Asserts that two Json files are equal.
      *
      * @throws ExpectationFailedException
      *
@@ -2901,7 +2901,7 @@ if (!function_exists('PHPUnit\Framework\assertJsonFileEqualsJsonFile')) {
 
 if (!function_exists('PHPUnit\Framework\assertJsonFileNotEqualsJsonFile')) {
     /**
-     * Asserts that two JSON files are not equal.
+     * Asserts that two Json files are not equal.
      *
      * @throws ExpectationFailedException
      *

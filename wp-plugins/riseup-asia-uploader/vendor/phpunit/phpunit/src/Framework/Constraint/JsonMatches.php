@@ -34,7 +34,7 @@ final class JsonMatches extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'matches JSON string "%s"',
+            'matches Json string "%s"',
             $this->value,
         );
     }

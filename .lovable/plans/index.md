@@ -286,3 +286,7 @@
 - [Task 643](completed/02-guideline-audit-fixes/643-fix-wp-plugins-riseup-asia-uploader-vendor-php-stubs-wordpress-stubs-wordpress-stubs-php.md) - Completed
 - [Task 644](completed/02-guideline-audit-fixes/644-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-php-code-coverage-src-exception-testidmissingexception-php.md) - Completed
 
+- [Task 645](completed/02-guideline-audit-fixes/645-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-assert-php.md) - Completed
+- [Task 646](completed/02-guideline-audit-fixes/646-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-assert-functions-php.md) - Completed
+- [Task 647](completed/02-guideline-audit-fixes/647-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-constraint-jsonmatches-php.md) - Completed
+

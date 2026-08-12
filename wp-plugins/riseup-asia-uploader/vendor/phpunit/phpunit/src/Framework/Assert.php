@@ -2574,7 +2574,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that a string is a valid JSON string.
+     * Asserts that a string is a valid Json string.
      *
      * @throws ExpectationFailedException
      */
@@ -2584,7 +2584,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that two given JSON encoded objects or arrays are equal.
+     * Asserts that two given Json encoded objects or arrays are equal.
      *
      * @throws ExpectationFailedException
      */
@@ -2597,7 +2597,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that two given JSON encoded objects or arrays are not equal.
+     * Asserts that two given Json encoded objects or arrays are not equal.
      *
      * @throws ExpectationFailedException
      */
@@ -2616,7 +2616,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that the generated JSON encoded object and the content of the given file are equal.
+     * Asserts that the generated Json encoded object and the content of the given file are equal.
      *
      * @throws ExpectationFailedException
      */
@@ -2634,7 +2634,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that the generated JSON encoded object and the content of the given file are not equal.
+     * Asserts that the generated Json encoded object and the content of the given file are not equal.
      *
      * @throws ExpectationFailedException
      */
@@ -2658,7 +2658,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that two JSON files are equal.
+     * Asserts that two Json files are equal.
      *
      * @throws ExpectationFailedException
      */
@@ -2682,7 +2682,7 @@ abstract class Assert
     }
 
     /**
-     * Asserts that two JSON files are not equal.
+     * Asserts that two Json files are not equal.
      *
      * @throws ExpectationFailedException
      */
