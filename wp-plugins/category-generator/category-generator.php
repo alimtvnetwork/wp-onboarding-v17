@@ -557,6 +557,7 @@ class Category_Generator_Pro {
                 'noTestsMatchFilter' => __('No tests match the current filter', 'category-generator'),
             ]
         ]);
+    }
     
     /**
      * Render admin page
