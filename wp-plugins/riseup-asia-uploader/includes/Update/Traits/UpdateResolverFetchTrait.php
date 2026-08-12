@@ -60,7 +60,7 @@ trait UpdateResolverFetchTrait {
     private function resolveUpdateUrl(array $settings, bool $forceCheck): string {
         $updateUrl = $this->getUpdateUrl($forceCheck);
         if (is_wp_error($updateUrl)) {
-            $this->fileLogger->warn('Falling back to master URL', ['error' => $updateUrl->get_error_message()]);
+            $this->fileLogger->warn('Falling back to master Url', ['error' => $updateUrl->get_error_message()]);
 
             return $settings['master_url'];
         }
@@ -85,7 +85,7 @@ trait UpdateResolverFetchTrait {
         $isRetryable = ($forceCheck === false) && !empty($settings['resolved_url'] ?? null);
 
         if ($isRetryable) {
-            $this->fileLogger->info('Cached URL failed, resolving fresh');
+            $this->fileLogger->info('Cached Url failed, resolving fresh');
             $this->clearCache();
 
             return $this->fetchUpdateInfo(true);
@@ -107,7 +107,7 @@ trait UpdateResolverFetchTrait {
         $isRetryable = ($forceCheck === false) && !empty($settings['resolved_url'] ?? null);
 
         if ($isRetryable) {
-            $this->fileLogger->info('Cached URL returned error, resolving fresh');
+            $this->fileLogger->info('Cached Url returned error, resolving fresh');
             $this->clearCache();
 
             return $this->fetchUpdateInfo(true);
@@ -129,7 +129,7 @@ trait UpdateResolverFetchTrait {
 
         $data = json_decode($body, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            $this->fileLogger->error('Invalid JSON from update server');
+            $this->fileLogger->error('Invalid Json from update server');
 
             return ['version' => '', 'package' => $updateUrl];
         }

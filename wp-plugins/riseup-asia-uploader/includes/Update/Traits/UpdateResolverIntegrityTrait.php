@@ -66,7 +66,7 @@ trait UpdateResolverIntegrityTrait {
     /**
      * Download a package and verify its integrity before returning the local path.
      *
-     * @param string      $packageUrl   URL to the ZIP package.
+     * @param string      $packageUrl   Url to the ZIP package.
      * @param string|null $expectedHash Expected SHA-256 hash (null skips verification).
      *
      * @return string|WP_Error Local file path on success, WP_Error on failure.

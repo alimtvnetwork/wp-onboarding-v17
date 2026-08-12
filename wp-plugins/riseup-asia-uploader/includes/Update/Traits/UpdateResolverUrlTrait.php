@@ -1,6 +1,6 @@
 <?php
 /**
- * UpdateResolverUrlTrait — URL resolution with redirect following and caching.
+ * UpdateResolverUrlTrait — Url resolution with redirect following and caching.
  *
  * @package RiseupAsia\Update\Traits
  * @since   1.57.0
@@ -24,7 +24,7 @@ trait UpdateResolverUrlTrait {
 
     public function resolveUrl(string $url, ?int $maxRedirects = null): string|WP_Error {
         $maxRedirects ??= UpdateConfigType::MaxRedirects->value;
-        $this->fileLogger->info('Resolving URL through redirects', ['url' => $url]);
+        $this->fileLogger->info('Resolving Url through redirects', ['url' => $url]);
 
         $currentUrl = $url;
 
@@ -48,7 +48,7 @@ trait UpdateResolverUrlTrait {
         $response = wp_remote_head($url, HttpConfigType::headRedirectOptions());
 
         if (is_wp_error($response)) {
-            $this->fileLogger->error('URL resolution failed', ['url' => $url, 'error' => $response->get_error_message()]);
+            $this->fileLogger->error('Url resolution failed', ['url' => $url, 'error' => $response->get_error_message()]);
 
             return $response;
         }
@@ -87,7 +87,7 @@ trait UpdateResolverUrlTrait {
         string $final,
         int $hops,
     ): string {
-        $this->fileLogger->info('URL resolved', ['original' => $original, 'final' => $final, 'hops' => $hops]);
+        $this->fileLogger->info('Url resolved', ['original' => $original, 'final' => $final, 'hops' => $hops]);
 
         return $final;
     }
@@ -96,13 +96,13 @@ trait UpdateResolverUrlTrait {
         $settings = $this->getSettings();
 
         if (empty($settings['master_url'])) {
-            return new WP_Error(WpErrorCodeType::NoMasterUrl->value, 'No master update URL configured');
+            return new WP_Error(WpErrorCodeType::NoMasterUrl->value, 'No master update Url configured');
         }
 
         $isCacheUsable = ($forceResolve === false && $this->isCacheValid($settings));
 
         if ($isCacheUsable) {
-            $this->fileLogger->debug('Using cached resolved URL', ['url' => $settings['resolved_url']]);
+            $this->fileLogger->debug('Using cached resolved Url', ['url' => $settings['resolved_url']]);
 
             return $settings['resolved_url'];
         }
@@ -131,7 +131,7 @@ trait UpdateResolverUrlTrait {
     }
 
     public function clearCache(): bool {
-        $this->fileLogger->info('Clearing update URL cache');
+        $this->fileLogger->info('Clearing update Url cache');
 
         return $this->saveSettings(['resolved_url' => '', 'resolved_at' => '']);
     }
