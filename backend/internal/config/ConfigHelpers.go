@@ -83,7 +83,7 @@ func collectSeedSiteIds(db *database.DB, cfg *Config, log *logger.Logger) []int6
 	var siteIds []int64
 
 	for _, site := range cfg.Seed.Sites {
-		normalizedUrl := urlutil.NormalizeWordPressUrl(site.URL)
+		normalizedUrl := urlutil.NormalizeWordPressUrl(site.Url)
 		id, err := db.GetSiteIdByUrl(normalizedUrl)
 		isFound := err == nil && id > 0
 

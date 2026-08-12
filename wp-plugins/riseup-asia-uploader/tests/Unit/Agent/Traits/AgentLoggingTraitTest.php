@@ -114,9 +114,9 @@ final class AgentLoggingTraitTest extends TestCase
 
         $result = $this->stub->getActionHistory(1, 3, 0);
 
-        // Note: MySQL is case-insensitive for column aliases but SQLite is not.
-        // The trait's SQL uses lowercase 'total' but ResponseKeyType::Total is 'Total'.
-        // In production (MySQL) this works fine; in test (SQLite) the key mismatch returns 0.
+        // Note: MySql is case-insensitive for column aliases but Sqlite is not.
+        // The trait's Sql uses lowercase 'total' but ResponseKeyType::Total is 'Total'.
+        // In production (MySql) this works fine; in test (Sqlite) the key mismatch returns 0.
         $this->assertCount(3, $result[ResponseKeyType::Actions->value]);
     }
 

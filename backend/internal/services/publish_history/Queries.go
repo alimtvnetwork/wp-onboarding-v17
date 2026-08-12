@@ -1,4 +1,4 @@
-// Package publishhistory — SQL query constants.
+// Package publishhistory — Sql query constants.
 package publishhistory
 
 const selectHistorySql = `SELECT
