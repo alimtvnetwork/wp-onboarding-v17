@@ -9,6 +9,7 @@ use RiseupAsia\Traits\Sync\SyncPushTrait;
 use RiseupAsia\Enums\SyncActionType;
 use RiseupAsia\Enums\SyncEntryStatusType;
 use RiseupAsia\Enums\ResponseKeyType;
+use Throwable;
 
 /**
  * Stub exposing SyncPushTrait private methods for testing.
@@ -32,7 +33,7 @@ final class SyncPushStub
         };
     }
 
-    public function errorResponse(string $msg, int $code, ?\Throwable $e = null): \WP_REST_Response
+    public function errorResponse(string $msg, int $code, ?Throwable $e = null): \WP_REST_Response
     {
         return new \WP_REST_Response(['error' => $msg], $code);
     }

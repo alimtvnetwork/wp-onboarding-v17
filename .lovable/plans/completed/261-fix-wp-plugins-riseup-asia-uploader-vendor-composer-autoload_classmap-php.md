@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/composer/autoload_classmap.
   `'PHPUnit\\Event\\Code\\Throwable' => $vendorDir . '/phpunit/phpunit/src/Event/Value/Throwable.php',`
   **Instruction**: Remove the leading backslash and add `use Throwable;` at the top of the file.
 
+
+[x] SKIPPED (False Positive - vendor/backup directories)

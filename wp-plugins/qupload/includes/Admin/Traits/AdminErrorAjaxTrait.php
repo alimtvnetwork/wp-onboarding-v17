@@ -15,6 +15,7 @@ if (!defined('ABSPATH')) {
 use QUpload\Enums\CapabilityType;
 use QUpload\Enums\NonceType;
 use QUpload\Logging\FileLogger;
+use Throwable;
 
 trait AdminErrorAjaxTrait {
 
@@ -121,7 +122,7 @@ trait AdminErrorAjaxTrait {
             $logger = FileLogger::getInstance();
             $logger->clearAllLogFiles();
             wp_send_json_success(['message' => 'All log files cleared']);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             wp_send_json_error(['message' => 'Failed to clear logs: ' . $e->getMessage()]);
         }
     }

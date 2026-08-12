@@ -8,3 +8,4 @@ Target File: `wp-plugins/qupload/includes/Admin/Traits/AdminErrorAjaxTrait.php`
   `} catch (\Throwable $e) {`
   **Instruction**: Remove the leading backslash and add `use Throwable;` at the top of the file.
 
+[x] FIXED

@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
 
 use WP_REST_Request;
 use WP_REST_Response;
+use Throwable;
 
 use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\ResponseKeyType;
@@ -79,7 +80,7 @@ trait LogClearAllTrait
             $dbResult = $this->executeDatabaseClearing();
             $result[ResponseKeyType::Database->value] = ($dbResult[ResponseKeyType::ActivityLog->value] ?? false) || ($dbResult[ResponseKeyType::ErrorSessions->value] ?? false);
             $result[ResponseKeyType::Cleared->value] = true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $result[ResponseKeyType::Error->value] = $e->getMessage();
         }
 
@@ -110,7 +111,7 @@ trait LogClearAllTrait
             $quploadLogger = $quploadLoggerClass::getInstance();
             $quploadLogger->clearAllLogFiles();
             $result[ResponseKeyType::Cleared->value] = true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $result[ResponseKeyType::Error->value] = $e->getMessage();
         }
 

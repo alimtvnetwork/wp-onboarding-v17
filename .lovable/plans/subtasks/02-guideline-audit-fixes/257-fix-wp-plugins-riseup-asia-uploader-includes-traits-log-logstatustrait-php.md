@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Log/LogStatusTrait
   `} catch (\Throwable $e) {`
   **Instruction**: Remove the leading backslash and add `use Throwable;` at the top of the file.
 
+[x] FIXED

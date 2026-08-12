@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use Throwable;
 use RiseupAsia\Enums\HookType;
 use RiseupAsia\Enums\OptionNameType;
 use RiseupAsia\Enums\PluginConfigType;
@@ -172,7 +173,7 @@ function riseup_asia_deactivate(): void {
         if ($isTempDirPresent) {
             riseup_asia_delete_temp_dir($tempDir);
         }
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         error_log('RiseUp Uploader: Deactivation cleanup failed: ' . $e->getMessage());
     }
 }

@@ -12,3 +12,4 @@ Target File: `wp-plugins/riseup-asia-uploader/templates/partials/settings/sectio
   `<label class="riseup-mode-card" id="mode_card_pertable" style="flex: 1; cursor: pointer; padding: 12px; border: 2px solid <?php echo $storageMode === StorageModeType::PerTable->value ? '#2271b1' : '#dcdcde'; ?>; border-radius: 8px; background: <?php echo $storageMode === StorageModeType::PerTable->value ? '#f0f6fc' : '#fff'; ?>; transition: all 0.2s;">`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

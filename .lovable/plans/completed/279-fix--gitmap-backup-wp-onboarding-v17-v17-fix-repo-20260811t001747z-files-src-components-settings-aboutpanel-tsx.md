@@ -8,3 +8,5 @@ Target File: `.gitmap/backup/wp-onboarding-v17/v17/fix-repo/20260811T001747Z/fil
   `Copy API URLs and version info for support`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive - vendor/backup directories)

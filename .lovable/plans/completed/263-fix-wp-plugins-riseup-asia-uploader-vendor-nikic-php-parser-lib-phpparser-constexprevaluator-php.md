@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/nikic/php-parser/lib/PhpPar
   `} catch (\Throwable $e) {`
   **Instruction**: Remove the leading backslash and add `use Throwable;` at the top of the file.
 
+
+[x] SKIPPED (False Positive - vendor/backup directories)

@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/vendor/phpunit/phpunit/src/Logging
   `use PHPUnit\Event\Code\Throwable;`
   **Instruction**: Remove the leading backslash and add `use Throwable;` at the top of the file.
 
+
+[x] SKIPPED (False Positive - vendor/backup directories)

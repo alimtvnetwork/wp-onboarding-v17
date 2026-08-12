@@ -8,6 +8,7 @@ use PDO;
 use PHPUnit\Framework\TestCase;
 use RiseupAsia\Agent\Traits\AgentLoggingTrait;
 use RiseupAsia\Enums\ResponseKeyType;
+use Throwable;
 
 final class LoggingStub
 {
@@ -28,7 +29,7 @@ final class LoggingStub
         };
 
         $this->fileLogger = new class {
-            public function logException(\Throwable $e, string $ctx): void {}
+            public function logException(Throwable $e, string $ctx): void {}
             public function info(string $msg, array $ctx = []): void {}
         };
     }

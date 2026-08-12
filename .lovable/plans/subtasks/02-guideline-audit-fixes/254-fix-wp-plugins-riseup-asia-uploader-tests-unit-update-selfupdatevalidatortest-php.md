@@ -12,3 +12,4 @@ Target File: `wp-plugins/riseup-asia-uploader/tests/Unit/Update/SelfUpdateValida
   `$syntaxErrors = array_filter($errors, fn($e) => $e['code'] === SelfUpdateStatusType::SyntaxError->value);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

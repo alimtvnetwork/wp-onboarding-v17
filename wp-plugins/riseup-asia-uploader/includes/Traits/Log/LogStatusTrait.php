@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
 
 use WP_REST_Request;
 use WP_REST_Response;
+use Throwable;
 
 use RiseupAsia\Database\Database;
 use RiseupAsia\Enums\HttpStatusType;
@@ -162,7 +163,7 @@ trait LogStatusTrait
             if ($isErrorSessionCountReady) {
                 $result[$esKey] = (int) $esStmt->fetchColumn();
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->fileLogger->logException($e, 'Failed to get database counts for log status');
         }
 
