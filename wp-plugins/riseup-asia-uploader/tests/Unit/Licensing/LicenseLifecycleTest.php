@@ -21,7 +21,7 @@ class LicenseLifecycleTest extends TestCase
 
     private LicenseManager $manager;
 
-    /** @var int Counts API calls made during the test. */
+    /** @var int Counts Api calls made during the test. */
     private int $apiCallCount;
 
     /** @var string[] URLs hit during the test (in order). */
@@ -82,7 +82,7 @@ class LicenseLifecycleTest extends TestCase
         // ── Step 3: isLicensed uses cache ────────────────────────────
         $callsBefore = $this->apiCallCount;
         $this->assertTrue($this->manager->isLicensed(), 'Should be licensed with active cached status');
-        $this->assertSame($callsBefore, $this->apiCallCount, 'isLicensed should use cache, not call API');
+        $this->assertSame($callsBefore, $this->apiCallCount, 'isLicensed should use cache, not call Api');
 
         // ── Step 4: Activate on this domain ──────────────────────────
         $this->apiCallCount = 0;
@@ -95,7 +95,7 @@ class LicenseLifecycleTest extends TestCase
         $this->assertSame(self::DOMAIN, $activateResult['domain']);
         $this->assertContainsUrlFragment('/activate', 'Should hit activate endpoint');
         $this->assertContainsUrlFragment('/validate', 'Activate should trigger re-validation');
-        $this->assertGreaterThanOrEqual(2, $this->apiCallCount, 'Activate should make at least 2 API calls');
+        $this->assertGreaterThanOrEqual(2, $this->apiCallCount, 'Activate should make at least 2 Api calls');
 
         // Cache should be refreshed after activate.
         $this->assertSame('active', $_wp_test_options['riseup_license_status']);
@@ -147,8 +147,8 @@ class LicenseLifecycleTest extends TestCase
 
         $isLicensed = $this->manager->isLicensed();
 
-        $this->assertTrue($isLicensed, 'Stale cache re-validates and API returns valid=true, so isLicensed should be true');
-        $this->assertGreaterThanOrEqual(1, $this->apiCallCount, 'Stale cache should trigger API call');
+        $this->assertTrue($isLicensed, 'Stale cache re-validates and Api returns valid=true, so isLicensed should be true');
+        $this->assertGreaterThanOrEqual(1, $this->apiCallCount, 'Stale cache should trigger Api call');
     }
 
     // ------------------------------------------------------------------
@@ -174,7 +174,7 @@ class LicenseLifecycleTest extends TestCase
     // ------------------------------------------------------------------
 
     /**
-     * Build a request router that responds based on URL path.
+     * Build a request router that responds based on Url path.
      */
     private function buildRouter(): callable
     {
@@ -234,7 +234,7 @@ class LicenseLifecycleTest extends TestCase
     }
 
     /**
-     * Assert that at least one captured URL contains the given fragment.
+     * Assert that at least one captured Url contains the given fragment.
      */
     private function assertContainsUrlFragment(string $fragment, string $message = ''): void
     {
@@ -247,6 +247,6 @@ class LicenseLifecycleTest extends TestCase
             }
         }
 
-        $this->assertTrue($found, $message ?: "Expected a URL containing '{$fragment}', got: " . implode(', ', $this->apiUrls));
+        $this->assertTrue($found, $message ?: "Expected a Url containing '{$fragment}', got: " . implode(', ', $this->apiUrls));
     }
 }

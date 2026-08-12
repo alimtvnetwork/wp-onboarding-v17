@@ -270,3 +270,7 @@
 - [Task 631](completed/02-guideline-audit-fixes/631-fix-wp-plugins-riseup-asia-uploader-tests-unit-database-ormtest-php.md) - Completed
 - [Task 632](completed/02-guideline-audit-fixes/632-fix-wp-plugins-riseup-asia-uploader-tests-unit-database-validationpatterntest-php.md) - Completed
 
+- [Task 633](completed/02-guideline-audit-fixes/633-fix-wp-plugins-riseup-asia-uploader-tests-unit-licensing-licenseclienttest-php.md) - Completed
+- [Task 634](completed/02-guideline-audit-fixes/634-fix-wp-plugins-riseup-asia-uploader-tests-unit-licensing-licenselifecycletest-php.md) - Completed
+- [Task 635](completed/02-guideline-audit-fixes/635-fix-wp-plugins-riseup-asia-uploader-tests-unit-licensing-licensemanagertest-php.md) - Completed
+

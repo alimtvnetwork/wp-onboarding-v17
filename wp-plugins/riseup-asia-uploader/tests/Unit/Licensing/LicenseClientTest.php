@@ -22,7 +22,7 @@ class LicenseClientTest extends TestCase
         $this->capturedRequests = [];
         $this->client = new LicenseClient(self::BASE_URL, self::HMAC_SECRET);
 
-        // Default handler — capture request and return valid JSON.
+        // Default handler — capture request and return valid Json.
         $_wp_test_remote_handler = function (string $url, array $args) {
             $this->capturedRequests[] = ['url' => $url, 'args' => $args];
 
@@ -92,7 +92,7 @@ class LicenseClientTest extends TestCase
     }
 
     // ------------------------------------------------------------------
-    // URL construction
+    // Url construction
     // ------------------------------------------------------------------
 
     public function testValidateHitsCorrectUrl(): void
@@ -180,7 +180,7 @@ class LicenseClientTest extends TestCase
     }
 
     // ------------------------------------------------------------------
-    // JSON decoding
+    // Json decoding
     // ------------------------------------------------------------------
 
     public function testValidResponseDecodedAsArray(): void

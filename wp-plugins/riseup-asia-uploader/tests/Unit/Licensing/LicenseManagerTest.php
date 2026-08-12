@@ -90,7 +90,7 @@ class LicenseManagerTest extends TestCase
         // 13 hours ago — beyond the 12-hour TTL.
         $_wp_test_options['riseup_license_checked_at'] = (string) (time() - 13 * 3600);
 
-        // API returns invalid → isLicensed falls back to API.
+        // Api returns invalid → isLicensed falls back to Api.
         $_wp_test_remote_handler = fn() => [
             'response' => ['code' => 200],
             'body' => json_encode(['valid' => false, 'status' => 'expired']),
@@ -167,7 +167,7 @@ class LicenseManagerTest extends TestCase
         $_wp_test_options['riseup_license_status'] = 'active';
         $_wp_test_options['riseup_license_checked_at'] = (string) time();
 
-        // Deactivate call — API returns success.
+        // Deactivate call — Api returns success.
         $_wp_test_remote_handler = fn() => [
             'response' => ['code' => 200],
             'body' => json_encode(['deactivated' => true]),
