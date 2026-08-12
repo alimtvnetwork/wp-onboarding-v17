@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { resolveApiUrl, resolveApiBase, toAbsoluteUrl } from "@/lib/endpoints";
 import { useErrorStore } from "@/stores/errorStore";
 
+const Json = globalThis.JSON;
+
 interface BackendStatusProps {
   /** Polling interval in ms. Default: 10000 (10 seconds) */
   pollInterval?: number;
@@ -18,10 +20,10 @@ export enum DisconnectReasonType {
 /**
  * Displays a banner when the backend is disconnected.
  * Detection logic:
- * 1. If response body is HTML → E9005 (misrouting/hosted preview)
+ * 1. If response body is Html → E9005 (misrouting/hosted preview)
  * 2. If fetch throws → E9003 (network/unreachable)
- * 3. If response is JSON with 2xx → connected
- * 4. If response is JSON with non-2xx → disconnected/unhealthy
+ * 3. If response is Json with 2xx → connected
+ * 4. If response is Json with non-2xx → disconnected/unhealthy
  */
 export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
   const [isConnected, setIsConnected] = useState(true);
@@ -44,18 +46,18 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
         headers: { Accept: "application/json" },
       });
 
-      // Always read as text first: some servers/dev proxies return HTML but still claim application/json.
+      // Always read as text first: some servers/dev proxies return Html but still claim application/json.
       const raw = await response.text();
       const trimmed = raw.trim();
 
       const looksLikeJson = trimmed.startsWith("{") || trimmed.startsWith("[");
 
-      // Case 1: HTML returned instead of JSON
+      // Case 1: Html returned instead of Json
       if (!looksLikeJson) {
         const errorInfo = {
           code: "E9005",
           message:
-            "Backend returned HTML instead of JSON. This usually means the backend is not running or the API URL is misconfigured.",
+            "Backend returned Html instead of Json. This usually means the backend is not running or the Api Url is misconfigured.",
           url: healthUrl,
           reason: DisconnectReasonType.Html,
         };
@@ -64,17 +66,17 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
         return;
       }
 
-      // Case 2: JSON response - check HTTP status
+      // Case 2: Json response - check Http status
       if (response.ok) {
-        // 2xx with JSON = connected
+        // 2xx with Json = connected
         setIsConnected(true);
         setLastError(null);
       } else {
-        // Non-2xx JSON response = backend is reachable but unhealthy
-        const data = JSON.parse(raw) as { error?: { message?: string } };
+        // Non-2xx Json response = backend is reachable but unhealthy
+        const data = Json.parse(raw) as { error?: { message?: string } };
         const errorInfo = {
           code: "E9003",
-          message: `Backend returned HTTP ${response.status}: ${data.error?.message || "Unknown error"}`,
+          message: `Backend returned Http ${response.status}: ${data.error?.message || "Unknown error"}`,
           url: healthUrl,
           reason: DisconnectReasonType.Non2xx,
         };
@@ -109,7 +111,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
         code: lastError?.code || "E9005",
         message: lastError?.message || "Backend disconnected",
         details:
-          "The frontend cannot reach the backend API. If you're using the hosted preview, it cannot connect to your local backend—open the app from your local backend URL instead (e.g. http://localhost:8080).",
+          "The frontend cannot reach the backend Api. If you're using the hosted preview, it cannot connect to your local backend—open the app from your local backend Url instead (e.g. http://localhost:8080).",
         timestamp: new Date().toISOString(),
       },
       {
@@ -148,7 +150,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
     if (!lastError) return "Backend disconnected";
     switch (lastError.reason) {
       case DisconnectReasonType.Html:
-        return "Backend disconnected — API requests are returning HTML instead of JSON";
+        return "Backend disconnected — Api requests are returning Html instead of Json";
       case DisconnectReasonType.Network:
         return "Backend unreachable — network error or server not running";
       case DisconnectReasonType.Non2xx:

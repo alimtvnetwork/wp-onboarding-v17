@@ -26,7 +26,7 @@ interface CopyDiagnosticsButtonProps {
 }
 
 /**
- * A small button that copies API base, WS URL, and app version
+ * A small button that copies Api base, Ws Url, and app version
  * for faster support and debugging.
  */
 export function CopyDiagnosticsButton({

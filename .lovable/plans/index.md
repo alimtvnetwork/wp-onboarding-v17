@@ -101,3 +101,6 @@
 - [Task 419](completed/419-fix-src-components-plugins-demoremotelogsdata-ts.md) - Completed
 - [Task 420](completed/420-fix-src-components-publish-siteversionbadge-tsx.md) - Completed
 - [Task 421](completed/421-fix-src-components-settings-aboutpanel-tsx.md) - Completed
+- [Task 422](completed/422-fix-src-components-settings-googleoauthsettingspanel-tsx.md) - Completed
+- [Task 423](completed/423-fix-src-components-shared-backendstatus-tsx.md) - Completed
+- [Task 424](completed/424-fix-src-components-shared-copydiagnosticsbutton-tsx.md) - Completed

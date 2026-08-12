@@ -54,7 +54,7 @@ export function GoogleOAuthSettingsPanel() {
       const trimmedSecret = clientSecret.trim();
 
       if (!trimmedId) {
-        throw new Error("Client ID is required");
+        throw new Error("Client Id is required");
       }
 
       const payload: Record<string, unknown> = {
@@ -131,7 +131,7 @@ export function GoogleOAuthSettingsPanel() {
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="google-client-id" className="text-sm">Client ID</Label>
+          <Label htmlFor="google-client-id" className="text-sm">Client Id</Label>
           <Input
             id="google-client-id"
             value={clientId}
@@ -237,9 +237,9 @@ export function GoogleOAuthSettingsPanel() {
           <li>Go to the Google Cloud Console</li>
           <li>Create or select a project</li>
           <li>Navigate to <strong>APIs & Services → Credentials</strong></li>
-          <li>Create an <strong>OAuth 2.0 Client ID</strong> (Web application type)</li>
+          <li>Create an <strong>OAuth 2.0 Client Id</strong> (Web application type)</li>
           <li>Add the redirect URIs above as <strong>Authorized redirect URIs</strong></li>
-          <li>Copy the Client ID and Client Secret here</li>
+          <li>Copy the Client Id and Client Secret here</li>
         </ol>
         <a
           href="https://console.cloud.google.com/apis/credentials"
