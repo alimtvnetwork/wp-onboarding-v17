@@ -242,3 +242,7 @@
 - [Task 610](completed/02-guideline-audit-fixes/610-fix-wp-plugins-riseup-asia-uploader-includes-update-selfupdatehealthcheck-php.md) - Completed
 - [Task 611](completed/02-guideline-audit-fixes/611-fix-wp-plugins-riseup-asia-uploader-includes-update-selfupdatevalidator-php.md) - Completed
 
+- [Task 612](completed/02-guideline-audit-fixes/612-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverfetchtrait-php.md) - Completed
+- [Task 613](completed/02-guideline-audit-fixes/613-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverintegritytrait-php.md) - Completed
+- [Task 614](completed/02-guideline-audit-fixes/614-fix-wp-plugins-riseup-asia-uploader-includes-update-traits-updateresolverurltrait-php.md) - Completed
+
