@@ -10,13 +10,13 @@ import (
 	"riseup-licensing/internal/models"
 )
 
-// batchIdsRequest is the JSON body for batch operations.
+// batchIdsRequest is the Json body for batch operations.
 type batchIdsRequest struct {
 	Ids  []int64 `json:"ids"`
 	Days int     `json:"days,omitempty"`
 }
 
-// batchResultResponse is the JSON response for batch operations.
+// batchResultResponse is the Json response for batch operations.
 type batchResultResponse struct {
 	Affected int `json:"affected"`
 }
@@ -25,7 +25,7 @@ type batchResultResponse struct {
 func (h *AdminHandlers) BatchRevoke(w http.ResponseWriter, r *http.Request) {
 	var req batchIdsRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil {
 		errorResponse(w, http.StatusBadRequest, "invalid request body")
 
@@ -59,7 +59,7 @@ func (h *AdminHandlers) BatchRevoke(w http.ResponseWriter, r *http.Request) {
 func (h *AdminHandlers) BatchExtend(w http.ResponseWriter, r *http.Request) {
 	var req batchIdsRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil {
 		errorResponse(w, http.StatusBadRequest, "invalid request body")
 
@@ -117,7 +117,7 @@ func (h *AdminHandlers) ExportCSV(w http.ResponseWriter, r *http.Request) {
 
 	writer := csv.NewWriter(w)
 
-	header := []string{"ID", "Key", "Email", "Product", "Type", "Status", "MaxActivations", "Created", "Expires"}
+	header := []string{"Id", "Key", "Email", "Product", "Type", "Status", "MaxActivations", "Created", "Expires"}
 	writer.Write(header) //nolint:errcheck
 
 	for _, l := range licenses {

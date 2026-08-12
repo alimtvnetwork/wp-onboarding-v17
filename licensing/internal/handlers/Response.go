@@ -44,8 +44,8 @@ func errorResponse(
 	jsonResponse(w, status, errorBody{Error: message})
 }
 
-// decodeJSON reads and parses a JSON request body into the target.
-func decodeJSON(r *http.Request, target any) error {
+// decodeJson reads and parses a JSON request body into the target.
+func decodeJson(r *http.Request, target any) error {
 
 	return json.NewDecoder(r.Body).Decode(target)
 }

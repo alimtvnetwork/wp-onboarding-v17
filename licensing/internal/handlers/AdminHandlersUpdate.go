@@ -28,7 +28,7 @@ func (h *AdminHandlers) UpdateLicense(w http.ResponseWriter, r *http.Request) {
 
 	var req updateLicenseRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil {
 		errorResponse(w, http.StatusBadRequest, "invalid request body")
 

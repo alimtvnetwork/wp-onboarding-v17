@@ -19,7 +19,7 @@ type AdminHandlers struct {
 	Audit    *services.AuditService
 }
 
-// createLicenseRequest is the JSON body for license creation.
+// createLicenseRequest is the Json body for license creation.
 type createLicenseRequest struct {
 	Email          string `json:"email"`
 	Product        string `json:"product"`
@@ -32,7 +32,7 @@ type createLicenseRequest struct {
 func (h *AdminHandlers) CreateLicense(w http.ResponseWriter, r *http.Request) {
 	var req createLicenseRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil {
 		errorResponse(w, http.StatusBadRequest, "invalid request body")
 
@@ -146,7 +146,7 @@ func extractIdParam(r *http.Request) (int64, error) {
 func (h *AdminHandlers) ListAuditLogs(w http.ResponseWriter, r *http.Request) {
 	filter := services.ListFilter{}
 
-	actionParam := r.URL.Query().Get("action")
+	actionParam := r.FormValue("action")
 	hasAction := actionParam != ""
 
 	if hasAction {
@@ -154,7 +154,7 @@ func (h *AdminHandlers) ListAuditLogs(w http.ResponseWriter, r *http.Request) {
 		filter.Action = &action
 	}
 
-	licenseParam := r.URL.Query().Get("license_id")
+	licenseParam := r.FormValue("license_id")
 	hasLicense := licenseParam != ""
 
 	if hasLicense {

@@ -20,7 +20,7 @@ func (h *PublicHandlers) Activate(w http.ResponseWriter, r *http.Request) {
 
 	var req activateRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil || req.Domain == "" {
 		errorResponse(w, http.StatusBadRequest, "domain is required")
 
@@ -91,7 +91,7 @@ func (h *PublicHandlers) Deactivate(w http.ResponseWriter, r *http.Request) {
 
 	var req activateRequest
 
-	decodeErr := decodeJSON(r, &req)
+	decodeErr := decodeJson(r, &req)
 	if decodeErr != nil || req.Domain == "" {
 		errorResponse(w, http.StatusBadRequest, "domain is required")
 
