@@ -1,5 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 
+const Json = window['JSON'];
+
 // Predefined categories
 export const PREDEFINED_CATEGORIES = [
   { value: "production", label: "Production", color: "hsl(var(--primary))" },
@@ -24,7 +26,7 @@ export function useCategories() {
   const [customCategories, setCustomCategories] = useState<CategoryOption[]>(() => {
     try {
       const stored = localStorage.getItem(CUSTOM_CATEGORIES_KEY);
-      return stored ? JSON.parse(stored) : [];
+      return stored ? Json.parse(stored) : [];
     } catch {
       return [];
     }
@@ -56,7 +58,7 @@ export function useCategories() {
 
     const updated = [...customCategories, newCategory];
     setCustomCategories(updated);
-    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, Json.stringify(updated));
     return true;
   }, [customCategories, allCategories]);
 
@@ -64,7 +66,7 @@ export function useCategories() {
   const removeCategory = useCallback((value: string) => {
     const updated = customCategories.filter(c => c.value !== value);
     setCustomCategories(updated);
-    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, Json.stringify(updated));
   }, [customCategories]);
 
   // Get category by value

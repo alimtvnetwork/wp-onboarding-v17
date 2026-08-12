@@ -10,7 +10,7 @@ export interface ClickEvent {
   text?: string;          // Button text or link text
   path: string;           // CSS selector path
   action: string;         // "click", "submit", "change", etc.
-  targetId?: string;      // Element ID if present
+  targetId?: string;      // Element Id if present
   targetClass?: string;   // Main class if present
   componentName?: string; // Data attribute for component tracking
   route?: string;         // Current route when click happened

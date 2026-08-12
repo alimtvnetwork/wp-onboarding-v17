@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 441: Fix violations in src/hooks/useCategories.ts
 
 Target File: `src/hooks/useCategories.ts`

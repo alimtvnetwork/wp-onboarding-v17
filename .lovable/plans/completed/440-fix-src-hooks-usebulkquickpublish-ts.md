@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 440: Fix violations in src/hooks/useBulkQuickPublish.ts
 
 Target File: `src/hooks/useBulkQuickPublish.ts`

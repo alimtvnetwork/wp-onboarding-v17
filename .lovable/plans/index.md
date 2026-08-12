@@ -116,3 +116,6 @@
 - [Task 437](completed/437-fix-src-components-users-createuserdialog-tsx.md) - Completed
 - [Task 438](completed/438-fix-src-components-users-usertable-tsx.md) - Completed
 - [Task 439](completed/439-fix-src-hooks-useapiquery-ts.md) - Completed
+- [Task 440](completed/440-fix-src-hooks-usebulkquickpublish-ts.md) - Completed
+- [Task 441](completed/441-fix-src-hooks-usecategories-ts.md) - Completed
+- [Task 442](completed/442-fix-src-hooks-useclicktracker-ts.md) - Completed

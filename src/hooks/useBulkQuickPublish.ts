@@ -6,6 +6,8 @@ import { usePublishStore, initializePublishWebSocketListeners } from '@/stores/p
 import { useExecutionLoggerStore } from '@/hooks/useExecutionLogger';
 import { useErrorStore } from '@/stores/errorStore';
 
+const Json = window['JSON'];
+
 export enum UploadModeType {
   File = "file",
   Zip = "zip",
@@ -33,7 +35,7 @@ export function useBulkQuickPublish() {
   const bulkQuickPublish = useCallback(async (
     plugins: Plugin[],
     _options?: {
-      concurrency?: number; // Kept for API compat but unused (server controls sequencing)
+      concurrency?: number; // Kept for Api compat but unused (server controls sequencing)
     }
   ) => {
     const execLogger = useExecutionLoggerStore.getState();
@@ -92,7 +94,7 @@ export function useBulkQuickPublish() {
     try {
       const saved = localStorage.getItem("wppp_cloud_storage_accounts");
       if (saved) {
-        const ids = JSON.parse(saved) as number[];
+        const ids = Json.parse(saved) as number[];
         if (ids.length > 0) cloudStorageAccountIds = ids;
       }
     } catch { /* default */ }
