@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 539: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/plugins-onboard.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/plugins-onboard.php`

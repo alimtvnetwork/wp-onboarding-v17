@@ -1,6 +1,6 @@
 <?php
 /**
- * EndpointType — REST API endpoint path fragments.
+ * EndpointType — REST Api endpoint path fragments.
  *
  * @package QUpload\Enums
  * @since   1.0.0

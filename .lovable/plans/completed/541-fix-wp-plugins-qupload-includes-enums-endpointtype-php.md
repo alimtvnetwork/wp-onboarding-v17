@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 541: Fix violations in wp-plugins/qupload/includes/Enums/EndpointType.php
 
 Target File: `wp-plugins/qupload/includes/Enums/EndpointType.php`

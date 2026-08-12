@@ -21,7 +21,7 @@ enum AdminPageType: string
     public function isOtherThan(self $other): bool { return $this !== $other; }
     public function isAnyOf(self ...$others): bool { return in_array($this, $others, true); }
 
-    /** Build the full admin URL for this page. */
+    /** Build the full admin Url for this page. */
     public function adminUrl(): string
     {
         return admin_url('admin.php?page=' . $this->value);

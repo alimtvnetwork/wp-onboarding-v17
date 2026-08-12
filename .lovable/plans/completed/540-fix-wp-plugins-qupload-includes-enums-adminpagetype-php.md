@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 540: Fix violations in wp-plugins/qupload/includes/Enums/AdminPageType.php
 
 Target File: `wp-plugins/qupload/includes/Enums/AdminPageType.php`

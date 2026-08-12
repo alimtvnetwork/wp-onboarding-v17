@@ -217,3 +217,6 @@
 - [Task 536](completed/536-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-snapshotquerytrait-php.md) - Completed
 - [Task 537](completed/537-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-snapshotrestoretrait-php.md) - Completed
 - [Task 538](completed/538-fix-wp-plugins-ignored-plugins-plugins-onboard-phpstan-bootstrap-php.md) - Completed
+- [Task 539](completed/539-fix-wp-plugins-ignored-plugins-plugins-onboard-plugins-onboard-php.md) - Completed
+- [Task 540](completed/540-fix-wp-plugins-qupload-includes-enums-adminpagetype-php.md) - Completed
+- [Task 541](completed/541-fix-wp-plugins-qupload-includes-enums-endpointtype-php.md) - Completed

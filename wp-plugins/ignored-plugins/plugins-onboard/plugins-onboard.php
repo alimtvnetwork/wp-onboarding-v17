@@ -70,7 +70,7 @@ OnboardIncludeFiles::loadMany(array(
     OnboardIncludeFiles::DEBUG_MAINTENANCE,
     OnboardIncludeFiles::CLEANUP,
     OnboardIncludeFiles::SECURITY_UTILS,
-    OnboardIncludeFiles::API,
+    OnboardIncludeFiles::Api,
     OnboardIncludeFiles::API_PERMISSIONS,
     OnboardIncludeFiles::ADMIN_UI,
 ));
@@ -125,7 +125,7 @@ class PluginsOnboard {
     public $mutation_token = null;
 
     /**
-     * IP whitelist instance.
+     * Ip whitelist instance.
      *
      * @var OnboardIPWhitelist|null
      */
@@ -160,7 +160,7 @@ class PluginsOnboard {
     public $cleanup = null;
 
     /**
-     * API instance.
+     * Api instance.
      *
      * @var OnboardAPI|null
      */
@@ -248,7 +248,7 @@ class PluginsOnboard {
             OnboardLogger::debug('Adding plugins_loaded action');
             add_action('plugins_loaded', array($this, 'init'), 10);
 
-            // Register REST API routes.
+            // Register REST Api routes.
             OnboardLogger::debug('Adding rest_api_init action');
             add_action('rest_api_init', array($this, 'register_api_routes'));
 
@@ -535,7 +535,7 @@ class PluginsOnboard {
     }
 
     /**
-     * Register API routes.
+     * Register Api routes.
      */
     public function register_api_routes() {
         if ($this->api) {
@@ -569,7 +569,7 @@ class PluginsOnboard {
 
         return new WP_Error(
             'invalid_route',
-            "The endpoint '/{$path}' does not exist. Check the API documentation for available endpoints.",
+            "The endpoint '/{$path}' does not exist. Check the Api documentation for available endpoints.",
             array(
                 'status'        => 404,
                 'pluginVersion' => ONBOARD_PLUGIN_VERSION,
