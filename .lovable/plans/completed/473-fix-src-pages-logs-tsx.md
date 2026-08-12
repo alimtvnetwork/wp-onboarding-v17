@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 473: Fix violations in src/pages/Logs.tsx
 
 Target File: `src/pages/Logs.tsx`

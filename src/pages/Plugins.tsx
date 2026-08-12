@@ -347,7 +347,7 @@ export default function Plugins() {
     setIsSyncing(plugin.id);
 
     try {
-      // Trigger sync via API - the dialog will track progress via WebSocket
+      // Trigger sync via Api - the dialog will track progress via WebSocket
       execLogger.log({ type: 'api', name: `checkSync(${plugin.id}, ${firstMapping.siteId})` });
       const response = await api.checkSync(plugin.id, firstMapping.siteId);
       if (!response.success && response.error) {
@@ -710,14 +710,14 @@ export default function Plugins() {
     setSelectedPlugin(plugin);
     setShowMappingDialog(true);
     
-    // Fetch fresh mappings from API instead of using potentially stale plugin.mappings
+    // Fetch fresh mappings from Api instead of using potentially stale plugin.mappings
     try {
       const response = await api.getPluginMappings(plugin.id);
       if (response.success && response.data) {
         setSelectedSites(response.data.map((m) => m.siteId));
         setRemoteSlug(response.data[0]?.remoteSlug || plugin.name.toLowerCase().replace(/\s+/g, '-'));
       } else {
-        // Fallback to local data if API fails
+        // Fallback to local data if Api fails
         setSelectedSites(plugin.mappings?.map((m) => m.siteId) || []);
         setRemoteSlug(plugin.mappings?.[0]?.remoteSlug || plugin.name.toLowerCase().replace(/\s+/g, '-'));
       }
@@ -1228,7 +1228,7 @@ export default function Plugins() {
                   Browse Folder
                 </Button>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Requires backend folder picker API (coming soon)
+                  Requires backend folder picker Api (coming soon)
                 </p>
               </div>
             </TabsContent>
@@ -1250,7 +1250,7 @@ export default function Plugins() {
             {formData.gitEnabled && (
               <>
                 <div className="space-y-2">
-                  <Label htmlFor="git-url">Git Remote URL (optional)</Label>
+                  <Label htmlFor="git-url">Git Remote Url (optional)</Label>
                   <Input
                     id="git-url"
                     placeholder="https://github.com/user/plugin.git"

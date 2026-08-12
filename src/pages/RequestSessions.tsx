@@ -50,6 +50,9 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
+const Json = window['JSON'];
+const Url = window['URL'];
+
 type StatusFilter = "all" | "2xx" | "3xx" | "4xx" | "5xx";
 
 function getStatusCategory(code: number): StatusFilter {
@@ -103,14 +106,14 @@ function useCopyAction() {
 function formatUnknown(value: unknown): string {
   if (value === null || value === undefined) return "";
   if (typeof value === "string") {
-    // Try to parse and re-format if it's a JSON string
+    // Try to parse and re-format if it's a Json string
     try {
-      return JSON.stringify(JSON.parse(value), null, 2);
+      return Json.stringify(Json.parse(value), null, 2);
     } catch {
       return value;
     }
   }
-  return JSON.stringify(value, null, 2);
+  return Json.stringify(value, null, 2);
 }
 
 function JsonViewer({ content, label }: { content: unknown; label: string }) {
@@ -309,7 +312,7 @@ export default function RequestSessions() {
           <div>
             <h1 className="text-2xl font-bold">Request Sessions</h1>
             <p className="text-muted-foreground">
-              Per-API-call request logs with full request/response inspection
+              Per-Api-call request logs with full request/response inspection
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -417,7 +420,7 @@ export default function RequestSessions() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search path, method, ID..."
+                placeholder="Search path, method, Id..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9"
@@ -549,9 +552,9 @@ export default function RequestSessions() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      title="Copy full session JSON"
+                      title="Copy full session Json"
                       onClick={() => {
-                        navigator.clipboard.writeText(JSON.stringify(detail, null, 2));
+                        navigator.clipboard.writeText(Json.stringify(detail, null, 2));
                         toast.success("Session copied to clipboard");
                       }}
                     >
@@ -561,13 +564,13 @@ export default function RequestSessions() {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        const blob = new Blob([JSON.stringify(detail, null, 2)], { type: "application/json" });
-                        const url = URL.createObjectURL(blob);
+                        const blob = new Blob([Json.stringify(detail, null, 2)], { type: "application/json" });
+                        const url = Url.createObjectURL(blob);
                         const a = document.createElement("a");
                         a.href = url;
                         a.download = `request-session-${detail.id}.json`;
                         a.click();
-                        URL.revokeObjectURL(url);
+                        Url.revokeObjectURL(url);
                       }}
                     >
                       <Download className="h-4 w-4" />

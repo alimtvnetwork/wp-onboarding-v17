@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 474: Fix violations in src/pages/Plugins.tsx
 
 Target File: `src/pages/Plugins.tsx`

@@ -151,3 +151,6 @@
 - [Task 470](completed/470-fix-src-pages-apiexplorer-tsx.md) - Completed
 - [Task 471](completed/471-fix-src-pages-coreplugindashboard-tsx.md) - Completed
 - [Task 472](completed/472-fix-src-pages-errors-tsx.md) - Completed
+- [Task 473](completed/473-fix-src-pages-logs-tsx.md) - Completed
+- [Task 474](completed/474-fix-src-pages-plugins-tsx.md) - Completed
+- [Task 475](completed/475-fix-src-pages-requestsessions-tsx.md) - Completed

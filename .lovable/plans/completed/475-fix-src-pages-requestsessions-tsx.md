@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 475: Fix violations in src/pages/RequestSessions.tsx
 
 Target File: `src/pages/RequestSessions.tsx`
