@@ -21,10 +21,10 @@ use RiseupAsia\Helpers\BooleanHelpers;
 <div class="riseup-card">
     <h2>
         <span class="dashicons dashicons-media-text"></span>
-        <?php esc_html_e('PHP Log Retrieval (Remote API)', $pluginSlug); ?>
+        <?php esc_html_e('Php Log Retrieval (Remote Api)', $pluginSlug); ?>
     </h2>
     <p class="description">
-        <?php esc_html_e('Controls which log files are included when the Go backend requests PHP logs via the /error-logs endpoint. This endpoint returns the raw log file contents as JSON for remote diagnostics.', $pluginSlug); ?>
+        <?php esc_html_e('Controls which log files are included when the Go backend requests Php logs via the /error-logs endpoint. This endpoint returns the raw log file contents as Json for remote diagnostics.', $pluginSlug); ?>
     </p>
 
     <table class="form-table">
@@ -102,7 +102,7 @@ use RiseupAsia\Helpers\BooleanHelpers;
             <th scope="row"><?php esc_html_e('Endpoint', $pluginSlug); ?></th>
             <td>
                 <code><?php echo esc_html(rest_url(PluginConfigType::apiFullNamespace() . '/' . EndpointType::ErrorLogs->value)); ?></code>
-                <p class="description"><?php esc_html_e('GET request with Basic Auth. Returns JSON with error_log, full_log, and/or stacktrace_log fields.', $pluginSlug); ?></p>
+                <p class="description"><?php esc_html_e('Get request with Basic Auth. Returns Json with error_log, full_log, and/or stacktrace_log fields.', $pluginSlug); ?></p>
             </td>
         </tr>
     </table>

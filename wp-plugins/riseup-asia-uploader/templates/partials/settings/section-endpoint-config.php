@@ -17,9 +17,9 @@ use RiseupAsia\Helpers\BooleanHelpers;
 ?>
 <!-- Endpoint Configuration (Grouped) -->
 <div class="riseup-card">
-    <h2><?php esc_html_e('API Endpoints Configuration', $pluginSlug); ?></h2>
+    <h2><?php esc_html_e('Api Endpoints Configuration', $pluginSlug); ?></h2>
     <p class="description">
-        <?php esc_html_e('Enable or disable specific API endpoints and configure authentication requirements.', $pluginSlug); ?>
+        <?php esc_html_e('Enable or disable specific Api endpoints and configure authentication requirements.', $pluginSlug); ?>
     </p>
 
     <table class="wp-list-table widefat fixed striped riseup-endpoints-table">

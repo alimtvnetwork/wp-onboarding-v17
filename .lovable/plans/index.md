@@ -258,3 +258,7 @@
 - [Task 622](completed/02-guideline-audit-fixes/622-fix-wp-plugins-riseup-asia-uploader-templates-partials-errors-sessions-tab-php.md) - Completed
 - [Task 623](completed/02-guideline-audit-fixes/623-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-auto-update-php.md) - Completed
 
+- [Task 624](completed/02-guideline-audit-fixes/624-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-endpoint-config-php.md) - Completed
+- [Task 625](completed/02-guideline-audit-fixes/625-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-log-retrieval-php.md) - Completed
+- [Task 626](completed/02-guideline-audit-fixes/626-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-plugin-info-php.md) - Completed
+

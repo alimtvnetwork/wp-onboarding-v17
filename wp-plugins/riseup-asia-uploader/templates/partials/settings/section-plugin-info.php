@@ -23,11 +23,11 @@ use RiseupAsia\Enums\PluginConfigType;
             <td><code><?php echo esc_html(PluginConfigType::Version->value); ?></code></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('API Namespace', $pluginSlug); ?></th>
+            <th><?php esc_html_e('Api Namespace', $pluginSlug); ?></th>
             <td><code><?php echo esc_html(PluginConfigType::apiFullNamespace()); ?></code></td>
         </tr>
         <tr>
-            <th><?php esc_html_e('REST API Base', $pluginSlug); ?></th>
+            <th><?php esc_html_e('Rest Api Base', $pluginSlug); ?></th>
             <td><code><?php echo esc_url(rest_url(PluginConfigType::apiFullNamespace())); ?></code></td>
         </tr>
     </table>
