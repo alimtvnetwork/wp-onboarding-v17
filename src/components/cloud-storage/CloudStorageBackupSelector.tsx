@@ -34,11 +34,11 @@ export function CloudStorageBackupSelector({
     try {
       const saved = localStorage.getItem("wppp_cloud_storage_accounts");
       if (saved) {
-        const ids = JSON.parse(saved) as number[];
-        if (ids.length > 0) {
+        const accountIds = globalThis.JSON.parse(saved) as number[];
+        if (accountIds.length > 0) {
           setIsOpen(true);
           // Only restore valid account IDs
-          const validIds = ids.filter((id) =>
+          const validIds = accountIds.filter((id) =>
             activeAccounts.some((a) => a.id === id)
           );
           if (validIds.length > 0 && selectedAccountIds.length === 0) {
@@ -56,7 +56,7 @@ export function CloudStorageBackupSelector({
     try {
       localStorage.setItem(
         "wppp_cloud_storage_accounts",
-        JSON.stringify(selectedAccountIds)
+        globalThis.JSON.stringify(selectedAccountIds)
       );
     } catch {
       // ignore

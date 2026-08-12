@@ -67,3 +67,6 @@
 - [Task 383](completed/383-fix-licensing-internal-services-queries-go.md) - Completed
 - [Task 384](completed/384-fix-licensing-internal-services-queriesstats-go.md) - Completed
 - [Task 385](completed/385-fix-licensing-internal-services-testhelper_test-go.md) - Completed
+- [Task 386](completed/386-fix-licensing-pkg-apperror-codes-go.md) - Completed
+- [Task 387](completed/387-fix-src-app-tsx.md) - Completed
+- [Task 388](completed/388-fix-src-components-api-explorer-requesthistorypanel-tsx.md) - Completed

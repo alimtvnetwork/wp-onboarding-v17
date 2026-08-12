@@ -125,7 +125,7 @@ function buildErrorReport(
 
 ### Context
 - **Operation:** ${operation}
-- **Plugin:** ${pluginName || "N/A"} ${mappingId ? `(Mapping ID: ${mappingId})` : ""}
+- **Plugin:** ${pluginName || "N/A"} ${mappingId ? `(Mapping Id: ${mappingId})` : ""}
 - **Failed Stage:** ${failedStage?.label || "Unknown"}
 
 ### Error Message

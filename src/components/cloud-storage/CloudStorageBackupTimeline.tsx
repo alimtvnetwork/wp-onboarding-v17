@@ -66,7 +66,7 @@ function formatDate(iso: string): string {
   });
 }
 
-function getISOWeek(date: Date): string {
+function getIsoWeek(date: Date): string {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7));
@@ -80,7 +80,7 @@ function groupByWeek(records: CloudStorageBackupHistoryRecord[]): WeekGroup[] {
   const groups = new Map<string, WeekGroup>();
 
   for (const record of records) {
-    const weekKey = getISOWeek(new Date(record.createdAt));
+    const weekKey = getIsoWeek(new Date(record.createdAt));
     const existing = groups.get(weekKey);
     const hasGroup = !!existing;
 
