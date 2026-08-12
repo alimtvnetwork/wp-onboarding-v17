@@ -84,7 +84,7 @@ func (s *Service) runRemoteAction(ctx context.Context, input remoteActionExecInp
 	return nil
 }
 
-// initRemoteActionSession starts a session for the remote action and returns the session ID.
+// initRemoteActionSession starts a session for the remote action and returns the session Id.
 func (s *Service) initRemoteActionSession(ref *remoteActionRef) string {
 	if s.sessionService == nil {
 

@@ -176,7 +176,7 @@ func (s *Service) saveRemoteErrorStackAndDetails(
 	s.sessionService.SaveError(sessionId, stackTrace, appErr.Error(), session.ToJson(errDetails))
 }
 
-// buildErrorBodyJson converts a response body string to JSON.
+// buildErrorBodyJson converts a response body string to Json.
 func buildErrorBodyJson(responseBody string) json.RawMessage {
 	isBodyEmpty := responseBody == ""
 

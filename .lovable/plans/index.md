@@ -19,3 +19,6 @@
 - [Task 332](completed/332-fix-backend-internal-services-site-serviceconnection-go.md) - Completed
 - [Task 333](completed/333-fix-backend-internal-services-site-serviceconnectioncredentials-go.md) - Completed
 - [Task 334](completed/334-fix-backend-internal-services-site-serviceconnectionexec-go.md) - Completed
+- [Task 335](completed/335-fix-backend-internal-services-site-serviceerrorlog-go.md) - Completed
+- [Task 336](completed/336-fix-backend-internal-services-site-serviceremoteerrors-go.md) - Completed
+- [Task 337](completed/337-fix-backend-internal-services-site-serviceremoteerrorsphp-go.md) - Completed
