@@ -12,7 +12,7 @@ import (
 
 // RemoteBackupResult holds the response from the remote plugin backup endpoint.
 type RemoteBackupResult struct {
-	Success  bool   `json:"success"`            // external key (Riseup Asia Uploader API)
+	Success  bool   `json:"success"`            // external key (Riseup Asia Uploader Api)
 	Message  string `json:"message,omitempty"`   // external key
 	Filename string `json:"filename,omitempty"`  // external key
 	Size     int64  `json:"size,omitempty"`      // external key

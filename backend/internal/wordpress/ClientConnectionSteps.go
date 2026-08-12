@@ -15,7 +15,7 @@ import (
 )
 
 // TestConnection runs the full five-step connection test sequence:
-// 1. REST API probe   2. Auth check   3. Parse user info   4. Plugin access   5. Write test
+// 1. Rest Api probe   2. Auth check   3. Parse user info   4. Plugin access   5. Write test
 func (c *Client) TestConnection() apperror.Result[*ConnectionInfo] {
 	result := &ConnectionInfo{
 		Url: c.baseUrl,
@@ -30,7 +30,7 @@ func (c *Client) TestConnection() apperror.Result[*ConnectionInfo] {
 	return c.runPostAuthSteps(result)
 }
 
-// runPreAuthSteps executes REST API probe and authentication.
+// runPreAuthSteps executes Rest Api probe and authentication.
 func (c *Client) runPreAuthSteps(result *ConnectionInfo) *apperror.AppError {
 	appErr := c.probeRestApi(result)
 	if appErr != nil {
@@ -53,7 +53,7 @@ func (c *Client) runPostAuthSteps(result *ConnectionInfo) apperror.Result[*Conne
 	return apperror.Ok(result)
 }
 
-// probeRestApi checks WordPress REST API availability (Step 1).
+// probeRestApi checks WordPress Rest Api availability (Step 1).
 func (c *Client) probeRestApi(result *ConnectionInfo) *apperror.AppError {
 	c.reportProbeStart()
 
@@ -75,12 +75,12 @@ func (c *Client) probeRestApi(result *ConnectionInfo) *apperror.AppError {
 	return nil
 }
 
-// reportProbeStart sends the DNS/API check start event.
+// reportProbeStart sends the Dns/Api check start event.
 func (c *Client) reportProbeStart() {
 	probeStart := ProgressEvent{
 		Step:    connectionstep.DnsCheck.Value(),
 		Status:  stagestatus.Running.String(),
-		Message: "Checking WordPress REST API availability...",
+		Message: "Checking WordPress Rest Api availability...",
 		Details: toProgress(UrlProgress{Url: c.baseUrl}),
 	}
 	c.progress(probeStart)
@@ -91,12 +91,12 @@ func (c *Client) reportProbeFailure(err error) *apperror.AppError {
 	failEvent := ProgressEvent{
 		Step:    connectionstep.DnsCheck.Value(),
 		Status:  stagestatus.Failed.String(),
-		Message: fmt.Sprintf("REST API not accessible: %v", err),
+		Message: fmt.Sprintf("Rest Api not accessible: %v", err),
 		Details: toProgress(UrlProgress{Url: c.baseUrl}),
 	}
 	c.progress(failEvent)
 
-	return apperror.Wrap(err, apperror.ErrWPAPIDisabled, "REST API not accessible").WithUrl(c.baseUrl)
+	return apperror.Wrap(err, apperror.ErrWPAPIDisabled, "Rest Api not accessible").WithUrl(c.baseUrl)
 }
 
 // reportProbeSuccess sends the probe success event.
@@ -104,13 +104,13 @@ func (c *Client) reportProbeSuccess(result *ConnectionInfo) {
 	successEvent := ProgressEvent{
 		Step:    connectionstep.DnsCheck.Value(),
 		Status:  stagestatus.Completed.String(),
-		Message: "REST API is available",
+		Message: "Rest Api is available",
 		Details: toProgress(SiteNameProgress{Url: c.baseUrl, SiteName: result.SiteName}),
 	}
 	c.progress(successEvent)
 }
 
-// validateRestApiStatus checks the REST API response status and parses site info.
+// validateRestApiStatus checks the Rest Api response status and parses site info.
 func (c *Client) validateRestApiStatus(resp *http.Response, result *ConnectionInfo) *apperror.AppError {
 	isMissing := resp.StatusCode == HttpStatusNotFound.Int()
 
@@ -135,12 +135,12 @@ func (c *Client) reportRestApiNotFound() *apperror.AppError {
 	notFoundEvent := ProgressEvent{
 		Step:    connectionstep.DnsCheck.Value(),
 		Status:  stagestatus.Failed.String(),
-		Message: "REST API not found - is permalink structure set?",
+		Message: "Rest Api not found - is permalink structure set?",
 		Details: toProgress(UrlProgress{Url: c.baseUrl}),
 	}
 	c.progress(notFoundEvent)
 
-	return apperror.New(apperror.ErrWPAPIDisabled, "WordPress REST API not found - ensure permalinks are enabled").WithUrl(c.baseUrl)
+	return apperror.New(apperror.ErrWPAPIDisabled, "WordPress Rest Api not found - ensure permalinks are enabled").WithUrl(c.baseUrl)
 }
 
 // authenticateAndParseUser checks authentication (Step 2) and parses user info (Step 3).
@@ -177,7 +177,7 @@ func (c *Client) reportAuthStart() {
 	c.progress(authStartEvent)
 }
 
-// fetchAuthResponse sends the authentication API call.
+// fetchAuthResponse sends the authentication Api call.
 func (c *Client) fetchAuthResponse() apperror.Result[ApiCallResponse] {
 	authInput := ApiCallInput{
 		Method:    httpmethod.Get,
@@ -214,7 +214,7 @@ func (c *Client) reportAuthSuccess(result *ConnectionInfo) {
 	authSuccessEvent := ProgressEvent{
 		Step:    connectionstep.AuthCheck.Value(),
 		Status:  stagestatus.Completed.String(),
-		Message: fmt.Sprintf("Authenticated as %s (ID: %d)", result.UserDisplayName, result.UserId),
+		Message: fmt.Sprintf("Authenticated as %s (Id: %d)", result.UserDisplayName, result.UserId),
 		Details: toProgress(authProgress),
 	}
 	c.progress(authSuccessEvent)

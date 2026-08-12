@@ -28,3 +28,6 @@
 - [Task 341](completed/341-fix-backend-internal-services-site-snapshots-go.md) - Completed
 - [Task 342](completed/342-fix-backend-internal-services-site-snapshotsadvanced-go.md) - Completed
 - [Task 343](completed/343-fix-backend-internal-services-site-validator-go.md) - Completed
+- [Task 344](completed/344-fix-backend-internal-services-site_health-queries-go.md) - Completed
+- [Task 345](completed/345-fix-backend-internal-services-version-service-go.md) - Completed
+- [Task 346](completed/346-fix-backend-internal-wordpress-clientconnectionaccess-go.md) - Completed
