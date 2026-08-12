@@ -112,5 +112,5 @@ export { pascalToCamel, transformKeys } from './keyTransform';
 // Client utilities
 export { ApiClientError, isApiClientError, requireSuccess, request, getApiDiagnostics } from './client';
 
-// API methods object
+// Api methods object
 export { api } from './methods';

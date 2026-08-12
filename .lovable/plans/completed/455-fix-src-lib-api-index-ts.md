@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 455: Fix violations in src/lib/api/index.ts
 
 Target File: `src/lib/api/index.ts`

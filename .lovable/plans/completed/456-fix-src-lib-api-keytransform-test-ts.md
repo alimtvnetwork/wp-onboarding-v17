@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 456: Fix violations in src/lib/api/keyTransform.test.ts
 
 Target File: `src/lib/api/keyTransform.test.ts`

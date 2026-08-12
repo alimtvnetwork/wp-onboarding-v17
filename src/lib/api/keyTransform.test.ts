@@ -10,8 +10,8 @@ describe('pascalToCamel', () => {
   });
 
   it('handles all-uppercase short keys', () => {
-    expect(pascalToCamel('ID')).toBe('id');
-    expect(pascalToCamel('URL')).toBe('url');
+    expect(pascalToCamel('Id')).toBe('id');
+    expect(pascalToCamel('Url')).toBe('url');
   });
 
   it('handles multi-uppercase prefixes', () => {

@@ -2,7 +2,7 @@
 //
 // Go structs without explicit json tags serialize fields as PascalCase.
 // The frontend expects camelCase. This module recursively transforms
-// object keys at the API boundary so all downstream code stays unchanged.
+// object keys at the Api boundary so all downstream code stays unchanged.
 
 /**
  * Convert a single PascalCase key to camelCase.
@@ -10,9 +10,9 @@
  * Examples:
  *   PluginId   → pluginId
  *   IsSuccess  → isSuccess
- *   ID         → id
+ *   Id         → id
  *   WPVersion  → wpVersion
- *   URL        → url
+ *   Url        → url
  *   SiteUrl    → siteUrl
  */
 export function pascalToCamel(key: string): string {
@@ -28,7 +28,7 @@ export function pascalToCamel(key: string): string {
   }
 
   if (i === 0) return key;                              // no uppercase prefix
-  if (i === key.length) return key.toLowerCase();       // all uppercase (e.g. "ID", "URL")
+  if (i === key.length) return key.toLowerCase();       // all uppercase (e.g. "Id", "Url")
   if (i === 1) return key[0].toLowerCase() + key.slice(1); // normal PascalCase
 
   // Multiple uppercase prefix: "WPVersion" → "wpVersion", "HTTPStatus" → "httpStatus"

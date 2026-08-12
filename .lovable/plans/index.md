@@ -133,3 +133,6 @@
 - [Task 452](completed/452-fix-src-lib-analyticsexport-ts.md) - Completed
 - [Task 453](completed/453-fix-src-lib-api-client-ts.md) - Completed
 - [Task 454](completed/454-fix-src-lib-api-envelope-ts.md) - Completed
+- [Task 455](completed/455-fix-src-lib-api-index-ts.md) - Completed
+- [Task 456](completed/456-fix-src-lib-api-keytransform-test-ts.md) - Completed
+- [Task 457](completed/457-fix-src-lib-api-keytransform-ts.md) - Completed
