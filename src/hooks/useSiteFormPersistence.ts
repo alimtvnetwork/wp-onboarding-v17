@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
+const Json = window['JSON'];
+
 const STORAGE_KEY = "wppp_site_form_draft";
 
 export interface SiteFormData {
@@ -28,7 +30,7 @@ export function useSiteFormPersistence() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved) as Partial<SiteFormData>;
+        const parsed = Json.parse(saved) as Partial<SiteFormData>;
         setFormData({
           name: parsed.name || "",
           url: parsed.url || "",
@@ -50,7 +52,7 @@ export function useSiteFormPersistence() {
         // Save everything except password
         localStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({
+          Json.stringify({
             name: next.name,
             url: next.url,
             username: next.username,

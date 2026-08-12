@@ -127,3 +127,6 @@
 - [Task 446](completed/446-fix-src-hooks-usequickpublish-ts.md) - Completed
 - [Task 447](completed/447-fix-src-hooks-useremotedebugroutes-ts.md) - Completed
 - [Task 448](completed/448-fix-src-hooks-useremotesnapshots-ts.md) - Completed
+- [Task 449](completed/449-fix-src-hooks-useremoteusers-ts.md) - Completed
+- [Task 450](completed/450-fix-src-hooks-usesiteformpersistence-ts.md) - Completed
+- [Task 451](completed/451-fix-src-hooks-usetheme-ts.md) - Completed

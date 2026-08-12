@@ -162,7 +162,7 @@ export function useTheme() {
   const updateSettingMutation = useMutation({
     mutationFn: async ({ key, value }: { key: string; value: string }) => {
       const response = await api.updateSetting(key, value);
-      // Ensure errors surface in the GlobalErrorModal with the full resolved URL.
+      // Ensure errors surface in the GlobalErrorModal with the full resolved Url.
       return requireSuccess(response, {
         endpoint: `/settings/${encodeURIComponent(key)}`,
         method: "PUT",

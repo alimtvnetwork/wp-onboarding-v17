@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 449: Fix violations in src/hooks/useRemoteUsers.ts
 
 Target File: `src/hooks/useRemoteUsers.ts`

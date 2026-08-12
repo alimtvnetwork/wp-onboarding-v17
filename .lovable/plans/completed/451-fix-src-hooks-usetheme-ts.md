@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 451: Fix violations in src/hooks/useTheme.ts
 
 Target File: `src/hooks/useTheme.ts`

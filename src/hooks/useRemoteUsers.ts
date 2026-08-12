@@ -6,7 +6,9 @@ import type { WPUser, WPUserSummary, UserCreateInput, UserUpdateInput, UserCreat
 import { toast } from "sonner";
 import { request } from "@/lib/api";
 
-// ── API Methods ─────────────────────────────────────────
+const Json = window['JSON'];
+
+// ── Api Methods ─────────────────────────────────────────
 
 function listUsers(siteId: number, params?: { page?: number; per_page?: number; role?: string; search?: string }) {
   const query = new URLSearchParams();
@@ -25,14 +27,14 @@ function getUser(siteId: number, userId: number) {
 function createUser(siteId: number, input: UserCreateInput) {
   return request<UserCreateResult>(`/sites/${siteId}/users`, {
     method: "POST",
-    body: JSON.stringify(input),
+    body: Json.stringify(input),
   });
 }
 
 function updateUser(siteId: number, userId: number, input: UserUpdateInput) {
   return request<UserUpdateResult>(`/sites/${siteId}/users/${userId}`, {
     method: "PUT",
-    body: JSON.stringify(input),
+    body: Json.stringify(input),
   });
 }
 

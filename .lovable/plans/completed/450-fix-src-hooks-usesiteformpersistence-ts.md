@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 450: Fix violations in src/hooks/useSiteFormPersistence.ts
 
 Target File: `src/hooks/useSiteFormPersistence.ts`
