@@ -40,3 +40,4 @@ Target File: `backend/internal/api/middleware/MiddlewareErrorLog.go`
   `// writePrettyOrRawBody writes JSON-indented body if possible, otherwise raw.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

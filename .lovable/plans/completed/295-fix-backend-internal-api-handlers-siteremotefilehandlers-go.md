@@ -16,3 +16,4 @@ Target File: `backend/internal/api/handlers/SiteRemoteFileHandlers.go`
   `// parseRemotePluginFileInputOrFail parses site ID + plugin slug + file path, writing error responses on failure.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

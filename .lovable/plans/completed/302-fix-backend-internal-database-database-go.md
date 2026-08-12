@@ -8,3 +8,4 @@ Target File: `backend/internal/database/Database.go`
   `// DB wraps the SQL database connection with Split DB support`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

@@ -5,7 +5,7 @@ func init() {
 		Migration{
 			Version:     6,
 			Description: "Add RemotePluginsCache table for caching site plugin lists",
-			SQL: `
+			Sql: `
 				CREATE TABLE IF NOT EXISTS RemotePluginsCache (
 					Id INTEGER PRIMARY KEY AUTOINCREMENT,
 					SiteId INTEGER NOT NULL UNIQUE,
@@ -21,7 +21,7 @@ func init() {
 		Migration{
 			Version:     7,
 			Description: "Add ErrorHistory table for persistent error/notification storage",
-			SQL: `
+			Sql: `
 				CREATE TABLE IF NOT EXISTS ErrorHistory (
 					Id INTEGER PRIMARY KEY AUTOINCREMENT,
 					ErrorId TEXT NOT NULL UNIQUE,
@@ -57,7 +57,7 @@ func init() {
 		Migration{
 			Version:     8,
 			Description: "PublishHistory table for publish operation audit trail",
-			SQL: `
+			Sql: `
 				CREATE TABLE IF NOT EXISTS PublishHistory (
 					ID INTEGER PRIMARY KEY AUTOINCREMENT,
 					PluginID INTEGER NOT NULL,
@@ -85,7 +85,7 @@ func init() {
 		Migration{
 			Version:     9,
 			Description: "SiteHealthChecks table for health monitoring",
-			SQL: `
+			Sql: `
 				CREATE TABLE IF NOT EXISTS SiteHealthChecks (
 					Id INTEGER PRIMARY KEY AUTOINCREMENT,
 					SiteId INTEGER NOT NULL,
@@ -105,7 +105,7 @@ func init() {
 		Migration{
 			Version:     10,
 			Description: "SiteCredentials table for multi-user per site",
-			SQL: `
+			Sql: `
 				CREATE TABLE IF NOT EXISTS SiteCredentials (
 					Id INTEGER PRIMARY KEY AUTOINCREMENT,
 					SiteId INTEGER NOT NULL,

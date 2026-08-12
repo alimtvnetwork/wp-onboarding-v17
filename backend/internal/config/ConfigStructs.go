@@ -110,7 +110,7 @@ type SeedCredential struct {
 // SeedSite represents a site to seed
 type SeedSite struct {
 	Name                string
-	URL                 string
+	Url                 string
 	// Legacy single-credential fields (backward compat)
 	Username            string
 	ApplicationPassword string

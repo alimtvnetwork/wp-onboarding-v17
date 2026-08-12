@@ -116,7 +116,7 @@ func applySingleMigration(db *DB, log *logger.Logger, m Migration) error {
 
 // executeMigrationTx runs the SQL and records the migration within a transaction.
 func executeMigrationTx(tx *sql.Tx, m Migration) error {
-	_, err := tx.Exec(m.SQL)
+	_, err := tx.Exec(m.Sql)
 	if err != nil {
 		return wrapMigrationError(err, "failed to apply migration SQL", m.Version).
 			WithDetails(fmt.Sprintf("description=%s", m.Description))

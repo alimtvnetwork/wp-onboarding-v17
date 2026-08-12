@@ -12,3 +12,4 @@ Target File: `backend/internal/database/DatabaseCredentials.go`
   `// DeleteSiteCredential deletes a credential by ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

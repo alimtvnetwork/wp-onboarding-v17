@@ -5,7 +5,7 @@ package database
 type Migration struct {
 	Version     int
 	Description string
-	SQL         string
+	Sql         string
 }
 
 // migrations is the list of all database migrations (core schema, migrations 1-5).
@@ -14,7 +14,7 @@ var migrations = []Migration{
 	{
 		Version:     1,
 		Description: "Initial schema",
-		SQL: `
+		Sql: `
 			CREATE TABLE IF NOT EXISTS Sites (
 				Id INTEGER PRIMARY KEY AUTOINCREMENT,
 				Name TEXT NOT NULL,
@@ -116,7 +116,7 @@ var migrations = []Migration{
 	{
 		Version:     2,
 		Description: "Add PluginGitConfig table",
-		SQL: `
+		Sql: `
 			CREATE TABLE IF NOT EXISTS PluginGitConfig (
 				PluginId INTEGER PRIMARY KEY,
 				GitEnabled INTEGER DEFAULT 1,
@@ -132,7 +132,7 @@ var migrations = []Migration{
 	{
 		Version:     3,
 		Description: "Add Category field to Sites and Plugins",
-		SQL: `
+		Sql: `
 			ALTER TABLE Sites ADD COLUMN Category TEXT DEFAULT '';
 			ALTER TABLE Plugins ADD COLUMN Category TEXT DEFAULT '';
 			CREATE INDEX IF NOT EXISTS idx_sites_category ON Sites(Category);
@@ -142,7 +142,7 @@ var migrations = []Migration{
 	{
 		Version:     4,
 		Description: "Add AutoPublish and SeedVersion support",
-		SQL: `
+		Sql: `
 			ALTER TABLE Plugins ADD COLUMN AutoPublish INTEGER DEFAULT 0;
 			INSERT OR IGNORE INTO AppConfig (Key, Value) VALUES ('seed.version', '');
 			INSERT OR IGNORE INTO AppConfig (Key, Value) VALUES ('db.version', '1.8.0');
@@ -151,7 +151,7 @@ var migrations = []Migration{
 	{
 		Version:     5,
 		Description: "Add PluginVersions table for version history and rollback",
-		SQL: `
+		Sql: `
 			CREATE TABLE IF NOT EXISTS PluginVersions (
 				Id INTEGER PRIMARY KEY AUTOINCREMENT,
 				PluginId INTEGER NOT NULL,

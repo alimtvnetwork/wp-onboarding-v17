@@ -50,7 +50,7 @@ func (db *DB) CreateSiteCredential(input SeedCredentialInput) (int64, *apperror.
 
 	id, lastIdErr := result.LastInsertId()
 	if lastIdErr != nil {
-		return 0, apperror.Wrap(lastIdErr, apperror.ErrDatabaseQuery, "failed to get credential insert ID")
+		return 0, apperror.Wrap(lastIdErr, apperror.ErrDatabaseQuery, "failed to get credential insert Id")
 	}
 
 	return id, nil

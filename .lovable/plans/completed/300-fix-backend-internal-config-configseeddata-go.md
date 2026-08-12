@@ -12,3 +12,4 @@ Target File: `backend/internal/config/ConfigSeedData.go`
   `normalizedUrl := urlutil.NormalizeWordPressUrl(site.URL)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)
