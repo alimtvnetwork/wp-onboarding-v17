@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 478: Fix violations in src/pages/Tests.tsx
 
 Target File: `src/pages/Tests.tsx`

@@ -95,7 +95,7 @@ const testCasesData: Record<string, TestCase[]> = {
   ],
   "site-connections": [
     { id: "TC-SITE-001", suiteId: "site-connections", name: "Register Site", description: "Register a WordPress site", steps: ["Call POST /sites with valid credentials", "Verify response contains site data", "Verify site appears in GET /sites"], expectedResult: "Site created" },
-    { id: "TC-SITE-002", suiteId: "site-connections", name: "Test Connection", description: "Test WP REST API connectivity", steps: ["Create site", "Call POST /sites/{id}/test", "Verify success response with WP version"], expectedResult: "Connection verified" },
+    { id: "TC-SITE-002", suiteId: "site-connections", name: "Test Connection", description: "Test WP REST Api connectivity", steps: ["Create site", "Call POST /sites/{id}/test", "Verify success response with WP version"], expectedResult: "Connection verified" },
     { id: "TC-SITE-003", suiteId: "site-connections", name: "Invalid Credentials", description: "Test with bad credentials", steps: ["Create site with invalid password", "Call POST /sites/{id}/test", "Verify error response"], expectedResult: "Auth error returned" },
     { id: "TC-SITE-004", suiteId: "site-connections", name: "Create Plugin Mapping", description: "Map plugin to site", steps: ["Create plugin", "Create site", "Call POST /plugins/{id}/mappings", "Verify mapping created"], expectedResult: "Mapping created" },
   ],

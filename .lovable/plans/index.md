@@ -154,3 +154,6 @@
 - [Task 473](completed/473-fix-src-pages-logs-tsx.md) - Completed
 - [Task 474](completed/474-fix-src-pages-plugins-tsx.md) - Completed
 - [Task 475](completed/475-fix-src-pages-requestsessions-tsx.md) - Completed
+- [Task 476](completed/476-fix-src-pages-sessions-tsx.md) - Completed
+- [Task 477](completed/477-fix-src-pages-settings-tsx.md) - Completed
+- [Task 478](completed/478-fix-src-pages-tests-tsx.md) - Completed

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 476: Fix violations in src/pages/Sessions.tsx
 
 Target File: `src/pages/Sessions.tsx`

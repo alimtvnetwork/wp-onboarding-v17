@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 477: Fix violations in src/pages/Settings.tsx
 
 Target File: `src/pages/Settings.tsx`

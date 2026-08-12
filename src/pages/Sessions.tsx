@@ -44,6 +44,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { LogViewer } from "@/components/shared/LogViewer";
 
+const Json = window['JSON'];
+
 const SESSION_TYPE_ICONS: Record<string, typeof Activity> = {
   publish: Package,
   sync: RefreshCw,
@@ -467,7 +469,7 @@ export default function Sessions() {
                     {"metadata" in selectedSession && selectedSession.metadata && (
                       <ScrollArea className="h-full">
                         <pre className="text-xs font-mono bg-muted/50 p-4 rounded-lg whitespace-pre-wrap break-all">
-                          {JSON.stringify(selectedSession.metadata, null, 2)}
+                          {Json.stringify(selectedSession.metadata, null, 2)}
                         </pre>
                       </ScrollArea>
                     )}

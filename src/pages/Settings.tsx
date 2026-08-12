@@ -28,6 +28,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useErrorStore } from "@/stores/errorStore";
 
+const Json = window['JSON'];
+
 type SettingsTab = "watching" | "backups" | "snapshots" | "publish" | "cloud-storage" | "appearance" | "developer" | "about";
 
 interface TabItem {
@@ -645,7 +647,7 @@ export default function Settings() {
                 </div>
               </div>
               <p className="text-xs text-muted-foreground">
-                Failed API calls retry with exponential backoff
+                Failed Api calls retry with exponential backoff
               </p>
             </div>
 
@@ -984,8 +986,8 @@ export default function Settings() {
                   onClick={() => {
                     import("@/components/plugins/demoRemoteLogsData").then(({ createDemoLogsStatus, createDemoRetrieveResult }) => {
                       // Store demo data in sessionStorage for the RemoteLogsPanel to pick up
-                      sessionStorage.setItem("remoteLogs:demoStatus", JSON.stringify(createDemoLogsStatus()));
-                      sessionStorage.setItem("remoteLogs:demoRetrieve", JSON.stringify(createDemoRetrieveResult()));
+                      sessionStorage.setItem("remoteLogs:demoStatus", Json.stringify(createDemoLogsStatus()));
+                      sessionStorage.setItem("remoteLogs:demoRetrieve", Json.stringify(createDemoRetrieveResult()));
                       sessionStorage.setItem("remoteLogs:demoActivate", "true");
                       toast.success("Remote Logs demo data ready — navigate to a site to see the panel in demo mode", {
                         style: {
