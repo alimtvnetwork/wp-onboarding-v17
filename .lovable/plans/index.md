@@ -22,3 +22,6 @@
 - [Task 335](completed/335-fix-backend-internal-services-site-serviceerrorlog-go.md) - Completed
 - [Task 336](completed/336-fix-backend-internal-services-site-serviceremoteerrors-go.md) - Completed
 - [Task 337](completed/337-fix-backend-internal-services-site-serviceremoteerrorsphp-go.md) - Completed
+- [Task 338](completed/338-fix-backend-internal-services-site-serviceremotelifecycleevents-go.md) - Completed
+- [Task 339](completed/339-fix-backend-internal-services-site-serviceremotelifecycleexec-go.md) - Completed
+- [Task 340](completed/340-fix-backend-internal-services-site-serviceremoteplugins-go.md) - Completed

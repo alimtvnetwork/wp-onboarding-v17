@@ -84,7 +84,7 @@ type streamSnapshotInput struct {
 	Meta       *wordpress.SnapshotDownloadResult
 }
 
-// streamSnapshotFromMeta streams the ZIP file from the download URL.
+// streamSnapshotFromMeta streams the Zip file from the download Url.
 func (s *Service) streamSnapshotFromMeta(input streamSnapshotInput) (*SnapshotZipDownload, *apperror.AppError) {
 	streamResult := input.Client.StreamSnapshotZip(input.Meta.Url)
 	if streamResult.HasError() {

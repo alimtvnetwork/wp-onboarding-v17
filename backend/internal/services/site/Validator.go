@@ -13,17 +13,17 @@ var (
 	// Minimum password length for application passwords (WordPress format is 24 chars with spaces)
 	minPasswordLength = 20
 
-	// URL must start with http:// or https://
+	// Url must start with http:// or https://
 	urlSchemeRegex = regexp.MustCompile(`^https?://`)
 )
 
-// ValidateSiteUrl validates a WordPress site URL
+// ValidateSiteUrl validates a WordPress site Url
 func ValidateSiteUrl(siteUrl string) *apperror.AppError {
 	siteUrl = strings.TrimSpace(siteUrl)
 	isUrlEmpty := siteUrl == ""
 
 	if isUrlEmpty {
-		return apperror.New(apperror.ErrValidation, "URL is required")
+		return apperror.New(apperror.ErrValidation, "Url is required")
 	}
 
 	// Add https if no scheme
@@ -35,18 +35,18 @@ func ValidateSiteUrl(siteUrl string) *apperror.AppError {
 
 	parsed, err := url.Parse(siteUrl)
 	if err != nil {
-		return apperror.Wrap(err, apperror.ErrValidation, "invalid URL format")
+		return apperror.Wrap(err, apperror.ErrValidation, "invalid Url format")
 	}
 
 	isHostEmpty := parsed.Host == ""
 
 	if isHostEmpty {
-		return apperror.New(apperror.ErrValidation, "URL must include a host")
+		return apperror.New(apperror.ErrValidation, "Url must include a host")
 	}
 
 	// Check for common issues
 	if strings.Contains(parsed.Path, "wp-admin") {
-		return apperror.New(apperror.ErrValidation, "URL should not include /wp-admin")
+		return apperror.New(apperror.ErrValidation, "Url should not include /wp-admin")
 	}
 
 	return nil
