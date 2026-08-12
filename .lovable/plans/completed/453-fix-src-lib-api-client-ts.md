@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 453: Fix violations in src/lib/api/client.ts
 
 Target File: `src/lib/api/client.ts`

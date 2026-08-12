@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 454: Fix violations in src/lib/api/envelope.ts
 
 Target File: `src/lib/api/envelope.ts`

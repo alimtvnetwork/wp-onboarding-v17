@@ -130,3 +130,6 @@
 - [Task 449](completed/449-fix-src-hooks-useremoteusers-ts.md) - Completed
 - [Task 450](completed/450-fix-src-hooks-usesiteformpersistence-ts.md) - Completed
 - [Task 451](completed/451-fix-src-hooks-usetheme-ts.md) - Completed
+- [Task 452](completed/452-fix-src-lib-analyticsexport-ts.md) - Completed
+- [Task 453](completed/453-fix-src-lib-api-client-ts.md) - Completed
+- [Task 454](completed/454-fix-src-lib-api-envelope-ts.md) - Completed

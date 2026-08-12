@@ -9,6 +9,8 @@ import type { ApiResponse, ApiError, ApiMethod, ApiCallMeta, ErrorDiagnosticCont
 import { isEnvelope, parseEnvelope, looksLikeJson } from './envelope';
 import { transformKeys } from './keyTransform';
 
+const Json = window['JSON'];
+
 // Re-export looksLikeJson so methods.ts can use it
 export { looksLikeJson };
 
@@ -53,7 +55,7 @@ export function requireSuccess<T>(response: ApiResponse<T>, meta: ApiCallMeta): 
     response.error ||
     ({
       code: "E9999",
-      message: "Unknown API error",
+      message: "Unknown Api error",
       timestamp: new Date().toISOString(),
     } as ApiError);
   throw new ApiClientError(apiError, meta);
@@ -113,18 +115,18 @@ async function fetchRequest<T>(
     const contentType = response.headers.get("content-type") || "";
     const preview = raw.slice(0, 800);
 
-    // JSON happy-path
+    // Json happy-path
     if (looksLikeJson(raw)) {
-      const parsed = JSON.parse(raw);
+      const parsed = Json.parse(raw);
       // Auto-detect PascalCase universal envelope and convert transparently
       if (isEnvelope(parsed)) {
         return parseEnvelope<T>(parsed);
       }
-      // Non-envelope JSON: transform PascalCase keys → camelCase
+      // Non-envelope Json: transform PascalCase keys → camelCase
       return transformKeys<ApiResponse<T>>(parsed);
     }
 
-    // Server error (5xx) with non-JSON body — backend crash / unhandled panic
+    // Server error (5xx) with non-Json body — backend crash / unhandled panic
     if (response.status >= 500 && !looksLikeJson(raw)) {
       return {
         success: false,
@@ -132,7 +134,7 @@ async function fetchRequest<T>(
           code: "E9007",
           message: `Server error (${response.status}) — the backend encountered an internal failure`,
           details:
-            "The server returned an error instead of a JSON response. This typically means an unhandled exception or panic in the backend.\n\n" +
+            "The server returned an error instead of a Json response. This typically means an unhandled exception or panic in the backend.\n\n" +
             "Troubleshooting:\n" +
             "• Check the backend terminal/logs for stack traces\n" +
             "• If this is a WordPress operation, check the remote site's PHP error log or wp-content/debug.log\n" +
@@ -157,12 +159,12 @@ async function fetchRequest<T>(
         success: false,
         error: {
           code: "E9005",
-          message: "API returned HTML instead of JSON",
+          message: "Api returned HTML instead of Json",
           details:
-            "This usually means the UI is not talking to the Go backend (wrong base URL/port, or preview environment).\n" +
-            `Requested URL: ${requestUrl}\n` +
-            `Configured API base: ${apiBase}\n` +
-            `API Base (absolute): ${toAbsoluteUrl(apiBase)}\n` +
+            "This usually means the UI is not talking to the Go backend (wrong base Url/port, or preview environment).\n" +
+            `Requested Url: ${requestUrl}\n` +
+            `Configured Api base: ${apiBase}\n` +
+            `Api Base (absolute): ${toAbsoluteUrl(apiBase)}\n` +
             `VITE_API_URL (raw): ${envViteApiUrl}\n` +
             "Fix: set VITE_API_URL to your backend origin (e.g. http://localhost:8080) and reload.\n" +
             `HTTP ${response.status} (${contentType || "no content-type"})`,
@@ -176,15 +178,15 @@ async function fetchRequest<T>(
       };
     }
 
-    // Unexpected non-JSON (but not HTML)
+    // Unexpected non-Json (but not HTML)
     return {
       success: false,
       error: {
         code: "E9006",
-        message: "Unexpected API response format",
+        message: "Unexpected Api response format",
         details:
-          `Expected JSON but got: ${contentType || "unknown"}\n` +
-          `Requested URL: ${requestUrl}\n` +
+          `Expected Json but got: ${contentType || "unknown"}\n` +
+          `Requested Url: ${requestUrl}\n` +
           `Preview: ${preview}`,
         context: buildDiagnosticContext({
           responseStatus: response.status,
@@ -196,7 +198,7 @@ async function fetchRequest<T>(
     };
   } catch (error: unknown) {
     const duration = Date.now() - startTime;
-    logger.error(`API request failed: ${endpoint}`, error, { endpoint, method, duration });
+    logger.error(`Api request failed: ${endpoint}`, error, { endpoint, method, duration });
     
     return {
       success: false,

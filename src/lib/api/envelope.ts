@@ -23,7 +23,7 @@ export interface RawEnvelope<T = unknown> {
 }
 
 /**
- * Detect whether a parsed JSON object is a PascalCase universal envelope.
+ * Detect whether a parsed Json object is a PascalCase universal envelope.
  */
 export function isEnvelope(obj: unknown): obj is RawEnvelope<unknown> {
   if (!obj || typeof obj !== 'object') return false;
@@ -113,7 +113,7 @@ export function parseEnvelope<T>(env: RawEnvelope<unknown>): ApiResponse<T> {
   };
 }
 
-/** Quick check whether a text string looks like JSON */
+/** Quick check whether a text string looks like Json */
 export function looksLikeJson(text: string): boolean {
   const trimmed = text.trim();
   return trimmed.startsWith("{") || trimmed.startsWith("[");

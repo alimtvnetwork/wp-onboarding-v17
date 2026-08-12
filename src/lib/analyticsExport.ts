@@ -2,6 +2,8 @@
 
 import type { PublishAnalyticsData } from "@/hooks/usePublishAnalytics";
 
+const Url = window['URL'];
+
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function durationLabel(ms: number): string {
@@ -173,11 +175,11 @@ export function exportAnalyticsPdf(data: PublishAnalyticsData): void {
 </html>`;
 
   const blob = new Blob([html], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
+  const url = Url.createObjectURL(blob);
   const win = window.open(url, "_blank");
   if (win) {
     win.addEventListener("load", () => {
-      URL.revokeObjectURL(url);
+      Url.revokeObjectURL(url);
     });
   }
 }
@@ -186,12 +188,12 @@ export function exportAnalyticsPdf(data: PublishAnalyticsData): void {
 
 function downloadFile(content: string, filename: string, mimeType: string): void {
   const blob = new Blob([content], { type: mimeType });
-  const url = URL.createObjectURL(blob);
+  const url = Url.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  Url.revokeObjectURL(url);
 }
