@@ -61,7 +61,7 @@ export function RequestHistoryPanel({ history, onClear }: RequestHistoryPanelPro
             <div className="p-4 text-center text-muted-foreground text-sm">
               <History className="h-8 w-8 mx-auto mb-2 opacity-50" />
               <p>No requests yet</p>
-              <p className="text-xs mt-1">Requests will appear here as you test the API</p>
+              <p className="text-xs mt-1">Requests will appear here as you test the Api</p>
             </div>
           ) : (
             <div className="divide-y">

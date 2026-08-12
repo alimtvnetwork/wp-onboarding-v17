@@ -64,3 +64,6 @@
 - [Task 380](completed/380-fix-licensing-internal-middleware-ratelimit-go.md) - Completed
 - [Task 381](completed/381-fix-licensing-internal-services-activationservice-go.md) - Completed
 - [Task 382](completed/382-fix-licensing-internal-services-licenseservice-go.md) - Completed
+- [Task 383](completed/383-fix-licensing-internal-services-queries-go.md) - Completed
+- [Task 384](completed/384-fix-licensing-internal-services-queriesstats-go.md) - Completed
+- [Task 385](completed/385-fix-licensing-internal-services-testhelper_test-go.md) - Completed

@@ -165,7 +165,7 @@ function GlobalErrorHandler({ children }: { children: React.ReactNode }) {
       } else if (typeof reason === "string") {
         errorMessage = reason;
       } else if (reason && typeof reason === "object") {
-        errorMessage = (reason as { message?: string }).message || JSON.stringify(reason);
+        errorMessage = (reason as { message?: string }).message || String(reason);
       }
 
       console.error(`[GlobalErrorHandler] Unhandled rejection in ${errorSource}:`, reason);
