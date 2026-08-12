@@ -110,3 +110,6 @@
 - [Task 428](completed/428-fix-src-components-sites-addsitedialog-tsx.md) - Completed
 - [Task 429](completed/429-fix-src-components-sites-connectiontestlogs-tsx.md) - Completed
 - [Task 430](completed/430-fix-src-components-sites-deployuploaderdialog-tsx.md) - Completed
+- [Task 431](completed/431-fix-src-components-sites-editsitedialog-tsx.md) - Completed
+- [Task 432](completed/432-fix-src-components-sites-remotepluginfilebrowser-tsx.md) - Completed
+- [Task 433](completed/433-fix-src-components-sites-remotepluginspanel-tsx.md) - Completed

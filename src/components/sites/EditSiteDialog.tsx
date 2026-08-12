@@ -23,10 +23,25 @@ import { ConnectionTestLogs } from "./ConnectionTestLogs";
 import { useConnectionTestLogs } from "@/hooks/useConnectionTestLogs";
 import { cn } from "@/lib/utils";
 
+const TOAST_DURATION_MS = 10000;
+const MASKED_PASSWORD = "***";
+
 interface EditSiteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   site: Pick<Site, "id" | "name" | "url" | "username" | "category" | "connectionStatus" | "lastTestedAt"> | null;
+}
+
+enum TabType {
+  Basic = "basic",
+  Connection = "connection",
+  Plugins = "plugins",
+}
+
+enum QueryKeyType {
+  Plugins = "plugins",
+  Sites = "sites",
+  Mappings = "mappings",
 }
 
 export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps) {
@@ -35,7 +50,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
   const [testSuccess, setTestSuccess] = useState(false);
-  const [activeTab, setActiveTab] = useState("basic");
+  const [activeTab, setActiveTab] = useState<string>(TabType.Basic);
   const [formData, setFormData] = useState({
     name: "",
     url: "",
@@ -50,27 +65,27 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
 
   // Fetch all plugins for the Plugins tab
   const { data: allPlugins } = useQuery({
-    queryKey: ["plugins"],
+    queryKey: [QueryKeyType.Plugins],
     queryFn: async () => {
       const response = await api.getPlugins();
-      return response.success ? response.data || [] : [];
+      return response.success === true ? response.data || [] : [];
     },
   });
 
   // Fetch current site mappings
   const { data: currentMappings } = useQuery({
-    queryKey: ["sites", site?.id, "mappings"],
+    queryKey: [QueryKeyType.Sites, site?.id, QueryKeyType.Mappings],
     queryFn: async () => {
-      if (!site?.id) return [];
+      if (site?.id === undefined) return [];
       const response = await api.getSiteMappings(site.id);
-      return response.success ? response.data || [] : [];
+      return response.success === true ? response.data || [] : [];
     },
     enabled: !!site?.id,
   });
 
   // Populate form when site changes
   useEffect(() => {
-    if (site) {
+    if (site !== null) {
       setFormData({
         name: site.name,
         url: site.url,
@@ -78,7 +93,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
         password: "",
         category: site.category || null,
       });
-      setActiveTab("basic");
+      setActiveTab(TabType.Basic);
       setTestSuccess(false);
       setPluginSearch("");
       clearLogs();
@@ -87,7 +102,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
 
   // Initialize selected plugins from mappings - this effect runs when currentMappings changes
   useEffect(() => {
-    if (currentMappings && Array.isArray(currentMappings)) {
+    if (currentMappings !== undefined && Array.isArray(currentMappings)) {
       const pluginIds = currentMappings.map((m: PluginMapping) => m.pluginId);
       setSelectedPlugins(pluginIds);
     } else {
@@ -100,7 +115,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
     toast.error(apiError.message, {
       description: "Click for details",
       action: { label: "View Details", onClick: () => openErrorModal(captured) },
-      duration: 10000,
+      duration: TOAST_DURATION_MS,
     });
   };
 
@@ -109,7 +124,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
   };
 
   const handleTestConnection = async () => {
-    if (!site) return;
+    if (site === null) return;
 
     setIsTesting(true);
     setTestSuccess(false);
@@ -117,11 +132,11 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
 
     try {
       const response = await api.testConnection(site.id);
-      if (response.success && response.data?.isSuccess) {
+      if (response.success === true && response.data?.isSuccess === true) {
         setTestSuccess(true);
         toast.success(`Connection successful! WP ${response.data.wpVersion}`);
-        queryClient.invalidateQueries({ queryKey: ["sites"] });
-      } else if (response.error) {
+        queryClient.invalidateQueries({ queryKey: [QueryKeyType.Sites] });
+      } else if (response.error !== undefined) {
         showErrorWithModal(response.error, { endpoint: `/sites/${site.id}/test`, method: "POST" });
       } else {
         toast.error(response.data?.message || "Connection failed");
@@ -138,7 +153,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
       toast.error("Connection test failed", {
         description: "Click for details",
         action: { label: "View Details", onClick: () => openErrorModal(captured) },
-        duration: 10000,
+        duration: TOAST_DURATION_MS,
       });
     } finally {
       setIsTesting(false);
@@ -154,7 +169,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
   };
 
   const handleEditSite = async () => {
-    if (!site) return;
+    if (site === null) return;
 
     setIsSubmitting(true);
     try {
@@ -163,10 +178,10 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
         ...formData,
         category: formData.category || undefined,
       });
-      if (response.success) {
+      if (response.success === true) {
         // Use the new robust endpoint to update all site mappings in one call
         const mappingRes = await api.updateSiteMappings(site.id, selectedPlugins);
-        if (!mappingRes.success && mappingRes.error) {
+        if (mappingRes.success === false && mappingRes.error !== undefined) {
           console.warn("[EditSiteDialog] Mapping update warning:", mappingRes.error.message);
           toast.warning("Site saved, but some plugin mappings may not have updated");
         } else {
@@ -181,18 +196,18 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
         }
 
         // Invalidate AND refetch both sites and plugins to ensure bidirectional sync
-        await queryClient.invalidateQueries({ queryKey: ["sites"] });
-        await queryClient.invalidateQueries({ queryKey: ["plugins"] });
-        await queryClient.invalidateQueries({ queryKey: ["sites", site.id, "mappings"] });
+        await queryClient.invalidateQueries({ queryKey: [QueryKeyType.Sites] });
+        await queryClient.invalidateQueries({ queryKey: [QueryKeyType.Plugins] });
+        await queryClient.invalidateQueries({ queryKey: [QueryKeyType.Sites, site.id, QueryKeyType.Mappings] });
         // Force refetch to ensure data is fresh
-        await queryClient.refetchQueries({ queryKey: ["plugins"] });
+        await queryClient.refetchQueries({ queryKey: [QueryKeyType.Plugins] });
         
         onOpenChange(false);
-      } else if (response.error) {
+      } else if (response.error !== undefined) {
         showErrorWithModal(response.error, {
           endpoint: `/sites/${site.id}`,
           method: "PUT",
-          requestBody: { ...formData, password: formData.password ? "***" : undefined },
+          requestBody: { ...formData, password: formData.password ? MASKED_PASSWORD : undefined },
         });
       }
     } catch (error: unknown) {
@@ -202,13 +217,13 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
         triggerAction: "save_clicked",
         endpoint: `/sites/${site.id}`,
         method: "PUT",
-        requestBody: { ...formData, password: "***" },
+        requestBody: { ...formData, password: MASKED_PASSWORD },
         context: { siteId: site.id, selectedPluginCount: selectedPlugins.length }
       });
       toast.error("Failed to update site", {
         description: "Click for details",
         action: { label: "View Details", onClick: () => openErrorModal(captured) },
-        duration: 10000,
+        duration: TOAST_DURATION_MS,
       });
     } finally {
       setIsSubmitting(false);
@@ -237,12 +252,12 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="basic">Basic</TabsTrigger>
-            <TabsTrigger value="connection">Connection</TabsTrigger>
-            <TabsTrigger value="plugins">Plugins</TabsTrigger>
+            <TabsTrigger value={TabType.Basic}>Basic</TabsTrigger>
+            <TabsTrigger value={TabType.Connection}>Connection</TabsTrigger>
+            <TabsTrigger value={TabType.Plugins}>Plugins</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="basic" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Basic} className="space-y-4 pt-4">
             <div className="space-y-2">
               <Label htmlFor="edit-name">Site Name</Label>
               <Input
@@ -252,7 +267,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-url">Site URL</Label>
+              <Label htmlFor="edit-url">Site Url</Label>
               <Input
                 id="edit-url"
                 value={formData.url}
@@ -269,7 +284,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
             </div>
           </TabsContent>
 
-          <TabsContent value="connection" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Connection} className="space-y-4 pt-4">
             <div className="space-y-2">
               <Label htmlFor="edit-username">Username</Label>
               <Input
@@ -324,7 +339,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
             <ConnectionTestLogs steps={steps} isActive={testActive} />
           </TabsContent>
 
-          <TabsContent value="plugins" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Plugins} className="space-y-4 pt-4">
             <p className="text-sm text-muted-foreground">
               Select plugins to deploy to this site.
             </p>
@@ -378,7 +393,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
                 );
               }
               
-              if (allPlugins && allPlugins.length === 0) {
+              if (allPlugins !== undefined && allPlugins.length === 0) {
                 return (
                   <div className="text-center py-6 text-muted-foreground">
                     <Package className="h-8 w-8 mx-auto mb-2 opacity-50" />
@@ -388,7 +403,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
                 );
               }
               
-              if (pluginSearch) {
+              if (pluginSearch !== "") {
                 return (
                   <div className="text-center py-6 text-muted-foreground">
                     <p className="text-sm">No plugins match "{pluginSearch}"</p>
@@ -403,7 +418,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
               <div className="flex flex-wrap gap-1.5 pt-2 border-t">
                 {selectedPlugins.map((pluginId) => {
                   const plugin = allPlugins?.find((p: Plugin) => p.id === pluginId);
-                  return plugin ? (
+                  return plugin !== undefined ? (
                     <Badge key={pluginId} variant="secondary" className="text-xs">
                       <Package className="h-3 w-3 mr-1" />
                       {plugin.name}

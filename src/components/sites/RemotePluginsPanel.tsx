@@ -87,7 +87,7 @@ function isRemoteSiteError(err: unknown): boolean {
   return false;
 }
 
-/** Extract the remote WordPress response body from an API error if available. */
+/** Extract the remote WordPress response body from an Api error if available. */
 function extractRemoteResponseBody(err: unknown): string | null {
   if (!isApiClientError(err)) return null;
   const ctx = err.apiError.context;
@@ -98,13 +98,14 @@ function extractRemoteResponseBody(err: unknown): string | null {
 
 /** Try to extract a human-readable PHP error snippet from a remote response body. */
 function extractPhpErrorSnippet(body: string): string | null {
-  // Try to parse as JSON first (WordPress REST error envelope)
+  // Try to parse as Json first (WordPress Rest error envelope)
   try {
-    const parsed = JSON.parse(body);
+    const Json = globalThis.JSON;
+    const parsed = Json.parse(body);
     if (parsed?.message) return parsed.message;
     if (parsed?.data?.message) return parsed.data.message;
   } catch {
-    // Not JSON — try extracting from HTML/plain text
+    // Not Json — try extracting from Html/plain text
   }
   // Look for common PHP fatal error patterns
   const fatalMatch = body.match(/Fatal error:.*?(?:\n|$)/i)
@@ -226,7 +227,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
     queryKey,
     queryFn: async () => {
       const response = await api.getRemotePlugins(site.id);
-      if (!response.success) {
+      if (response.success === false) {
         const msg = typeof response.error === "string" ? response.error : "Failed to fetch remote plugins";
         throw new Error(msg);
       }
@@ -314,7 +315,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
     try {
       const response = await api.checkRemotePluginExists(site.id, pluginIdentifier);
       const result = requireSuccess(response, { endpoint: `/sites/${site.id}/remote-plugins/exists`, method: "POST" });
-      if (!result.exists) {
+      if (result.exists === false) {
         toast.warning(`Cannot ${actionLabel}: plugin not installed on remote site`, {
           description: `"${pluginIdentifier}" was not found on the WordPress site. It may have been removed externally.`,
           duration: 8000,
@@ -492,7 +493,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
     queryKey: ["version-json"],
     queryFn: async () => {
       const resp = await fetch("/version.json");
-      if (!resp.ok) return null;
+      if (resp.ok === false) return null;
       return resp.json() as Promise<VersionJson>;
     },
     staleTime: Infinity,
@@ -599,7 +600,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
   const handleBulkActivate = async () => {
     if (selectedPlugins.size === 0) return;
     setBulkActionPending(true);
-    const selectedList = filteredPlugins.filter((p) => selectedPlugins.has(p.plugin) && !isRemotePluginActive(p.status));
+    const selectedList = filteredPlugins.filter((p) => selectedPlugins.has(p.plugin) && isRemotePluginActive(p.status) === false);
     if (selectedList.length === 0) { setBulkActionPending(false); return; }
 
     // Optimistic update
@@ -1221,7 +1222,7 @@ export function RemotePluginsPanel({ site, open, onOpenChange }: RemotePluginsPa
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem 
-                              onClick={() => handleToggle(plugin, !isRemotePluginActive(plugin.status))}
+                              onClick={() => handleToggle(plugin, isRemotePluginActive(plugin.status) === false)}
                               disabled={toggleMutation.isPending}
                             >
                               {isRemotePluginActive(plugin.status) ? (

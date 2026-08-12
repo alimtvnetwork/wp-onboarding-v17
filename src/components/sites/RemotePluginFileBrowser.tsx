@@ -322,12 +322,13 @@ export function RemotePluginFileBrowser({
   const downloadFile = () => {
     if (fileContent && selectedFile) {
       const blob = new Blob([fileContent], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
+      const Url = globalThis.URL;
+      const objectUrl = Url.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = url;
+      a.href = objectUrl;
       a.download = selectedFile.name;
       a.click();
-      URL.revokeObjectURL(url);
+      Url.revokeObjectURL(objectUrl);
       toast.success(`Downloaded ${selectedFile.name}`);
     }
   };
