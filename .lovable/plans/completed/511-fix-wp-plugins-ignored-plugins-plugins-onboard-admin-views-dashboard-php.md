@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 511: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Dashboard.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Dashboard.php`

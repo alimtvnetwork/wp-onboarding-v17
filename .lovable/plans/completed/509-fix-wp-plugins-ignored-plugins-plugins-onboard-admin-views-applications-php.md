@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 509: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Applications.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Applications.php`

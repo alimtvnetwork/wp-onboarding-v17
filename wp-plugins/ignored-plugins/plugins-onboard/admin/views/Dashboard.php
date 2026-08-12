@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     <?php if (!empty($pending_approvals)) : ?>
     <div class="notice notice-warning">
         <p>
-            <strong><?php esc_html_e('Pending IP Approvals:', 'plugins-onboard'); ?></strong>
+            <strong><?php esc_html_e('Pending Ip Approvals:', 'plugins-onboard'); ?></strong>
             <?php echo count($pending_approvals); ?> 
             <a href="<?php echo admin_url('admin.php?page=plugins-onboard-applications'); ?>">
                 <?php esc_html_e('Review Now', 'plugins-onboard'); ?>

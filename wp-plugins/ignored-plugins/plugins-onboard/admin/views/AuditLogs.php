@@ -72,7 +72,7 @@ $success = isset($_GET['success']) ? sanitize_text_field($_GET['success']) : '';
                     <th style="width: 12%;"><?php esc_html_e('Plugin', 'plugins-onboard'); ?></th>
                     <th style="width: 10%;"><?php esc_html_e('Status', 'plugins-onboard'); ?></th>
                     <th style="width: 12%;"><?php esc_html_e('App', 'plugins-onboard'); ?></th>
-                    <th style="width: 12%;"><?php esc_html_e('IP Address', 'plugins-onboard'); ?></th>
+                    <th style="width: 12%;"><?php esc_html_e('Ip Address', 'plugins-onboard'); ?></th>
                     <th style="width: 24%;"><?php esc_html_e('Details', 'plugins-onboard'); ?></th>
                 </tr>
             </thead>

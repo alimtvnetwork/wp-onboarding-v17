@@ -29,10 +29,10 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
                     esc_html_e('Application deleted successfully.', 'plugins-onboard');
                     break;
                 case 'ip_approved':
-                    esc_html_e('IP address approved successfully.', 'plugins-onboard');
+                    esc_html_e('Ip address approved successfully.', 'plugins-onboard');
                     break;
                 case 'ip_rejected':
-                    esc_html_e('IP address rejected.', 'plugins-onboard');
+                    esc_html_e('Ip address rejected.', 'plugins-onboard');
                     break;
                 default:
                     esc_html_e('Operation completed successfully.', 'plugins-onboard');
@@ -59,7 +59,7 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
                 <td><?php echo esc_html($new_app['app_name']); ?></td>
             </tr>
             <tr>
-                <td><strong><?php esc_html_e('Client ID', 'plugins-onboard'); ?></strong></td>
+                <td><strong><?php esc_html_e('Client Id', 'plugins-onboard'); ?></strong></td>
                 <td><code><?php echo esc_html($new_app['client_id']); ?></code></td>
             </tr>
             <tr>
@@ -70,19 +70,19 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
     </div>
     <?php endif; ?>
 
-    <!-- Pending IP Approvals -->
+    <!-- Pending Ip Approvals -->
     <?php if (!empty($pending_approvals)) : ?>
     <div class="onboard-section">
         <h2>
             <span class="dashicons dashicons-warning" style="color: orange;"></span>
-            <?php esc_html_e('Pending IP Approvals', 'plugins-onboard'); ?>
+            <?php esc_html_e('Pending Ip Approvals', 'plugins-onboard'); ?>
             <span class="count">(<?php echo count($pending_approvals); ?>)</span>
         </h2>
         <table class="widefat fixed striped">
             <thead>
                 <tr>
                     <th><?php esc_html_e('Application', 'plugins-onboard'); ?></th>
-                    <th><?php esc_html_e('IP Address', 'plugins-onboard'); ?></th>
+                    <th><?php esc_html_e('Ip Address', 'plugins-onboard'); ?></th>
                     <th><?php esc_html_e('Requested', 'plugins-onboard'); ?></th>
                     <th><?php esc_html_e('Expires', 'plugins-onboard'); ?></th>
                     <th><?php esc_html_e('Actions', 'plugins-onboard'); ?></th>
@@ -139,7 +139,7 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
                     </th>
                     <td>
                         <input type="url" name="redirect_uri" id="redirect_uri" class="regular-text" required placeholder="https://example.com/callback">
-                        <p class="description"><?php esc_html_e('OAuth callback URL for your application.', 'plugins-onboard'); ?></p>
+                        <p class="description"><?php esc_html_e('OAuth callback Url for your application.', 'plugins-onboard'); ?></p>
                     </td>
                 </tr>
             </table>
@@ -161,7 +161,7 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
                 <thead>
                     <tr>
                         <th style="width: 20%;"><?php esc_html_e('Name', 'plugins-onboard'); ?></th>
-                        <th style="width: 20%;"><?php esc_html_e('Client ID', 'plugins-onboard'); ?></th>
+                        <th style="width: 20%;"><?php esc_html_e('Client Id', 'plugins-onboard'); ?></th>
                         <th style="width: 20%;"><?php esc_html_e('Redirect URI', 'plugins-onboard'); ?></th>
                         <th style="width: 10%;"><?php esc_html_e('Status', 'plugins-onboard'); ?></th>
                         <th style="width: 15%;"><?php esc_html_e('Created', 'plugins-onboard'); ?></th>
@@ -200,14 +200,14 @@ $error = isset($_GET['error']) ? sanitize_text_field($_GET['error']) : '';
         <?php endif; ?>
     </div>
 
-    <!-- API Endpoints -->
+    <!-- Api Endpoints -->
     <div class="onboard-section">
         <h2><?php esc_html_e('OAuth Endpoints', 'plugins-onboard'); ?></h2>
         <table class="widefat fixed">
             <thead>
                 <tr>
                     <th><?php esc_html_e('Endpoint', 'plugins-onboard'); ?></th>
-                    <th><?php esc_html_e('URL', 'plugins-onboard'); ?></th>
+                    <th><?php esc_html_e('Url', 'plugins-onboard'); ?></th>
                 </tr>
             </thead>
             <tbody>
