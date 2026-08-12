@@ -262,3 +262,7 @@
 - [Task 625](completed/02-guideline-audit-fixes/625-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-log-retrieval-php.md) - Completed
 - [Task 626](completed/02-guideline-audit-fixes/626-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-plugin-info-php.md) - Completed
 
+- [Task 627](completed/02-guideline-audit-fixes/627-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-rest-endpoints-php.md) - Completed
+- [Task 628](completed/02-guideline-audit-fixes/628-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-support-feedback-php.md) - Completed
+- [Task 629](completed/02-guideline-audit-fixes/629-fix-wp-plugins-riseup-asia-uploader-templates-partials-shared-pagination-php.md) - Completed
+

@@ -1,6 +1,6 @@
 <?php
 /**
- * Settings Partial — REST API Endpoints reference table.
+ * Settings Partial — Rest Api Endpoints reference table.
  *
  * Variables expected: $pluginSlug.
  *
@@ -15,14 +15,14 @@ if (!defined('ABSPATH')) {
 use RiseupAsia\Enums\EndpointType;
 use RiseupAsia\Enums\PluginConfigType;
 ?>
-<!-- REST API Endpoints -->
+<!-- Rest Api Endpoints -->
 <div class="riseup-card">
     <h2>
         <span class="dashicons dashicons-rest-api"></span>
-        <?php esc_html_e('REST API Endpoints', $pluginSlug); ?>
+        <?php esc_html_e('Rest Api Endpoints', $pluginSlug); ?>
     </h2>
     <p class="description">
-        <?php esc_html_e('Base URL:', $pluginSlug); ?> <code><?php echo esc_url(rest_url(PluginConfigType::apiFullNamespace())); ?></code>
+        <?php esc_html_e('Base Url:', $pluginSlug); ?> <code><?php echo esc_url(rest_url(PluginConfigType::apiFullNamespace())); ?></code>
     </p>
 
     <table class="wp-list-table widefat fixed striped riseup-endpoints-table">

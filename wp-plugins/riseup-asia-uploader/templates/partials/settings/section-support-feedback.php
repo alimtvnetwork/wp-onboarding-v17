@@ -41,7 +41,7 @@ use RiseupAsia\Enums\OptionNameType;
         </tr>
         <tr>
             <th scope="row">
-                <label for="fallback_url"><?php esc_html_e('Fallback Ticket URL', $pluginSlug); ?></label>
+                <label for="fallback_url"><?php esc_html_e('Fallback Ticket Url', $pluginSlug); ?></label>
             </th>
             <td>
                 <input type="url"
@@ -50,7 +50,7 @@ use RiseupAsia\Enums\OptionNameType;
                        value="<?php echo esc_attr($supportSettings['fallback_url'] ?? ''); ?>"
                        class="regular-text"
                        placeholder="https://support.example.com/tickets/new">
-                <p class="description"><?php esc_html_e('If email is not configured, users will see a link to this URL for manual ticket submission.', $pluginSlug); ?></p>
+                <p class="description"><?php esc_html_e('If email is not configured, users will see a link to this Url for manual ticket submission.', $pluginSlug); ?></p>
             </td>
         </tr>
     </table>

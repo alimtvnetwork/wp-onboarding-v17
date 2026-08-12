@@ -9,7 +9,7 @@
  *   $page           — Current page number (int)
  *
  * Optional variables:
- *   $paginationBase — Custom base URL pattern (default: add_query_arg('paged', '%#%'))
+ *   $paginationBase — Custom base Url pattern (default: add_query_arg('paged', '%#%'))
  *   $paginationArgs — Full override array for paginate_links() (ignores $paginationBase if set)
  *
  * @package RiseupAsiaUploader
