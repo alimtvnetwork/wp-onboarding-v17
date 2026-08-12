@@ -116,7 +116,7 @@ trait UploadInstallExtractRollbackTrait
         $requestedAt = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
         // Use the correct diagnostics key based on the failure phase
-        $diagnosticsKey = $reason->isHealthCheckError() || $reason === SelfUpdateStatusType::HealthCheckFailed
+        $diagnosticsKey = $reason->isHealthCheckError() || $reason->isEqual(SelfUpdateStatusType::HealthCheckFailed)
             ? ResponseKeyType::HealthCheck->value
             : ResponseKeyType::Validation->value;
 

@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Status/StatusPaylo
   `$methods = array_merge($methods, gettype($handler['methods']) === PhpNativeType::PhpArray->value`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

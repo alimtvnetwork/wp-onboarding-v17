@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/templates/admin-license.p
   `$isActive      = ($licenseStatus === LicenseStatusType::Active->value);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

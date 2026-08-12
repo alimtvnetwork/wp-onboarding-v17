@@ -16,3 +16,5 @@ Target File: `wp-plugins/riseup-asia-uploader/templates/admin-license.php`
   `$isExpired = ($licenseStatus === LicenseStatusType::Expired->value);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

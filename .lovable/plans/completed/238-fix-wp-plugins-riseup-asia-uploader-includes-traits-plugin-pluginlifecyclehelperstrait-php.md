@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Plugin/PluginLifec
   `if ($slug === PluginConfigType::Slug->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Upload/UploadInsta
   `$diagnosticsKey = $reason->isHealthCheckError() || $reason === SelfUpdateStatusType::HealthCheckFailed`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] FIXED

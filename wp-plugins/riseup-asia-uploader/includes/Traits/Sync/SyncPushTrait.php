@@ -40,14 +40,14 @@ trait SyncPushTrait
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $slug = isset($body['plugin']) ? sanitize_text_field($body['plugin']) : '';
             $files = isset($body[ResponseKeyType::Files->value]) ? $body[ResponseKeyType::Files->value] : [];
 
             if (empty($slug)) {
-                return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+                return $this->errorResponse('Plugin slug is required in Json body', HttpStatusType::BadRequest->value);
             }
 
             $isFilesInvalid = (BooleanHelpers::isValueEmpty($files) || gettype($files) !== PhpNativeType::PhpArray->value);

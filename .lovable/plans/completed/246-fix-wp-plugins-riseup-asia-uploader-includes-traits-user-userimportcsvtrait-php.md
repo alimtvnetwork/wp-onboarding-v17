@@ -24,3 +24,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/User/UserImportCsv
   `$wpdb->update($wpdb->users, ['user_pass' => $passwordHash], ['ID' => $userId]);`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

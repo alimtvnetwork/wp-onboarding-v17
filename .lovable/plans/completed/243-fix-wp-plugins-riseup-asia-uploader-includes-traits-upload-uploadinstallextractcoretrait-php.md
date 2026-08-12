@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Upload/UploadInsta
   `$isSelfUpdate = ($slug === PluginConfigType::Slug->value && $isUpdate);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

@@ -36,3 +36,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Sync/SyncPushTrait
   `return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
