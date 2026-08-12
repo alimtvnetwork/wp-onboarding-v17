@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 508: Fix violations in wp-plugins/category-generator/templates/tests-page.php
 
 Target File: `wp-plugins/category-generator/templates/tests-page.php`

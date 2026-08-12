@@ -172,7 +172,7 @@ if (!defined('ABSPATH')) {
                 <h3><span class="dashicons dashicons-admin-generic"></span> <?php _e('Other Tests', 'category-generator'); ?></h3>
                 <span class="cg-test-count"><?php _e('10 tests', 'category-generator'); ?></span>
                 <ul>
-                    <li><?php _e('Import/Export (CSV, JSON)', 'category-generator'); ?></li>
+                    <li><?php _e('Import/Export (CSV, Json)', 'category-generator'); ?></li>
                     <li><?php _e('Business profile CRUD', 'category-generator'); ?></li>
                     <li><?php _e('Settings save/load', 'category-generator'); ?></li>
                     <li><?php _e('Constants validation', 'category-generator'); ?></li>
@@ -209,7 +209,7 @@ if (!defined('ABSPATH')) {
                 <span class="cg-test-count"><?php _e('3 tests', 'category-generator'); ?></span>
                 <ul>
                     <li><?php _e('XSS prevention', 'category-generator'); ?></li>
-                    <li><?php _e('SQL injection prevention', 'category-generator'); ?></li>
+                    <li><?php _e('Sql injection prevention', 'category-generator'); ?></li>
                     <li><?php _e('Max length validation', 'category-generator'); ?></li>
                 </ul>
             </div>
@@ -425,12 +425,12 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     const blob = new Blob([response.data.content], { type: 'text/plain' });
-                    const url = window.URL.createObjectURL(blob);
+                    const url = window.Url.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = 'CategoryGeneratorTest.php';
                     a.click();
-                    window.URL.revokeObjectURL(url);
+                    window.Url.revokeObjectURL(url);
                 }
             }
         });

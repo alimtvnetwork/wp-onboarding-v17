@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th style="width: 50px;"><?php _e('ID', 'category-generator'); ?></th>
+                    <th style="width: 50px;"><?php _e('Id', 'category-generator'); ?></th>
                     <th><?php _e('Name', 'category-generator'); ?></th>
                     <th style="width: 150px;"><?php _e('Category', 'category-generator'); ?></th>
                     <th style="width: 150px;"><?php _e('Schema Type', 'category-generator'); ?></th>
