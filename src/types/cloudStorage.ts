@@ -189,7 +189,7 @@ export const PROVIDER_CONFIG: Record<CloudStorageProvider, {
     authType: 'pat',
     fields: [
       { key: 'Username', label: 'Username', placeholder: 'john.doe', help: 'Your GitLab username', required: false },
-      { key: 'BaseUrl', label: 'Base URL', placeholder: 'https://gitlab.com', help: 'Leave blank for gitlab.com, or enter your self-hosted URL', required: false },
+      { key: 'BaseUrl', label: 'Base Url', placeholder: 'https://gitlab.com', help: 'Leave blank for gitlab.com, or enter your self-hosted Url', required: false },
       { key: 'RepoOwner', label: 'Namespace', placeholder: 'john.doe', help: 'Your username or group path (e.g., my-org/sub-group)', required: false },
     ],
   },

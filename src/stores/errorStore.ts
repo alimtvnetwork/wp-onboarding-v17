@@ -73,7 +73,7 @@ export interface CapturedError {
   function?: string;
   stackTrace?: string;
   createdAt: string;
-  // Additional fields for API errors
+  // Additional fields for Api errors
   endpoint?: string;
   method?: string;
   requestBody?: unknown;
@@ -352,7 +352,7 @@ interface BuildCapturedErrorInput {
   parentSource?: string;
   triggerComponent?: string;
   triggerAction?: string;
-  // API / request meta
+  // Api / request meta
   endpoint?: string;
   method?: string;
   requestBody?: unknown;

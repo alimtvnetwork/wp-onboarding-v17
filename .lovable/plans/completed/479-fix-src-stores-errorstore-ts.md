@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 479: Fix violations in src/stores/errorStore.ts
 
 Target File: `src/stores/errorStore.ts`

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 480: Fix violations in src/stores/publishStore.ts
 
 Target File: `src/stores/publishStore.ts`

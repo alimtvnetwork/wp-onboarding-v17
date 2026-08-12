@@ -35,8 +35,8 @@ export interface PublishStage {
  * Individual publish operation tracked in the store
  */
 export interface PublishOperation {
-  id: string; // Unique operation ID (pluginId-siteId-timestamp)
-  sessionId?: string; // Backend session ID for log retrieval
+  id: string; // Unique operation Id (pluginId-siteId-timestamp)
+  sessionId?: string; // Backend session Id for log retrieval
   pluginId: number;
   pluginName: string;
   siteId: number;
@@ -66,7 +66,7 @@ export interface QuickPublishRequest {
 }
 
 interface PublishStore {
-  // Active operations indexed by operation ID
+  // Active operations indexed by operation Id
   operations: Map<string, PublishOperation>;
   
   // Quick access: which plugins have active operations

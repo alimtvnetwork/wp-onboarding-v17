@@ -157,3 +157,6 @@
 - [Task 476](completed/476-fix-src-pages-sessions-tsx.md) - Completed
 - [Task 477](completed/477-fix-src-pages-settings-tsx.md) - Completed
 - [Task 478](completed/478-fix-src-pages-tests-tsx.md) - Completed
+- [Task 479](completed/479-fix-src-stores-errorstore-ts.md) - Completed
+- [Task 480](completed/480-fix-src-stores-publishstore-ts.md) - Completed
+- [Task 481](completed/481-fix-src-types-cloudstorage-ts.md) - Completed
