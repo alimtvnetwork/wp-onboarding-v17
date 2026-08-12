@@ -8,3 +8,4 @@ Target File: `tools/consistency-checker/internal/rules/GoRawError_test.go`
   ``func ExecInsert(db interface{ Exec(string, ...any) (sql.Result, error) }, ctx Context, query string, args ...any) (*Result, error) {`,`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

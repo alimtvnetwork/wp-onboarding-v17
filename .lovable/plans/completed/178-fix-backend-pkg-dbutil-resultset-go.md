@@ -20,3 +20,4 @@ Target File: `backend/pkg/dbutil/ResultSet.go`
   `// Propagates any error from the original query.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

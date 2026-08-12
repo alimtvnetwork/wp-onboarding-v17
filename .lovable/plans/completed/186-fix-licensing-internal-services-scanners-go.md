@@ -12,3 +12,4 @@ Target File: `licensing/internal/services/Scanners.go`
   `Scan(dest ...any) error`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

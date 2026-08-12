@@ -40,3 +40,5 @@ Target File: `licensing/internal/handlers/testhelper_test.go`
   `resp := adminRequest(t, "POST", baseURL+"/api/v1/admin/licenses", body)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

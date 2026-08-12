@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"encoding/json"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -60,7 +62,7 @@ func phpContext(lineCount, maxLines int) engine.CheckContext {
 		Spec: config.RuleSpec{
 			Id:        "php-file-size",
 			Severity:  "warning",
-			Params:    map[string]any{"max_lines": float64(maxLines)},
+			Params:    map[string]json.RawMessage{"max_lines": json.RawMessage(fmt.Sprintf("%d", maxLines))},
 			Reference: "spec/03-rules.md#php-file-size",
 		},
 	}

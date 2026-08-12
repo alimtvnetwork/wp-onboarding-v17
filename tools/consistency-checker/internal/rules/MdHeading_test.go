@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/json"
 	"testing"
 
 	"consistency-checker/internal/config"
@@ -64,9 +65,9 @@ func mdContext(lines []string) engine.CheckContext {
 		Language: "md",
 		Lines:    lines,
 		Spec: config.RuleSpec{
-			ID:        "md-heading",
+			Id:        "md-heading",
 			Severity:  "info",
-			Params:    map[string]any{},
+			Params:    map[string]json.RawMessage{},
 			Reference: "spec/03-rules.md#md-heading",
 		},
 	}

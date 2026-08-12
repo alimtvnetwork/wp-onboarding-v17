@@ -24,3 +24,4 @@ Target File: `licensing/internal/services/LicenseServiceUpdate.go`
   `// Delete removes a license by ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

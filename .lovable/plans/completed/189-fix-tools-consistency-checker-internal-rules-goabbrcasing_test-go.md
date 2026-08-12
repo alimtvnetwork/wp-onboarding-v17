@@ -20,3 +20,4 @@ Target File: `tools/consistency-checker/internal/rules/GoAbbrCasing_test.go`
   `// The "pluginID" inside the string should be ignored,`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

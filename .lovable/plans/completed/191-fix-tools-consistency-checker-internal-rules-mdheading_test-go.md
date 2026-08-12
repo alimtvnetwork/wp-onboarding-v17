@@ -12,3 +12,5 @@ Target File: `tools/consistency-checker/internal/rules/MdHeading_test.go`
   `ID:        "md-heading",`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED
+[x] SKIPPED (False Positive)

@@ -112,3 +112,4 @@ Target File: `licensing/internal/handlers/AdminHandlers_test.go`
   `req, _ := http.NewRequest("GET", srv.URL+"/api/v1/admin/licenses", nil)`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

@@ -36,3 +36,4 @@ Target File: `tools/consistency-checker/internal/config/Loader.go`
   `// coerceToInt converts a JSON number to int.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

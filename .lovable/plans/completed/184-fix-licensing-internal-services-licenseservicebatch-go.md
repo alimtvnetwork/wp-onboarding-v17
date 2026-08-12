@@ -24,3 +24,4 @@ Target File: `licensing/internal/services/LicenseServiceBatch.go`
   `// buildInClause creates SQL placeholders and args for an IN clause.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

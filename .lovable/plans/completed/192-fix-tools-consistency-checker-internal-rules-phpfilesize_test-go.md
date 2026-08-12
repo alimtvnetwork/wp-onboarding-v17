@@ -8,3 +8,4 @@ Target File: `tools/consistency-checker/internal/rules/PhpFileSize_test.go`
   `Params:    map[string]any{"max_lines": float64(maxLines)},`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

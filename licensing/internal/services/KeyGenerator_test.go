@@ -6,7 +6,9 @@ import (
 )
 
 func TestGenerateKeyFormat(t *testing.T) {
-	key, err := GenerateKey()
+	res := GenerateKey()
+	key := res.Value()
+	err := res.Error()
 	if err != nil {
 		t.Fatalf("generate: %v", err)
 	}
@@ -48,7 +50,9 @@ func TestGenerateKeyUniqueness(t *testing.T) {
 	count := 200
 
 	for i := 0; i < count; i++ {
-		key, err := GenerateKey()
+		res := GenerateKey()
+	key := res.Value()
+	err := res.Error()
 		if err != nil {
 			t.Fatalf("generate %d: %v", i, err)
 		}

@@ -9,12 +9,14 @@ func TestActivateNew(t *testing.T) {
 	licId := seedLicense(t, db)
 	svc := NewActivationService(db)
 
-	act, err := svc.Activate(ActivateInput{
+	res := svc.Activate(ActivateInput{
 		LicenseId: licId,
 		Domain:    "example.com",
 		IpAddress: "1.2.3.4",
 		UserAgent: "TestAgent/1.0",
 	})
+	act := res.Value()
+	err := res.Error()
 	if err != nil {
 		t.Fatalf("activate: %v", err)
 	}
@@ -35,7 +37,9 @@ func TestActivateReactivation(t *testing.T) {
 	svc.Activate(ActivateInput{LicenseId: licId, Domain: "reactivate.com", IpAddress: "1.1.1.1", UserAgent: "A"})
 	svc.Deactivate(licId, "reactivate.com")
 
-	act, err := svc.Activate(ActivateInput{LicenseId: licId, Domain: "reactivate.com", IpAddress: "2.2.2.2", UserAgent: "B"})
+	res := svc.Activate(ActivateInput{LicenseId: licId, Domain: "reactivate.com", IpAddress: "2.2.2.2", UserAgent: "B"})
+	act := res.Value()
+	err := res.Error()
 	if err != nil {
 		t.Fatalf("reactivate: %v", err)
 	}
@@ -60,7 +64,8 @@ func TestDeactivate(t *testing.T) {
 		t.Fatalf("deactivate: %v", err)
 	}
 
-	count, _ := svc.CountActive(licId)
+	res := svc.CountActive(licId)
+	count := res.Value()
 	if count != 0 {
 		t.Errorf("active count = %d, want 0", count)
 	}
@@ -77,7 +82,9 @@ func TestCountActive(t *testing.T) {
 
 	svc.Deactivate(licId, "b.com")
 
-	count, err := svc.CountActive(licId)
+	res := svc.CountActive(licId)
+	count := res.Value()
+	err := res.Error()
 	if err != nil {
 		t.Fatalf("count: %v", err)
 	}
@@ -94,7 +101,9 @@ func TestListByLicense(t *testing.T) {
 	svc.Activate(ActivateInput{LicenseId: licId, Domain: "x.com", IpAddress: "1.1.1.1", UserAgent: "A"})
 	svc.Activate(ActivateInput{LicenseId: licId, Domain: "y.com", IpAddress: "1.1.1.1", UserAgent: "A"})
 
-	list, err := svc.ListByLicense(licId)
+	res := svc.ListByLicense(licId)
+	list := res.Value()
+	err := res.Error()
 	if err != nil {
 		t.Fatalf("list: %v", err)
 	}

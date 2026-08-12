@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/json"
 	"testing"
 
 	"consistency-checker/internal/config"
@@ -138,8 +139,8 @@ func TestGoAbbrCasing_UsesConfigPascalAbbreviations(t *testing.T) {
 		},
 		Spec: config.RuleSpec{
 			Severity: "warning",
-			Params: map[string]any{
-				"abbreviations": []any{"Sql"},
+			Params: map[string]json.RawMessage{
+				"abbreviations": json.RawMessage(`["Sql"]`),
 			},
 		},
 	}

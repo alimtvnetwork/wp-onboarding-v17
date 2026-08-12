@@ -16,14 +16,14 @@ type Config struct {
 
 // RuleSpec defines a single rule from rules.json.
 type RuleSpec struct {
-	Id        string            `json:"id"`
-	Name      string            `json:"name"`
-	IsEnabled bool              `json:"enabled"`
-	Severity  string            `json:"severity"`
-	Languages []string          `json:"languages"`
-	Params    map[string]any    `json:"params"`
-	Exclude   []string          `json:"exclude"`
-	Reference string            `json:"reference"`
+	Id        string                     `json:"id"`
+	Name      string                     `json:"name"`
+	IsEnabled bool                       `json:"enabled"`
+	Severity  string                     `json:"severity"`
+	Languages []string                   `json:"languages"`
+	Params    map[string]json.RawMessage `json:"params"`
+	Exclude   []string                   `json:"exclude"`
+	Reference string                     `json:"reference"`
 }
 
 // Load reads and parses a rules.json config file.
@@ -64,19 +64,11 @@ func (r *RuleSpec) ParamInt(key string, defaultVal int) int {
 		return defaultVal
 	}
 
-	return coerceToInt(v, defaultVal)
-}
-
-// coerceToInt converts a JSON number to int.
-func coerceToInt(v any, defaultVal int) int {
-	switch n := v.(type) {
-	case float64:
-		return int(n)
-	case int:
+	var n int
+	if err := json.Unmarshal(v, &n); err == nil {
 		return n
-	default:
-		return defaultVal
 	}
+	return defaultVal
 }
 
 // ParamString extracts a string parameter with a default.
@@ -85,7 +77,8 @@ func (r *RuleSpec) ParamString(key, defaultVal string) string {
 	if !ok {
 		return defaultVal
 	}
-	if s, ok := v.(string); ok {
+	var s string
+	if err := json.Unmarshal(v, &s); err == nil {
 		return s
 	}
 	return defaultVal
@@ -98,26 +91,9 @@ func (r *RuleSpec) ParamStringSlice(key string, defaultVal []string) []string {
 		return defaultVal
 	}
 
-	raw, ok := v.([]any)
-	if !ok {
-		return defaultVal
+	var s []string
+	if err := json.Unmarshal(v, &s); err == nil {
+		return s
 	}
-
-	return coerceToStringSlice(raw, defaultVal)
-}
-
-// coerceToStringSlice converts a []any of strings to []string.
-func coerceToStringSlice(raw []any, defaultVal []string) []string {
-	result := make([]string, 0, len(raw))
-
-	for _, item := range raw {
-		s, ok := item.(string)
-		if !ok {
-			return defaultVal
-		}
-
-		result = append(result, s)
-	}
-
-	return result
+	return defaultVal
 }
