@@ -8,7 +8,7 @@
 
 namespace RiseupAsia\Traits\CloudStorage;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -49,9 +49,9 @@ trait CloudStorageSettingsTrait {
             $providerParam = $request->get_param('provider');
             $providerType  = CloudStorageProviderType::tryFrom($providerParam);
 
-            $isInvalidProvider = ($providerType === false);
+            $isValidProvider = ($providerType !== null);
 
-            if ($isInvalidProvider) {
+            if ($isValidProvider === false) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
                     ResponseKeyType::Error->value   => 'Invalid provider: ' . $providerParam,
@@ -59,10 +59,10 @@ trait CloudStorageSettingsTrait {
             }
 
             $params = $this->extractValidBody($request);
-            $isBodyInvalid = ($params === null);
+            $isValidBody = ($params !== null);
 
-            if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+            if ($isValidBody === false) {
+                return $this->validationError('Invalid or missing Json body', $request);
             }
             $table  = TableType::CloudStorageSettings->value;
             $sets   = [];
@@ -92,12 +92,12 @@ trait CloudStorageSettingsTrait {
         }, 'update-cloud-storage-settings');
     }
 
-    /** Format a settings row for API response. */
+    /** Format a settings row for Api response. */
     private function formatSettingsRow(array|false $row): array
     {
-        $isNull = ($row === false);
+        $isValidRow = ($row !== false);
 
-        if ($isNull) {
+        if ($isValidRow === false) {
             return [];
         }
 
@@ -119,7 +119,7 @@ trait CloudStorageSettingsTrait {
         foreach ($boolFields as $field) {
             $hasField = isset($params[$field]);
 
-            if ($hasField) {
+            if ($hasField === true) {
                 $sets[]   = "{$field} = ?";
                 $values[] = (int) $params[$field];
             }
@@ -127,14 +127,14 @@ trait CloudStorageSettingsTrait {
 
         $hasDefaultAccount = isset($params['DefaultAccountId']);
 
-        if ($hasDefaultAccount) {
+        if ($hasDefaultAccount === true) {
             $sets[]   = 'DefaultAccountId = ?';
             $values[] = $params['DefaultAccountId'] !== null ? (int) $params['DefaultAccountId'] : null;
         }
 
         $hasRetention = isset($params['RetentionCount']);
 
-        if ($hasRetention) {
+        if ($hasRetention === true) {
             $count      = max(1, min(100, (int) $params['RetentionCount']));
             $sets[]     = 'RetentionCount = ?';
             $values[]   = $count;
@@ -142,7 +142,7 @@ trait CloudStorageSettingsTrait {
 
         $hasPrefix = isset($params['BackupPrefix']);
 
-        if ($hasPrefix) {
+        if ($hasPrefix === true) {
             $sets[]   = 'BackupPrefix = ?';
             $values[] = sanitize_file_name($params['BackupPrefix']);
         }

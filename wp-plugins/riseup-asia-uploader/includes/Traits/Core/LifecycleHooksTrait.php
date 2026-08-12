@@ -110,7 +110,7 @@ trait LifecycleHooksTrait
     }
 
     /**
-     * Check if the current request is a REST API request.
+     * Check if the current request is a RestApi request.
      */
     private function isRestRequest(): bool {
         if (defined('REST_REQUEST') && REST_REQUEST) {

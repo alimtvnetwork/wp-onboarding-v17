@@ -43,7 +43,7 @@ trait CloudStorageOAuthTrait {
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError('Invalid or missing Json body', $request);
             }
 
             $accountLabel = sanitize_text_field($body['AccountLabel'] ?? 'Google Drive');
@@ -54,7 +54,7 @@ trait CloudStorageOAuthTrait {
             if ($isClientMissing) {
                 return new WP_REST_Response([
                     ResponseKeyType::Success->value => false,
-                    ResponseKeyType::Error->value   => 'Google OAuth Client ID not configured. Go to Settings to add your Google Cloud credentials.',
+                    ResponseKeyType::Error->value   => 'Google OAuth Client Id not configured. Go to Settings to add your Google Cloud credentials.',
                 ], HttpStatusType::BadRequest->value);
             }
 
