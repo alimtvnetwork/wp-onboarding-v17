@@ -30,7 +30,7 @@ final class IsJson extends Constraint
      */
     public function toString(): string
     {
-        return 'is valid JSON';
+        return 'is valid Json';
     }
 
     /**
@@ -61,15 +61,15 @@ final class IsJson extends Constraint
     protected function failureDescription(mixed $other): string
     {
         if (!is_string($other)) {
-            return $this->valueToTypeStringFragment($other) . 'is valid JSON';
+            return $this->valueToTypeStringFragment($other) . 'is valid Json';
         }
 
         if ($other === '') {
-            return 'an empty string is valid JSON';
+            return 'an empty string is valid Json';
         }
 
         return sprintf(
-            'a string is valid JSON (%s)',
+            'a string is valid Json (%s)',
             $this->determineJsonError($other),
         );
     }
@@ -83,7 +83,7 @@ final class IsJson extends Constraint
             JSON_ERROR_DEPTH          => 'Maximum stack depth exceeded',
             JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
             JSON_ERROR_CTRL_CHAR      => 'Unexpected control character found',
-            JSON_ERROR_SYNTAX         => 'Syntax error, malformed JSON',
+            JSON_ERROR_SYNTAX         => 'Syntax error, malformed Json',
             JSON_ERROR_UTF8           => 'Malformed UTF-8 characters, possibly incorrectly encoded',
             default                   => 'Unknown error',
         };

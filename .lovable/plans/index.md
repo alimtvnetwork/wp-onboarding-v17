@@ -290,3 +290,7 @@
 - [Task 646](completed/02-guideline-audit-fixes/646-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-assert-functions-php.md) - Completed
 - [Task 647](completed/02-guideline-audit-fixes/647-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-constraint-jsonmatches-php.md) - Completed
 
+- [Task 648](completed/02-guideline-audit-fixes/648-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-framework-constraint-string-isjson-php.md) - Completed
+- [Task 649](completed/02-guideline-audit-fixes/649-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-runner-filter-namefilteriterator-php.md) - Completed
+- [Task 650](completed/02-guideline-audit-fixes/650-fix-wp-plugins-riseup-asia-uploader-vendor-phpunit-phpunit-src-util-json-php.md) - Completed
+

@@ -42,9 +42,9 @@ final readonly class Json
     }
 
     /**
-     * Element 0 is true and element 1 is null when JSON decoding did not work.
-     * * Element 0 is false and element 1 has the decoded value when JSON decoding did work.
-     * * This is used to avoid ambiguity with JSON strings consisting entirely of 'null' or 'false'.
+     * Element 0 is true and element 1 is null when Json decoding did not work.
+     * * Element 0 is false and element 1 has the decoded value when Json decoding did work.
+     * * This is used to avoid ambiguity with Json strings consisting entirely of 'null' or 'false'.
      *
      * @return array{0: false, 1: mixed}|array{0: true, 1: null}
      */
@@ -64,7 +64,7 @@ final readonly class Json
     }
 
     /**
-     * JSON object keys are unordered while PHP array keys are ordered.
+     * Json object keys are unordered while PHP array keys are ordered.
      *
      * Sort all array keys to ensure both the expected and actual values have
      * their keys in the same order.
@@ -80,10 +80,10 @@ final readonly class Json
 
         if ($isObject) {
             // Objects need to be sorted during canonicalization to ensure
-            // correct comparsion since JSON objects are unordered. It must be
-            // kept as an object so that the value correctly stays as a JSON
+            // correct comparsion since Json objects are unordered. It must be
+            // kept as an object so that the value correctly stays as a Json
             // object instead of potentially being converted to an array. This
-            // approach ensures that numeric string JSON keys are preserved and
+            // approach ensures that numeric string Json keys are preserved and
             // don't risk being flattened due to PHP's array semantics.
             // See #2919, #4584, #4674
             $json = (array) $json;
