@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 556: Fix violations in wp-plugins/riseup-asia-uploader/includes/Agent/AgentSite.php
 
 Target File: `wp-plugins/riseup-asia-uploader/includes/Agent/AgentSite.php`

@@ -232,3 +232,6 @@
 - [Task 551](completed/551-fix-wp-plugins-qupload-templates-admin-dashboard-php.md) - Completed
 - [Task 552](completed/552-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminajaxupdatetrait-php.md) - Completed
 - [Task 553](completed/553-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminlicenseajaxtrait-php.md) - Completed
+- [Task 554](completed/554-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminmenuenqueuesnapshotstrait-php.md) - Completed
+- [Task 555](completed/555-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminpagestrait-php.md) - Completed
+- [Task 556](completed/556-fix-wp-plugins-riseup-asia-uploader-includes-agent-agentsite-php.md) - Completed

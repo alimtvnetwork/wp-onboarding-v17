@@ -61,7 +61,7 @@ final readonly class AgentSite {
     }
 
     /**
-     * Convert to associative array for backward-compatible API responses.
+     * Convert to associative array for backward-compatible Api responses.
      *
      * @return array<string,mixed>
      */

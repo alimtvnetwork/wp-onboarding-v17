@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 555: Fix violations in wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminPagesTrait.php
 
 Target File: `wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminPagesTrait.php`

@@ -152,7 +152,7 @@ trait AdminMenuEnqueueSnapshotsTrait {
                 'importFailed'         => __('Import failed', $pluginSlug),
                 'restoreQueued'        => __('Restore queued — running in background', $pluginSlug),
                 'restoreFailed'        => __('Restore failed', $pluginSlug),
-                'noDownloadUrl'        => __('No download URL returned', $pluginSlug),
+                'noDownloadUrl'        => __('No download Url returned', $pluginSlug),
                 'snapshotDeleted'      => __('Snapshot deleted', $pluginSlug),
                 'deleteFailed'         => __('Delete failed', $pluginSlug),
                 'cascadeWarning'       => __('This full snapshot has %d incremental backup(s). Deleting it will also permanently remove all %d incremental snapshot(s).', $pluginSlug),

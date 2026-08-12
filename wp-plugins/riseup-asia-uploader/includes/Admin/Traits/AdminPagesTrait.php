@@ -138,7 +138,7 @@ trait AdminPagesTrait {
                 'label' => __('Monitoring & Logs', $pluginSlug),
                 'icon'  => 'dashicons-chart-area',
                 'endpoints' => [
-                    'logs'           => ['label' => 'Logs API', 'desc' => 'Fetch transaction logs'],
+                    'logs'           => ['label' => 'Logs Api', 'desc' => 'Fetch transaction logs'],
                     'logs_stats'     => ['label' => 'Logs Stats', 'desc' => 'Get log statistics'],
                     'logs_status'    => ['label' => 'Remote Logs Status', 'desc' => 'Get remote log file metadata and counters'],
                     'logs_clear'     => ['label' => 'Remote Logs Clear', 'desc' => 'Request secure two-step log clearing token'],
@@ -159,7 +159,7 @@ trait AdminPagesTrait {
                 'label' => __('Documentation', $pluginSlug),
                 'icon'  => 'dashicons-media-document',
                 'endpoints' => [
-                    'openapi' => ['label' => 'OpenAPI Spec', 'desc' => 'API documentation endpoint'],
+                    'openapi' => ['label' => 'OpenApi Spec', 'desc' => 'Api documentation endpoint'],
                 ],
             ],
         ];
