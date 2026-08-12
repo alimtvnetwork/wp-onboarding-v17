@@ -107,3 +107,6 @@
 - [Task 425](completed/425-fix-src-components-shared-envelopepagination-tsx.md) - Completed
 - [Task 426](completed/426-fix-src-components-shared-jsonhighlighter-tsx.md) - Completed
 - [Task 427](completed/427-fix-src-components-shared-logviewer-tsx.md) - Completed
+- [Task 428](completed/428-fix-src-components-sites-addsitedialog-tsx.md) - Completed
+- [Task 429](completed/429-fix-src-components-sites-connectiontestlogs-tsx.md) - Completed
+- [Task 430](completed/430-fix-src-components-sites-deployuploaderdialog-tsx.md) - Completed

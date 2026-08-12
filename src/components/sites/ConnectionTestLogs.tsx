@@ -5,6 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { LiveLogEntry } from "@/components/shared/LiveLogEntry";
+import { ConnectionTestPhaseType } from "@/lib/constants";
+
+const Json = JSON;
 
 interface ConnectionTestLogsProps {
   steps: ConnectionTestStep[];
@@ -19,35 +22,37 @@ interface ConnectionTestLogsProps {
 function generateCurlCommand(step: ConnectionTestStep): string | null {
   const details = step.details;
   
+  const MAX_HEAD_BYTES = 500;
+  
   // Generate curl commands for specific steps
-  switch (step.step) {
-    case "dns_check":
-      if (details?.normalizedUrl || details?.url) {
+  switch (step.step as ConnectionTestPhaseType | string) {
+    case ConnectionTestPhaseType.DnsCheck:
+      if (details?.normalizedUrl !== undefined || details?.url !== undefined) {
         const url = (details.normalizedUrl || details.url) as string;
         return `curl -I -s -o /dev/null -w "%{http_code}" "${url}"`;
       }
       break;
-    case "rest_api_check":
-      if (details?.normalizedUrl || details?.url) {
+    case ConnectionTestPhaseType.RestApiCheck:
+      if (details?.normalizedUrl !== undefined || details?.url !== undefined) {
         const url = (details.normalizedUrl || details.url) as string;
-        return `curl -s "${url}/wp-json/" | head -c 500`;
+        return `curl -s "${url}/wp-json/" | head -c ${MAX_HEAD_BYTES}`;
       }
       break;
-    case "auth_check":
+    case ConnectionTestPhaseType.AuthCheck:
       // We don't show the actual password in curl for security
-      if (details?.url || details?.normalizedUrl) {
+      if (details?.url !== undefined || details?.normalizedUrl !== undefined) {
         const url = (details.normalizedUrl || details.url) as string;
         return `curl -s -u "USERNAME:APP_PASSWORD" "${url}/wp-json/wp/v2/users/me"`;
       }
       break;
-    case "plugin_access_check":
-      if (details?.url || details?.normalizedUrl) {
+    case ConnectionTestPhaseType.PluginAccessCheck:
+      if (details?.url !== undefined || details?.normalizedUrl !== undefined) {
         const url = (details.normalizedUrl || details.url) as string;
         return `curl -s -u "USERNAME:APP_PASSWORD" "${url}/wp-json/wp/v2/plugins"`;
       }
       break;
-    case "write_test":
-      if (details?.url || details?.normalizedUrl) {
+    case ConnectionTestPhaseType.WriteTest:
+      if (details?.url !== undefined || details?.normalizedUrl !== undefined) {
         const url = (details.normalizedUrl || details.url) as string;
         return `curl -s -X POST -u "USERNAME:APP_PASSWORD" -H "Content-Type: application/json" \\\n  -d '{"title":"Test","content":"Test","status":"draft"}' \\\n  "${url}/wp-json/wp/v2/posts"`;
       }
@@ -69,9 +74,9 @@ export function ConnectionTestLogs({ steps, isActive, onClear, debugMode = false
     const logText = steps
       .map((s) => {
         const time = s.timestamp.toLocaleTimeString();
-        const details = s.details ? `\n  Details: ${JSON.stringify(s.details)}` : "";
-        const curl = debugMode ? generateCurlCommand(s) : null;
-        const curlLine = curl ? `\n  Command: ${curl}` : "";
+        const details = s.details !== undefined ? `\n  Details: ${Json.stringify(s.details)}` : "";
+        const curl = debugMode === true ? generateCurlCommand(s) : null;
+        const curlLine = curl !== null ? `\n  Command: ${curl}` : "";
         return `[${time}] [${s.status.toUpperCase()}] ${s.step}: ${s.message}${details}${curlLine}`;
       })
       .join("\n");

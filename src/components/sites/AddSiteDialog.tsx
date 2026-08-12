@@ -33,6 +33,70 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useErrorStore } from "@/stores/errorStore";
 
+enum TabType {
+  Basic = "basic",
+  Connection = "connection",
+  Plugins = "plugins",
+}
+
+enum AddSiteFieldType {
+  Name = "name",
+  Url = "url",
+  Username = "username",
+  Password = "password",
+}
+
+enum QueryKeyType {
+  Plugins = "plugins",
+  Sites = "sites",
+}
+
+enum EndpointType {
+  SitesTest = "/sites/test",
+  Sites = "/sites",
+}
+
+enum MethodType {
+  Post = "POST",
+}
+
+enum ToastMessageType {
+  MissingFieldsTest = "Url, username, and password are required to test",
+  ConnectionSuccessful = "Connection successful!",
+  ConnectionFailed = "Connection failed",
+  ConnectionTestFailed = "Connection test failed",
+  AllFieldsRequired = "All fields are required",
+  SiteAddedSuccessfully = "Site added successfully",
+  FailedToAddSite = "Failed to add site",
+}
+
+enum ToastDescriptionType {
+  ClickForDetails = "Click for details",
+}
+
+enum ToastActionLabelType {
+  ViewDetails = "View Details",
+}
+
+enum NumberType {
+  ToastDuration = 10000,
+  Zero = 0,
+}
+
+enum LoggerSourceType {
+  HandleTestCredentials = "AddSiteDialog.handleTestCredentials",
+  HandleAddSite = "AddSiteDialog.handleAddSite",
+}
+
+enum LoggerComponentType {
+  AddSiteDialog = "AddSiteDialog",
+}
+
+enum LoggerActionType {
+  TestConnection = "test_connection",
+  SaveClicked = "save_clicked",
+}
+
 interface AddSiteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -47,7 +111,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTestingCredentials, setIsTestingCredentials] = useState(false);
-  const [activeTab, setActiveTab] = useState("basic");
+  const [activeTab, setActiveTab] = useState<TabType>(TabType.Basic);
   const [category, setCategory] = useState<string | null>(null);
   const [credentialsTestResult, setCredentialsTestResult] = useState<{
     success: boolean;
@@ -63,25 +127,25 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
 
   // Fetch all plugins for the Plugins tab
   const { data: allPlugins } = useQuery({
-    queryKey: ["plugins"],
+    queryKey: [QueryKeyType.Plugins],
     queryFn: async () => {
       try {
         const response = await api.getPlugins();
-        return response.success ? response.data || [] : [];
+        return response.success === true ? response.data || [] : [];
       } catch (e: unknown) {
         console.warn("[AddSiteDialog] Failed to fetch plugins:", e);
         return [];
       }
     },
-    enabled: open,
+    enabled: open === true,
   });
 
   // Reset state when dialog closes
   useEffect(() => {
-    if (!open) {
+    if (open === false) {
       setCredentialsTestResult(null);
       connectionLogs.clearLogs();
-      setActiveTab("basic");
+      setActiveTab(TabType.Basic);
       setCategory(null);
       setSelectedPluginIds([]);
       setPluginSearch("");
@@ -97,17 +161,17 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
     });
   };
 
-  const handleFieldChange = useCallback((field: "name" | "url" | "username" | "password", value: string) => {
+  const handleFieldChange = useCallback((field: AddSiteFieldType, value: string) => {
     handleInputChange(field, value);
     // Only clear test result if credentials change
-    if (field === "url" || field === "username" || field === "password") {
+    if (field === AddSiteFieldType.Url || field === AddSiteFieldType.Username || field === AddSiteFieldType.Password) {
       setCredentialsTestResult(null);
     }
   }, [handleInputChange]);
 
   const handleTestCredentials = async () => {
-    if (!formData.url || !formData.username || !formData.password) {
-      toast.error("URL, username, and password are required to test");
+    if (formData.url === "" || formData.username === "" || formData.password === "") {
+      toast.error(ToastMessageType.MissingFieldsTest);
       return;
     }
 
@@ -122,8 +186,8 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
         password: formData.password,
       });
 
-      if (response.success && response.data) {
-        if (response.data.isSuccess) {
+      if (response.success === true && response.data !== undefined) {
+        if (response.data.isSuccess === true) {
           setCredentialsTestResult({
             success: true,
             message: response.data.message || "Connection successful",
@@ -131,7 +195,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             canManagePlugins: response.data.canManagePlugins,
             testedAt: new Date().toISOString(),
           });
-          toast.success("Connection successful!", {
+          toast.success(ToastMessageType.ConnectionSuccessful, {
             description: response.data.siteName || response.data.message,
           });
         } else {
@@ -139,11 +203,15 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             success: false,
             message: response.data.message || "Connection failed",
           });
-          toast.error("Connection failed", { description: response.data.message });
+          toast.error(ToastMessageType.ConnectionFailed, { description: response.data.message });
         }
-      } else if (response.error) {
+      } else if (response.error !== undefined) {
         setCredentialsTestResult({ success: false, message: response.error.message });
-        showErrorWithModal(response.error, { endpoint: "/sites/test", method: "POST" });
+        showErrorWithModal(response.error, {
+          endpoint: EndpointType.Sites,
+          method: MethodType.Post,
+          requestBody: { ...requestBody, applicationPassword: "***" },
+        });
       }
     } catch (error: unknown) {
       const captured = captureException(error, { 
@@ -176,8 +244,8 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
   };
 
   const handleAddSite = async () => {
-    if (!formData.name || !formData.url || !formData.username || !formData.password) {
-      toast.error("All fields are required");
+    if (formData.name === "" || formData.url === "" || formData.username === "" || formData.password === "") {
+      toast.error(ToastMessageType.AllFieldsRequired);
       return;
     }
 
@@ -188,7 +256,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
       applicationPassword: formData.password,
       category: category || undefined,
       // If connection was tested successfully, pass that info
-      ...(credentialsTestResult?.success && {
+      ...(credentialsTestResult?.success === true && {
         connectionStatus: ConnectionStatusType.Connected,
         testedAt: credentialsTestResult.testedAt,
       }),
@@ -197,18 +265,18 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
     setIsSubmitting(true);
     try {
       const response = await api.createSite(requestBody);
-      if (response.success && response.data) {
+      if (response.success === true && response.data !== undefined) {
         const newSiteId = response.data.id;
         
         // Create plugin mappings for selected plugins
-        if (selectedPluginIds.length > 0 && newSiteId) {
+        if (selectedPluginIds.length > NumberType.Zero && newSiteId !== undefined) {
           for (const pluginId of selectedPluginIds) {
             try {
               const plugin = allPlugins?.find((p) => p.id === pluginId);
               const pluginMappingsRes = await api.getPluginMappings(pluginId);
-              if (pluginMappingsRes.success && pluginMappingsRes.data) {
+              if (pluginMappingsRes.success === true && pluginMappingsRes.data !== undefined) {
                 const currentSiteIds = pluginMappingsRes.data.map((m) => m.siteId);
-                if (!currentSiteIds.includes(newSiteId)) {
+                if (currentSiteIds.includes(newSiteId) === false) {
                   const remoteSlug = pluginMappingsRes.data[0]?.remoteSlug || 
                     (plugin?.name || "plugin").toLowerCase().replace(/\s+/g, '-');
                   await api.updatePluginMappings(pluginId, { 
@@ -223,12 +291,12 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
           }
         }
         
-        toast.success("Site added successfully");
-        queryClient.invalidateQueries({ queryKey: ["sites"] });
-        queryClient.invalidateQueries({ queryKey: ["plugins"] });
+        toast.success(ToastMessageType.SiteAddedSuccessfully);
+        queryClient.invalidateQueries({ queryKey: [QueryKeyType.Sites] });
+        queryClient.invalidateQueries({ queryKey: [QueryKeyType.Plugins] });
         onOpenChange(false);
         clearForm();
-      } else if (response.error) {
+      } else if (response.error !== undefined) {
         showErrorWithModal(response.error, {
           endpoint: "/sites",
           method: "POST",
@@ -255,8 +323,8 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
     }
   };
 
-  const canTest = formData.url && formData.username && formData.password;
-  const canSave = formData.name && formData.url && formData.username && formData.password;
+  const canTest = formData.url !== "" && formData.username !== "" && formData.password !== "";
+  const canSave = formData.name !== "" && formData.url !== "" && formData.username !== "" && formData.password !== "";
   
   // Filter plugins by search
   const filteredPlugins = (allPlugins || []).filter((plugin) =>
@@ -270,7 +338,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             Add WordPress Site
-            {credentialsTestResult?.success && (
+            {credentialsTestResult?.success === true && (
               <span className="inline-flex items-center gap-1 text-xs font-normal text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                 <CheckCircle className="h-3 w-3" />
                 Connected
@@ -278,34 +346,34 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             )}
           </DialogTitle>
           <DialogDescription>
-            Connect a WordPress site using its REST API credentials.
+            Connect a WordPress site using its Rest Api credentials.
           </DialogDescription>
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="basic">Basic</TabsTrigger>
-            <TabsTrigger value="connection">Connection</TabsTrigger>
-            <TabsTrigger value="plugins">Plugins</TabsTrigger>
+            <TabsTrigger value={TabType.Basic}>Basic</TabsTrigger>
+            <TabsTrigger value={TabType.Connection}>Connection</TabsTrigger>
+            <TabsTrigger value={TabType.Plugins}>Plugins</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="basic" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Basic} className="space-y-4 pt-4">
             <div className="space-y-2">
               <Label htmlFor="name">Site Name</Label>
               <Input
                 id="name"
                 placeholder="My WordPress Site"
                 value={formData.name}
-                onChange={(e) => handleFieldChange("name", e.target.value)}
+                onChange={(e) => handleFieldChange(AddSiteFieldType.Name, e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="url">Site URL</Label>
+              <Label htmlFor="url">Site Url</Label>
               <Input
                 id="url"
                 placeholder="https://example.com"
                 value={formData.url}
-                onChange={(e) => handleFieldChange("url", e.target.value)}
+                onChange={(e) => handleFieldChange(AddSiteFieldType.Url, e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -318,14 +386,14 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             </div>
           </TabsContent>
 
-          <TabsContent value="connection" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Connection} className="space-y-4 pt-4">
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
                 placeholder="admin"
                 value={formData.username}
-                onChange={(e) => handleFieldChange("username", e.target.value)}
+                onChange={(e) => handleFieldChange(AddSiteFieldType.Username, e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -335,7 +403,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
                 type="password"
                 placeholder="xxxx xxxx xxxx xxxx xxxx xxxx"
                 value={formData.password}
-                onChange={(e) => handleFieldChange("password", e.target.value)}
+                onChange={(e) => handleFieldChange(AddSiteFieldType.Password, e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
                 Generate an application password in WordPress under Users → Profile
@@ -354,7 +422,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    {credentialsTestResult.success ? (
+                    {credentialsTestResult.success === true ? (
                       <CheckCircle className="h-4 w-4 text-primary" />
                     ) : (
                       <XCircle className="h-4 w-4 text-destructive" />
@@ -362,10 +430,10 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
                     <span
                       className={cn(
                         "text-sm font-medium",
-                        credentialsTestResult.success ? "text-primary" : "text-destructive"
+                        credentialsTestResult.success === true ? "text-primary" : "text-destructive"
                       )}
                     >
-                      {credentialsTestResult.success ? "Connected" : "Connection Failed"}
+                      {credentialsTestResult.success === true ? "Connected" : "Connection Failed"}
                     </span>
                   </div>
                   {credentialsTestResult.success && (
@@ -376,7 +444,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
                       disabled={isTestingCredentials}
                       className="h-7 text-xs"
                     >
-                      {isTestingCredentials ? (
+                      {isTestingCredentials === true ? (
                         <Loader2 className="h-3 w-3 animate-spin mr-1" />
                       ) : (
                         <RefreshCw className="h-3 w-3 mr-1" />
@@ -402,14 +470,14 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             )}
 
             {/* Test Button */}
-            {!credentialsTestResult?.success && (
+            {credentialsTestResult?.success !== true && (
               <Button
                 variant="secondary"
                 className="w-full"
                 onClick={handleTestCredentials}
-                disabled={isTestingCredentials || !canTest}
+                disabled={isTestingCredentials === true || canTest === false}
               >
-                {isTestingCredentials ? (
+                {isTestingCredentials === true ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : (
                   <TestTube className="h-4 w-4 mr-2" />
@@ -419,7 +487,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             )}
 
             {/* Connection Test Logs */}
-            {connectionLogs.steps.length > 0 && (
+            {connectionLogs.steps.length > NumberType.Zero && (
               <ConnectionTestLogs
                 steps={connectionLogs.steps}
                 isActive={connectionLogs.isActive}
@@ -429,7 +497,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             )}
           </TabsContent>
 
-          <TabsContent value="plugins" className="space-y-4 pt-4">
+          <TabsContent value={TabType.Plugins} className="space-y-4 pt-4">
             <p className="text-sm text-muted-foreground">
               Select plugins to deploy to this site after creation.
             </p>
@@ -445,21 +513,21 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
               />
             </div>
             
-            {filteredPlugins.length > 0 ? (
+            {filteredPlugins.length > NumberType.Zero ? (
               <div className="space-y-2 max-h-[200px] overflow-y-auto">
                 {filteredPlugins.map((plugin: Plugin) => (
                   <div
                     key={plugin.id}
                     className={cn(
                       "flex items-center space-x-3 p-2 rounded-lg border cursor-pointer transition-colors",
-                      selectedPluginIds.includes(plugin.id)
+                      selectedPluginIds.includes(plugin.id) === true
                         ? "border-primary bg-primary/5"
                         : "border-border hover:bg-muted/50"
                     )}
                     onClick={() => togglePluginSelection(plugin.id)}
                   >
                     <Checkbox
-                      checked={selectedPluginIds.includes(plugin.id)}
+                      checked={selectedPluginIds.includes(plugin.id) === true}
                       onCheckedChange={() => togglePluginSelection(plugin.id)}
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -473,7 +541,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
                   </div>
                 ))}
               </div>
-            ) : allPlugins && allPlugins.length === 0 ? (
+            ) : allPlugins !== undefined && allPlugins.length === NumberType.Zero ? (
               <div className="text-center py-6 text-muted-foreground">
                 <Package className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p className="text-sm">No plugins registered yet.</p>
@@ -485,7 +553,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
               </div>
             ) : null}
             
-            {selectedPluginIds.length > 0 && (
+            {selectedPluginIds.length > NumberType.Zero && (
               <div className="flex flex-wrap gap-1.5 pt-2 border-t">
                 {selectedPluginIds.map((pluginId) => {
                   const plugin = allPlugins?.find((p: Plugin) => p.id === pluginId);
@@ -505,8 +573,8 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleAddSite} disabled={isSubmitting || !canSave}>
-            {isSubmitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+          <Button onClick={handleAddSite} disabled={isSubmitting === true || canSave === false}>
+            {isSubmitting === true && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             {credentialsTestResult?.success ? "Save Site" : "Add Site"}
           </Button>
         </DialogFooter>

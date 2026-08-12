@@ -1137,7 +1137,7 @@ function PluginDetailCard({
               )}
               {plugin?.apiNamespace && (
                 <span className="font-mono text-xs">
-                  API {plugin.apiNamespace}
+                  Api {plugin.apiNamespace}
                 </span>
               )}
               {plugin?.dbAvailable && (
@@ -1149,7 +1149,7 @@ function PluginDetailCard({
             </div>
           )}
 
-          {/* Server time + remote URL */}
+          {/* Server time + remote Url */}
           {(plugin?.serverTime || plugin?.remoteSiteUrl) && (
             <div className="flex items-center gap-3 text-muted-foreground text-xs">
               {plugin?.serverTime && (

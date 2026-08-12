@@ -135,6 +135,16 @@ export const ConnectionTestStatus = {
 
 export type ConnectionTestStatus = (typeof ConnectionTestStatus)[keyof typeof ConnectionTestStatus];
 
+export const ConnectionTestPhaseType = {
+  DnsCheck: "dns_check",
+  RestApiCheck: "rest_api_check",
+  AuthCheck: "auth_check",
+  PluginAccessCheck: "plugin_access_check",
+  WriteTest: "write_test",
+} as const;
+
+export type ConnectionTestPhaseType = (typeof ConnectionTestPhaseType)[keyof typeof ConnectionTestPhaseType];
+
 // ---------------------------------------------------------------------------
 // Cron Job
 // ---------------------------------------------------------------------------
