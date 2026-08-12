@@ -250,3 +250,7 @@
 - [Task 616](completed/02-guideline-audit-fixes/616-fix-wp-plugins-riseup-asia-uploader-phpstan-bootstrap-php.md) - Completed
 - [Task 617](completed/02-guideline-audit-fixes/617-fix-wp-plugins-riseup-asia-uploader-templates-admin-agents-php.md) - Completed
 
+- [Task 618](completed/02-guideline-audit-fixes/618-fix-wp-plugins-riseup-asia-uploader-templates-admin-feedback-php.md) - Completed
+- [Task 619](completed/02-guideline-audit-fixes/619-fix-wp-plugins-riseup-asia-uploader-templates-admin-logs-php.md) - Completed
+- [Task 620](completed/02-guideline-audit-fixes/620-fix-wp-plugins-riseup-asia-uploader-templates-admin-settings-php.md) - Completed
+

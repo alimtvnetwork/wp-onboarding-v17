@@ -22,7 +22,7 @@ $pluginSlug = PluginConfigType::Slug->value;
     <?php
     $pageIcon = 'dashicons-admin-settings';
     $pageTitle = $pluginName . ' - ' . __('Settings', $pluginSlug);
-    $pageDescription = __('Configure API endpoints, authentication requirements, and auto-update settings.', $pluginSlug);
+    $pageDescription = __('Configure Api endpoints, authentication requirements, and auto-update settings.', $pluginSlug);
     include __DIR__ . '/partials/shared/page-header.php';
     ?>
 

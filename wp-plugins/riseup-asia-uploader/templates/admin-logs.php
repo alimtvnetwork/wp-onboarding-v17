@@ -22,7 +22,7 @@ $pluginSlug = PluginConfigType::Slug->value;
 
 // Trigger source labels for display
 $triggerLabels = [
-    TriggerSourceType::Api->value       => __('API', $pluginSlug),
+    TriggerSourceType::Api->value       => __('Api', $pluginSlug),
     TriggerSourceType::Dashboard->value => __('Dashboard', $pluginSlug),
     TriggerSourceType::Agent->value     => __('Agent Push', $pluginSlug),
     TriggerSourceType::Cron->value      => __('Cron', $pluginSlug),
@@ -41,7 +41,7 @@ $triggerClasses = [
 // Upload source labels for display
 $uploadSourceLabels = [
     UploadSourceType::Script->value  => __('Upload Script', $pluginSlug),
-    UploadSourceType::RestApi->value => __('REST API', $pluginSlug),
+    UploadSourceType::RestApi->value => __('Rest Api', $pluginSlug),
     UploadSourceType::AdminUi->value => __('Admin UI', $pluginSlug),
     UploadSourceType::WpCli->value   => __('WP-CLI', $pluginSlug),
 ];
@@ -58,7 +58,7 @@ $uploadSourceClasses = [
     <?php
     $pageIcon = 'dashicons-list-view';
     $pageTitle = $pluginName . ' - ' . __('Activity Logs', $pluginSlug);
-    $pageDescription = __('View all API activity and operations performed through this plugin.', $pluginSlug);
+    $pageDescription = __('View all Api activity and operations performed through this plugin.', $pluginSlug);
     include __DIR__ . '/partials/shared/page-header.php';
     ?>
 

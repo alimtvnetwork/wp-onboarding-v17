@@ -106,7 +106,7 @@ $pluginSlug = PluginConfigType::Slug->value;
                     <td>
                         <label class="riseup-feedback-checkbox-label">
                             <input type="checkbox" id="feedback-system-info" name="include_system_info" value="1" checked>
-                            <?php esc_html_e('Include system info (PHP version, WordPress version, plugin version, site URL)', $pluginSlug); ?>
+                            <?php esc_html_e('Include system info (Php version, WordPress version, plugin version, site Url)', $pluginSlug); ?>
                         </label>
                     </td>
                 </tr>
