@@ -189,7 +189,7 @@ func detectHtmlResponse(body []byte, endpoint string, op operationtype.Variant) 
 	}
 	msg += ". Verify the plugin is installed, activated, and the API namespace matches"
 
-	return apperror.New(apperror.ErrWPEndpointMismatch, msg)
+	return apperror.New(apperror.ErrWpEndpointMismatch, msg)
 }
 
 // firstNonEmpty returns the first non-empty ErrorCode argument.

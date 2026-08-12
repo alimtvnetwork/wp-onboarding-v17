@@ -44,11 +44,11 @@ const (
 	ErrDatabaseBootstrap ErrorCode = "E2010" // Failed to bootstrap operation
 )
 
-// WordPress API errors (E3xxx)
+// WordPress Api errors (E3xxx)
 const (
 	ErrWPConnection     ErrorCode = "E3001" // Failed to connect to WordPress
 	ErrWPAuth           ErrorCode = "E3002" // Authentication failed
-	ErrWPAPIDisabled    ErrorCode = "E3003" // REST API is disabled
+	ErrWpApiDisabled    ErrorCode = "E3003" // REST API is disabled
 	ErrWPPluginList     ErrorCode = "E3004" // Failed to list plugins
 	ErrWPPluginGet      ErrorCode = "E3005" // Failed to get plugin info
 	ErrWPPluginUpload   ErrorCode = "E3006" // Failed to upload plugin
@@ -58,7 +58,7 @@ const (
 	ErrWPPluginDelete      ErrorCode = "E3010" // Failed to delete plugin
 	ErrWPPluginFiles       ErrorCode = "E3011" // Failed to get plugin files
 	ErrWPPluginContent     ErrorCode = "E3012" // Failed to get plugin file content
-	ErrWPEndpointMismatch  ErrorCode = "E3013" // REST API returned HTML — endpoint/namespace not registered
+	ErrWpEndpointMismatch  ErrorCode = "E3013" // REST API returned HTML — endpoint/namespace not registered
 )
 
 // File system errors (E4xxx)

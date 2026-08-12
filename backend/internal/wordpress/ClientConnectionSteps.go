@@ -96,7 +96,7 @@ func (c *Client) reportProbeFailure(err error) *apperror.AppError {
 	}
 	c.progress(failEvent)
 
-	return apperror.Wrap(err, apperror.ErrWPAPIDisabled, "Rest Api not accessible").WithUrl(c.baseUrl)
+	return apperror.Wrap(err, apperror.ErrWpApiDisabled, "Rest Api not accessible").WithUrl(c.baseUrl)
 }
 
 // reportProbeSuccess sends the probe success event.
@@ -140,7 +140,7 @@ func (c *Client) reportRestApiNotFound() *apperror.AppError {
 	}
 	c.progress(notFoundEvent)
 
-	return apperror.New(apperror.ErrWPAPIDisabled, "WordPress Rest Api not found - ensure permalinks are enabled").WithUrl(c.baseUrl)
+	return apperror.New(apperror.ErrWpApiDisabled, "WordPress Rest Api not found - ensure permalinks are enabled").WithUrl(c.baseUrl)
 }
 
 // authenticateAndParseUser checks authentication (Step 2) and parses user info (Step 3).

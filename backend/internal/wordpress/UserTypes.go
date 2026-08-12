@@ -31,7 +31,7 @@ type UserYoast struct {
 	Pronouns             string `json:"Pronouns,omitempty"`
 }
 
-// UserResponse represents a full user object returned from the PHP API.
+// UserResponse represents a full user object returned from the Php Api.
 type UserResponse struct {
 	Id           int         `json:"Id"`
 	Username     string      `json:"Username"`

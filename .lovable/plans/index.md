@@ -49,3 +49,6 @@
 - [Task 362](completed/362-fix-backend-internal-wordpress-snapshotsbackup-go.md) - Completed
 - [Task 363](completed/363-fix-backend-internal-wordpress-snapshotsexport-go.md) - Completed
 - [Task 364](completed/364-fix-backend-internal-wordpress-uploader-go.md) - Completed
+- [Task 365](completed/365-fix-backend-internal-wordpress-uploaderexport-go.md) - Completed
+- [Task 366](completed/366-fix-backend-internal-wordpress-uploaderexporterrors-go.md) - Completed
+- [Task 367](completed/367-fix-backend-internal-wordpress-uploaderfiles-go.md) - Completed

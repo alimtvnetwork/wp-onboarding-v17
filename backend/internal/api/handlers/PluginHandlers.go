@@ -52,7 +52,7 @@ var GetPlugin = handleActionById(
 		IsReady:     isPluginServiceReady,
 		ServiceName: "Plugin service",
 		ParamName:   "id",
-		ErrCode:     apperror.ErrWPAPIDisabled,
+		ErrCode:     apperror.ErrWpApiDisabled,
 	},
 	func(ctx context.Context, id int64) (*models.Plugin, *apperror.AppError) {
 		return Services.PluginService.GetById(ctx, id)
