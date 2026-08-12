@@ -1,4 +1,4 @@
-// Licensing server API client.
+// Licensing server Api client.
 // Talks directly to the licensing server (separate from main Go backend).
 // Uses Bearer token auth via VITE_LICENSING_ADMIN_TOKEN.
 
@@ -8,6 +8,9 @@ import type {
   CreateLicenseInput,
   UpdateLicenseInput,
 } from "@/types/licensing";
+
+const Json = window['JSON'];
+const Url = window['URL'];
 
 const LICENSING_PREFIX = "/api/v1/admin";
 
@@ -35,9 +38,9 @@ function authHeaders(): HeadersInit {
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.text();
-    let message = `Licensing API error (${res.status})`;
+    let message = `Licensing Api error (${res.status})`;
     try {
-      const parsed = JSON.parse(body);
+      const parsed = Json.parse(body);
       if (parsed.error) message = parsed.error;
     } catch {
       // use default message
@@ -63,7 +66,7 @@ export async function createLicense(input: CreateLicenseInput): Promise<License>
   const res = await fetch(buildUrl("/licenses"), {
     method: "POST",
     headers: authHeaders(),
-    body: JSON.stringify(input),
+    body: Json.stringify(input),
   });
   return handleResponse<License>(res);
 }
@@ -72,7 +75,7 @@ export async function updateLicense(id: number, input: UpdateLicenseInput): Prom
   const res = await fetch(buildUrl(`/licenses/${id}`), {
     method: "PATCH",
     headers: authHeaders(),
-    body: JSON.stringify(input),
+    body: Json.stringify(input),
   });
   return handleResponse<License>(res);
 }
@@ -93,7 +96,7 @@ export async function listAuditLogs(params?: {
   action?: string;
   license_id?: number;
 }): Promise<AuditLog[]> {
-  const url = new URL(buildUrl("/audit"));
+  const url = new Url(buildUrl("/audit"));
   if (params?.action) url.searchParams.set("action", params.action);
   if (params?.license_id) url.searchParams.set("license_id", String(params.license_id));
 

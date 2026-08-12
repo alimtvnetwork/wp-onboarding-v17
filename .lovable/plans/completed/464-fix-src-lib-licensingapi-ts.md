@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 464: Fix violations in src/lib/licensingApi.ts
 
 Target File: `src/lib/licensingApi.ts`

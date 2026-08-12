@@ -3,7 +3,7 @@
 /**
  * Converts embedded literal "\\n" sequences into real newlines for display.
  *
- * NOTE: This intentionally does NOT attempt full JSON unescaping—only newlines,
+ * NOTE: This intentionally does NOT attempt full Json unescaping—only newlines,
  * which are common in stack traces and multi-line responses.
  */
 export function unescapeEmbeddedNewlines(input: string): string {

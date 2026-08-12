@@ -9,6 +9,8 @@
  * - Configurable via settings
  */
 
+const Json = window['JSON'];
+
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error';
 
 export interface LogEntry {
@@ -59,7 +61,7 @@ const logBuffer: LogEntry[] = [];
 // Track function entry times for duration calculation
 const entryTimes = new Map<string, number>();
 
-// Generate unique ID for log entries
+// Generate unique Id for log entries
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
@@ -207,7 +209,7 @@ function log(
 }
 
 /**
- * Logger API
+ * Logger Api
  */
 export const logger = {
   /**
@@ -304,7 +306,7 @@ export const logger = {
           entry.functionName ? `${entry.functionName}()` : null,
           entry.action ? `(${entry.action}${entry.duration ? ` ${entry.duration}ms` : ''})` : null,
           entry.message,
-          entry.context ? JSON.stringify(entry.context) : null,
+          entry.context ? Json.stringify(entry.context) : null,
         ]
           .filter(Boolean)
           .join(' ');
