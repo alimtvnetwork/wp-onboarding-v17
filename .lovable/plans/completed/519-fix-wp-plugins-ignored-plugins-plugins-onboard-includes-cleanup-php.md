@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 519: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/Cleanup.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/Cleanup.php`

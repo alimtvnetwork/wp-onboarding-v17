@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 520: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/Config.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/Config.php`

@@ -37,8 +37,8 @@ class OnboardAuditLogger {
      *
      * @param string      $action         Action name.
      * @param string|null $plugin_slug    Plugin slug (if applicable).
-     * @param string|null $app_id         Application ID.
-     * @param string|null $ip_address     IP address.
+     * @param string|null $app_id         Application Id.
+     * @param string|null $ip_address     Ip address.
      * @param string      $status         Status (success, failed, pending_approval).
      * @param array       $details        Additional details.
      * @param string|null $error_message  Error message (if failed).
@@ -86,10 +86,10 @@ class OnboardAuditLogger {
     }
 
     /**
-     * Log IP approval action.
+     * Log Ip approval action.
      *
-     * @param string      $app_id     Application ID.
-     * @param string      $ip_address IP address.
+     * @param string      $app_id     Application Id.
+     * @param string      $ip_address Ip address.
      * @param string      $action     Action (requested, approved, rejected).
      * @param array       $details    Additional details.
      */
@@ -160,7 +160,7 @@ class OnboardAuditLogger {
 
         $results = $this->db->audit_query($sql, $params)->fetchAll();
 
-        // Decode JSON details.
+        // Decode Json details.
         foreach ($results as &$row) {
             if (!empty($row['details'])) {
                 $row['details'] = json_decode($row['details'], true);
@@ -200,7 +200,7 @@ class OnboardAuditLogger {
     }
 
     /**
-     * Get IP approval logs.
+     * Get Ip approval logs.
      *
      * @param array $filters Filters.
      * @param int   $limit   Limit.
@@ -283,9 +283,9 @@ class OnboardAuditLogger {
     }
 
     /**
-     * Get application name by ID.
+     * Get application name by Id.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return string|null
      */
     private function get_app_name($app_id) {
@@ -298,7 +298,7 @@ class OnboardAuditLogger {
     }
 
     /**
-     * Get client IP address.
+     * Get client Ip address.
      *
      * @return string
      */

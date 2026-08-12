@@ -224,7 +224,7 @@ class OnboardCleanup {
     }
 
     /**
-     * Cleanup expired IP approval requests.
+     * Cleanup expired Ip approval requests.
      *
      * @return array
      */

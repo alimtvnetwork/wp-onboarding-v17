@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 518: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/AuditLogger.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/AuditLogger.php`

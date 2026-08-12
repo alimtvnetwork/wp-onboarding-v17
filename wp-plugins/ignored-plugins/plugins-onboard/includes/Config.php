@@ -46,7 +46,7 @@ class OnboardConfig {
      * @var array
      */
     private static $config_map = array(
-        // API
+        // Api
         'api_namespace' => 'ONBOARD_API_NAMESPACE',
         'api_version' => 'ONBOARD_API_VERSION',
         
