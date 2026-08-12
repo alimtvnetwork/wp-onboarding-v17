@@ -61,14 +61,14 @@ jQuery(document).ready(function($) {
         });
     });
     
-    // Add new API
+    // Add new Api
     $('#cg-add-api-btn').on('click', function() {
         const name = $('#new_api_name').val().trim();
         const url = $('#new_api_url').val().trim();
         const key = $('#new_api_key').val();
         
         if (!name || !url) {
-            alert('<?php echo esc_js(__('Please enter API name and URL', 'category-generator')); ?>');
+            alert('<?php echo esc_js(__('Please enter Api name and Url', 'category-generator')); ?>');
             return;
         }
         
@@ -86,13 +86,13 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     location.reload();
                 } else {
-                    alert(response.data.message || '<?php echo esc_js(__('Error adding API', 'category-generator')); ?>');
+                    alert(response.data.message || '<?php echo esc_js(__('Error adding Api', 'category-generator')); ?>');
                 }
             }
         });
     });
     
-    // Import from API
+    // Import from Api
     $(document).on('click', '.cg-import-from-api', function() {
         const apiId = $(this).data('id');
         const $btn = $(this);
@@ -118,9 +118,9 @@ jQuery(document).ready(function($) {
         });
     });
     
-    // Delete API
+    // Delete Api
     $(document).on('click', '.cg-delete-api', function() {
-        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete this API?', 'category-generator')); ?>')) return;
+        if (!confirm('<?php echo esc_js(__('Are you sure you want to delete this Api?', 'category-generator')); ?>')) return;
         
         const apiId = $(this).data('id');
         

@@ -417,13 +417,13 @@ jQuery(document).ready(function($) {
         try {
             const raw = localStorage.getItem(CG_COLUMNS_STORAGE_KEY);
             if (raw === null) return CG_DEFAULT_HIDDEN.slice();
-            const parsed = JSON.parse(raw);
+            const parsed = Json.parse(raw);
             return Array.isArray(parsed) ? parsed : [];
         } catch (e) { return CG_DEFAULT_HIDDEN.slice(); }
     }
     
     function saveHiddenColumns(hidden) {
-        try { localStorage.setItem(CG_COLUMNS_STORAGE_KEY, JSON.stringify(hidden)); } catch (e) {}
+        try { localStorage.setItem(CG_COLUMNS_STORAGE_KEY, Json.stringify(hidden)); } catch (e) {}
     }
     
     function applyColumnVisibility() {

@@ -19,7 +19,7 @@ $col_span = $has_yoast ? CG_Constants::HISTORY_COLUMNS_WITH_YOAST : CG_Constants
     <thead>
         <tr>
             <th class="<?php echo CG_CSS::COLUMN_CB; ?>" style="width: 40px;"><input type="checkbox" id="<?php echo CG_CSS::ID_SELECT_ALL; ?>"></th>
-            <th class="<?php echo CG_CSS::COLUMN_ID; ?>" style="width: 50px;"><?php _e('ID', 'category-generator'); ?></th>
+            <th class="<?php echo CG_CSS::COLUMN_ID; ?>" style="width: 50px;"><?php _e('Id', 'category-generator'); ?></th>
             <th class="<?php echo CG_CSS::COLUMN_NAME; ?>"><?php _e('Category Name', 'category-generator'); ?></th>
             <th class="<?php echo CG_CSS::COLUMN_SLUG; ?>"><?php _e('Slug', 'category-generator'); ?></th>
             <th class="<?php echo CG_CSS::COLUMN_TITLE; ?>"><?php _e('Title', 'category-generator'); ?></th>

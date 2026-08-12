@@ -175,3 +175,6 @@
 - [Task 494](completed/494-fix-wp-plugins-category-generator-templates-inner-templates-page-php.md) - Completed
 - [Task 495](completed/495-fix-wp-plugins-category-generator-templates-partials-business-profile-form-php.md) - Completed
 - [Task 496](completed/496-fix-wp-plugins-category-generator-templates-partials-history-header-php.md) - Completed
+- [Task 497](completed/497-fix-wp-plugins-category-generator-templates-partials-history-scripts-php.md) - Completed
+- [Task 498](completed/498-fix-wp-plugins-category-generator-templates-partials-history-table-php.md) - Completed
+- [Task 499](completed/499-fix-wp-plugins-category-generator-templates-partials-settings-scripts-php.md) - Completed
