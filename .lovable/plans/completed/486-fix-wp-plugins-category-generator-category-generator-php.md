@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 486: Fix violations in wp-plugins/category-generator/category-generator.php
 
 Target File: `wp-plugins/category-generator/category-generator.php`

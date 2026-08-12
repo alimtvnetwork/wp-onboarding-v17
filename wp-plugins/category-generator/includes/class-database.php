@@ -1039,7 +1039,7 @@ class CG_Database {
     }
     
     /**
-     * Delete business profile by ID
+     * Delete business profile by Id
      */
     public function delete_business_profile($id) {
         $stmt = $this->db->prepare("DELETE FROM business_profile WHERE id = :id");

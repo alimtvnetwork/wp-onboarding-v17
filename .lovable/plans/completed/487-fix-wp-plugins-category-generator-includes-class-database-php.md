@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 487: Fix violations in wp-plugins/category-generator/includes/class-database.php
 
 Target File: `wp-plugins/category-generator/includes/class-database.php`

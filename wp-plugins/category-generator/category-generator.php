@@ -674,7 +674,7 @@ class Category_Generator_Pro {
                     $clean_area = trim(preg_replace('/\(S\)\s*$/i', '', $area));
                 }
                 
-                // Determine parent ID for this category
+                // Determine parent Id for this category
                 $should_be_child = $make_children || $is_sub;
                 $parent_id = $static_parent_id;
                 
@@ -887,7 +887,7 @@ class Category_Generator_Pro {
             );
         }
         
-        // Get site URL for generating category URL
+        // Get site Url for generating category Url
         $category_url = home_url('/' . $slug . '/');
         $contact_url = $business_profile['website'] ?? home_url('/contact/');
         
@@ -926,7 +926,7 @@ class Category_Generator_Pro {
     }
     
     /**
-     * Generate Schema.org JSON-LD
+     * Generate Schema.org Json-LD
      */
     private function generate_schema($template, $title, $area, $category, $slug, $meta_desc, $business_profile, $use_global = true) {
         $category_url = home_url('/' . $slug . '/');
@@ -962,7 +962,7 @@ class Category_Generator_Pro {
         
         $schema = str_replace(array_keys($placeholders), array_values($placeholders), $template);
         
-        // Clean up empty values in JSON
+        // Clean up empty values in Json
         $schema = preg_replace('/"[^"]*":\s*""\s*,?\s*/', '', $schema);
         $schema = preg_replace('/,\s*}/', '}', $schema);
         $schema = preg_replace('/,\s*]/', ']', $schema);
@@ -1297,7 +1297,7 @@ class Category_Generator_Pro {
         $id = intval($_POST['id'] ?? 0);
         
         if ($id <= 0) {
-            wp_send_json_error(['message' => __('Invalid template ID.', 'category-generator')]);
+            wp_send_json_error(['message' => __('Invalid template Id.', 'category-generator')]);
         }
         
         switch ($type) {

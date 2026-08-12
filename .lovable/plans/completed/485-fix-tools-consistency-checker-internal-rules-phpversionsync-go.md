@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 485: Fix violations in tools/consistency-checker/internal/rules/PhpVersionSync.go
 
 Target File: `tools/consistency-checker/internal/rules/PhpVersionSync.go`

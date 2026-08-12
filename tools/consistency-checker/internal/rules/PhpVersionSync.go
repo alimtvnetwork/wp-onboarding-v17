@@ -184,7 +184,7 @@ func checkVersionJsonSync(ctx engine.CheckContext, enumVersion string) []engine.
 			FilePath:   ctx.FilePath,
 			Line:       1,
 			Message:    fmt.Sprintf("Cannot read version.json at %s: %v", jsonPath, err),
-			Suggestion: "Ensure public/version.json exists and is valid JSON",
+			Suggestion: "Ensure public/version.json exists and is valid Json",
 			Reference:  ctx.Spec.Reference,
 		}}
 	}
