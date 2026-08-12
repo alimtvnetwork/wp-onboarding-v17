@@ -57,7 +57,7 @@ interface ExecutionLoggerState {
   getChainAsString: (chainId: string) => string;
 }
 
-// Generate unique ID
+// Generate unique Id
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
@@ -94,7 +94,7 @@ function formatEntry(entry: ExecutionLogEntry): string {
 }
 
 // Store for execution logging
-// Always captures a small buffer of recent API calls for error diagnostics,
+// Always captures a small buffer of recent Api calls for error diagnostics,
 // even when full debug mode is disabled.
 export const useExecutionLoggerStore = create<ExecutionLoggerState>((set, get) => ({
   enabled: false,
@@ -390,13 +390,13 @@ export function logHandler(handlerName: string, eventType?: string): void {
 }
 
 /**
- * Log an API call - ALWAYS logs regardless of enabled state
- * This ensures we always have recent API context when errors occur.
+ * Log an Api call - ALWAYS logs regardless of enabled state
+ * This ensures we always have recent Api context when errors occur.
  */
 export function logApiCall(method: string, endpoint: string): string {
   const state = useExecutionLoggerStore.getState();
   
-  // Always log API calls to provide context for error diagnostics
+  // Always log Api calls to provide context for error diagnostics
   const entryId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   const fullEntry: ExecutionLogEntry = {
     id: entryId,

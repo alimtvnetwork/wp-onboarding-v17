@@ -16,7 +16,7 @@ export function useErrorHistory() {
     staleTime: 30000, // 30 seconds
   });
   
-  // Extract data from API response
+  // Extract data from Api response
   const data = response?.success ? response.data : undefined;
 
   // Save error to backend

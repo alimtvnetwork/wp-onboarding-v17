@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 443: Fix violations in src/hooks/useErrorHistory.ts
 
 Target File: `src/hooks/useErrorHistory.ts`

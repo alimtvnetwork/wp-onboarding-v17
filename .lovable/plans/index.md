@@ -119,3 +119,5 @@
 - [Task 440](completed/440-fix-src-hooks-usebulkquickpublish-ts.md) - Completed
 - [Task 441](completed/441-fix-src-hooks-usecategories-ts.md) - Completed
 - [Task 442](completed/442-fix-src-hooks-useclicktracker-ts.md) - Completed
+- [Task 443](completed/443-fix-src-hooks-useerrorhistory-ts.md) - Completed
+- [Task 444](completed/444-fix-src-hooks-useexecutionlogger-ts.md) - Completed
