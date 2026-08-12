@@ -12,3 +12,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/Orchestra
   `$isEligible = ($selection === PluginSelectionType::All->value || in_array($pluginFile, $activePlugins));`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

@@ -20,3 +20,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Log/LogDedupRegist
   `$hasHashes = gettype($data) === PhpNativeType::PhpArray->value && isset($data['hashes']) && gettype($data['hashes']) === PhpNativeType::PhpArray->value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

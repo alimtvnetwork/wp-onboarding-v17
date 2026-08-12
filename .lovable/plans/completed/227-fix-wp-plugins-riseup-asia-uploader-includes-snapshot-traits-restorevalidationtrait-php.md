@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/RestoreVa
   `$isSelectiveWithTables = $mode === RestoreModeType::Selective->value && !empty($selectedTables);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

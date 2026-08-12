@@ -16,3 +16,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Debug/DebugRoutesT
   `* Lists all registered REST API routes for the plugin namespace,`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

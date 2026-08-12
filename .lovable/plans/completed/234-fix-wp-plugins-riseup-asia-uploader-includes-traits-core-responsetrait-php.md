@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Core/ResponseTrait
   `if (gettype($code) === PhpNativeType::PhpInteger->value && $code > 0) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

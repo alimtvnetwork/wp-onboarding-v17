@@ -40,3 +40,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Plugin/PluginBacku
   `return $this->validationError('Plugin slug and backup filename required (invalid JSON body)', $request);`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

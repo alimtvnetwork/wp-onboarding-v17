@@ -12,3 +12,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/RestoreSq
   `$verb = ($strategy === RestoreStrategyType::Merge->value) ? 'REPLACE' : 'INSERT';`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)
