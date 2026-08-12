@@ -3,7 +3,7 @@
 // This file defines a centralized enum→route mapping for all
 // WordPress-delegated operations. When the Go backend forwards a
 // request to a remote WordPress site, this map identifies both the
-// Go API route that initiated the call and the WordPress REST
+// Go Api route that initiated the call and the WordPress Rest
 // endpoint that receives it.
 //
 // See spec/wp-plugin-publish/05-endpoint-mapping.md for full documentation.
@@ -105,20 +105,20 @@ const (
 	EPCloudStorageRotate         WPEndpointName = "CloudStorageRotate"
 )
 
-// GoEndpointRoute describes the Go backend API route for a delegated operation.
-// The {id} placeholder represents the site ID.
+// GoEndpointRoute describes the Go backend Api route for a delegated operation.
+// The {id} placeholder represents the site Id.
 type GoEndpointRoute struct {
 	Method  httpmethod.Variant
 	Pattern string // e.g. "/api/v1/sites/{id}/remote-plugins/enable"
 }
 
-// WPEndpointRoute describes the WordPress REST API endpoint that receives the delegated request.
+// WPEndpointRoute describes the WordPress Rest Api endpoint that receives the delegated request.
 type WPEndpointRoute struct {
 	Method   httpmethod.Variant
 	Endpoint ep.Variant // typed endpoint path
 }
 
-// GoEndpointMap maps each operation enum to the Go backend API route.
+// GoEndpointMap maps each operation enum to the Go backend Api route.
 var GoEndpointMap = map[WPEndpointName]GoEndpointRoute{
 	// Plugin operations
 	EPListPlugins:       {Method: httpmethod.Get, Pattern: "/api/v1/sites/{id}/remote-plugins"},
@@ -301,7 +301,7 @@ func ResolveGoEndpoint(name WPEndpointName, siteId int64) string {
 	return replaceId(route.Pattern, siteId)
 }
 
-// ResolveWPEndpoint returns the full WordPress REST API path for a given operation.
+// ResolveWPEndpoint returns the full WordPress Rest Api path for a given operation.
 func ResolveWPEndpoint(name WPEndpointName) string {
 	route, ok := WPEndpointMap[name]
 	if !ok {

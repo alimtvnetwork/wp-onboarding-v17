@@ -3,29 +3,29 @@ package wordpress
 import "fmt"
 
 // =============================================================================
-// REST API NAMESPACES
+// Rest Api Namespaces
 // =============================================================================
 
 const (
-	// RiseupAsiaNamespace is the REST API namespace for the Riseup Asia Uploader plugin.
+	// RiseupAsiaNamespace is the Rest Api namespace for the Riseup Asia Uploader plugin.
 	// NOTE: The namespace is "riseup-asia-api/v1", NOT "riseup-asia-uploader/v1" (the plugin slug).
 	RiseupAsiaNamespace = "riseup-asia-api/v1"
 
 	// RiseUpUploaderNamespace is the legacy namespace (kept for backward compatibility).
 	RiseUpUploaderNamespace = "riseup-uploader/v1"
 
-	// OnboardNamespace is the legacy REST API namespace for the Onboard plugin.
+	// OnboardNamespace is the legacy Rest Api namespace for the Onboard plugin.
 	OnboardNamespace = "onboard-plugin/v1"
 
 	// PluginUploaderNamespace is deprecated, use RiseupAsiaNamespace.
 	// Kept for backward compatibility.
 	PluginUploaderNamespace = "plugin-uploader/v1"
 
-	// QUploadNamespace is the REST API namespace for the QUpload (Quick Upload) plugin.
+	// QUploadNamespace is the Rest Api namespace for the QUpload (Quick Upload) plugin.
 	QUploadNamespace = "qupload-api/v1"
 )
 
-// NOTE: REST API Endpoints have been migrated to endpoint_type.go (EndpointType).
+// NOTE: Rest Api Endpoints have been migrated to endpoint_type.go (EndpointType).
 // NOTE: Action Types have been migrated to action_type.go (ActionType).
 // NOTE: Status Values have been migrated to status_type.go (StatusType).
 // NOTE: Post Status Values have been migrated to post_status_type.go (PostStatusType).
@@ -59,17 +59,17 @@ const (
 )
 
 // =============================================================================
-// WORDPRESS CORE API ENDPOINTS (not Riseup Asia plugin)
+// Wordpress Core Api Endpoints (not Riseup Asia plugin)
 // =============================================================================
 
 const (
-	// WPCoreApiRoot is the root path for WordPress REST API.
+	// WPCoreApiRoot is the root path for WordPress Rest Api.
 	WPCoreApiRoot = "/wp-json"
 
 	// WPCoreUsersMe is the endpoint for current user info.
 	WPCoreUsersMe = "/wp/v2/users/me"
 
-	// WPCorePlugins is the endpoint for WordPress core plugins API.
+	// WPCorePlugins is the endpoint for WordPress core plugins Api.
 	WPCorePlugins = "/wp/v2/plugins"
 
 	// WPCorePluginBySlug is the endpoint for a specific plugin (format: /wp/v2/plugins/%s).
@@ -99,11 +99,11 @@ const (
 )
 
 // =============================================================================
-// GO API ROUTE CONSTANTS
+// Go Api Route Constants
 // =============================================================================
 
 const (
-	// GoApiPrefix is the base prefix for all Go backend API routes.
+	// GoApiPrefix is the base prefix for all Go backend Api routes.
 	GoApiPrefix = "/api/v1"
 
 	// GoApiHealth is the health check endpoint.
@@ -116,12 +116,12 @@ const (
 	GoApiWebSocket = "/ws"
 )
 
-// GoApiSiteRoute constructs a site-scoped Go API route: /api/v1/sites/{siteId}/{suffix}.
+// GoApiSiteRoute constructs a site-scoped Go Api route: /api/v1/sites/{siteId}/{suffix}.
 func GoApiSiteRoute(siteId int64, suffix string) string {
 	return fmt.Sprintf("%s/%d/%s", GoApiSitesPrefix, siteId, suffix)
 }
 
-// GoApiSitePluginRoute constructs a site+plugin Go API route:
+// GoApiSitePluginRoute constructs a site+plugin Go Api route:
 // /api/v1/sites/{siteId}/remote-plugins/{pluginSlug}/{action}.
 func GoApiSitePluginRoute(siteId int64, pluginSlug, action string) string {
 	return fmt.Sprintf("%s/%d/remote-plugins/%s/%s", GoApiSitesPrefix, siteId, pluginSlug, action)

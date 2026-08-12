@@ -34,3 +34,6 @@
 - [Task 347](completed/347-fix-backend-internal-wordpress-clientconnectionsteps-go.md) - Completed
 - [Task 348](completed/348-fix-backend-internal-wordpress-clientconnectiontypes-go.md) - Completed
 - [Task 349](completed/349-fix-backend-internal-wordpress-clientpluginbackup-go.md) - Completed
+- [Task 350](completed/350-fix-backend-internal-wordpress-clientplugins-go.md) - Completed
+- [Task 351](completed/351-fix-backend-internal-wordpress-clienttypes-go.md) - Completed
+- [Task 352](completed/352-fix-backend-internal-wordpress-cloudstoragetypes-go.md) - Completed

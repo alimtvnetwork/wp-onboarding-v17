@@ -1,6 +1,6 @@
 package wordpress
 
-// HttpStatusType represents HTTP status codes used in REST API responses.
+// HttpStatusType represents Http status codes used in Rest Api responses.
 type HttpStatusType int
 
 const (
