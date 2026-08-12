@@ -37,3 +37,6 @@
 - [Task 350](completed/350-fix-backend-internal-wordpress-clientplugins-go.md) - Completed
 - [Task 351](completed/351-fix-backend-internal-wordpress-clienttypes-go.md) - Completed
 - [Task 352](completed/352-fix-backend-internal-wordpress-cloudstoragetypes-go.md) - Completed
+- [Task 353](completed/353-fix-backend-internal-wordpress-constants-go.md) - Completed
+- [Task 354](completed/354-fix-backend-internal-wordpress-endpointmap-go.md) - Completed
+- [Task 355](completed/355-fix-backend-internal-wordpress-httpstatustype-go.md) - Completed

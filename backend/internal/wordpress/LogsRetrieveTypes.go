@@ -1,10 +1,10 @@
 // Typed response structs for the /logs/retrieve endpoint.
-// The PHP endpoint returns a flat response (not envelope-wrapped).
+// The Php endpoint returns a flat response (not envelope-wrapped).
 package wordpress
 
-// --- Raw PHP response (matches PHP JSON output exactly) ---
+// --- Raw Php response (matches Php Json output exactly) ---
 
-// LogsRetrievePhpResponse is the raw response from the PHP /logs/retrieve endpoint.
+// LogsRetrievePhpResponse is the raw response from the Php /logs/retrieve endpoint.
 type LogsRetrievePhpResponse struct {
 	Success     bool                     `json:"Success"`
 	Version     string                   `json:"Version"`

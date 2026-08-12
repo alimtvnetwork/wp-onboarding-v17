@@ -34,16 +34,16 @@ type PowerShellResult struct {
 	IsActivated  bool   `json:",omitempty"`
 }
 
-// psJsonOutput is the typed struct for parsing PowerShell quiet-mode JSON.
+// psJsonOutput is the typed struct for parsing PowerShell quiet-mode Json.
 type psJsonOutput struct {
-	Success   bool   `json:"success"`   // external key (PowerShell JSON output)
+	Success   bool   `json:"success"`   // external key (PowerShell Json output)
 	Plugin    string `json:"plugin"`    // external key
 	Activated bool   `json:"activated"` // external key
 	Error     string `json:"error"`     // external key
 }
 
 // RunPowerShellUpload executes the upload-plugin.ps1 script with the given configuration.
-// It passes config as inline JSON for direct invocation from the app.
+// It passes config as inline Json for direct invocation from the app.
 func RunPowerShellUpload(scriptPath string, cfg PowerShellConfig, onOutput func(line string)) (*PowerShellResult, error) {
 	isWindows := runtime.GOOS == "windows"
 	isUnsupportedPlatform := !isWindows
@@ -65,7 +65,7 @@ func RunPowerShellUpload(scriptPath string, cfg PowerShellConfig, onOutput func(
 	return executePowerShellCommand(args, onOutput)
 }
 
-// buildPsJsonConfigArgs constructs PowerShell arguments for JSON config mode.
+// buildPsJsonConfigArgs constructs PowerShell arguments for Json config mode.
 func buildPsJsonConfigArgs(scriptPath, jsonConfig string) []string {
 	return []string{
 		"-ExecutionPolicy", "Bypass",
@@ -104,7 +104,7 @@ type DirectUploadInput struct {
 }
 
 // RunPowerShellUploadDirect executes the upload script with direct command-line parameters.
-// This is simpler than JSON config and works well for programmatic invocation.
+// This is simpler than Json config and works well for programmatic invocation.
 func RunPowerShellUploadDirect(input DirectUploadInput) (*PowerShellResult, error) {
 	isWindows := runtime.GOOS == "windows"
 	isUnsupportedPlatform := !isWindows

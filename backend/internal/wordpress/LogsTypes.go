@@ -1,18 +1,18 @@
 // Typed response structs for remote log management endpoints.
-// These match the PHP plugin's JSON output and the frontend's TypeScript types.
+// These match the Php plugin's Json output and the frontend's TypeScript types.
 package wordpress
 
-// --- Raw PHP response types (match PHP JSON output exactly) ---
+// --- Raw Php response types (match Php Json output exactly) ---
 
-// LogsStatusPhpResponse is the raw response from the PHP logs/status endpoint.
-// The PHP returns: { Success, logs: { log_file, error_file, stacktrace_file, archive_count }, database: {...} }
+// LogsStatusPhpResponse is the raw response from the Php logs/status endpoint.
+// The Php returns: { Success, logs: { log_file, error_file, stacktrace_file, archive_count }, database: {...} }
 type LogsStatusPhpResponse struct {
 	Success  bool                    `json:"Success"`
 	Logs     LogsStatusPhpLogsBlock  `json:"Logs"`
 	Database LogsStatusPhpDbBlock    `json:"Database"`
 }
 
-// LogsStatusPhpLogsBlock maps the "Logs" object from PHP.
+// LogsStatusPhpLogsBlock maps the "Logs" object from Php.
 type LogsStatusPhpLogsBlock struct {
 	LogFile        LogsStatusPhpFileInfo `json:"LogFile"`
 	ErrorFile      LogsStatusPhpFileInfo `json:"ErrorFile"`
@@ -20,7 +20,7 @@ type LogsStatusPhpLogsBlock struct {
 	ArchiveCount   int                   `json:"ArchiveCount"`
 }
 
-// LogsStatusPhpFileInfo maps a single file entry from PHP logs/status.
+// LogsStatusPhpFileInfo maps a single file entry from Php logs/status.
 type LogsStatusPhpFileInfo struct {
 	Exists       bool   `json:"Exists"`
 	SizeBytes    int64  `json:"SizeBytes"`
@@ -28,7 +28,7 @@ type LogsStatusPhpFileInfo struct {
 	LineCount    int    `json:"LineCount"`
 }
 
-// LogsStatusPhpDbBlock maps the "Database" object from PHP.
+// LogsStatusPhpDbBlock maps the "Database" object from Php.
 type LogsStatusPhpDbBlock struct {
 	TransactionCount   int `json:"TransactionCount"`
 	ErrorSessionCount  int `json:"ErrorSessionCount"`
@@ -54,7 +54,7 @@ type LogFileInfo struct {
 	Modified  string `json:"modified,omitempty"`
 }
 
-// ToLogsStatusData transforms the raw PHP response into the frontend-facing format.
+// ToLogsStatusData transforms the raw Php response into the frontend-facing format.
 func (r *LogsStatusPhpResponse) ToLogsStatusData() *LogsStatusData {
 	files := []LogFileInfo{
 		phpFileToLogFileInfo("log.txt", r.Logs.LogFile),
@@ -74,7 +74,7 @@ func (r *LogsStatusPhpResponse) ToLogsStatusData() *LogsStatusData {
 	}
 }
 
-// phpFileToLogFileInfo converts a raw PHP file info to the normalized format.
+// phpFileToLogFileInfo converts a raw Php file info to the normalized format.
 func phpFileToLogFileInfo(name string, info LogsStatusPhpFileInfo) LogFileInfo {
 	return LogFileInfo{
 		Name:      name,
@@ -87,7 +87,7 @@ func phpFileToLogFileInfo(name string, info LogsStatusPhpFileInfo) LogFileInfo {
 
 // --- Other log endpoint types ---
 
-// LogsClearRequestData is the typed response from PHP logs/clear Step 1 (request token).
+// LogsClearRequestData is the typed response from Php logs/clear Step 1 (request token).
 type LogsClearRequestData struct {
 	Token                string `json:"token"`
 	ConfirmationRequired bool   `json:"ConfirmationRequired"`
@@ -96,14 +96,14 @@ type LogsClearRequestData struct {
 	Message              string `json:"Message"`
 }
 
-// LogsClearConfirmData is the typed response from PHP logs/clear Step 2 (confirm).
+// LogsClearConfirmData is the typed response from Php logs/clear Step 2 (confirm).
 type LogsClearConfirmData struct {
 	Deleted []string `json:"deleted"`
 	Failed  []string `json:"failed"`
 	Message string   `json:"message"`
 }
 
-// LogsEmailResultData is the typed response from the PHP logs/email endpoint.
+// LogsEmailResultData is the typed response from the Php logs/email endpoint.
 type LogsEmailResultData struct {
 	Message         string `json:"Message"`
 	Recipient       string `json:"Recipient"`
@@ -111,7 +111,7 @@ type LogsEmailResultData struct {
 	TotalSizeBytes  int64  `json:"TotalSizeBytes"`
 }
 
-// LogsRotationStatusData is the typed response from the PHP logs rotation status endpoint.
+// LogsRotationStatusData is the typed response from the Php logs rotation status endpoint.
 type LogsRotationStatusData struct {
 	IsEnabled       bool   `json:"isEnabled"`
 	MaxSizeBytes    int64  `json:"maxSizeBytes"`
