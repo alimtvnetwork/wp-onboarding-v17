@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 535: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/traits/PluginManagerUploadTrait.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/traits/PluginManagerUploadTrait.php`

@@ -22,8 +22,8 @@ trait OnboardPluginManagerUploadTrait {
      *
      * @param array       $file       Uploaded file data.
      * @param bool        $auto_backup Whether to create backup of existing plugin.
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public function upload($file, $auto_backup = true, $app_id = null, $ip_address = null) {

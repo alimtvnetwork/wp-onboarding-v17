@@ -42,7 +42,7 @@ trait OnboardDatabaseSettingsTrait {
 
             if ($result) {
                 $decoded = json_decode($result['setting_value'], true);
-                // If JSON decode failed, return raw value.
+                // If Json decode failed, return raw value.
                 return ($decoded !== null || $result['setting_value'] === 'null') ? $decoded : $result['setting_value'];
             }
             return null;

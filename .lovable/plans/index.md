@@ -211,3 +211,6 @@
 - [Task 530](completed/530-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-securityutils-php.md) - Completed
 - [Task 531](completed/531-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-snapshot-php.md) - Completed
 - [Task 532](completed/532-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-tokenencryption-php.md) - Completed
+- [Task 533](completed/533-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-databaseschematrait-php.md) - Completed
+- [Task 534](completed/534-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-databasesettingstrait-php.md) - Completed
+- [Task 535](completed/535-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-pluginmanageruploadtrait-php.md) - Completed

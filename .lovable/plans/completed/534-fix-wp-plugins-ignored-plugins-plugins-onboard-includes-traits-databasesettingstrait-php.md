@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 534: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/traits/DatabaseSettingsTrait.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/traits/DatabaseSettingsTrait.php`

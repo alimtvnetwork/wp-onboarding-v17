@@ -107,7 +107,7 @@ trait OnboardDatabaseSchemaTrait {
             )
         ");
 
-        // IP approvals table.
+        // Ip approvals table.
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS ip_approvals (
                 approval_id TEXT PRIMARY KEY,
@@ -182,7 +182,7 @@ trait OnboardDatabaseSchemaTrait {
             )
         ");
 
-        // IP approval logs table.
+        // Ip approval logs table.
         $this->audit_pdo->exec("
             CREATE TABLE IF NOT EXISTS ip_approval_logs (
                 log_id TEXT PRIMARY KEY,
