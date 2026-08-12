@@ -92,3 +92,6 @@
 - [Task 410](completed/410-fix-src-components-licensing-licensebatchactions-tsx.md) - Completed
 - [Task 411](completed/411-fix-src-components-licensing-licensetable-tsx.md) - Completed
 - [Task 412](completed/412-fix-src-components-plugins-activationdiagnostics-tsx.md) - Completed
+- [Task 413](completed/413-fix-src-components-plugins-inlineerrordiagnostic-tsx.md) - Completed
+- [Task 414](completed/414-fix-src-components-plugins-logcontentviewer-tsx.md) - Completed
+- [Task 415](completed/415-fix-src-components-plugins-publishprogressdialog-tsx.md) - Completed

@@ -74,12 +74,25 @@ const SEV_CLASSES: Record<SeverityType, string> = {
   [SeverityType.Plain]:   "text-foreground",
 };
 
-const FILTER_OPTIONS: { value: string; label: string }[] = [
-  { value: "all",     label: "All" },
-  { value: "error",   label: "Errors" },
-  { value: "warning", label: "Warnings" },
-  { value: "info",    label: "Info" },
-  { value: "debug",   label: "Debug" },
+export enum FilterOptionType {
+  All = "all",
+  Error = "error",
+  Warning = "warning",
+  Info = "info",
+  Debug = "debug"
+}
+
+export enum NavigationDirectionType {
+  Forward = 1,
+  Backward = -1
+}
+
+const FILTER_OPTIONS: { value: FilterOptionType; label: string }[] = [
+  { value: FilterOptionType.All,     label: "All" },
+  { value: FilterOptionType.Error,   label: "Errors" },
+  { value: FilterOptionType.Warning, label: "Warnings" },
+  { value: FilterOptionType.Info,    label: "Info" },
+  { value: FilterOptionType.Debug,   label: "Debug" },
 ];
 
 // ── Highlighted line rendering ─────────────────────────────────
@@ -101,7 +114,7 @@ function HighlightedLine({
 
   // Build the line content with search highlights
   const parts = useMemo(() => {
-    if (!searchTerm) return [{ text: line, highlight: false }];
+    if (searchTerm === "") return [{ text: line, highlight: false }];
     const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
     const segments: { text: string; highlight: boolean }[] = [];
     let last = 0;
@@ -112,15 +125,15 @@ function HighlightedLine({
       last = regex.lastIndex;
     }
     if (last < line.length) segments.push({ text: line.slice(last), highlight: false });
-    return segments.length ? segments : [{ text: line, highlight: false }];
+    return segments.length > 0 ? segments : [{ text: line, highlight: false }];
   }, [line, searchTerm]);
 
   return (
     <div
       className={cn(
         "flex gap-0 leading-[1.6] transition-colors duration-150",
-        isCurrentMatch && "bg-amber-500/20 rounded",
-        isMatch && !isCurrentMatch && "bg-amber-500/8 rounded",
+        isCurrentMatch === true && "bg-amber-500/20 rounded",
+        isMatch === true && isCurrentMatch === false && "bg-amber-500/8 rounded",
       )}
     >
       <span className="select-none w-12 shrink-0 text-right pr-3 text-muted-foreground/50 text-[11px] tabular-nums">
@@ -128,7 +141,7 @@ function HighlightedLine({
       </span>
       <span className={cn("flex-1", colorClass)}>
         {parts.map((p, i) =>
-          p.highlight ? (
+          p.highlight === true ? (
             <mark key={i} className="bg-amber-400/40 text-inherit rounded-sm px-0.5">{p.text}</mark>
           ) : (
             <Fragment key={i}>{p.text}</Fragment>
@@ -148,7 +161,7 @@ interface LogContentViewerProps {
 export function LogContentViewer({ file, label }: LogContentViewerProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [severityFilter, setSeverityFilter] = useState("all");
+  const [severityFilter, setSeverityFilter] = useState<FilterOptionType>(FilterOptionType.All);
   const [currentMatchIdx, setCurrentMatchIdx] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const matchRefs = useRef<Map<number, HTMLDivElement>>(new Map());
@@ -156,7 +169,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   const [wordWrap, setWordWrap] = useState(true);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
-  const fileExists = !!file?.exists;
+  const fileExists = file?.exists === true;
   const content = file?.content || "";
 
   // Parse lines with severity
@@ -171,7 +184,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
 
   // Apply severity filter
   const filteredLines = useMemo(() => {
-    if (severityFilter === "all") return allLines;
+    if (severityFilter === FilterOptionType.All) return allLines;
     return allLines.filter((l) => l.severity === severityFilter);
   }, [allLines, severityFilter]);
 
@@ -180,8 +193,8 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   }, [filteredLines]);
 
   const handleCopy = useCallback(() => {
-    if (!file) return;
-    const isFiltered = severityFilter !== "all" || searchTerm;
+    if (file === undefined) return;
+    const isFiltered = severityFilter !== FilterOptionType.All || searchTerm !== "";
     navigator.clipboard.writeText(isFiltered ? getVisibleText() : file.content);
     toast.success(`${label}${isFiltered ? " (filtered)" : ""} copied to clipboard`);
   }, [file, label, severityFilter, searchTerm, getVisibleText]);
@@ -189,21 +202,22 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   const handleDownloadFiltered = useCallback(() => {
     const text = getVisibleText();
     const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
+    const browserUrl = window.URL;
+    const downloadUrl = browserUrl.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
-    const suffix = severityFilter !== "all" ? `-${severityFilter}` : searchTerm ? `-search` : "";
+    a.href = downloadUrl;
+    const suffix = severityFilter !== FilterOptionType.All ? `-${severityFilter}` : (searchTerm !== "" ? `-search` : "");
     a.download = `${label.toLowerCase().replace(/\s+/g, "-")}${suffix}-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    browserUrl.revokeObjectURL(downloadUrl);
     toast.success(`${filteredLines.length} lines downloaded`);
   }, [getVisibleText, label, severityFilter, searchTerm, filteredLines.length]);
 
   // Find search matches (indices into filteredLines)
   const matchIndices = useMemo(() => {
-    if (!searchTerm) return [];
+    if (searchTerm === "") return [];
     const term = searchTerm.toLowerCase();
     return filteredLines
       .map((l, idx) => (l.text.toLowerCase().includes(term) ? idx : -1))
@@ -226,7 +240,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   }, [currentMatchIdx, matchIndices, matchCount]);
 
   const navigateMatch = useCallback(
-    (dir: 1 | -1) => {
+    (dir: NavigationDirectionType) => {
       setCurrentMatchIdx((prev) => {
         const next = prev + dir;
         if (next < 0) return matchCount - 1;
@@ -240,14 +254,14 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   // Keyboard shortcut
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "f" && fileExists) {
+      if ((e.metaKey === true || e.ctrlKey === true) && e.key === "f" && fileExists === true) {
         e.preventDefault();
         setShowSearch(true);
       }
       if (e.key === "Escape") setShowSearch(false);
-      if (showSearch && e.key === "Enter") {
+      if (showSearch === true && e.key === "Enter") {
         e.preventDefault();
-        navigateMatch(e.shiftKey ? -1 : 1);
+        navigateMatch(e.shiftKey === true ? NavigationDirectionType.Backward : NavigationDirectionType.Forward);
       }
     };
     window.addEventListener("keydown", handler);
@@ -268,7 +282,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
   }, []);
 
   const jumpToFirstError = useCallback(() => {
-    setSeverityFilter("error");
+    setSeverityFilter(FilterOptionType.Error);
     setCurrentMatchIdx(0);
     // Scroll to top of content after filter applies
     setTimeout(() => {
@@ -276,8 +290,8 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
     }, 50);
   }, []);
 
-  if (!file) return <p className="text-sm text-muted-foreground py-4 text-center">Not requested</p>;
-  if (!file.exists) return (
+  if (file === undefined) return <p className="text-sm text-muted-foreground py-4 text-center">Not requested</p>;
+  if (file.exists === false) return (
     <div className="flex flex-col items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 py-6 text-center">
       <AlertTriangle className="h-5 w-5 text-amber-500" />
       <p className="text-sm text-amber-400 font-medium">No {label} file found</p>
@@ -297,7 +311,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
         <Badge variant="outline" className="text-xs font-mono border-border/60 bg-muted/50">
           {formatBytes(file.totalSize)}
         </Badge>
-        {file.truncated && <Badge variant="destructive" className="text-xs">Truncated</Badge>}
+        {file.truncated === true && <Badge variant="destructive" className="text-xs">Truncated</Badge>}
 
         {/* Severity counts */}
         {counts.error > 0 && (
@@ -313,7 +327,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
           <Badge
             variant="outline"
             className="text-xs cursor-pointer border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
-            onClick={() => setSeverityFilter(severityFilter === "warning" ? "all" : "warning")}
+            onClick={() => setSeverityFilter(severityFilter === FilterOptionType.Warning ? FilterOptionType.All : FilterOptionType.Warning)}
           >
             {counts.warning} warnings
           </Badge>
@@ -324,38 +338,38 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
             <TooltipTrigger asChild>
               <Button
                 size="sm"
-                variant={wordWrap ? "secondary" : "ghost"}
+                variant={wordWrap === true ? "secondary" : "ghost"}
                 className="h-6 w-6 p-0"
-                onClick={() => setWordWrap(w => !w)}
+                onClick={() => setWordWrap(w => w === false)}
               >
                 <WrapText className="h-3 w-3" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="text-xs">
-              {wordWrap ? "Disable" : "Enable"} word wrap
+              {wordWrap === true ? "Disable" : "Enable"} word wrap
             </TooltipContent>
           </Tooltip>
-          <Button size="sm" variant="ghost" className="h-6 px-2" onClick={() => setShowSearch((s) => !s)}>
+          <Button size="sm" variant="ghost" className="h-6 px-2" onClick={() => setShowSearch((s) => s === false)}>
             <Search className="h-3 w-3 mr-1" /> Search
           </Button>
           <Button size="sm" variant="ghost" className="h-6 px-2" onClick={handleCopy}>
-            <Copy className="h-3 w-3 mr-1" /> Copy{(severityFilter !== "all" || searchTerm) ? " visible" : ""}
+            <Copy className="h-3 w-3 mr-1" /> Copy{(severityFilter !== FilterOptionType.All || searchTerm !== "") ? " visible" : ""}
           </Button>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button size="sm" variant="ghost" className="h-6 px-2" onClick={handleDownloadFiltered}>
-                <Download className="h-3 w-3 mr-1" /> Export{(severityFilter !== "all" || searchTerm) ? ` (${filteredLines.length})` : ""}
+                <Download className="h-3 w-3 mr-1" /> Export{(severityFilter !== FilterOptionType.All || searchTerm !== "") ? ` (${filteredLines.length})` : ""}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="text-xs">
-              Download {severityFilter !== "all" || searchTerm ? "filtered" : "all"} lines as .txt
+              Download {severityFilter !== FilterOptionType.All || searchTerm !== "" ? "filtered" : "all"} lines as .txt
             </TooltipContent>
           </Tooltip>
         </div>
       </div>
 
       {/* Search bar */}
-      {showSearch && (
+      {showSearch === true && (
         <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-muted/30 px-3 py-2">
           <Search className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
           <Input
@@ -365,7 +379,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
             className="h-7 border-0 bg-transparent text-sm focus-visible:ring-0 px-0"
             autoFocus
           />
-          {searchTerm && (
+          {searchTerm !== "" && (
             <span className="text-xs text-muted-foreground shrink-0 tabular-nums">
               {matchCount > 0 ? `${currentMatchIdx + 1}/${matchCount}` : "0 results"}
             </span>
@@ -396,7 +410,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
         </div>
       )}
 
-      {file.truncated && (
+      {file.truncated === true && (
         <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-muted-foreground">
           <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-600" />
           Showing last {file.lines} of {file.totalLines} lines. Increase max lines to see more.
@@ -404,12 +418,12 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
       )}
 
       {/* Filter active indicator */}
-      {severityFilter !== "all" && (
+      {severityFilter !== FilterOptionType.All && (
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <Filter className="h-3 w-3" />
           Showing <span className="font-medium text-foreground">{filteredLines.length}</span> of {allLines.length} lines
           (filter: <span className="capitalize font-medium text-foreground">{severityFilter}</span>)
-          <Button size="sm" variant="ghost" className="h-5 px-1.5 text-xs" onClick={() => setSeverityFilter("all")}>
+          <Button size="sm" variant="ghost" className="h-5 px-1.5 text-xs" onClick={() => setSeverityFilter(FilterOptionType.All)}>
             Clear
           </Button>
         </div>
@@ -418,10 +432,10 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
       {/* Content */}
       <div className="relative">
       <ScrollArea className="h-[460px] rounded-xl border border-border/60 bg-muted/20 shadow-sm" ref={scrollRef}>
-        <div className={cn("p-4 font-mono text-[13px] leading-[1.6]", !wordWrap && "whitespace-pre overflow-x-auto")}>
+        <div className={cn("p-4 font-mono text-[13px] leading-[1.6]", wordWrap === false && "whitespace-pre overflow-x-auto")}>
           {filteredLines.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground py-8">
-              {severityFilter !== "all" ? "No lines match this filter." : "(empty)"}
+              {severityFilter !== FilterOptionType.All ? "No lines match this filter." : "(empty)"}
             </p>
           ) : (
             filteredLines.map((line, idx) => {
@@ -431,7 +445,7 @@ export function LogContentViewer({ file, label }: LogContentViewerProps) {
                 <div
                   key={line.lineNumber}
                   ref={(el) => {
-                    if (el && isMatch) matchRefs.current.set(idx, el);
+                    if (el !== null && isMatch === true) matchRefs.current.set(idx, el);
                     else matchRefs.current.delete(idx);
                   }}
                 >

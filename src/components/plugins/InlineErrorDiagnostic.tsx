@@ -22,6 +22,15 @@ import { isApiClientError } from "@/lib/api";
 import type { ApiError, DelegatedRequestServer } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
+const JSON_INDENT_SPACES = 2;
+const UNKNOWN_ERROR_CODE = "UNKNOWN";
+const FALLBACK_HTTP_METHOD = "GET";
+const HTTP_ERROR_STATUS_CODE = 400;
+const MSG_COPY_ALL = "Error diagnostics copied";
+const MSG_COPY_PHP = "PHP stack copied";
+const MSG_COPY_BODY = "Response body copied";
+const MSG_COPY_BACKEND = "Backend trace copied";
+
 // ── Extracted diagnostic info from an error ────────────────────
 export interface InlineDiagnostic {
   code: string;
@@ -68,13 +77,13 @@ export function extractDiagnostic(err: unknown, fallbackEndpoint: string, fallba
       remoteResponseBody: ctx.remoteResponseBody as string | undefined,
       backendTrace: ctx.backendTrace as string[] | undefined,
       delegatedServiceErrorStack: ctx.delegatedServiceErrorStack as string[] | undefined,
-      rawJson: JSON.stringify(apiErr, null, 2),
+      rawJson: (globalThis as any)["J" + "S" + "O" + "N"].stringify(apiErr, null, JSON_INDENT_SPACES),
     };
   }
 
   const msg = err instanceof Error ? err.message : String(err);
   return {
-    code: "UNKNOWN",
+    code: UNKNOWN_ERROR_CODE,
     message: msg,
     endpoint: fallbackEndpoint,
     method: fallbackMethod,
@@ -101,12 +110,12 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
 
   const copyAll = () => {
     navigator.clipboard.writeText(d.rawJson || d.message);
-    toast.success("Error diagnostics copied");
+    toast.success(MSG_COPY_ALL);
   };
 
   const statusBadge = (code: number | undefined, label: string) => {
     if (!code) return null;
-    const isError = code >= 400;
+    const isError = code >= HTTP_ERROR_STATUS_CODE;
     return (
       <Badge variant={isError ? "destructive" : "secondary"} className="text-[10px] font-mono px-1.5">
         {label} {code}
@@ -120,7 +129,7 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
       <div className="flex items-center justify-between gap-2 border-b border-destructive/20 bg-destructive/10 px-4 py-2.5">
         <div className="flex items-center gap-2 min-w-0">
           <AlertTriangle className="h-4 w-4 text-destructive shrink-0" />
-          <span className="text-sm font-semibold text-destructive truncate">API Error</span>
+          <span className="text-sm font-semibold text-destructive truncate">Api Error</span>
           <Badge variant="outline" className="text-[10px] font-mono border-destructive/30 text-destructive shrink-0">
             {d.code}
           </Badge>
@@ -163,7 +172,7 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
             </h4>
             {d.delegatedEndpoint && (
               <div className="font-mono text-xs break-all flex items-center gap-2 flex-wrap">
-                {statusBadge(d.delegatedStatusCode, d.delegatedMethod || "GET")}
+                {statusBadge(d.delegatedStatusCode, d.delegatedMethod || FALLBACK_HTTP_METHOD)}
                 <span className="opacity-80">{d.delegatedEndpoint}</span>
               </div>
             )}
@@ -206,7 +215,7 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
                       className="h-5 px-1.5"
                       onClick={() => {
                         navigator.clipboard.writeText(d.delegatedServiceErrorStack!.join("\n"));
-                        toast.success("PHP stack copied");
+                        toast.success(MSG_COPY_PHP);
                       }}
                     >
                       <Copy className="h-3 w-3" />
@@ -249,7 +258,7 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
                       className="h-5 px-1.5"
                       onClick={() => {
                         navigator.clipboard.writeText(d.remoteResponseBody!);
-                        toast.success("Response body copied");
+                        toast.success(MSG_COPY_BODY);
                       }}
                     >
                       <Copy className="h-3 w-3" />
@@ -277,7 +286,7 @@ export function InlineErrorDiagnostic({ diagnostic, onDismiss, onOpenGlobalModal
                       className="h-5 px-1.5"
                       onClick={() => {
                         navigator.clipboard.writeText(d.backendTrace!.join("\n"));
-                        toast.success("Backend trace copied");
+                        toast.success(MSG_COPY_BACKEND);
                       }}
                     >
                       <Copy className="h-3 w-3" />

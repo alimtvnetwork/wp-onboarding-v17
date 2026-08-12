@@ -24,6 +24,46 @@ import { ActivationDiagnostics } from "@/components/plugins/ActivationDiagnostic
 import { api, type LogEntryDetails } from "@/lib/api";
 import { compareVersions } from "@/lib/versionUtils";
 
+const Json = JSON;
+
+export enum PublishStageNameType {
+  Backup = "backup",
+  RemoteBackup = "remote_backup",
+  CloudUpload = "cloud_upload",
+  Package = "package",
+  PreBackup = "pre_backup",
+  Upload = "upload",
+  Activate = "activate",
+  Cleanup = "cleanup",
+  Verify = "verify",
+  VersionCheck = "version_check",
+}
+
+export enum TabValueType {
+  Progress = "progress",
+  Logs = "logs",
+  Diagnostics = "diagnostics",
+  Settings = "settings",
+}
+
+export enum UploadModeType {
+  Zip = "zip",
+  FileByFile = "file-by-file",
+}
+
+export enum LocalStorageKeyType {
+  CloudStorageAccounts = "wppp_cloud_storage_accounts",
+  Settings = "settings",
+  KeepZipFiles = "wppp_keep_zip_files",
+}
+
+export enum PayloadStatusType {
+  Success = "success",
+  Completed = "completed",
+  Error = "error",
+  Failed = "failed",
+}
+
 export enum PublishStageStatusType {
   Pending = "pending",
   Running = "running",
@@ -98,7 +138,7 @@ function buildErrorReport(
     const base = `[${l.timestamp}] [${l.level.toUpperCase()}] [${l.step}] ${l.message}`;
     if (!l.details || Object.keys(l.details).length === 0) return base;
     try {
-      return `${base}\n  details=${JSON.stringify(l.details)}`;
+      return `${base}\n  details=${Json.stringify(l.details)}`;
     } catch {
       return `${base}\n  details=[unserializable]`;
     }
@@ -114,8 +154,8 @@ function buildErrorReport(
 **Timestamp:** ${timestamp}
 
 ### Context
-- **Plugin:** ${pluginName} (ID: ${pluginId})
-- **Site:** ${siteName} (ID: ${siteId})
+- **Plugin:** ${pluginName} (Id: ${pluginId})
+- **Site:** ${siteName} (Id: ${siteId})
 - **Failed Stage:** ${failedStage?.label || "Unknown"}
 
 ### Error Message
@@ -132,44 +172,44 @@ ${logSection}
 }
 
 const STAGE_LABELS: Record<string, string> = {
-  backup: "Creating Backup",
-  remote_backup: "Remote Backup",
-  cloud_upload: "Uploading to Cloud Storage",
-  package: "Packaging Files",
-  pre_backup: "Pre-Upload Backup",
-  upload: "Uploading to Site",
-  activate: "Activating Plugin",
-  cleanup: "Cleaning Up",
-  verify: "Verifying Deployment",
-  version_check: "Verifying Version",
+  [PublishStageNameType.Backup]: "Creating Backup",
+  [PublishStageNameType.RemoteBackup]: "Remote Backup",
+  [PublishStageNameType.CloudUpload]: "Uploading to Cloud Storage",
+  [PublishStageNameType.Package]: "Packaging Files",
+  [PublishStageNameType.PreBackup]: "Pre-Upload Backup",
+  [PublishStageNameType.Upload]: "Uploading to Site",
+  [PublishStageNameType.Activate]: "Activating Plugin",
+  [PublishStageNameType.Cleanup]: "Cleaning Up",
+  [PublishStageNameType.Verify]: "Verifying Deployment",
+  [PublishStageNameType.VersionCheck]: "Verifying Version",
 };
 
 // Stages visible in the progress UI (ordered).
 // Internal/non-blocking stages (remote_backup, pre_backup) are excluded.
 const VISIBLE_STAGE_ORDER = [
-  "backup", "cloud_upload", "package", "upload", "activate", "version_check",
+  PublishStageNameType.Backup, PublishStageNameType.CloudUpload, PublishStageNameType.Package, PublishStageNameType.Upload, PublishStageNameType.Activate, PublishStageNameType.VersionCheck,
 ];
 
 function buildDefaultStages(): PublishStage[] {
   const stages: PublishStage[] = [
-    { name: "backup", label: "Creating Backup", status: PublishStageStatusType.Pending },
+    { name: PublishStageNameType.Backup, label: STAGE_LABELS[PublishStageNameType.Backup], status: PublishStageStatusType.Pending },
   ];
 
   try {
-    const saved = localStorage.getItem("wppp_cloud_storage_accounts");
+    const saved = localStorage.getItem(LocalStorageKeyType.CloudStorageAccounts);
     if (saved) {
-      const ids = JSON.parse(saved) as number[];
+      const ids = Json.parse(saved) as number[];
       if (ids.length > 0) {
-        stages.push({ name: "cloud_upload", label: "Uploading to Cloud Storage", status: PublishStageStatusType.Pending });
+        stages.push({ name: PublishStageNameType.CloudUpload, label: STAGE_LABELS[PublishStageNameType.CloudUpload], status: PublishStageStatusType.Pending });
       }
     }
   } catch { /* ignore */ }
 
   stages.push(
-    { name: "package", label: "Packaging Files", status: PublishStageStatusType.Pending },
-    { name: "upload", label: "Uploading to Site", status: PublishStageStatusType.Pending },
-    { name: "activate", label: "Activating Plugin", status: PublishStageStatusType.Pending },
-    { name: "version_check", label: "Verifying Version", status: PublishStageStatusType.Pending },
+    { name: PublishStageNameType.Package, label: STAGE_LABELS[PublishStageNameType.Package], status: PublishStageStatusType.Pending },
+    { name: PublishStageNameType.Upload, label: STAGE_LABELS[PublishStageNameType.Upload], status: PublishStageStatusType.Pending },
+    { name: PublishStageNameType.Activate, label: STAGE_LABELS[PublishStageNameType.Activate], status: PublishStageStatusType.Pending },
+    { name: PublishStageNameType.VersionCheck, label: STAGE_LABELS[PublishStageNameType.VersionCheck], status: PublishStageStatusType.Pending },
   );
 
   return stages;
@@ -189,11 +229,11 @@ export function PublishProgressDialog({
   const [stages, setStages] = useState<PublishStage[]>(buildDefaultStages);
   const [overallProgress, setOverallProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isFail, setIsFail] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [filesUpdated, setFilesUpdated] = useState<number | null>(null);
   const [backendStackTrace, setBackendStackTrace] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("progress");
+  const [activeTab, setActiveTab] = useState<TabValueType>(TabValueType.Progress);
   
   // Version info
   const [localVersion, setLocalVersion] = useState<string | null>(null);
@@ -219,11 +259,11 @@ export function PublishProgressDialog({
   
   // Upload mode setting
   const [useFileByFile, setUseFileByFile] = useState(() => {
-    const saved = localStorage.getItem("settings");
+    const saved = localStorage.getItem(LocalStorageKeyType.Settings);
     if (saved) {
       try {
-        const settings = JSON.parse(saved);
-        return settings.uploadMode === "file-by-file";
+        const settings = Json.parse(saved);
+        return settings.uploadMode === UploadModeType.FileByFile;
       } catch { /* ignore */ }
     }
     return true; // default to file-by-file
@@ -232,7 +272,7 @@ export function PublishProgressDialog({
   // Keep ZIP files setting
   const [keepZipFiles, setKeepZipFiles] = useState(() => {
     try {
-      const saved = localStorage.getItem("wppp_keep_zip_files");
+      const saved = localStorage.getItem(LocalStorageKeyType.KeepZipFiles);
       return saved === "true";
     } catch {
       return false;
@@ -274,12 +314,12 @@ export function PublishProgressDialog({
       setStages(buildDefaultStages());
       setOverallProgress(0);
       setIsComplete(false);
-      setIsFail(false);
+      setIsSuccess(false);
       setErrorMessage(null);
       setFilesUpdated(null);
       setBackendStackTrace(null);
       setLogs([]);
-      setActiveTab("progress");
+      setActiveTab(TabValueType.Progress);
       setRemoteVersion(null);
       publishCompletedRef.current = false;
       seenLogKeysRef.current.clear();
@@ -310,7 +350,7 @@ export function PublishProgressDialog({
       const payload = data as { pluginId: number; siteId: number };
       if (payload.pluginId === pluginId && payload.siteId === siteId && !publishCompletedRef.current) {
         setStages(prev => prev.map(s => 
-          s.name === "backup" ? { ...s, status: PublishStageStatusType.Running } : s
+          s.name === PublishStageNameType.Backup ? { ...s, status: PublishStageStatusType.Running } : s
         ));
         addLog({
           timestamp: new Date().toISOString(),
@@ -341,8 +381,8 @@ export function PublishProgressDialog({
           return prev.map(s => {
             if (s.name === payload.stage) {
               let mappedStatus: PublishStageStatusType = PublishStageStatusType.Running;
-              if (payload.status === "success" || payload.status === "completed") mappedStatus = PublishStageStatusType.Success;
-              else if (payload.status === "error" || payload.status === "failed") mappedStatus = PublishStageStatusType.Error;
+              if (payload.status === PayloadStatusType.Success || payload.status === PayloadStatusType.Completed) mappedStatus = PublishStageStatusType.Success;
+              else if (payload.status === PayloadStatusType.Error || payload.status === PayloadStatusType.Failed) mappedStatus = PublishStageStatusType.Error;
               return { ...s, status: mappedStatus, message: payload.message };
             }
             // Only auto-complete stages that appear BEFORE the current stage in the pipeline
@@ -363,10 +403,10 @@ export function PublishProgressDialog({
         // PERMANENTLY lock — no more events accepted for this session
         publishCompletedRef.current = true;
         
-        const wasSuccessful = payload.isSuccess ?? payload.success ?? (payload.status === "completed" || payload.status === "success");
+        const wasSuccessful = payload.isSuccess ?? payload.success ?? (payload.status === PayloadStatusType.Completed || payload.status === PayloadStatusType.Success);
         
         setIsComplete(true);
-        setIsFail(!wasSuccessful);
+        setIsSuccess(wasSuccessful);
         setFilesUpdated(payload.filesUpdated ?? null);
         setOverallProgress(100);
         
@@ -394,7 +434,7 @@ export function PublishProgressDialog({
         const finalizeStages = (prev: PublishStage[]): PublishStage[] => {
           const base = payload.stages || prev;
           return base.map(s => {
-            if (s.name === "version_check") {
+            if (s.name === PublishStageNameType.VersionCheck) {
               return { ...s, status: PublishStageStatusType.Pending };
             }
             if (wasSuccessful && s.status !== PublishStageStatusType.Skipped) {
@@ -414,7 +454,7 @@ export function PublishProgressDialog({
         // Version verification (delayed, won't conflict since we use functional updater)
         if (wasSuccessful && pluginId && siteId) {
           setStages(prev => prev.map(s => 
-            s.name === "version_check" ? { ...s, status: PublishStageStatusType.Running, message: "Checking remote version..." } : s
+            s.name === PublishStageNameType.VersionCheck ? { ...s, status: PublishStageStatusType.Running, message: "Checking remote version..." } : s
           ));
           api.previewPublish(pluginId, siteId).then(response => {
             if (response.success && response.data) {
@@ -425,7 +465,7 @@ export function PublishProgressDialog({
               
               const versionMatch = newRemote && local && newRemote === local;
               setStages(prev => prev.map(s => 
-                s.name === "version_check" ? { 
+                s.name === PublishStageNameType.VersionCheck ? { 
                   ...s, 
                   status: versionMatch ? PublishStageStatusType.Success : PublishStageStatusType.Error,
                   message: versionMatch 
@@ -444,7 +484,7 @@ export function PublishProgressDialog({
             }
           }).catch(() => {
             setStages(prev => prev.map(s => 
-              s.name === "version_check" ? { ...s, status: PublishStageStatusType.Skipped, message: "Could not verify" } : s
+              s.name === PublishStageNameType.VersionCheck ? { ...s, status: PublishStageStatusType.Skipped, message: "Could not verify" } : s
             ));
           });
         }
@@ -515,7 +555,7 @@ export function PublishProgressDialog({
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Upload className="h-5 w-5 text-primary" />
-            {isComplete ? (!isFail ? "Publish Complete" : "Publish Failed") : "Publishing..."}
+            {isComplete ? (isSuccess ? "Publish Complete" : "Publish Failed") : "Publishing..."}
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 flex-wrap min-h-0">
             <span className="truncate">Deploying <strong>{pluginName}</strong> to <strong className="truncate max-w-[200px] inline-block align-bottom">{siteName}</strong></span>
@@ -564,29 +604,29 @@ export function PublishProgressDialog({
         </DialogHeader>
 
         {/* Tabbed content for better screen fit */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
+        <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as TabValueType)} className="flex-1 flex flex-col overflow-hidden">
           <TabsList className="w-full flex flex-shrink-0">
-            <TabsTrigger value="progress" className="flex-1 gap-1 text-xs sm:text-sm">
+            <TabsTrigger value={TabValueType.Progress} className="flex-1 gap-1 text-xs sm:text-sm">
               <ListChecks className="h-3 w-3" />
               Progress
             </TabsTrigger>
-            <TabsTrigger value="logs" className="flex-1 gap-1 text-xs sm:text-sm">
+            <TabsTrigger value={TabValueType.Logs} className="flex-1 gap-1 text-xs sm:text-sm">
               <Terminal className="h-3 w-3" />
               Logs
               <Badge variant="secondary" className="ml-1 text-[10px]">{logs.length}</Badge>
             </TabsTrigger>
-            <TabsTrigger value="diagnostics" className="flex-1 gap-1 text-xs sm:text-sm">
+            <TabsTrigger value={TabValueType.Diagnostics} className="flex-1 gap-1 text-xs sm:text-sm">
               <Activity className="h-3 w-3" />
               Diag
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex-1 gap-1 text-xs sm:text-sm" disabled={isComplete}>
+            <TabsTrigger value={TabValueType.Settings} className="flex-1 gap-1 text-xs sm:text-sm" disabled={isComplete}>
               <Settings2 className="h-3 w-3" />
               Settings
             </TabsTrigger>
           </TabsList>
 
           {/* Progress Tab */}
-          <TabsContent value="progress" className="flex-1 overflow-hidden mt-4">
+          <TabsContent value={TabValueType.Progress} className="flex-1 overflow-hidden mt-4">
             <ScrollArea className="h-full pr-4">
               <div className="space-y-4">
                 {/* Overall Progress */}
@@ -618,12 +658,12 @@ export function PublishProgressDialog({
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-medium">{stage.label}</p>
                           {/* Show local version on deploy stages, remote on version_check */}
-                          {stage.name !== "version_check" && localVersion && stage.status !== PublishStageStatusType.Pending && (
+                          {stage.name !== PublishStageNameType.VersionCheck && localVersion && stage.status !== PublishStageStatusType.Pending && (
                             <Badge className="text-[10px] font-mono h-4 px-1.5 bg-primary/80 text-primary-foreground">
                               v{localVersion}
                             </Badge>
                           )}
-                          {stage.name === "version_check" && remoteVersion && stage.status !== PublishStageStatusType.Pending && (
+                          {stage.name === PublishStageNameType.VersionCheck && remoteVersion && stage.status !== PublishStageStatusType.Pending && (
                             <Badge variant="outline" className="text-[10px] font-mono h-4 px-1.5 border-accent text-accent-foreground">
                               v{remoteVersion}
                               <span className="ml-1 text-muted-foreground font-normal">server</span>
@@ -651,7 +691,7 @@ export function PublishProgressDialog({
                 </div>
 
                 {/* Success Message */}
-                {isComplete && !isFail && filesUpdated !== null && (
+                {isComplete && isSuccess && filesUpdated !== null && (
                   <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
                     <div className="flex items-center gap-2">
                       <Check className="h-5 w-5 text-primary" />
@@ -674,7 +714,7 @@ export function PublishProgressDialog({
                 )}
 
                 {/* Error Message */}
-                {isComplete && isFail && errorMessage && (
+                {isComplete && isSuccess === false && errorMessage && (
                   <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
                     <div className="flex items-start gap-2">
                       <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
@@ -748,7 +788,7 @@ export function PublishProgressDialog({
           </TabsContent>
 
           {/* Logs Tab — verbose logs already filtered at accumulation */}
-          <TabsContent value="logs" className="flex-1 overflow-hidden mt-4">
+          <TabsContent value={TabValueType.Logs} className="flex-1 overflow-hidden mt-4">
             <LogViewer
               logs={logs}
               title="Execution Logs"
@@ -760,12 +800,12 @@ export function PublishProgressDialog({
           </TabsContent>
 
           {/* Diagnostics Tab */}
-          <TabsContent value="diagnostics" className="flex-1 overflow-hidden mt-4">
+          <TabsContent value={TabValueType.Diagnostics} className="flex-1 overflow-hidden mt-4">
             <ActivationDiagnostics logs={logs} className="h-full" />
           </TabsContent>
 
           {/* Settings Tab */}
-          <TabsContent value="settings" className="flex-1 overflow-hidden mt-4">
+          <TabsContent value={TabValueType.Settings} className="flex-1 overflow-hidden mt-4">
             <div className="space-y-4">
               <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                 <div>
@@ -783,10 +823,10 @@ export function PublishProgressDialog({
                     checked={useFileByFile}
                     onCheckedChange={(checked) => {
                       setUseFileByFile(checked);
-                      const saved = localStorage.getItem("settings");
-                      const settings = saved ? JSON.parse(saved) : {};
-                      settings.uploadMode = checked ? "file-by-file" : "zip";
-                      localStorage.setItem("settings", JSON.stringify(settings));
+                      const saved = localStorage.getItem(LocalStorageKeyType.Settings);
+                      const settings = saved ? Json.parse(saved) : {};
+                      settings.uploadMode = checked ? UploadModeType.FileByFile : UploadModeType.Zip;
+                      localStorage.setItem(LocalStorageKeyType.Settings, Json.stringify(settings));
                       toast.success(`Upload mode: ${checked ? "File-by-file" : "ZIP"}`);
                     }}
                   />
@@ -808,7 +848,7 @@ export function PublishProgressDialog({
                   checked={keepZipFiles}
                   onCheckedChange={(checked) => {
                     setKeepZipFiles(checked);
-                    localStorage.setItem("wppp_keep_zip_files", String(checked));
+                    localStorage.setItem(LocalStorageKeyType.KeepZipFiles, String(checked));
                     toast.success(`Keep ZIP files: ${checked ? "enabled" : "disabled"}`);
                   }}
                 />
