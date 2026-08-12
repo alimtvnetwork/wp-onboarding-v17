@@ -61,14 +61,14 @@ func (c *Client) DeleteFileViaUploader(slug, relPath string) *apperror.AppError 
 
 // SyncFile represents a single file in a sync request.
 type SyncFile struct {
-	Path    string `json:"path"`              // external key (Riseup Asia Uploader API)
+	Path    string `json:"path"`              // external key (Riseup Asia Uploader Api)
 	Content string `json:"content,omitempty"` // external key (base64 encoded)
 	Action  string `json:"action"`            // external key ("replace" or "delete")
 }
 
 // SyncFileResult represents the result of syncing a single file.
 type SyncFileResult struct {
-	Path   string `json:"path"`             // external key (Riseup Asia Uploader API)
+	Path   string `json:"path"`             // external key (Riseup Asia Uploader Api)
 	Action string `json:"action"`           // external key
 	Status string `json:"status"`           // external key
 	Reason string `json:"reason,omitempty"` // external key
@@ -76,7 +76,7 @@ type SyncFileResult struct {
 
 // SyncResult represents the result of a delta sync operation.
 type SyncResult struct {
-	Success      bool             `json:"success"`       // external key (Riseup Asia Uploader API)
+	Success      bool             `json:"success"`       // external key (Riseup Asia Uploader Api)
 	FilesUpdated int              `json:"files_updated"` // external key
 	FilesDeleted int              `json:"files_deleted"` // external key
 	FilesIgnored int              `json:"files_ignored"` // external key

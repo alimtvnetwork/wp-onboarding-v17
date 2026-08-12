@@ -18,7 +18,7 @@ import (
 
 // RemoteLogFile represents a single log file returned by the error-logs endpoint.
 type RemoteLogFile struct {
-	Exists     bool   `json:"exists"`     // external key (Riseup Asia Uploader API)
+	Exists     bool   `json:"exists"`     // external key (Riseup Asia Uploader Api)
 	File       string `json:"file"`       // external key
 	Path       string `json:"path"`       // external key
 	Content    string `json:"content"`    // external key
@@ -30,7 +30,7 @@ type RemoteLogFile struct {
 
 // RemoteErrorLogsResult represents the /error-logs endpoint response.
 type RemoteErrorLogsResult struct {
-	Success          bool                 `json:"success"`                    // external key (Riseup Asia Uploader API)
+	Success          bool                 `json:"success"`                    // external key (Riseup Asia Uploader Api)
 	Version          string               `json:"version"`                    // external key
 	Settings         ProgressDetails      `json:"settings"`                   // external key
 	ErrorLog         *RemoteLogFile       `json:"errorLog,omitempty"`         // external key
@@ -71,7 +71,7 @@ func (c *Client) FetchRemoteErrorLogs() apperror.Result[*RemoteErrorLogsResult] 
 
 // RemoteErrorSessionEntry represents a single structured error from the plugin's SQLite DB.
 type RemoteErrorSessionEntry struct {
-	Id               int                  `json:"id"`                        // external key (Riseup Asia Uploader API)
+	Id               int                  `json:"id"`                        // external key (Riseup Asia Uploader Api)
 	Level            string               `json:"level"`                     // external key
 	Message          string               `json:"message"`                   // external key
 	File             string               `json:"file"`                      // external key
@@ -85,14 +85,14 @@ type RemoteErrorSessionEntry struct {
 
 // RemoteFlashState represents the flash notification state from the plugin.
 type RemoteFlashState struct {
-	LastSeenId  int  `json:"last_seen_id"`  // external key (Riseup Asia Uploader API)
+	LastSeenId  int  `json:"last_seen_id"`  // external key (Riseup Asia Uploader Api)
 	HasUnseen   bool `json:"has_unseen"`    // external key
 	UnseenCount int  `json:"unseen_count"`  // external key
 }
 
 // RemoteErrorSessionsResult represents the /error-sessions endpoint response.
 type RemoteErrorSessionsResult struct {
-	Success          bool                      `json:"success"`                    // external key (Riseup Asia Uploader API)
+	Success          bool                      `json:"success"`                    // external key (Riseup Asia Uploader Api)
 	Version          string                    `json:"version"`                    // external key
 	Message          string                    `json:"message,omitempty"`          // external key
 	Entries          []RemoteErrorSessionEntry `json:"entries"`                    // external key
@@ -160,7 +160,7 @@ type errorSessionsParams struct {
 	Offset    int
 }
 
-// buildErrorSessionsEndpoint constructs the endpoint URL with query parameters.
+// buildErrorSessionsEndpoint constructs the endpoint Url with query parameters.
 func buildErrorSessionsEndpoint(p errorSessionsParams) string {
 	endpoint := BuildNamespacedEndpoint(p.Namespace, ep.ErrorSessions)
 	params := collectErrorSessionParams(p)

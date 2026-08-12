@@ -17,7 +17,7 @@ import (
 
 // ExportPluginResult holds the response from the export-plugin endpoint.
 type ExportPluginResult struct {
-	Success   bool   `json:"success"`    // external key (Riseup Asia Uploader API)
+	Success   bool   `json:"success"`    // external key (Riseup Asia Uploader Api)
 	PluginZip string `json:"plugin_zip"` // external key (base64 encoded)
 	Slug      string `json:"slug"`       // external key
 	FileCount int    `json:"file_count"` // external key
@@ -58,7 +58,7 @@ func (c *Client) ExportPlugin(slug string) apperror.Result[*ExportPluginResult] 
 
 // ExportSelfResult represents the result of exporting the uploader plugin.
 type ExportSelfResult struct {
-	Success    bool   `json:"success"`    // external key (Riseup Asia Uploader API)
+	Success    bool   `json:"success"`    // external key (Riseup Asia Uploader Api)
 	PluginName string `json:"pluginName"` // external key
 	Version    string `json:"version"`    // external key
 	PluginSlug string `json:"pluginSlug"` // external key
@@ -97,7 +97,7 @@ func (c *Client) reportExportSelfStart() {
 	c.progress(exportStartEvent)
 }
 
-// callExportSelf sends the export-self API call.
+// callExportSelf sends the export-self Api call.
 func (c *Client) callExportSelf(namespace string) apperror.Result[*ExportSelfResult] {
 	endpoint := BuildNamespacedEndpoint(namespace, ep.ExportSelf)
 

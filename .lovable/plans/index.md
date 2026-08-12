@@ -46,3 +46,6 @@
 - [Task 359](completed/359-fix-backend-internal-wordpress-powershellexec-go.md) - Completed
 - [Task 360](completed/360-fix-backend-internal-wordpress-requesttypes-go.md) - Completed
 - [Task 361](completed/361-fix-backend-internal-wordpress-snapshots-go.md) - Completed
+- [Task 362](completed/362-fix-backend-internal-wordpress-snapshotsbackup-go.md) - Completed
+- [Task 363](completed/363-fix-backend-internal-wordpress-snapshotsexport-go.md) - Completed
+- [Task 364](completed/364-fix-backend-internal-wordpress-uploader-go.md) - Completed
