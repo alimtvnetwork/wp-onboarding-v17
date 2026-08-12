@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) {
                     <strong><?php _e('Show / Hide Columns', 'category-generator'); ?></strong>
                 </div>
                 <ul class="cg-columns-list">
-                    <li><label><input type="checkbox" class="cg-col-toggle" data-col="<?php echo CG_CSS::COLUMN_ID; ?>"> <?php _e('ID', 'category-generator'); ?></label></li>
+                    <li><label><input type="checkbox" class="cg-col-toggle" data-col="<?php echo CG_CSS::COLUMN_ID; ?>"> <?php _e('Id', 'category-generator'); ?></label></li>
                     <li><label><input type="checkbox" class="cg-col-toggle" data-col="<?php echo CG_CSS::COLUMN_NAME; ?>"> <?php _e('Category Name', 'category-generator'); ?></label></li>
                     <li><label><input type="checkbox" class="cg-col-toggle" data-col="<?php echo CG_CSS::COLUMN_SLUG; ?>"> <?php _e('Slug', 'category-generator'); ?></label></li>
                     <li><label><input type="checkbox" class="cg-col-toggle" data-col="<?php echo CG_CSS::COLUMN_TITLE; ?>"> <?php _e('Title', 'category-generator'); ?></label></li>

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 495: Fix violations in wp-plugins/category-generator/templates/partials/business-profile-form.php
 
 Target File: `wp-plugins/category-generator/templates/partials/business-profile-form.php`

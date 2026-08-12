@@ -37,7 +37,7 @@ $price_ranges = CG_Constants::get_price_ranges();
             </div>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="bp-website"><?php _e('Website URL', 'category-generator'); ?></label>
+                <label for="bp-website"><?php _e('Website Url', 'category-generator'); ?></label>
                 <input type="url" id="bp-website" name="website" value="<?php echo esc_attr($business_profile['website'] ?? ''); ?>" placeholder="https://example.com">
             </div>
         </div>
@@ -150,12 +150,12 @@ $price_ranges = CG_Constants::get_price_ranges();
             <h2><?php _e('Media', 'category-generator'); ?></h2>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="bp-logo"><?php _e('Logo URL', 'category-generator'); ?></label>
+                <label for="bp-logo"><?php _e('Logo Url', 'category-generator'); ?></label>
                 <input type="url" id="bp-logo" name="logo_url" value="<?php echo esc_attr($business_profile['logo_url'] ?? ''); ?>" placeholder="https://example.com/logo.png">
             </div>
             
             <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                <label for="bp-image"><?php _e('Business Image URL', 'category-generator'); ?></label>
+                <label for="bp-image"><?php _e('Business Image Url', 'category-generator'); ?></label>
                 <input type="url" id="bp-image" name="image_url" value="<?php echo esc_attr($business_profile['image_url'] ?? ''); ?>" placeholder="https://example.com/business-image.jpg">
             </div>
             
@@ -163,7 +163,7 @@ $price_ranges = CG_Constants::get_price_ranges();
                 <label for="bp-social"><?php _e('Social Profiles', 'category-generator'); ?></label>
                 <textarea id="bp-social" name="social_profiles" rows="3" placeholder="https://facebook.com/yourbusiness
 https://linkedin.com/company/yourbusiness"><?php echo esc_textarea($business_profile['social_profiles'] ?? ''); ?></textarea>
-                <span class="<?php echo esc_attr(CG_CSS::TEXT_HINT); ?>"><?php _e('One URL per line', 'category-generator'); ?></span>
+                <span class="<?php echo esc_attr(CG_CSS::TEXT_HINT); ?>"><?php _e('One Url per line', 'category-generator'); ?></span>
             </div>
         </div>
     </div>

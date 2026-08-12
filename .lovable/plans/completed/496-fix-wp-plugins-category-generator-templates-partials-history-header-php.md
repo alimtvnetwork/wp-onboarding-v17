@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 496: Fix violations in wp-plugins/category-generator/templates/partials/history-header.php
 
 Target File: `wp-plugins/category-generator/templates/partials/history-header.php`

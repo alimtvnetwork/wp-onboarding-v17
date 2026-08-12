@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 494: Fix violations in wp-plugins/category-generator/templates/inner-templates-page.php
 
 Target File: `wp-plugins/category-generator/templates/inner-templates-page.php`

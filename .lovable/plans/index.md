@@ -172,3 +172,6 @@
 - [Task 491](completed/491-fix-wp-plugins-category-generator-includes-class-snapshot-php.md) - Completed
 - [Task 492](completed/492-fix-wp-plugins-category-generator-includes-class-tests-php.md) - Completed
 - [Task 493](completed/493-fix-wp-plugins-category-generator-templates-admin-page-php.md) - Completed
+- [Task 494](completed/494-fix-wp-plugins-category-generator-templates-inner-templates-page-php.md) - Completed
+- [Task 495](completed/495-fix-wp-plugins-category-generator-templates-partials-business-profile-form-php.md) - Completed
+- [Task 496](completed/496-fix-wp-plugins-category-generator-templates-partials-history-header-php.md) - Completed

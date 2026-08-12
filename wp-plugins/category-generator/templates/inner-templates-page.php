@@ -50,9 +50,9 @@ $types = CG_Inner_Templates::get_types();
                 <table class="wp-list-table widefat fixed striped">
                     <thead>
                         <tr>
-                            <th style="width: 50px;"><?php _e('ID', 'category-generator'); ?></th>
+                            <th style="width: 50px;"><?php _e('Id', 'category-generator'); ?></th>
                             <th><?php _e('Name', 'category-generator'); ?></th>
-                            <th style="width: 120px;"><?php _e('Name ID', 'category-generator'); ?></th>
+                            <th style="width: 120px;"><?php _e('Name Id', 'category-generator'); ?></th>
                             <th style="width: 120px;"><?php _e('Type', 'category-generator'); ?></th>
                             <th style="width: 100px;"><?php _e('Category', 'category-generator'); ?></th>
                             <th style="width: 200px;"><?php _e('Actions', 'category-generator'); ?></th>
@@ -94,10 +94,10 @@ $types = CG_Inner_Templates::get_types();
             <div class="cg-card">
                 <h3><?php _e('Usage Guide', 'category-generator'); ?></h3>
                 <div class="cg-usage-guide">
-                    <p><strong><?php _e('By ID:', 'category-generator'); ?></strong></p>
+                    <p><strong><?php _e('By Id:', 'category-generator'); ?></strong></p>
                     <code>{inner:3}</code>
                     
-                    <p><strong><?php _e('By Name ID:', 'category-generator'); ?></strong></p>
+                    <p><strong><?php _e('By Name Id:', 'category-generator'); ?></strong></p>
                     <code>{inner:company-founded}</code>
                     
                     <p><strong><?php _e('Available in:', 'category-generator'); ?></strong></p>
@@ -156,7 +156,7 @@ $types = CG_Inner_Templates::get_types();
                     </div>
                     
                     <div class="cg-form-group">
-                        <label for="inner-name-id"><?php _e('Name ID (for {inner:xxx})', 'category-generator'); ?> *</label>
+                        <label for="inner-name-id"><?php _e('Name Id (for {inner:xxx})', 'category-generator'); ?> *</label>
                         <input type="text" id="inner-name-id" name="name_id" required pattern="[a-zA-Z_][a-zA-Z0-9_-]*" placeholder="company-founded">
                         <span class="cg-hint"><?php _e('Letters, numbers, hyphens, underscores only', 'category-generator'); ?></span>
                     </div>
