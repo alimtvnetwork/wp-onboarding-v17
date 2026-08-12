@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 550: Fix violations in wp-plugins/qupload/qupload.php
 
 Target File: `wp-plugins/qupload/qupload.php`

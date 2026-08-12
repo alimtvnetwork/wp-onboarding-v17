@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 548: Fix violations in wp-plugins/qupload/includes/Traits/Upload/UploadHandlerTrait.php
 
 Target File: `wp-plugins/qupload/includes/Traits/Upload/UploadHandlerTrait.php`

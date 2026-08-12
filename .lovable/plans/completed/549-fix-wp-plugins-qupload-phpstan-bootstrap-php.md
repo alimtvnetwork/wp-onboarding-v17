@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 549: Fix violations in wp-plugins/qupload/phpstan-bootstrap.php
 
 Target File: `wp-plugins/qupload/phpstan-bootstrap.php`

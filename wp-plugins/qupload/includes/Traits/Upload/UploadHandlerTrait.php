@@ -122,10 +122,10 @@ trait UploadHandlerTrait
         if (empty($data[RequestFieldType::PluginZip->value])) {
             $this->fileLogger->warn('Missing plugin_zip in request');
 
-            return $this->errorResponse(RequestFieldType::PluginZip->value . ' is required (multipart file or base64 JSON)', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(RequestFieldType::PluginZip->value . ' is required (multipart file or base64 Json)', HttpStatusType::BadRequest->value);
         }
 
-        $this->fileLogger->info('Processing base64 JSON upload');
+        $this->fileLogger->info('Processing base64 Json upload');
         $zipContent = base64_decode($data[RequestFieldType::PluginZip->value]);
 
         if ($zipContent === false) {
