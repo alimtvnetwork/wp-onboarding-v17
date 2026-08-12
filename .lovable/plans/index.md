@@ -274,3 +274,7 @@
 - [Task 634](completed/02-guideline-audit-fixes/634-fix-wp-plugins-riseup-asia-uploader-tests-unit-licensing-licenselifecycletest-php.md) - Completed
 - [Task 635](completed/02-guideline-audit-fixes/635-fix-wp-plugins-riseup-asia-uploader-tests-unit-licensing-licensemanagertest-php.md) - Completed
 
+- [Task 636](completed/02-guideline-audit-fixes/636-fix-wp-plugins-riseup-asia-uploader-tests-unit-snapshot-snapshotfactorytest-php.md) - Completed
+- [Task 637](completed/02-guideline-audit-fixes/637-fix-wp-plugins-riseup-asia-uploader-tests-unit-snapshot-sqliteschemaconvertertest-php.md) - Completed
+- [Task 638](completed/02-guideline-audit-fixes/638-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-internal-tokenpolyfill-php.md) - Completed
+

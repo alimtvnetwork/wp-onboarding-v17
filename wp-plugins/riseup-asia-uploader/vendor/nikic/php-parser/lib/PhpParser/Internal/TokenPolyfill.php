@@ -16,7 +16,7 @@ if (\PHP_VERSION_ID >= 80000) {
  * @internal
  */
 class TokenPolyfill {
-    /** @var int The ID of the token. Either a T_* constant of a character code < 256. */
+    /** @var int The Id of the token. Either a T_* constant of a character code < 256. */
     public int $id;
     /** @var string The textual content of the token. */
     public string $text;
@@ -37,7 +37,7 @@ class TokenPolyfill {
     private static array $identifierTokens;
 
     /**
-     * Create a Token with the given ID and text, as well optional line and position information.
+     * Create a Token with the given Id and text, as well optional line and position information.
      */
     final public function __construct(int $id, string $text, int $line = -1, int $pos = -1) {
         $this->id = $id;
@@ -48,7 +48,7 @@ class TokenPolyfill {
 
     /**
      * Get the name of the token. For single-char tokens this will be the token character.
-     * Otherwise it will be a T_* style name, or null if the token ID is unknown.
+     * Otherwise it will be a T_* style name, or null if the token Id is unknown.
      */
     public function getTokenName(): ?string {
         if ($this->id < 256) {
@@ -61,7 +61,7 @@ class TokenPolyfill {
 
     /**
      * Check whether the token is of the given kind. The kind may be either an integer that matches
-     * the token ID, a string that matches the token text, or an array of integers/strings. In the
+     * the token Id, a string that matches the token text, or an array of integers/strings. In the
      * latter case, the function returns true if any of the kinds in the array match.
      *
      * @param int|string|(int|string)[] $kind

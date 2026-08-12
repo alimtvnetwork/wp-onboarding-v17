@@ -11,7 +11,7 @@ final class SqliteSchemaConverterTest extends TestCase
 {
     public function testConvertReplacesIntTypes(): void
     {
-        $mysql = "CREATE TABLE `wp_posts` (\n  `ID` BIGINT(20) NOT NULL,\n  `post_status` TINYINT(1) DEFAULT 0\n) ENGINE=InnoDB";
+        $mysql = "CREATE TABLE `wp_posts` (\n  `Id` BIGINT(20) NOT NULL,\n  `post_status` TINYINT(1) DEFAULT 0\n) ENGINE=InnoDB";
         $result = SqliteSchemaConverter::convert($mysql, 'wp_posts');
 
         $this->assertStringContainsString('INTEGER', $result);

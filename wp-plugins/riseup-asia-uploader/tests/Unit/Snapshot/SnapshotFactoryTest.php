@@ -9,7 +9,7 @@ use RiseupAsia\Snapshot\SnapshotFactory;
 
 /**
  * Tests SnapshotFactory static method existence and return types.
- * Cannot fully test singletons without DB/Logger, but verifies API surface.
+ * Cannot fully test singletons without Db/Logger, but verifies Api surface.
  */
 final class SnapshotFactoryTest extends TestCase
 {
