@@ -159,7 +159,7 @@ func (s *Service) loadPhpStackTrace(sessionId string) string {
 }
 
 // extractPhpStackTraceFromLogs scans session log lines for the remote_php_stacktrace
-// entry and extracts the embedded stacktrace.txt content from its JSON context.
+// entry and extracts the embedded stacktrace.txt content from its Json context.
 func extractPhpStackTraceFromLogs(logs string) string {
 	for _, line := range strings.Split(logs, "\n") {
 		content := extractPhpContentFromLine(line)
@@ -186,11 +186,11 @@ func extractPhpContentFromLine(line string) string {
 	return parsePhpContent(line[braceIdx:])
 }
 
-// parsePhpContent unmarshals the JSON fragment and returns the content field.
+// parsePhpContent unmarshals the Json fragment and returns the content field.
 func parsePhpContent(jsonFragment string) string {
-	// stackTraceContentContext extracts "content" from remote_php_stacktrace log JSON.
+	// stackTraceContentContext extracts "content" from remote_php_stacktrace log Json.
 	type stackTraceContentContext struct {
-		Content string `json:"content"` // external key (session log JSON)
+		Content string `json:"content"` // external key (session log Json)
 	}
 	var ctx stackTraceContentContext
 	if json.Unmarshal([]byte(jsonFragment), &ctx) == nil {

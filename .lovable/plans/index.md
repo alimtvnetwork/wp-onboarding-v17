@@ -7,3 +7,6 @@
 - [Task 256](completed/256-fix-wp-plugins-riseup-asia-uploader-includes-traits-log-logclearalltrait-php.md) - Completed
 - [Task 257](completed/257-fix-wp-plugins-riseup-asia-uploader-includes-traits-log-logstatustrait-php.md) - Completed
 - [Task 258](completed/258-fix-wp-plugins-riseup-asia-uploader-riseup-asia-uploader-php.md) - Completed
+- [Task 259](completed/259-fix-wp-plugins-riseup-asia-uploader-tests-unit-agent-traits-agentloggingtraittest-php.md) - Completed
+- [Task 260](completed/260-fix-wp-plugins-riseup-asia-uploader-tests-unit-sync-syncpushtraittest-php.md) - Completed
+- [Task 325](completed/325-fix-backend-internal-services-publish_history-queries-go.md) - Completed

@@ -130,13 +130,13 @@ func writeSessionHeader(shi sessionHeaderInput) {
 	hasPluginName := shi.Input.PluginName != ""
 
 	if hasPluginName {
-		header += fmt.Sprintf(" PLUGIN: %s (ID: %d)\n", shi.Input.PluginName, shi.Input.PluginId)
+		header += fmt.Sprintf(" PLUGIN: %s (Id: %d)\n", shi.Input.PluginName, shi.Input.PluginId)
 	}
 
 	hasSiteName := shi.Input.SiteName != ""
 
 	if hasSiteName {
-		header += fmt.Sprintf(" SITE: %s (ID: %d)\n", shi.Input.SiteName, shi.Input.SiteId)
+		header += fmt.Sprintf(" SITE: %s (Id: %d)\n", shi.Input.SiteName, shi.Input.SiteId)
 	}
 	header += "═══════════════════════════════════════════════════════════════════════════════\n\n"
 	shi.File.WriteString(header)
@@ -201,7 +201,7 @@ func formatLogLine(input LogInput) string {
 	return fmt.Sprintf("[%s] [%s] [%s] %s\n", timestamp, levelUpper, input.Step, input.Message)
 }
 
-// writeLogDetails writes indented JSON details to the log file if present.
+// writeLogDetails writes indented Json details to the log file if present.
 func writeLogDetails(file *os.File, details json.RawMessage) {
 	isDetailsEmpty := len(details) == 0
 
