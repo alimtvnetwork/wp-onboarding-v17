@@ -1,6 +1,6 @@
 <?php
 /**
- * REST API class.
+ * REST Api class.
  *
  * @package PluginsOnboard
  */
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class OnboardAPI
  *
- * Handles REST API endpoint registration and callbacks.
+ * Handles REST Api endpoint registration and callbacks.
  */
 class OnboardAPI {
 
@@ -38,7 +38,7 @@ class OnboardAPI {
     private $mutation_token;
 
     /**
-     * IP whitelist instance.
+     * Ip whitelist instance.
      *
      * @var OnboardIPWhitelist
      */
@@ -96,7 +96,7 @@ class OnboardAPI {
     }
 
     /**
-     * Register REST API routes.
+     * Register REST Api routes.
      */
     public function register_routes() {
         $namespace = ONBOARD_API_NAMESPACE . '/' . ONBOARD_API_VERSION;
@@ -335,16 +335,16 @@ class OnboardAPI {
         }
 
 		// Support WordPress Application Passwords (Basic Auth) for non-interactive clients.
-		// When the REST API authenticates the request via Basic Auth, WordPress sets the current user.
+		// When the REST Api authenticates the request via Basic Auth, WordPress sets the current user.
 		// We allow that path as an alternative to the companion OAuth bearer token.
 		$isAuthorizedAdmin = is_user_logged_in() && (current_user_can('install_plugins') || current_user_can('activate_plugins'));
 		if ($isAuthorizedAdmin) {
 			$user = wp_get_current_user();
 			$request->set_param('_decoded_token', array(
 				'auth_type' => 'basic',
-				'user_id'   => $user ? $user->ID : 0,
+				'user_id'   => $user ? $user->Id : 0,
 			));
-			$request->set_param('_app_id', 'wp-user-' . ($user ? $user->ID : 0));
+			$request->set_param('_app_id', 'wp-user-' . ($user ? $user->Id : 0));
 			return true;
 		}
 
@@ -487,7 +487,7 @@ class OnboardAPI {
         $isAppMissing = !$app;
 
         if ($isAppMissing) {
-            return new WP_Error('invalid_client', 'Invalid client ID', array('status' => 400));
+            return new WP_Error('invalid_client', 'Invalid client Id', array('status' => 400));
         }
 
         $isRedirectMismatch = $app['redirect_uri'] !== $redirect_uri;
@@ -554,7 +554,7 @@ class OnboardAPI {
         $action = $request->get_param('action');
         $ip_address = onboard_get_client_ip();
 
-        // Check IP whitelist.
+        // Check Ip whitelist.
         if (ONBOARD_IP_WHITELIST_ENABLED && !ONBOARD_IP_AUTO_APPROVE) {
             if (!$this->ip_whitelist->is_whitelisted($decoded['app_id'], $ip_address)) {
                 // Request approval.

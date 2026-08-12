@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 515: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Tests.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Tests.php`

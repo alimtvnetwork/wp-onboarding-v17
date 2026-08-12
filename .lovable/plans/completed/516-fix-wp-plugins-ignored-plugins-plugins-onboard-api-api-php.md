@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 516: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/api/Api.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/api/Api.php`

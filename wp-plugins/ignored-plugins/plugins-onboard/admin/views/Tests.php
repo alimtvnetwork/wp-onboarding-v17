@@ -159,7 +159,7 @@ if ($run_tests) {
                 </tr>
                 <tr>
                     <td><span class="dashicons dashicons-yes-alt" style="color: green;"></span></td>
-                    <td><?php esc_html_e('IP whitelist enforced before mutation token generation', 'plugins-onboard'); ?></td>
+                    <td><?php esc_html_e('Ip whitelist enforced before mutation token generation', 'plugins-onboard'); ?></td>
                 </tr>
                 <tr>
                     <td><span class="dashicons dashicons-yes-alt" style="color: green;"></span></td>

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 517: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/api/Permissions.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/api/Permissions.php`

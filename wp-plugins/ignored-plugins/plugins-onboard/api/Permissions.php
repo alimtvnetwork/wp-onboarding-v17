@@ -62,7 +62,7 @@ class OnboardPermissions {
     }
 
     /**
-     * Check if current user can approve IP addresses.
+     * Check if current user can approve Ip addresses.
      *
      * @return bool
      */

@@ -193,3 +193,6 @@
 - [Task 512](completed/512-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-help-php.md) - Completed
 - [Task 513](completed/513-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-plugins-php.md) - Completed
 - [Task 514](completed/514-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-settings-php.md) - Completed
+- [Task 515](completed/515-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-tests-php.md) - Completed
+- [Task 516](completed/516-fix-wp-plugins-ignored-plugins-plugins-onboard-api-api-php.md) - Completed
+- [Task 517](completed/517-fix-wp-plugins-ignored-plugins-plugins-onboard-api-permissions-php.md) - Completed
