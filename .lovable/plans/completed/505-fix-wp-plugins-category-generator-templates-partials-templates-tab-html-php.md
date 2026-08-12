@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 505: Fix violations in wp-plugins/category-generator/templates/partials/templates-tab-html.php
 
 Target File: `wp-plugins/category-generator/templates/partials/templates-tab-html.php`

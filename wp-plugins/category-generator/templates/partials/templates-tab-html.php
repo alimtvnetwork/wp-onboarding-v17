@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th style="width: 50px;"><?php _e('ID', 'category-generator'); ?></th>
+                    <th style="width: 50px;"><?php _e('Id', 'category-generator'); ?></th>
                     <th><?php _e('Name', 'category-generator'); ?></th>
                     <th style="width: 180px;"><?php _e('Category', 'category-generator'); ?></th>
                     <th><?php _e('Description', 'category-generator'); ?></th>
@@ -77,15 +77,15 @@ if (!defined('ABSPATH')) {
             <code><?php echo CG_Constants::PLACEHOLDER_TITLE; ?></code> - Service/Product name<br>
             <code><?php echo CG_Constants::PLACEHOLDER_AREA; ?></code> - Location name<br>
             <code><?php echo CG_Constants::PLACEHOLDER_CATEGORY; ?></code> - Full category name<br>
-            <code><?php echo CG_Constants::PLACEHOLDER_SLUG; ?></code> - URL slug<br>
-            <code><?php echo CG_Constants::PLACEHOLDER_URL; ?></code> - Category URL<br>
+            <code><?php echo CG_Constants::PLACEHOLDER_SLUG; ?></code> - Url slug<br>
+            <code><?php echo CG_Constants::PLACEHOLDER_URL; ?></code> - Category Url<br>
             <code><?php echo CG_Constants::PLACEHOLDER_META_TITLE; ?></code> - Generated meta title<br>
             <code><?php echo CG_Constants::PLACEHOLDER_META_DESC; ?></code> - Generated meta description<br>
             <code><?php echo CG_Constants::PLACEHOLDER_BUSINESS_NAME; ?></code> - Business name from profile<br>
             <code>{phone}</code>, <code>{email}</code>, <code>{website}</code> - Contact info<br>
             <code>{street_address}</code>, <code>{city}</code>, <code>{state}</code>, <code>{postal_code}</code>, <code>{country}</code> - Address<br>
             <code>{rating_value}</code>, <code>{rating_count}</code> - Ratings<br>
-            <code>{contact_url}</code> - Contact page URL<br>
+            <code>{contact_url}</code> - Contact page Url<br>
             <code><?php echo CG_Constants::PLACEHOLDER_INNER; ?>name}</code> - Insert inner template by name
         </div>
     </div>

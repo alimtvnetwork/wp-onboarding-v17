@@ -78,7 +78,7 @@ if (!defined('ABSPATH')) {
                         </select>
                     </div>
                     <div class="<?php echo esc_attr(CG_CSS::FORM_GROUP); ?>">
-                        <label for="tpl-schema-content"><?php _e('Schema JSON-LD', 'category-generator'); ?></label>
+                        <label for="tpl-schema-content"><?php _e('Schema Json-LD', 'category-generator'); ?></label>
                         <textarea id="tpl-schema-content" name="content" rows="15"></textarea>
                     </div>
                 </div>

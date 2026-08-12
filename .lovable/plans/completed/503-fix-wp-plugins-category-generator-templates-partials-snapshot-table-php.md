@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 503: Fix violations in wp-plugins/category-generator/templates/partials/snapshot-table.php
 
 Target File: `wp-plugins/category-generator/templates/partials/snapshot-table.php`

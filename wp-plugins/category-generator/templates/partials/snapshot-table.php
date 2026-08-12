@@ -7,7 +7,7 @@
  * @package Category_Generator_Area
  * @var array $snapshots Array of snapshot data
  * @var string $type 'manual' or 'auto'
- * @var string $list_id ID for the tbody element
+ * @var string $list_id Id for the tbody element
  * @var string $empty_message Message to show when empty
  */
 

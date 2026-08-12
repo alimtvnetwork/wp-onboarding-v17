@@ -181,3 +181,6 @@
 - [Task 500](completed/500-fix-wp-plugins-category-generator-templates-partials-settings-tab-ai-php.md) - Completed
 - [Task 501](completed/501-fix-wp-plugins-category-generator-templates-partials-settings-tab-classes-php.md) - Completed
 - [Task 502](completed/502-fix-wp-plugins-category-generator-templates-partials-settings-tab-remote-php.md) - Completed
+- [Task 503](completed/503-fix-wp-plugins-category-generator-templates-partials-snapshot-table-php.md) - Completed
+- [Task 504](completed/504-fix-wp-plugins-category-generator-templates-partials-templates-modal-edit-php.md) - Completed
+- [Task 505](completed/505-fix-wp-plugins-category-generator-templates-partials-templates-tab-html-php.md) - Completed
