@@ -22,7 +22,7 @@ use RiseupAsia\Enums\TableType;
 use RiseupAsia\Helpers\BooleanHelpers;
 
 trait ExporterHelpersTrait {
-    /** Get a full snapshot record by ID (validates it's not incremental). */
+    /** Get a full snapshot record by Id (validates it's not incremental). */
     private function getFullSnapshot(int $snapshotId): ?array {
         $pdo = $this->db->getPdo();
         $isPdoMissing = ($pdo === null);
@@ -85,7 +85,7 @@ trait ExporterHelpersTrait {
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    /** Get an export record by ID. */
+    /** Get an export record by Id. */
     private function getExportById(int $exportId): ?array {
         $pdo = $this->db->getPdo();
         $isPdoMissing = ($pdo === null);

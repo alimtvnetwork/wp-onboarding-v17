@@ -32,7 +32,7 @@ trait DetectorSettingsTrait {
     /**
      * Get the preferred provider based on settings.
      *
-     * @return string Provider ID.
+     * @return string Provider Id.
      */
     public function getPreferredProvider(): string {
         $settings = get_option(OptionNameType::SnapshotSettings->value, []);
@@ -59,7 +59,7 @@ trait DetectorSettingsTrait {
     /**
      * Get the best available provider (priority: WP Reset > Updraft > Native).
      *
-     * @return string Provider ID.
+     * @return string Provider Id.
      */
     public function getBestAvailableProvider(): string {
         $providers = $this->detectAvailableProviders();
@@ -81,7 +81,7 @@ trait DetectorSettingsTrait {
     }
 
     /**
-     * @param string|null $providerId Provider ID, or null for preferred.
+     * @param string|null $providerId Provider Id, or null for preferred.
      * @return SnapshotProviderInterface Provider instance.
      * @throws Exception If provider not available.
      */
@@ -118,7 +118,7 @@ trait DetectorSettingsTrait {
     }
 
     /**
-     * Instantiate a provider by ID.
+     * Instantiate a provider by Id.
      *
      * @return SnapshotProviderInterface
      */

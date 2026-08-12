@@ -99,7 +99,7 @@ trait TypeCheckerTrait {
     }
 
     /**
-     * Validate that the request body exists and is a JSON object (array).
+     * Validate that the request body exists and is a Json object (array).
      *
      * @return array|null Returns the body array if valid, null if invalid.
      */

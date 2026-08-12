@@ -12,3 +12,6 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/ManagerSe
   `$dbValue = gettype($value) === PhpNativeType::PhpBoolean->value ? ($value ? '1' : '0') : (string)$value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)
+

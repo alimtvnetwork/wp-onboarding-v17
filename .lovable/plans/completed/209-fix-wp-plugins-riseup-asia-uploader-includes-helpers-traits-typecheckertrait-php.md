@@ -28,3 +28,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Helpers/Traits/TypeChecke
   `* Validate that the request body exists and is a JSON object (array).`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] FIXED

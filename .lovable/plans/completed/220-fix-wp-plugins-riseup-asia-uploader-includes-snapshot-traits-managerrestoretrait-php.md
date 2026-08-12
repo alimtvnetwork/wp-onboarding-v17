@@ -8,3 +8,6 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/ManagerRe
   `$isBackupError = gettype($backupId) === PhpNativeType::PhpArray->value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)
+

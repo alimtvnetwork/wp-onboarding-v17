@@ -24,3 +24,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/DetectorS
   `* Instantiate a provider by ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED

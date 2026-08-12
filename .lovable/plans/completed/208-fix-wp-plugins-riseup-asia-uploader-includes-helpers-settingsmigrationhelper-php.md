@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Helpers/SettingsMigration
   `$hasField = isset($settings[$field]) && gettype($settings[$field]) === PhpNativeType::PhpString->value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

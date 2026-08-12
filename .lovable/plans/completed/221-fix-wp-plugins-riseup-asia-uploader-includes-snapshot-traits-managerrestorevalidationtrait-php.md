@@ -16,3 +16,6 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/ManagerRe
   `* @return int|array|null Backup ID, error array, or null.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] FIXED
+

@@ -67,7 +67,7 @@ trait ManagerRestoreValidationTrait {
     /**
      * Handle pre-restore backup creation with optional strict enforcement.
      *
-     * @return int|array|null Backup ID, error array, or null.
+     * @return int|array|null Backup Id, error array, or null.
      */
     private function handlePreRestoreBackup($options, $snapshotId) {
         $hasCreateBackup = isset($options['create_backup']);

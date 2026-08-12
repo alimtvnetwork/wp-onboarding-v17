@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Logging/Traits/LoggerPath
   `$filteredFiles = array_filter($allFiles, fn($file) => gettype($file) === PhpNativeType::PhpString->value && $file !== '');`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

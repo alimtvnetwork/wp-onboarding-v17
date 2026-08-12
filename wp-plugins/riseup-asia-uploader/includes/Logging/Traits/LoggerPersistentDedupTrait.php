@@ -1,8 +1,8 @@
 <?php
 /**
- * Logger Persistent Dedup Trait — JSON-backed cross-request deduplication for Info logs.
+ * Logger Persistent Dedup Trait — Json-backed cross-request deduplication for Info logs.
  *
- * Stores MD5 hashes of previously logged Info messages in a JSON registry file.
+ * Stores Md5 hashes of previously logged Info messages in a Json registry file.
  * Resets automatically when the plugin version changes (i.e., on deployment).
  *
  * @package RiseupAsia\Logging\Traits
@@ -148,7 +148,7 @@ trait LoggerPersistentDedupTrait {
         }
     }
 
-    /** Resolve the full path to the dedup registry JSON file. */
+    /** Resolve the full path to the dedup registry Json file. */
     private function getPersistentDedupPath(): ?string {
         $isUninitialized = ($this->isInitialized === false);
         $isInitFailed = $isUninitialized && ($this->initializePaths() === false);

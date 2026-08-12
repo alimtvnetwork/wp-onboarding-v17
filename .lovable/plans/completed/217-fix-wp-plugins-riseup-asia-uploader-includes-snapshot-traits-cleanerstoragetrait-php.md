@@ -12,3 +12,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/CleanerSt
   `} elseif ($settings[SettingsKeyType::RetentionType->value] === RetentionType::Count->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

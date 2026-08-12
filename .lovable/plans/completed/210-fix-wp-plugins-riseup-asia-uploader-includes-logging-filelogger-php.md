@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Logging/FileLogger.php`
   `$hasLogging = isset($settings['logging']) && gettype($settings['logging']) === PhpNativeType::PhpArray->value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

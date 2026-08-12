@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/SnapshotCleaner.
   `if ($settings[SettingsKeyType::RetentionType->value] === RetentionType::None->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

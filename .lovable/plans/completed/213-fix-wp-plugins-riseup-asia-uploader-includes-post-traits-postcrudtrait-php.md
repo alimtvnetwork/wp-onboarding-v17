@@ -28,3 +28,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Post/Traits/PostCrudTrait
   `'permalink' => get_permalink($post->ID),`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)
