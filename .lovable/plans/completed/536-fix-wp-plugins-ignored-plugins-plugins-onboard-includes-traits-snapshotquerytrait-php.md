@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 536: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/traits/SnapshotQueryTrait.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/traits/SnapshotQueryTrait.php`

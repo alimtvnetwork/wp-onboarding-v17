@@ -20,9 +20,9 @@ trait OnboardSnapshotRestoreTrait {
     /**
      * Restore a plugin from snapshot.
      *
-     * @param string      $snapshot_id Snapshot ID.
-     * @param string|null $app_id      Application ID.
-     * @param string|null $ip_address  IP address.
+     * @param string      $snapshot_id Snapshot Id.
+     * @param string|null $app_id      Application Id.
+     * @param string|null $ip_address  Ip address.
      * @return array|WP_Error
      */
     public function restore($snapshot_id, $app_id = null, $ip_address = null) {

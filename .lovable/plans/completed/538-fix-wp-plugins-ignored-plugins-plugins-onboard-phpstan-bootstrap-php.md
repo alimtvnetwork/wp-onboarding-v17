@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 538: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/phpstan-bootstrap.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/phpstan-bootstrap.php`

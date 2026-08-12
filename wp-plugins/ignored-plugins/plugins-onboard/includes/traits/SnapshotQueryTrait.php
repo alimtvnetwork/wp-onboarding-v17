@@ -47,9 +47,9 @@ trait OnboardSnapshotQueryTrait {
     }
 
     /**
-     * Get snapshot by ID.
+     * Get snapshot by Id.
      *
-     * @param string $snapshot_id Snapshot ID.
+     * @param string $snapshot_id Snapshot Id.
      * @return array|null
      */
     public function get_snapshot($snapshot_id) {
@@ -90,7 +90,7 @@ trait OnboardSnapshotQueryTrait {
     /**
      * Delete a snapshot.
      *
-     * @param string $snapshot_id Snapshot ID.
+     * @param string $snapshot_id Snapshot Id.
      * @return bool
      */
     public function delete($snapshot_id) {

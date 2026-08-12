@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 537: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/traits/SnapshotRestoreTrait.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/traits/SnapshotRestoreTrait.php`

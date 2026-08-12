@@ -214,3 +214,6 @@
 - [Task 533](completed/533-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-databaseschematrait-php.md) - Completed
 - [Task 534](completed/534-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-databasesettingstrait-php.md) - Completed
 - [Task 535](completed/535-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-pluginmanageruploadtrait-php.md) - Completed
+- [Task 536](completed/536-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-snapshotquerytrait-php.md) - Completed
+- [Task 537](completed/537-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-traits-snapshotrestoretrait-php.md) - Completed
+- [Task 538](completed/538-fix-wp-plugins-ignored-plugins-plugins-onboard-phpstan-bootstrap-php.md) - Completed
