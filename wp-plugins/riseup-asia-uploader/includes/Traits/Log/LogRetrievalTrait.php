@@ -2,7 +2,7 @@
 /**
  * LogRetrievalTrait — Returns log file contents for remote retrieval.
  *
- * Returns a flat JSON response (NOT envelope-wrapped) to match the Go backend's
+ * Returns a flat Json response (NOT envelope-wrapped) to match the Go backend's
  * direct unmarshalling into LogsRetrievePhpResponse.
  *
  * @package RiseupAsia\Traits\Log
@@ -36,14 +36,14 @@ trait LogRetrievalTrait
             $result = [
                 ResponseKeyType::Success->value     => true,
                 ResponseKeyType::Version->value     => PluginConfigType::Version->value,
-                'RequestedAt'                        => gmdate('Y-m-d\TH:i:s.v\Z'),
-                ResponseKeyType::Settings->value     => $settings,
+                ResponseKeyType::RequestedAt->value => gmdate('Y-m-d\TH:i:s.v\Z'),
+                ResponseKeyType::Settings->value    => $settings,
             ];
 
             $isInfoLogRequested = $settings[ResponseKeyType::IncludeInfoLog->value];
 
             if ($isInfoLogRequested) {
-                $result['InfoLog'] = $this->readLogFileTail(
+                $result[ResponseKeyType::InfoLog->value] = $this->readLogFileTail(
                     $logsDir . '/log.txt',
                     $settings[ResponseKeyType::MaxLines->value],
                 );

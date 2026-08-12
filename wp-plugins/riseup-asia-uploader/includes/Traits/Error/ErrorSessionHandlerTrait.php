@@ -7,7 +7,7 @@
 
 namespace RiseupAsia\Traits\Error;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -36,10 +36,10 @@ trait ErrorSessionHandlerTrait {
                 return $this->errorResponse('Database not available (PDO/pdo_sqlite extension may not be installed)', HttpStatusType::InternalServerError->value);
             }
 
-            $isTableMissing = ($this->isTableExists($pdo, 'error_sessions') === false);
+            $isTableMissing = ($this->isTableExists($pdo, TableType::ErrorSessions->value) === false);
 
             if ($isTableMissing) {
-                return EnvelopeBuilder::success('error_sessions table does not exist yet (migration v9 not applied)')
+                return EnvelopeBuilder::success(sprintf('%s table does not exist yet (migration v9 not applied)', TableType::ErrorSessions->value))
                     ->autoDetectRequestedAt()->setResults([])->toResponse();
             }
 
@@ -57,18 +57,25 @@ trait ErrorSessionHandlerTrait {
 
     /** Check if a table exists in SQLite. */
     private function isTableExists(PDO $pdo, string $table): bool {
-        $check = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='{$table}'");
+        $objectType = 'table';
+        $check = $pdo->query("SELECT name FROM sqlite_master WHERE type='{$objectType}' AND name='{$table}'");
 
         return (bool) $check->fetchColumn();
     }
 
     /** Build query parameters for error sessions listing. */
     private function buildErrorSessionQuery(WP_REST_Request $request): array {
+        $defaultSinceId = 0;
+        $defaultOffset = 0;
+        $defaultLimit = 100;
+        $maxLimit = 1000;
+        $minLimit = 1;
+
         $level    = sanitize_text_field($request->get_param('level') ?: '');
         $search   = sanitize_text_field($request->get_param('search') ?: '');
-        $sinceId = (int) ($request->get_param('since_id') ?: 0);
-        $limit    = max(1, min(1000, (int) ($request->get_param('limit') ?: 100)));
-        $offset   = max(0, (int) ($request->get_param('offset') ?: 0));
+        $sinceId = (int) ($request->get_param('since_id') ?: $defaultSinceId);
+        $limit    = max($minLimit, min($maxLimit, (int) ($request->get_param('limit') ?: $defaultLimit)));
+        $offset   = max($defaultOffset, (int) ($request->get_param('offset') ?: $defaultOffset));
 
         return [
             'level' => $level, 'search' => $search, 'sinceId' => $sinceId,
@@ -78,13 +85,13 @@ trait ErrorSessionHandlerTrait {
 
     /** Apply error session filters to an Orm query. */
     private function applyErrorSessionFilters(Orm $query, array $params): void {
-        $hasLevel = !empty($params['level']);
+        $hasLevel = (empty($params['level']) === false);
 
         if ($hasLevel) {
             $query->where('Level', strtoupper($params['level']));
         }
 
-        $hasSearch = !empty($params['search']);
+        $hasSearch = (empty($params['search']) === false);
 
         if ($hasSearch) {
             $query->whereLike('Message', '%' . $params['search'] . '%');
@@ -129,7 +136,8 @@ trait ErrorSessionHandlerTrait {
                 'context' => $this->parseContextJson($row['ContextJson'] ?? ''), 'createdAt' => $row['CreatedAt'],
                 'pluginVersion' => $row['PluginVersion'] ?? null,
             ];
-            if (!empty($row['StackTrace'])) {
+            $hasStackTrace = (empty($row['StackTrace']) === false);
+            if ($hasStackTrace) {
                 $entry['stackTraceFrames'] = $this->parseStackTraceString($row['StackTrace']);
             }
             $entries[] = $entry;
@@ -138,12 +146,14 @@ trait ErrorSessionHandlerTrait {
         return $entries;
     }
 
-    /** Parse a JSON context string safely. */
+    /** Parse a Json context string safely. */
     private function parseContextJson(string $json): mixed {
-        if (empty($json)) { return null; }
+        $isJsonEmpty = empty($json);
+        if ($isJsonEmpty) { return null; }
         $decoded = json_decode($json, true);
 
-        return (json_last_error() === JSON_ERROR_NONE) ? $decoded : $json;
+        $isJsonErrorNone = (json_last_error() === JSON_ERROR_NONE);
+        return $isJsonErrorNone ? $decoded : $json;
     }
 
     /** Count errors with id > lastSeenId. */

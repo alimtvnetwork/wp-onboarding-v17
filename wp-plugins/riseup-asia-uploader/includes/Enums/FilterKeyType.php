@@ -22,6 +22,9 @@ enum FilterKeyType: string
     case From          = 'from';
     case To            = 'to';
     case SourceMachine = 'sourceMachine';
+    case Limit         = 'limit';
+    case Offset        = 'offset';
+    case Search        = 'search';
 
     public function isEqual(self $other): bool { return $this === $other; }
     public function isOtherThan(self $other): bool { return $this !== $other; }

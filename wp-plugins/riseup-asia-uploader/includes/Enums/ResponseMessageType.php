@@ -25,6 +25,7 @@ enum ResponseMessageType: string
     case DeleteFailed       = 'Plugin deletion failed';
     case FileIgnored        = 'File ignored by .uploadignore';
     case InvalidRequestBody = 'Invalid request body';
+    case InvalidJsonBody    = 'Invalid or missing Json body';
     case ConnectionSuccessful     = 'Connection successful';
     case SnapshotNotFound         = 'Snapshot not found';
     case SnapshotProviderMissing  = 'No snapshot provider available';

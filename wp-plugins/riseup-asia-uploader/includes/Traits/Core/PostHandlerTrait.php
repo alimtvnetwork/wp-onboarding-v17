@@ -21,6 +21,7 @@ use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\PaginationConfigType;
 use RiseupAsia\Enums\PluginConfigType;
 use RiseupAsia\Enums\ResponseKeyType;
+use RiseupAsia\Enums\ResponseMessageType;
 use RiseupAsia\Helpers\EnvelopeBuilder;
 
 trait PostHandlerTrait
@@ -30,10 +31,10 @@ trait PostHandlerTrait
             $this->fileLogger->debug('List posts endpoint called');
 
             $result = $this->postManager->listPosts([
-                'status' => $request->get_param('status'),
-                'limit'  => $request->get_param('limit'),
-                'offset' => $request->get_param('offset'),
-                'search' => $request->get_param('search'),
+                FilterKeyType::Status->value => $request->get_param(FilterKeyType::Status->value),
+                FilterKeyType::Limit->value  => $request->get_param(FilterKeyType::Limit->value),
+                FilterKeyType::Offset->value => $request->get_param(FilterKeyType::Offset->value),
+                FilterKeyType::Search->value => $request->get_param(FilterKeyType::Search->value),
             ]);
 
             return new WP_REST_Response($result, $result[ResponseKeyType::Success->value] ? HttpStatusType::Ok->value : HttpStatusType::InternalServerError->value);
@@ -48,7 +49,7 @@ trait PostHandlerTrait
             $isBodyInvalid = ($data === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError(ResponseMessageType::InvalidJsonBody->value, $request);
             }
 
             $result = $this->postManager->createPost($data);
@@ -62,9 +63,9 @@ trait PostHandlerTrait
             $this->fileLogger->debug('List categories endpoint called');
 
             $result = $this->postManager->listCategories([
-                'limit'  => $request->get_param('limit'),
-                'offset' => $request->get_param('offset'),
-                'search' => $request->get_param('search'),
+                FilterKeyType::Limit->value  => $request->get_param(FilterKeyType::Limit->value),
+                FilterKeyType::Offset->value => $request->get_param(FilterKeyType::Offset->value),
+                FilterKeyType::Search->value => $request->get_param(FilterKeyType::Search->value),
             ]);
 
             return new WP_REST_Response($result, $result[ResponseKeyType::Success->value] ? HttpStatusType::Ok->value : HttpStatusType::InternalServerError->value);
@@ -79,7 +80,7 @@ trait PostHandlerTrait
             $isBodyInvalid = ($data === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError(ResponseMessageType::InvalidJsonBody->value, $request);
             }
 
             $result = $this->postManager->createCategory($data);
@@ -94,8 +95,8 @@ trait PostHandlerTrait
 
             $this->db->init();
             $filters = $this->buildLogQueryFilters($request);
-            $limit  = $request->get_param('limit') ?? PaginationConfigType::DefaultLimit->value;
-            $offset = $request->get_param('offset') ?? 0;
+            $limit  = $request->get_param(FilterKeyType::Limit->value) ?? PaginationConfigType::DefaultLimit->value;
+            $offset = $request->get_param(FilterKeyType::Offset->value) ?? 0;
 
             $result = $this->db->queryTransactions($filters, $limit, $offset);
             $total = $result[ResponseKeyType::Total->value];
