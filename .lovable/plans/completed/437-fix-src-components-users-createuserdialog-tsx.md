@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 437: Fix violations in src/components/users/CreateUserDialog.tsx
 
 Target File: `src/components/users/CreateUserDialog.tsx`

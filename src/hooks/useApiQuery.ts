@@ -14,7 +14,7 @@ import {
 interface UseApiQueryOptions<T> {
   /** React Query cache key */
   queryKey: unknown[];
-  /** API method that returns an ApiResponse<T> */
+  /** Api method that returns an ApiResponse<T> */
   apiFn: () => Promise<ApiResponse<T>>;
   /** Endpoint string for error diagnostics (e.g. "/plugins") */
   endpoint: string;

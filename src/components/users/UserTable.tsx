@@ -59,7 +59,7 @@ export function UserTable({ users, siteId, onSelect }: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px]">ID</TableHead>
+              <TableHead className="w-[60px]">Id</TableHead>
               <TableHead>Username</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Display Name</TableHead>

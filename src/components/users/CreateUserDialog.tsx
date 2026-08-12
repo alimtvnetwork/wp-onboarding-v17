@@ -60,7 +60,7 @@ export function CreateUserDialog({ open, onOpenChange, siteId }: Props) {
       Bio: form.Bio || undefined,
       Role: form.Role || "subscriber",
       CreateAppPassword: createAppPass,
-      AppPasswordName: createAppPass ? "Dashboard API" : undefined,
+      AppPasswordName: createAppPass ? "Dashboard Api" : undefined,
     };
 
     createMutation.mutate(input, {

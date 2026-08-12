@@ -113,3 +113,6 @@
 - [Task 431](completed/431-fix-src-components-sites-editsitedialog-tsx.md) - Completed
 - [Task 432](completed/432-fix-src-components-sites-remotepluginfilebrowser-tsx.md) - Completed
 - [Task 433](completed/433-fix-src-components-sites-remotepluginspanel-tsx.md) - Completed
+- [Task 437](completed/437-fix-src-components-users-createuserdialog-tsx.md) - Completed
+- [Task 438](completed/438-fix-src-components-users-usertable-tsx.md) - Completed
+- [Task 439](completed/439-fix-src-hooks-useapiquery-ts.md) - Completed

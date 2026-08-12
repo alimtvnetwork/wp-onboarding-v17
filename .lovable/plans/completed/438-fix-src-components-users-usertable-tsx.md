@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 438: Fix violations in src/components/users/UserTable.tsx
 
 Target File: `src/components/users/UserTable.tsx`

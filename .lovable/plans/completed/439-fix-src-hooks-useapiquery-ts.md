@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 439: Fix violations in src/hooks/useApiQuery.ts
 
 Target File: `src/hooks/useApiQuery.ts`
