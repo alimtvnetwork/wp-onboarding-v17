@@ -43,3 +43,6 @@
 - [Task 356](completed/356-fix-backend-internal-wordpress-logsretrievetypes-go.md) - Completed
 - [Task 357](completed/357-fix-backend-internal-wordpress-logstypes-go.md) - Completed
 - [Task 358](completed/358-fix-backend-internal-wordpress-powershell-go.md) - Completed
+- [Task 359](completed/359-fix-backend-internal-wordpress-powershellexec-go.md) - Completed
+- [Task 360](completed/360-fix-backend-internal-wordpress-requesttypes-go.md) - Completed
+- [Task 361](completed/361-fix-backend-internal-wordpress-snapshots-go.md) - Completed

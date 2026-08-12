@@ -1,4 +1,4 @@
-// Package wordpress provides uploader capabilities using the Rise Up Uploader API.
+// Package wordpress provides uploader capabilities using the Rise Up Uploader Api.
 package wordpress
 
 import (
@@ -21,7 +21,7 @@ import (
 // Supports both legacy flat format and envelope Results[0] format.
 type UploaderStatus struct {
 	// Legacy flat fields
-	Status           string            `json:"status"`            // external key (Riseup Asia Uploader API)
+	Status           string            `json:"status"`            // external key (Riseup Asia Uploader Api)
 	Message          string            `json:"message"`           // external key
 	Version          string            `json:"version"`           // external key
 	WordPressVersion string            `json:"wordpress_version"` // external key
@@ -38,7 +38,7 @@ type UploaderStatus struct {
 
 // UploaderUploadResult represents the /upload endpoint response.
 type UploaderUploadResult struct {
-	Success       bool   `json:"success"`                    // external key (Riseup Asia Uploader API)
+	Success       bool   `json:"success"`                    // external key (Riseup Asia Uploader Api)
 	Message       string `json:"message"`                    // external key
 	Plugin        string `json:"plugin,omitempty"`           // external key
 	Activated     bool   `json:"activated"`                  // external key
@@ -68,7 +68,7 @@ func (r *UploaderUploadResult) IsDeactivated() bool { return r == nil || !r.Acti
 
 // UploaderPluginInfo represents plugin info from the list endpoint.
 type UploaderPluginInfo struct {
-	Slug        string `json:"slug"`        // external key (Riseup Asia Uploader API)
+	Slug        string `json:"slug"`        // external key (Riseup Asia Uploader Api)
 	File        string `json:"file"`        // external key
 	Name        string `json:"name"`        // external key
 	Version     string `json:"version"`     // external key
@@ -79,7 +79,7 @@ type UploaderPluginInfo struct {
 
 // UploaderFileInfo represents file info from the files endpoint.
 type UploaderFileInfo struct {
-	Path     string `json:"path"`     // external key (Riseup Asia Uploader API)
+	Path     string `json:"path"`     // external key (Riseup Asia Uploader Api)
 	Size     int64  `json:"size"`     // external key
 	Modified string `json:"modified"` // external key
 	Hash     string `json:"hash"`     // external key

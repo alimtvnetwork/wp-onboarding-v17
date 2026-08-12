@@ -16,13 +16,13 @@ import (
 
 // SnapshotBackupOptions holds options for full/incremental backup triggers.
 type SnapshotBackupOptions struct {
-	Scope  string   `json:"scope,omitempty"`  // external key (Riseup Asia snapshot API)
+	Scope  string   `json:"scope,omitempty"`  // external key (Riseup Asia snapshot Api)
 	Tables []string `json:"tables,omitempty"` // external key
 }
 
 // SnapshotBackupResult holds the result of a backup operation.
 type SnapshotBackupResult struct {
-	Success    bool   `json:"success"`              // external key (Riseup Asia snapshot API)
+	Success    bool   `json:"success"`              // external key (Riseup Asia snapshot Api)
 	SnapshotId int64  `json:"snapshotId,omitempty"` // external key
 	Message    string `json:"message,omitempty"`    // external key
 	Status     string `json:"status,omitempty"`     // external key
@@ -52,7 +52,7 @@ func (c *Client) IncrementalBackup(opts SnapshotBackupOptions) apperror.Result[S
 
 // SnapshotImportResult holds the result of an import operation.
 type SnapshotImportResult struct {
-	Success    bool   `json:"success"`                 // external key (Riseup Asia snapshot API)
+	Success    bool   `json:"success"`                 // external key (Riseup Asia snapshot Api)
 	SnapshotId int64  `json:"snapshot_id,omitempty"`   // external key
 	Message    string `json:"message,omitempty"`       // external key
 }

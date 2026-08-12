@@ -13,7 +13,7 @@ import (
 
 // SnapshotProvider represents an available snapshot provider.
 type SnapshotProvider struct {
-	Id        string `json:"id"`        // external key (Riseup Asia snapshot API)
+	Id        string `json:"id"`        // external key (Riseup Asia snapshot Api)
 	Name      string `json:"name"`      // external key
 	Available bool   `json:"available"` // external key
 	Priority  int    `json:"priority"`  // external key
@@ -21,7 +21,7 @@ type SnapshotProvider struct {
 
 // SnapshotStorageStats represents storage statistics.
 type SnapshotStorageStats struct {
-	TotalSnapshots int    `json:"totalSnapshots"` // external key (Riseup Asia snapshot API)
+	TotalSnapshots int    `json:"totalSnapshots"` // external key (Riseup Asia snapshot Api)
 	TotalSize      int64  `json:"totalSize"`      // external key
 	TotalSizeHuman string `json:"totalSizeHuman"` // external key
 	DiskFreeSpace  int64  `json:"diskFreeSpace"`  // external key
@@ -31,12 +31,12 @@ type SnapshotStorageStats struct {
 
 // SnapshotDownloadResult holds the result of a snapshot download request.
 type SnapshotDownloadResult struct {
-	Success          bool   `json:"success"`                    // external key (Riseup Asia snapshot API)
+	Success          bool   `json:"success"`                    // external key (Riseup Asia snapshot Api)
 	Url              string `json:"url"`                        // external key
 	Filename         string `json:"filename"`                   // external key
 	Size             int64  `json:"size"`                       // external key
 	Cached           bool   `json:"cached"`                     // external key
-	IncludedIDs      []int  `json:"includedIds,omitempty"`      // external key
+	IncludedIds      []int  `json:"includedIds,omitempty"`      // external key
 	IncrementalCount int    `json:"incrementalCount,omitempty"` // external key
 }
 
@@ -116,7 +116,7 @@ func (c *Client) GetSnapshotProviders() apperror.Result[[]SnapshotProvider] {
 
 // AvailableTable represents a database table available for snapshotting.
 type AvailableTable struct {
-	Name   string `json:"name"`   // external key (Riseup Asia snapshot API)
+	Name   string `json:"name"`   // external key (Riseup Asia snapshot Api)
 	Rows   int    `json:"rows"`   // external key
 	Size   int64  `json:"size"`   // external key
 	IsCore bool   `json:"isCore"` // external key
