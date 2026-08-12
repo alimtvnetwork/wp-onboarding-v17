@@ -64,7 +64,7 @@ use RiseupAsia\Helpers\DateHelper;
 <table class="wp-list-table widefat fixed striped riseup-error-table">
     <thead>
         <tr>
-            <th class="column-id" style="width: 50px;"><?php esc_html_e('ID', $pluginSlug); ?></th>
+            <th class="column-id" style="width: 50px;"><?php esc_html_e('Id', $pluginSlug); ?></th>
             <th class="column-timestamp" style="width: 160px;"><?php esc_html_e('Timestamp', $pluginSlug); ?></th>
             <th class="column-level" style="width: 70px;"><?php esc_html_e('Level', $pluginSlug); ?></th>
             <th class="column-version" style="width: 70px;"><?php esc_html_e('Version', $pluginSlug); ?></th>

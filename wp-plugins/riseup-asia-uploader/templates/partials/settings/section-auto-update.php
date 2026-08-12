@@ -23,7 +23,7 @@ use RiseupAsia\Helpers\BooleanHelpers;
         <?php esc_html_e('Auto-Update Settings', $pluginSlug); ?>
     </h2>
     <p class="description">
-        <?php esc_html_e('Configure automatic updates with 301 redirect URL resolution. The master URL will be resolved through redirects and cached for faster subsequent checks.', $pluginSlug); ?>
+        <?php esc_html_e('Configure automatic updates with 301 redirect Url resolution. The master Url will be resolved through redirects and cached for faster subsequent checks.', $pluginSlug); ?>
     </p>
 
     <table class="form-table">
@@ -40,12 +40,12 @@ use RiseupAsia\Helpers\BooleanHelpers;
                            <?php $isUpdateEnabled = BooleanHelpers::hasValue($updateSettings['enabled'] ?? null); checked($isUpdateEnabled); ?>>
                     <span class="toggle-slider"></span>
                 </label>
-                <p class="description"><?php esc_html_e('Enable automatic update checking via the configured master URL.', $pluginSlug); ?></p>
+                <p class="description"><?php esc_html_e('Enable automatic update checking via the configured master Url.', $pluginSlug); ?></p>
             </td>
         </tr>
         <tr>
             <th scope="row">
-                <label for="master_url"><?php esc_html_e('Master Update URL', $pluginSlug); ?></label>
+                <label for="master_url"><?php esc_html_e('Master Update Url', $pluginSlug); ?></label>
             </th>
             <td>
                 <input type="url" 
@@ -54,7 +54,7 @@ use RiseupAsia\Helpers\BooleanHelpers;
                        value="<?php echo esc_attr($updateSettings['master_url']); ?>" 
                        class="regular-text"
                        placeholder="https://updates.example.com/plugin">
-                <p class="description"><?php esc_html_e('The URL that will be resolved through 301 redirects to find the actual update endpoint.', $pluginSlug); ?></p>
+                <p class="description"><?php esc_html_e('The Url that will be resolved through 301 redirects to find the actual update endpoint.', $pluginSlug); ?></p>
             </td>
         </tr>
         <tr>
@@ -68,11 +68,11 @@ use RiseupAsia\Helpers\BooleanHelpers;
                     <option value="14" <?php selected($updateSettings['cache_days'], 14); ?>>14 <?php esc_html_e('days', $pluginSlug); ?></option>
                     <option value="30" <?php selected($updateSettings['cache_days'], 30); ?>>30 <?php esc_html_e('days', $pluginSlug); ?></option>
                 </select>
-                <p class="description"><?php esc_html_e('How long to cache the resolved URL before re-resolving through redirects.', $pluginSlug); ?></p>
+                <p class="description"><?php esc_html_e('How long to cache the resolved Url before re-resolving through redirects.', $pluginSlug); ?></p>
             </td>
         </tr>
         <tr>
-            <th scope="row"><?php esc_html_e('Resolved URL (Cached)', $pluginSlug); ?></th>
+            <th scope="row"><?php esc_html_e('Resolved Url (Cached)', $pluginSlug); ?></th>
             <td>
                 <?php $hasResolvedUrl = BooleanHelpers::hasValue($updateSettings['resolved_url'] ?? null); ?>
                 <?php if ($hasResolvedUrl): ?>

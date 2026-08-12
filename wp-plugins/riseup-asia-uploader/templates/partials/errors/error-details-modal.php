@@ -1,6 +1,6 @@
 <?php
 /**
- * Errors Partial — Error details modal (context, stack trace, raw JSON tabs).
+ * Errors Partial — Error details modal (context, stack trace, raw Json tabs).
  *
  * Variables expected: $pluginSlug.
  *
@@ -58,7 +58,7 @@ if (!defined('ABSPATH')) {
                 </button>
                 <button type="button" class="modal-tab" data-modal-tab="raw">
                     <span class="dashicons dashicons-media-text"></span>
-                    <?php esc_html_e('Raw JSON', $pluginSlug); ?>
+                    <?php esc_html_e('Raw Json', $pluginSlug); ?>
                 </button>
             </div>
 

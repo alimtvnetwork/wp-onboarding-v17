@@ -254,3 +254,7 @@
 - [Task 619](completed/02-guideline-audit-fixes/619-fix-wp-plugins-riseup-asia-uploader-templates-admin-logs-php.md) - Completed
 - [Task 620](completed/02-guideline-audit-fixes/620-fix-wp-plugins-riseup-asia-uploader-templates-admin-settings-php.md) - Completed
 
+- [Task 621](completed/02-guideline-audit-fixes/621-fix-wp-plugins-riseup-asia-uploader-templates-partials-errors-error-details-modal-php.md) - Completed
+- [Task 622](completed/02-guideline-audit-fixes/622-fix-wp-plugins-riseup-asia-uploader-templates-partials-errors-sessions-tab-php.md) - Completed
+- [Task 623](completed/02-guideline-audit-fixes/623-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-auto-update-php.md) - Completed
+

@@ -1,0 +1,2 @@
+Status: completed
+# Subtask 622: Fix violations in wp-plugins/riseup-asia-uploader/templates/partials/errors/sessions-tab.php  Target File: `wp-plugins/riseup-asia-uploader/templates/partials/errors/sessions-tab.php`  ## Violations  - **Line 67**: abbreviations - Invalid abbreviation casing   `<th class="column-id" style="width: 50px;"><?php esc_html_e('ID', $pluginSlug); ?></th>`   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL). 
