@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 484: Fix violations in tools/consistency-checker/internal/rules/GoAbbrCasing.go
 
 Target File: `tools/consistency-checker/internal/rules/GoAbbrCasing.go`

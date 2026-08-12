@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 483: Fix violations in tools/consistency-checker/internal/report/Json.go
 
 Target File: `tools/consistency-checker/internal/report/Json.go`

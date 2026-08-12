@@ -1,4 +1,4 @@
-// Package report — JSON output for CI/CD integration.
+// Package report — Json output for CI/CD integration.
 package report
 
 import (
@@ -9,13 +9,13 @@ import (
 	"consistency-checker/internal/engine"
 )
 
-// jsonOutput is the top-level JSON report structure.
+// jsonOutput is the top-level Json report structure.
 type jsonOutput struct {
 	Summary  jsonSummary  `json:"summary"`
 	Findings []jsonFinding `json:"findings"`
 }
 
-// jsonSummary holds aggregate counts for JSON output.
+// jsonSummary holds aggregate counts for Json output.
 type jsonSummary struct {
 	TotalFiles    int `json:"total_files"`
 	TotalFindings int `json:"total_findings"`
@@ -25,7 +25,7 @@ type jsonSummary struct {
 	ExitCode      int `json:"exit_code"`
 }
 
-// jsonFinding represents a single violation in JSON output.
+// jsonFinding represents a single violation in Json output.
 type jsonFinding struct {
 	RuleId     string `json:"rule_id"`
 	Severity   string `json:"severity"`
@@ -37,20 +37,20 @@ type jsonFinding struct {
 	Reference  string `json:"reference,omitempty"`
 }
 
-// PrintJSON writes findings and summary as a JSON object to stdout.
+// PrintJSON writes findings and summary as a Json object to stdout.
 func PrintJSON(findings []engine.Finding, summary Summary) {
 	output := buildJSONOutput(findings, summary)
 
 	data, err := json.MarshalIndent(output, "", "  ")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: failed to marshal JSON: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error: failed to marshal Json: %v\n", err)
 		return
 	}
 
 	fmt.Println(string(data))
 }
 
-// buildJSONOutput assembles the full JSON report.
+// buildJSONOutput assembles the full Json report.
 func buildJSONOutput(findings []engine.Finding, summary Summary) jsonOutput {
 	return jsonOutput{
 		Summary:  toJSONSummary(summary),
@@ -78,7 +78,7 @@ func exitCodeFromSummary(s Summary) int {
 	return 0
 }
 
-// toJSONFindings converts engine findings to JSON findings.
+// toJSONFindings converts engine findings to Json findings.
 func toJSONFindings(findings []engine.Finding) []jsonFinding {
 	result := make([]jsonFinding, 0, len(findings))
 	for _, f := range findings {

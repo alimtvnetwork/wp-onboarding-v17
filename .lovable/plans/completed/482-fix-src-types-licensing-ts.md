@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 482: Fix violations in src/types/licensing.ts
 
 Target File: `src/types/licensing.ts`

@@ -14,7 +14,7 @@ import (
 var defaultAbbreviations = []string{"Id", "Url", "Http", "Json", "Api", "Php", "Pid"}
 
 // GoAbbrCasing checks that Go identifiers use PascalCase for abbreviations (Id, Url, Http, etc.)
-// instead of ALL-CAPS (ID, URL, HTTP, etc.).
+// instead of ALL-CAPS (Id, Url, Http, etc.).
 type GoAbbrCasing struct{}
 
 // Id returns the rule identifier.

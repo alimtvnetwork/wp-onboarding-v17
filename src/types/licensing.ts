@@ -30,7 +30,7 @@ export enum AuditActionType {
   Deleted = "deleted"
 }
 
-// ── Domain models (match Go JSON output) ────────────────
+// ── Domain models (match Go Json output) ────────────────
 
 export interface License {
   id: number;
