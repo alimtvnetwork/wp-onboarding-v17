@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 553: Fix violations in wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminLicenseAjaxTrait.php
 
 Target File: `wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminLicenseAjaxTrait.php`

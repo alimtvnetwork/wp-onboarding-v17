@@ -39,7 +39,7 @@ trait AdminAjaxUpdateTrait {
         }
     }
 
-    /** AJAX handler: Clear update URL cache. */
+    /** AJAX handler: Clear update Url cache. */
     public function ajaxClearUpdateCache() {
         check_ajax_referer(NonceType::Admin->value, 'nonce');
 

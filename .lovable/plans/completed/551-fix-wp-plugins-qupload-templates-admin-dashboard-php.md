@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 551: Fix violations in wp-plugins/qupload/templates/admin-dashboard.php
 
 Target File: `wp-plugins/qupload/templates/admin-dashboard.php`

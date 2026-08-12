@@ -72,10 +72,10 @@ $errorFileSize = file_exists($errorFile) ? size_format(filesize($errorFile)) : '
         </table>
     </div>
 
-    <!-- REST API Endpoints -->
+    <!-- REST Api Endpoints -->
     <div class="qupload-card">
-        <h2><span class="dashicons dashicons-rest-api"></span> <?php esc_html_e('REST API Endpoints', $pluginSlug); ?></h2>
-        <p><?php esc_html_e('Base URL:', $pluginSlug); ?> <code><?php echo esc_url($restUrl); ?></code></p>
+        <h2><span class="dashicons dashicons-rest-api"></span> <?php esc_html_e('REST Api Endpoints', $pluginSlug); ?></h2>
+        <p><?php esc_html_e('Base Url:', $pluginSlug); ?> <code><?php echo esc_url($restUrl); ?></code></p>
         <table class="widefat striped qupload-endpoints-table">
             <thead>
                 <tr>

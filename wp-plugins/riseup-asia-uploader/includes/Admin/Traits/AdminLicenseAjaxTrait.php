@@ -93,7 +93,7 @@ trait AdminLicenseAjaxTrait {
         wp_send_json_success(['message' => 'License key removed.']);
     }
 
-    /** Refresh validation status from the API. */
+    /** Refresh validation status from the Api. */
     public function ajaxLicenseRefresh(): void {
         $this->checkLicensePermission();
 

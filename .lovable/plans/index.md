@@ -229,3 +229,6 @@
 - [Task 548](completed/548-fix-wp-plugins-qupload-includes-traits-upload-uploadhandlertrait-php.md) - Completed
 - [Task 549](completed/549-fix-wp-plugins-qupload-phpstan-bootstrap-php.md) - Completed
 - [Task 550](completed/550-fix-wp-plugins-qupload-qupload-php.md) - Completed
+- [Task 551](completed/551-fix-wp-plugins-qupload-templates-admin-dashboard-php.md) - Completed
+- [Task 552](completed/552-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminajaxupdatetrait-php.md) - Completed
+- [Task 553](completed/553-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminlicenseajaxtrait-php.md) - Completed
