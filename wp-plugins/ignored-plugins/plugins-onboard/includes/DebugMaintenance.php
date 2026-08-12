@@ -19,8 +19,8 @@ class OnboardDebugMaintenance {
     /**
      * Enable debug mode.
      *
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public static function enable_debug($app_id = null, $ip_address = null) {
@@ -40,8 +40,8 @@ class OnboardDebugMaintenance {
     /**
      * Disable debug mode.
      *
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public static function disable_debug($app_id = null, $ip_address = null) {
@@ -135,8 +135,8 @@ class OnboardDebugMaintenance {
     /**
      * Enable maintenance mode.
      *
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public static function enable_maintenance($app_id = null, $ip_address = null) {
@@ -160,8 +160,8 @@ class OnboardDebugMaintenance {
     /**
      * Disable maintenance mode.
      *
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public static function disable_maintenance($app_id = null, $ip_address = null) {

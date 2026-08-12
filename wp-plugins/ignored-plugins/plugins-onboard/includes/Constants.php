@@ -21,12 +21,12 @@ if (!defined('ONBOARD_ERROR_LOGGING')) {
     define('ONBOARD_ERROR_LOGGING', true); // Set to false to disable error logging
 }
 
-// Demo/Fallback Website URL.
+// Demo/Fallback Website Url.
 if (!defined('ONBOARD_DEMO_WEBSITE')) {
     define('ONBOARD_DEMO_WEBSITE', 'https://riseup-asia.com');
 }
 
-// API Configuration.
+// Api Configuration.
 if (!defined('ONBOARD_API_NAMESPACE')) {
     define('ONBOARD_API_NAMESPACE', 'onboard-plugin');
 }

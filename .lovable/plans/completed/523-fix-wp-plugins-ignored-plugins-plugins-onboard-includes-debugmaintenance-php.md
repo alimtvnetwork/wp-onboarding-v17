@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 523: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/DebugMaintenance.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/DebugMaintenance.php`

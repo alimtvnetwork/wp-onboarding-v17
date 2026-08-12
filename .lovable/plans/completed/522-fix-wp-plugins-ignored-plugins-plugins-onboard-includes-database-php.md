@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 522: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/Database.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/Database.php`

@@ -199,3 +199,6 @@
 - [Task 518](completed/518-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-auditlogger-php.md) - Completed
 - [Task 519](completed/519-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-cleanup-php.md) - Completed
 - [Task 520](completed/520-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-config-php.md) - Completed
+- [Task 521](completed/521-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-constants-php.md) - Completed
+- [Task 522](completed/522-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-database-php.md) - Completed
+- [Task 523](completed/523-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-debugmaintenance-php.md) - Completed

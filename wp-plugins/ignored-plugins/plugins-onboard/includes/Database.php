@@ -205,7 +205,7 @@ class OnboardDatabase {
     /**
      * Execute query on plugin manager database.
      *
-     * @param string $sql    SQL query.
+     * @param string $sql    Sql query.
      * @param array  $params Query parameters.
      * @return PDOStatement|false
      */
@@ -228,7 +228,7 @@ class OnboardDatabase {
     /**
      * Execute query on audit database.
      *
-     * @param string $sql    SQL query.
+     * @param string $sql    Sql query.
      * @param array  $params Query parameters.
      * @return PDOStatement|false
      */
@@ -313,7 +313,7 @@ class OnboardDatabase {
     }
 
     /**
-     * Get last insert ID.
+     * Get last insert Id.
      *
      * @return string
      */
