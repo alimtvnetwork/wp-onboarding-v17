@@ -1,6 +1,6 @@
 <?php
 /**
- * ResponseMessageType — Human-readable API response messages.
+ * ResponseMessageType — Human-readable Api response messages.
  *
  * @package RiseupAsia\Enums
  * @since   1.58.0
@@ -31,9 +31,9 @@ enum ResponseMessageType: string
     case ProviderMissing          = 'No provider available';
     case SnapshotFileMissing      = 'Snapshot file not found';
     case UploadedFileMissing      = 'Uploaded file not found';
-    case ZipCreateFailed          = 'Failed to create ZIP file';
+    case ZipCreateFailed          = 'Failed to create Zip file';
     case TempDirCreateFailed      = 'Failed to create temp directory';
-    case InvalidFileTypeZip       = 'Invalid file type. Expected ZIP file.';
+    case InvalidFileTypeZip       = 'Invalid file type. Expected Zip file.';
     case MissingPluginSlug        = 'Missing required plugin slug parameter';
     case SelfActionProhibited     = 'Cannot perform this action on the managing plugin itself';
     case DbQueryFailed            = 'Database query failed';
@@ -44,6 +44,6 @@ enum ResponseMessageType: string
 
     public function isFailure(): bool
     {
-        return !$this->isAnyOf(self::Success, self::FileIgnored);
+        return $this->isAnyOf(self::Success, self::FileIgnored) === false;
     }
 }

@@ -2,7 +2,7 @@
 /**
  * RequestFieldType — HTTP request field name constants.
  *
- * Eliminates magic strings for form/JSON field names used in upload
+ * Eliminates magic strings for form/Json field names used in upload
  * and related endpoints.
  *
  * @package RiseupAsia\Enums

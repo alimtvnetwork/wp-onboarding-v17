@@ -2,7 +2,7 @@
 /**
  * SelfUpdateStatusType — Standardized status codes for self-update rollback and diagnostics.
  *
- * Used in REST API responses to provide machine-readable reason codes
+ * Used in Rest Api responses to provide machine-readable reason codes
  * for self-update outcomes: success, validation failures, activation failures,
  * health check failures, and rollback results.
  *
@@ -95,7 +95,7 @@ enum SelfUpdateStatusType: string
     }
 
     /**
-     * Get a human-readable label for REST API responses.
+     * Get a human-readable label for Rest Api responses.
      */
     public function label(): string
     {
@@ -116,7 +116,7 @@ enum SelfUpdateStatusType: string
             self::DirectoryMissing       => 'Plugin directory does not exist after extraction',
             self::BootErrorDetected      => 'BootErrorCollector captured errors during activation',
             self::CriticalClassMissing   => 'A critical class was not loaded after activation',
-            self::RestHookMissing        => 'REST API hooks were not registered after activation',
+            self::RestHookMissing        => 'Rest Api hooks were not registered after activation',
         };
     }
 
