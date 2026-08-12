@@ -202,3 +202,6 @@
 - [Task 521](completed/521-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-constants-php.md) - Completed
 - [Task 522](completed/522-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-database-php.md) - Completed
 - [Task 523](completed/523-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-debugmaintenance-php.md) - Completed
+- [Task 524](completed/524-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-includefiles-php.md) - Completed
+- [Task 525](completed/525-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-ipwhitelist-php.md) - Completed
+- [Task 526](completed/526-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-mutationtoken-php.md) - Completed

@@ -58,8 +58,8 @@ class OnboardIncludeFiles {
     const DEBUG_MAINTENANCE = 'includes/DebugMaintenance.php';
     const CLEANUP          = 'includes/Cleanup.php';
 
-    /** API & Admin */
-    const API      = 'api/Api.php';
+    /** Api & Admin */
+    const Api      = 'api/Api.php';
     const API_PERMISSIONS = 'api/Permissions.php';
     const ADMIN_UI = 'admin/AdminUi.php';
 
@@ -73,7 +73,7 @@ class OnboardIncludeFiles {
      */
     private static $results = array();
 
-    // ─── Public API ─────────────────────────────────────────────────
+    // ─── Public Api ─────────────────────────────────────────────────
 
     /**
      * Load a file by its enum constant.
@@ -90,23 +90,23 @@ class OnboardIncludeFiles {
         // Check file existence first
         if (OnboardBooleanHelpers::isFileMissing($filepath)) {
             $trace = self::captureStackTrace();
-            $errorMsg = "File not found: {$fileConstant} (resolved: {$filepath})";
+            $errorMessage = "File not found: {$fileConstant} (resolved: {$filepath})";
 
             self::$results[] = array(
                 'file'    => $fileConstant,
                 'success' => false,
-                'error'   => $errorMsg,
+                'error'   => $errorMessage,
                 'mode'    => $mode,
             );
 
             // Log error with stack trace
-            OnboardLogger::error($errorMsg, null, array(
+            OnboardLogger::error($errorMessage, null, array(
                 'stackTrace' => $trace,
                 'mode'       => $mode,
                 'constant'   => $fileConstant,
             ));
 
-            error_log("Plugins Onboard [{$mode}]: {$errorMsg}\nStack trace:\n{$trace}");
+            error_log("Plugins Onboard [{$mode}]: {$errorMessage}\nStack trace:\n{$trace}");
 
             return false;
         }
@@ -128,23 +128,23 @@ class OnboardIncludeFiles {
             OnboardLogger::debug("✓ Loaded [{$mode}]: {$fileConstant}");
             return true;
 
-        } catch (Throwable $e) {
-            $trace = $e->getTraceAsString();
-            $errorMsg = "Failed to load {$fileConstant}: {$e->getMessage()}";
+        } catch (Throwable $exception) {
+            $trace = $exception->getTraceAsString();
+            $errorMessage = "Failed to load {$fileConstant}: {$exception->getMessage()}";
 
             self::$results[] = array(
                 'file'    => $fileConstant,
                 'success' => false,
-                'error'   => $errorMsg,
+                'error'   => $errorMessage,
                 'mode'    => $mode,
             );
 
-            OnboardLogger::error($errorMsg, $e, array(
+            OnboardLogger::error($errorMessage, $exception, array(
                 'mode'     => $mode,
                 'constant' => $fileConstant,
             ));
 
-            error_log("Plugins Onboard [{$mode}]: {$errorMsg}\nStack trace:\n{$trace}");
+            error_log("Plugins Onboard [{$mode}]: {$errorMessage}\nStack trace:\n{$trace}");
 
             return false;
         }
@@ -184,8 +184,8 @@ class OnboardIncludeFiles {
      * @return array
      */
     public static function getFailures() {
-        return array_filter(self::$results, function ($r) {
-            return OnboardBooleanHelpers::isFalsy($r['success']);
+        return array_filter(self::$results, function ($result) {
+            return OnboardBooleanHelpers::isFalsy($result['success']);
         });
     }
 
@@ -208,8 +208,8 @@ class OnboardIncludeFiles {
         $failed = count(self::getFailures());
 
         if ($failed > 0) {
-            $failureDetails = array_map(function ($r) {
-                return "[{$r['mode']}] {$r['file']}: {$r['error']}";
+            $failureDetails = array_map(function ($result) {
+                return "[{$result['mode']}] {$result['file']}: {$result['error']}";
             }, self::getFailures());
 
             OnboardLogger::error("Dependency loading: {$failed}/{$total} failed", null, array(

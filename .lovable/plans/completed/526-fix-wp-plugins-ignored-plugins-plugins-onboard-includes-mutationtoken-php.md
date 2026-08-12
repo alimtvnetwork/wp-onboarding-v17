@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 526: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/MutationToken.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/MutationToken.php`

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 524: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/IncludeFiles.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/IncludeFiles.php`

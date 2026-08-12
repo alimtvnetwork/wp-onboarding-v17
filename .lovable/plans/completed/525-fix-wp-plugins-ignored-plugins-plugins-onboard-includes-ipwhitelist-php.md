@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 525: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/IpWhitelist.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/IpWhitelist.php`

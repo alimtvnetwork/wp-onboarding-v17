@@ -42,10 +42,10 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Check if IP is whitelisted for an application.
+     * Check if Ip is whitelisted for an application.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @return bool
      */
     public function is_whitelisted($app_id, $ip_address) {
@@ -70,10 +70,10 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Add IP to whitelist.
+     * Add Ip to whitelist.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @return bool
      */
     public function add_to_whitelist($app_id, $ip_address) {
@@ -102,10 +102,10 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Remove IP from whitelist.
+     * Remove Ip from whitelist.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @return bool
      */
     public function remove_from_whitelist($app_id, $ip_address) {
@@ -134,7 +134,7 @@ class OnboardIPWhitelist {
     /**
      * Get whitelist for an application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return array
      */
     public function get_whitelist($app_id) {
@@ -151,10 +151,10 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Request IP approval.
+     * Request Ip approval.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @param string $action     Requested action.
      * @return array Approval request details.
      */
@@ -169,7 +169,7 @@ class OnboardIPWhitelist {
             return array(
                 'approval_id' => $existing['approval_id'],
                 'status' => 'already_pending',
-                'message' => 'An approval request is already pending for this IP.',
+                'message' => 'An approval request is already pending for this Ip.',
             );
         }
 
@@ -204,16 +204,16 @@ class OnboardIPWhitelist {
         return array(
             'approval_id' => $approval_id,
             'status' => 'pending',
-            'message' => 'IP pending admin approval. Check your email.',
+            'message' => 'Ip pending admin approval. Check your email.',
             'expires_in' => 86400,
         );
     }
 
     /**
-     * Approve IP request.
+     * Approve Ip request.
      *
      * @param string $approval_code Approval code.
-     * @param int    $approved_by   Admin user ID.
+     * @param int    $approved_by   Admin user Id.
      * @return array|WP_Error
      */
     public function approve($approval_code, $approved_by = null) {
@@ -261,15 +261,15 @@ class OnboardIPWhitelist {
             'status' => 'approved',
             'app_id' => $approval['app_id'],
             'ip_address' => $approval['ip_address'],
-            'message' => 'IP address has been approved.',
+            'message' => 'Ip address has been approved.',
         );
     }
 
     /**
-     * Reject IP request.
+     * Reject Ip request.
      *
      * @param string $approval_code Approval code.
-     * @param int    $rejected_by   Admin user ID.
+     * @param int    $rejected_by   Admin user Id.
      * @return array|WP_Error
      */
     public function reject($approval_code, $rejected_by = null) {
@@ -311,14 +311,14 @@ class OnboardIPWhitelist {
             'status' => 'rejected',
             'app_id' => $approval['app_id'],
             'ip_address' => $approval['ip_address'],
-            'message' => 'IP address has been rejected.',
+            'message' => 'Ip address has been rejected.',
         );
     }
 
     /**
      * Get pending approvals.
      *
-     * @param string|null $app_id Filter by application ID.
+     * @param string|null $app_id Filter by application Id.
      * @return array
      */
     public function get_pending_approvals($app_id = null) {
@@ -340,7 +340,7 @@ class OnboardIPWhitelist {
     /**
      * Get all approvals for an application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return array
      */
     public function get_all_approvals($app_id) {
@@ -353,8 +353,8 @@ class OnboardIPWhitelist {
     /**
      * Send approval email to admin.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @param string $action     Requested action.
      * @param string $approval_code Approval code.
      */
@@ -365,18 +365,18 @@ class OnboardIPWhitelist {
         $admin_email = $this->db->get_setting('admin_email') ?: get_option('admin_email');
         $approval_url = admin_url('admin.php?page=plugins-onboard-applications&action=approve_ip&code=' . urlencode($approval_code));
 
-        $subject = __('New IP Access Request - Plugins Onboard', 'plugins-onboard');
+        $subject = __('New Ip Access Request - Plugins Onboard', 'plugins-onboard');
 
         $message = sprintf(
             __(
-                "A new IP address is requesting access to your Plugins Onboard API.\n\n" .
+                "A new Ip address is requesting access to your Plugins Onboard Api.\n\n" .
                 "Application: %s\n" .
-                "IP Address: %s\n" .
+                "Ip Address: %s\n" .
                 "Requested Action: %s\n" .
                 "Timestamp: %s\n\n" .
                 "APPROVE THIS REQUEST:\n%s\n\n" .
                 "SECURITY NOTE:\n" .
-                "If you don't recognize this application or IP, do not approve.\n" .
+                "If you don't recognize this application or Ip, do not approve.\n" .
                 "Only approve requests you initiated or expect.\n\n" .
                 "For security, this email contains no sensitive data.\n" .
                 "The approval code is single-use and expires after 24 hours.",
@@ -395,8 +395,8 @@ class OnboardIPWhitelist {
     /**
      * Send approval notification to app.
      *
-     * @param string $app_id     Application ID.
-     * @param string $ip_address IP address.
+     * @param string $app_id     Application Id.
+     * @param string $ip_address Ip address.
      * @param bool   $approved   Whether approved or rejected.
      */
     private function send_approval_notification($app_id, $ip_address, $approved) {
@@ -433,9 +433,9 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Approve by approval ID (from admin panel).
+     * Approve by approval Id (from admin panel).
      *
-     * @param string $approval_id Approval ID.
+     * @param string $approval_id Approval Id.
      * @return array|WP_Error
      */
     public function approve_by_id($approval_id) {
@@ -458,9 +458,9 @@ class OnboardIPWhitelist {
     }
 
     /**
-     * Reject by approval ID (from admin panel).
+     * Reject by approval Id (from admin panel).
      *
-     * @param string $approval_id Approval ID.
+     * @param string $approval_id Approval Id.
      * @return array|WP_Error
      */
     public function reject_by_id($approval_id) {

@@ -60,9 +60,9 @@ class OnboardMutationToken {
     /**
      * Generate a mutation token.
      *
-     * @param string $app_id     Application ID.
+     * @param string $app_id     Application Id.
      * @param string $action     Requested action.
-     * @param string $ip_address Requester IP address.
+     * @param string $ip_address Requester Ip address.
      * @return array|WP_Error
      */
     public function generate($app_id, $action, $ip_address) {
@@ -134,7 +134,7 @@ class OnboardMutationToken {
     }
 
     /**
-     * Build mutation endpoint URL.
+     * Build mutation endpoint Url.
      *
      * @param string $token  Mutation token.
      * @param string $action Action.
@@ -168,7 +168,7 @@ class OnboardMutationToken {
      *
      * @param string $token      Mutation token.
      * @param string $action     Expected action.
-     * @param string $ip_address Requester IP address.
+     * @param string $ip_address Requester Ip address.
      * @return array|WP_Error Token data or error.
      */
     public function validate_and_consume($token, $action, $ip_address) {
@@ -192,7 +192,7 @@ class OnboardMutationToken {
             );
         }
 
-        // Verify IP matches.
+        // Verify Ip matches.
         if ($token_record['ip_address'] !== $ip_address) {
             $this->audit_logger->log(
                 'mutation_token_ip_mismatch',
@@ -204,12 +204,12 @@ class OnboardMutationToken {
                     'expected_ip' => $token_record['ip_address'],
                     'actual_ip' => $ip_address,
                 ),
-                'IP address mismatch'
+                'Ip address mismatch'
             );
 
             return new WP_Error(
                 'ip_mismatch',
-                'IP address does not match token',
+                'Ip address does not match token',
                 array('status' => 403)
             );
         }
@@ -290,7 +290,7 @@ class OnboardMutationToken {
     /**
      * Get active tokens for an application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return array
      */
     public function get_active_tokens($app_id) {
@@ -303,7 +303,7 @@ class OnboardMutationToken {
     /**
      * Revoke all tokens for an application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return int Number of tokens revoked.
      */
     public function revoke_all($app_id) {
