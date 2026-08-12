@@ -90,9 +90,9 @@ trait InvalidRouteTrait
         WP_REST_Request $request,
     ): WP_REST_Response {
         $route = $request->get_route();
-        $isOtherNamespace = (strpos($route, '/' . PluginConfigType::apiFullNamespace()) === false);
+        $isPluginNamespace = (strpos($route, '/' . PluginConfigType::apiFullNamespace()) !== false);
 
-        if ($isOtherNamespace) {
+        if ($isPluginNamespace === false) {
 
             return $response;
         }
@@ -100,15 +100,15 @@ trait InvalidRouteTrait
         $status = $response->get_status();
         $isSuccessStatus = ($status < 400);
 
-        if ($isSuccessStatus) {
+        if ($isSuccessStatus === true) {
 
             return $response;
         }
 
         $data = $response->get_data();
-        $isDataInvalid = (gettype($data) !== PhpNativeType::PhpArray->value);
+        $isDataValid = (gettype($data) === PhpNativeType::PhpArray->value);
 
-        if ($isDataInvalid) {
+        if ($isDataValid === false) {
 
             return $response;
         }
@@ -145,23 +145,23 @@ trait InvalidRouteTrait
     }
 
     private function classifyErrorCode(WpErrorCodeType $errorCode): string {
-        if ($errorCode->isRoutingError()) {
+        if ($errorCode->isRoutingError() === true) {
 
             return 'routing';
         }
-        if ($errorCode->isAuthError()) {
+        if ($errorCode->isAuthError() === true) {
 
             return 'authentication';
         }
-        if ($errorCode->isDatabaseError()) {
+        if ($errorCode->isDatabaseError() === true) {
 
             return 'database';
         }
-        if ($errorCode->isValidationError()) {
+        if ($errorCode->isValidationError() === true) {
 
             return 'validation';
         }
-        if ($errorCode->isNetworkError()) {
+        if ($errorCode->isNetworkError() === true) {
 
             return 'network';
         }
@@ -193,7 +193,7 @@ trait InvalidRouteTrait
         foreach ($allRoutes as $routePattern) {
             $isPluginRoute = (strpos($routePattern, $prefix) === 0);
 
-            if ($isPluginRoute) {
+            if ($isPluginRoute === true) {
                 $pluginRoutes[] = $routePattern;
             }
         }
@@ -215,13 +215,13 @@ trait InvalidRouteTrait
     }
 
     private function injectErrorMetadata(array $data): array {
-        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::PluginVersion->value)) {
+        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::PluginVersion->value) === true) {
             $data[ResponseKeyType::PluginVersion->value] = PluginConfigType::Version->value;
         }
-        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::Timestamp->value)) {
+        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::Timestamp->value) === true) {
             $data[ResponseKeyType::Timestamp->value] = DateHelper::nowIso();
         }
-        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::LogHint->value)) {
+        if (BooleanHelpers::isKeyMissing($data, ResponseKeyType::LogHint->value) === true) {
             $data[ResponseKeyType::LogHint->value] = 'Check the plugin error logs or the Activity Logs page for details.';
         }
 
@@ -244,12 +244,12 @@ trait InvalidRouteTrait
 
         $isWarnLevel = ($errorCode !== null && ($errorCode->isAuthError() || $errorCode->isValidationError()));
 
-        if ($isWarnLevel) {
-            $this->fileLogger->warn('REST API error response', $context);
+        if ($isWarnLevel === true) {
+            $this->fileLogger->warn('Rest Api error response', $context);
 
             return;
         }
 
-        $this->fileLogger->error('REST API error response', $context);
+        $this->fileLogger->error('Rest Api error response', $context);
     }
 }

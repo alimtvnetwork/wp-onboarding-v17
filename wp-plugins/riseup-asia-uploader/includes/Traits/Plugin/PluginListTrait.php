@@ -55,7 +55,7 @@ trait PluginListTrait
     /**
      * Handle plugin info — return details for a single plugin by slug.
      *
-     * @param WP_REST_Request $request Request object (expects 'slug' in JSON body).
+     * @param WP_REST_Request $request Request object (expects 'slug' in Json body).
      * @return WP_REST_Response
      */
     public function handlePluginInfo(WP_REST_Request $request): WP_REST_Response {
@@ -65,7 +65,7 @@ trait PluginListTrait
 
             if (empty($slug)) {
 
-                return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+                return $this->errorResponse('Plugin slug is required in Json body', HttpStatusType::BadRequest->value);
             }
 
             if (BooleanHelpers::isFuncMissing('get_plugins')) {
@@ -144,7 +144,7 @@ trait PluginListTrait
             $slug = ($body !== null && isset($body['plugin'])) ? sanitize_text_field($body['plugin']) : $request->get_param('slug');
 
             if (empty($slug)) {
-                return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+                return $this->errorResponse('Plugin slug is required in Json body', HttpStatusType::BadRequest->value);
             }
 
             return $this->scanPluginFilesWithCache($slug);
@@ -193,7 +193,7 @@ trait PluginListTrait
             $slug = ($json !== null && isset($json['plugin'])) ? sanitize_text_field($json['plugin']) : $request->get_param('slug');
 
             if (empty($slug)) {
-                return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+                return $this->errorResponse('Plugin slug is required in Json body', HttpStatusType::BadRequest->value);
             }
 
             $filePath = isset($json[ResponseKeyType::Path->value]) ? $json[ResponseKeyType::Path->value] : null;

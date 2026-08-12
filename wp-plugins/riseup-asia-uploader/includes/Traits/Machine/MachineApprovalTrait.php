@@ -1,6 +1,6 @@
 <?php
 /**
- * MachineApprovalTrait — Remote machine approval via REST API.
+ * MachineApprovalTrait — Remote machine approval via Rest Api.
  *
  * PUT /machines/approve: Adds a machine name to the approved_machines list
  * stored in the WordPress option, without requiring plugin redeployment.
@@ -24,10 +24,18 @@ use RiseupAsia\Enums\ResponseKeyType;
 
 trait MachineApprovalTrait
 {
+    private const KEY_MACHINE           = 'machine';
+    private const KEY_APPROVED_MACHINES = 'approved_machines';
+    private const KEY_ALREADY_APPROVED  = 'already_approved';
+    private const KEY_CODE              = 'code';
+    private const ERR_MACHINE_MISSING   = 'machine_name_missing';
+    private const MSG_INVALID_BODY      = 'Invalid or missing Json body';
+    private const MSG_MACHINE_MISSING   = 'Machine name is required in request body';
+
     /**
      * Handle PUT /machines/approve — add a machine to the approved list.
      *
-     * Expects JSON body: { "machine": "MACHINE-NAME" }
+     * Expects Json body: { "machine": "MACHINE-NAME" }
      * Stores in WP option: {settings_group}.approved_machines[]
      */
     public function handleApproveMachine(WP_REST_Request $request): WP_REST_Response
@@ -37,18 +45,18 @@ trait MachineApprovalTrait
             $isBodyInvalid = ($body === null);
 
             if ($isBodyInvalid) {
-                return $this->validationError('Invalid or missing JSON body', $request);
+                return $this->validationError(self::MSG_INVALID_BODY, $request);
             }
 
-            $machineName = trim($body['machine'] ?? '');
+            $machineName = trim($body[self::KEY_MACHINE] ?? '');
             $isMachineEmpty = ($machineName === '');
 
             if ($isMachineEmpty) {
                 return new WP_REST_Response(
                     [
                         ResponseKeyType::Success->value => false,
-                        ResponseKeyType::Error->value   => 'Machine name is required in request body',
-                        'code'                          => 'machine_name_missing',
+                        ResponseKeyType::Error->value   => self::MSG_MACHINE_MISSING,
+                        self::KEY_CODE                  => self::ERR_MACHINE_MISSING,
                     ],
                     HttpStatusType::BadRequest->value,
                 );
@@ -56,7 +64,7 @@ trait MachineApprovalTrait
 
             $settingsKey = PluginConfigType::SettingsGroup->value;
             $settings = get_option($settingsKey, []);
-            $approvedMachines = $settings['approved_machines'] ?? [];
+            $approvedMachines = $settings[self::KEY_APPROVED_MACHINES] ?? [];
 
             // Check if already approved (case-insensitive)
             $lowerMachine = strtolower($machineName);
@@ -74,29 +82,29 @@ trait MachineApprovalTrait
                     [
                         ResponseKeyType::Success->value => true,
                         ResponseKeyType::Message->value => "Machine '$machineName' is already approved",
-                        'machine'                       => $machineName,
-                        'approved_machines'              => $approvedMachines,
-                        'already_approved'               => true,
+                        self::KEY_MACHINE               => $machineName,
+                        self::KEY_APPROVED_MACHINES     => $approvedMachines,
+                        self::KEY_ALREADY_APPROVED      => true,
                     ],
                     HttpStatusType::Ok->value,
                 );
             }
 
             $approvedMachines[] = $machineName;
-            $settings['approved_machines'] = $approvedMachines;
+            $settings[self::KEY_APPROVED_MACHINES] = $approvedMachines;
             update_option($settingsKey, $settings);
 
             $this->fileLogger->info('Machine approved remotely', [
-                'machine'           => $machineName,
-                'approved_machines' => $approvedMachines,
+                self::KEY_MACHINE           => $machineName,
+                self::KEY_APPROVED_MACHINES => $approvedMachines,
             ]);
 
             return new WP_REST_Response(
                 [
                     ResponseKeyType::Success->value => true,
                     ResponseKeyType::Message->value => "Machine '$machineName' approved successfully",
-                    'machine'                       => $machineName,
-                    'approved_machines'              => $approvedMachines,
+                    self::KEY_MACHINE               => $machineName,
+                    self::KEY_APPROVED_MACHINES     => $approvedMachines,
                 ],
                 HttpStatusType::Ok->value,
             );

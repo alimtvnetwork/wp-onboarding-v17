@@ -21,6 +21,7 @@ use RiseupAsia\Enums\ActionType;
 use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\PluginConfigType;
 use RiseupAsia\Enums\ResponseKeyType;
+use RiseupAsia\Enums\ResponseMessageType;
 use RiseupAsia\Enums\StatusType;
 use RiseupAsia\Helpers\PathHelper;
 use RiseupAsia\Helpers\ResultHelper;
@@ -36,7 +37,7 @@ trait PluginExportTrait
             $zipContent = $this->createPluginZip($pluginDir, PluginConfigType::Slug->value, $ignore);
 
             if ($zipContent === null) {
-                return $this->errorResponse('Failed to create or read ZIP file', HttpStatusType::InternalServerError->value);
+                return $this->errorResponse(ResponseMessageType::ZipCreateFailed->value, HttpStatusType::InternalServerError->value);
             }
 
             $this->logger->logPluginAction(ActionType::ExportSelf->value, PluginConfigType::Slug->value, StatusType::Success->value, [
@@ -56,7 +57,7 @@ trait PluginExportTrait
         $slug = ($body !== null && isset($body['plugin'])) ? sanitize_text_field($body['plugin']) : $request->get_param('slug');
 
         if (empty($slug)) {
-            return $this->errorResponse('Plugin slug is required in JSON body', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(ResponseMessageType::MissingPluginSlug->value, HttpStatusType::BadRequest->value);
         }
 
         return $this->safeExecute(function () use ($slug) {
@@ -93,18 +94,18 @@ trait PluginExportTrait
         $pluginDir  = PathHelper::join($pluginsDir, $slug);
 
         if (PathHelper::isDirMissing($pluginDir)) {
-            return $this->errorResponse('Plugin not found: ' . $slug, HttpStatusType::NotFound->value);
+            return $this->errorResponse(ResponseMessageType::PluginNotFound->value . ': ' . $slug, HttpStatusType::NotFound->value);
         }
 
         if (PathHelper::isPathMissing($pluginDir, $pluginsDir)) {
-            return $this->errorResponse('Invalid plugin slug', HttpStatusType::BadRequest->value);
+            return $this->errorResponse(ResponseMessageType::InvalidRequest->value, HttpStatusType::BadRequest->value);
         }
 
         $ignore = UploadIgnore::fromDirectory($pluginDir);
         $zipContent = $this->createPluginZip($pluginDir, $slug . '-backup', $ignore);
 
         if ($zipContent === null) {
-            return $this->errorResponse('Failed to create or read ZIP file', HttpStatusType::InternalServerError->value);
+            return $this->errorResponse(ResponseMessageType::ZipCreateFailed->value, HttpStatusType::InternalServerError->value);
         }
 
         $this->logger->logPluginAction(ActionType::ExportPlugin->value, $slug, StatusType::Success->value, [

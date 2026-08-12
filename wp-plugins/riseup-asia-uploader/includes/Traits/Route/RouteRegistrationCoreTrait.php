@@ -20,7 +20,7 @@ use RiseupAsia\Enums\PluginConfigType;
 trait RouteRegistrationCoreTrait
 {
     /**
-     * Register REST API routes.
+     * Register Rest Api routes.
      */
     public function registerRoutes() {
         $namespace = PluginConfigType::apiFullNamespace();
