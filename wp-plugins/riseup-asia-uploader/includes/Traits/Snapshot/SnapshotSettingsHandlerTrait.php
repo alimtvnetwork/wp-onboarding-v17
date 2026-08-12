@@ -45,7 +45,7 @@ trait SnapshotSettingsHandlerTrait {
             $isBodyMissing = ($body === null);
 
             if ($isBodyMissing) {
-                return $this->validationError('Request body must be a JSON object', $request);
+                return $this->validationError('Request body must be a Json object', $request);
             }
 
             $this->fileLogger->info('Updating snapshot settings', ['keys' => array_keys($body)]);

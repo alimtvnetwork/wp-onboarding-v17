@@ -17,7 +17,9 @@ use WP_REST_Response;
 use RiseupAsia\Enums\ActionType;
 use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\LogCategoryType;
+use RiseupAsia\Enums\RequestFieldType;
 use RiseupAsia\Enums\ResponseKeyType;
+use RiseupAsia\Enums\ResponseMessageType;
 use RiseupAsia\Enums\RestoreModeType;
 use RiseupAsia\Enums\SnapshotConfigType;
 use RiseupAsia\Enums\SnapshotPhaseType;
@@ -33,12 +35,12 @@ trait SnapshotCrudRestoreTrait {
     public function handleDeleteSnapshot(WP_REST_Request $request): WP_REST_Response {
         return $this->safeExecute(function() use ($request): WP_REST_Response {
             $body = $this->extractValidBody($request) ?? [];
-            $id = isset($body[ResponseKeyType::Id->value]) ? (int) $body[ResponseKeyType::Id->value] : (int) $request->get_param('id');
+            $id = isset($body[ResponseKeyType::Id->value]) ? (int) $body[ResponseKeyType::Id->value] : (int) $request->get_param(RequestFieldType::Id->value);
 
             $isIdInvalid = ($id <= 0);
 
             if ($isIdInvalid) {
-                return $this->validationError('Snapshot ID must be a positive integer', $request);
+                return $this->validationError(ResponseMessageType::InvalidSnapshotId->value, $request);
             }
 
             $this->fileLogger->info('Deleting snapshot', ['id' => $id]);
@@ -67,12 +69,12 @@ trait SnapshotCrudRestoreTrait {
     public function handleRestoreSnapshot(WP_REST_Request $request): WP_REST_Response {
         return $this->safeExecute(function() use ($request): WP_REST_Response {
             $body = $this->extractValidBody($request) ?? [];
-            $id = isset($body[ResponseKeyType::Id->value]) ? (int) $body[ResponseKeyType::Id->value] : (int) $request->get_param('id');
+            $id = isset($body[ResponseKeyType::Id->value]) ? (int) $body[ResponseKeyType::Id->value] : (int) $request->get_param(RequestFieldType::Id->value);
 
             $isIdInvalid = ($id <= 0);
 
             if ($isIdInvalid) {
-                return $this->validationError('Snapshot ID must be a positive integer', $request);
+                return $this->validationError(ResponseMessageType::InvalidSnapshotId->value, $request);
             }
 
             $options = $this->parseRestoreOptions($body);

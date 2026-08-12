@@ -26,6 +26,7 @@ enum ResponseMessageType: string
     case FileIgnored        = 'File ignored by .uploadignore';
     case InvalidRequestBody = 'Invalid request body';
     case InvalidJsonBody    = 'Invalid or missing Json body';
+    case InvalidSnapshotId  = 'Snapshot Id must be a positive integer';
     case ConnectionSuccessful     = 'Connection successful';
     case SnapshotNotFound         = 'Snapshot not found';
     case SnapshotProviderMissing  = 'No snapshot provider available';
