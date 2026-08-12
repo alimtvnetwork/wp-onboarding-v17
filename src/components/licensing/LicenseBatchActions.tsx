@@ -46,7 +46,7 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
 
   const handleBatchExtend = async () => {
     // Extend expiry by 30 days — the backend handles the actual extension.
-    // Since the current API uses PATCH with status, we send an update signal.
+    // Since the current Api uses Patch with status, we send an update signal.
     for (const license of selected) {
       await updateMutation.mutateAsync({ id: license.id, input: { status: LicenseStatusType.Active } });
     }
@@ -56,7 +56,7 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
   };
 
   const handleExportCsv = () => {
-    const headers = ["ID", "Key", "Email", "Product", "Type", "Status", "Max Activations", "Created", "Expires"];
+    const headers = ["Id", "Key", "Email", "Product", "Type", "Status", "Max Activations", "Created", "Expires"];
     const rows = (selected.length > 0 ? selected : allLicenses).map((l) => [
       l.id,
       l.key,
@@ -71,12 +71,13 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
 
     const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
+    const Url = globalThis.URL;
+    const url = Url.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `licenses-export-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
-    URL.revokeObjectURL(url);
+    Url.revokeObjectURL(url);
     toast.success("CSV exported");
   };
 
@@ -102,7 +103,7 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
         </Button>
       </div>
 
-      <AlertDialog open={!!confirmAction} onOpenChange={() => setConfirmAction(null)}>
+      <AlertDialog open={confirmAction !== null} onOpenChange={() => setConfirmAction(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>

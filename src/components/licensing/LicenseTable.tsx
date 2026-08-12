@@ -78,7 +78,7 @@ export function LicenseTable({ licenses, onSelect, batchSelected = [], onBatchTo
                   />
                 </TableHead>
               )}
-              <TableHead className="w-[60px]">ID</TableHead>
+              <TableHead className="w-[60px]">Id</TableHead>
               <TableHead>Key</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Status</TableHead>

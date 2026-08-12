@@ -89,3 +89,6 @@
 - [Task 407](completed/407-fix-src-components-layout-header-tsx.md) - Completed
 - [Task 408](completed/408-fix-src-components-layout-sidebar-tsx.md) - Completed
 - [Task 409](completed/409-fix-src-components-licensing-auditloglist-tsx.md) - Completed
+- [Task 410](completed/410-fix-src-components-licensing-licensebatchactions-tsx.md) - Completed
+- [Task 411](completed/411-fix-src-components-licensing-licensetable-tsx.md) - Completed
+- [Task 412](completed/412-fix-src-components-plugins-activationdiagnostics-tsx.md) - Completed

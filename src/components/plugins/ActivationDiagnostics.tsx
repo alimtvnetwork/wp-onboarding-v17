@@ -3,15 +3,41 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AlertCircle, CheckCircle2, ExternalLink, Activity, Server } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LogEntry } from "@/components/shared/LogViewer";
+import { LogEntry, LevelType } from "@/components/shared/LogViewer";
 import type { LogEntryDetails } from "@/lib/api";
+
+const MAX_BODY_LENGTH = 500;
+
+enum LogKeywordType {
+  ActivateStep = "activate",
+  ActivateSubstr = "activat",
+  ResolvedIdentifier = "Resolved plugin identifier",
+  ActivatingPlugin = "Activating plugin:",
+  ActivationFailed = "Activation failed",
+  ActivatedSuccessfully = "activated successfully",
+  Successfully = "successfully",
+  Error404 = "404"
+}
+
+enum DiagnosticLabelType {
+  ResolvedPluginId = "Resolved Plugin Id",
+  ActivationTarget = "Activation Target",
+  ErrorMessage = "Error Message",
+  RequestUrl = "Request Url",
+  HttpMethod = "HTTP Method",
+  ResponseStatus = "Response Status",
+  ResponseBody = "Response Body",
+  Status = "Status",
+  StatusSuccess = "✓ Plugin activated successfully",
+  Error = "Error"
+}
 
 interface ActivationDiagnosticsProps {
   logs: LogEntry[];
   className?: string;
 }
 
-export enum DiagnosticEntryType {
+enum DiagnosticEntryType {
   Request = "request",
   Response = "response",
   Info = "info",
@@ -35,17 +61,17 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
     
     // Find activation-related logs
     const activateLogs = logs.filter(
-      (l) => l.step === "activate" || l.message.toLowerCase().includes("activat")
+      (l) => l.step === LogKeywordType.ActivateStep || l.message.toLowerCase().includes(LogKeywordType.ActivateSubstr)
     );
 
     for (const log of activateLogs) {
       // Extract resolved identifier
-      if (log.message.includes("Resolved plugin identifier")) {
+      if (log.message.includes(LogKeywordType.ResolvedIdentifier)) {
         const details = log.details;
         if (details?.resolvedIdentifier) {
           entries.push({
             type: DiagnosticEntryType.Info,
-            label: "Resolved Plugin ID",
+            label: DiagnosticLabelType.ResolvedPluginId,
             value: String(details.resolvedIdentifier),
             details,
           });
@@ -53,85 +79,85 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
       }
 
       // Extract activation request details
-      if (log.message.includes("Activating plugin:")) {
-        const match = log.message.match(/Activating plugin:\s*(.+)/);
+      if (log.message.includes(LogKeywordType.ActivatingPlugin)) {
+        const match = log.message.match(new RegExp(`${LogKeywordType.ActivatingPlugin}\\s*(.+)`));
         if (match) {
           entries.push({
             type: DiagnosticEntryType.Request,
-            label: "Activation Target",
+            label: DiagnosticLabelType.ActivationTarget,
             value: match[1],
           });
         }
       }
 
-      // Extract failed activation with API error details
-      if (log.message.includes("Activation failed") || log.level === "error") {
+      // Extract failed activation with Api error details
+      if (log.message.includes(LogKeywordType.ActivationFailed) || log.level === LevelType.Error) {
         const details = log.details;
         
         entries.push({
           type: DiagnosticEntryType.Error,
-          label: "Error Message",
+          label: DiagnosticLabelType.ErrorMessage,
           value: log.message,
         });
 
         // Extract request details if available
         if (details?.request) {
-          const req = details.request as LogEntryDetails;
-          if (req.url) {
+          const request = details.request as LogEntryDetails;
+          if (request.url) {
             entries.push({
               type: DiagnosticEntryType.Request,
-              label: "Request URL",
-              value: String(req.url),
+              label: DiagnosticLabelType.RequestUrl,
+              value: String(request.url),
             });
           }
-          if (req.method) {
+          if (request.method) {
             entries.push({
               type: DiagnosticEntryType.Request,
-              label: "HTTP Method",
-              value: String(req.method),
+              label: DiagnosticLabelType.HttpMethod,
+              value: String(request.method),
             });
           }
         }
 
         // Extract response details if available
         if (details?.response) {
-          const resp = details.response as LogEntryDetails;
-          if (resp.status !== undefined) {
+          const response = details.response as LogEntryDetails;
+          if (response.status !== undefined) {
             entries.push({
               type: DiagnosticEntryType.Response,
-              label: "Response Status",
-              value: String(resp.status),
+              label: DiagnosticLabelType.ResponseStatus,
+              value: String(response.status),
             });
           }
-          if (resp.body) {
+          if (response.body) {
             entries.push({
               type: DiagnosticEntryType.Response,
-              label: "Response Body",
-              value: typeof resp.body === "string" 
-                ? resp.body.slice(0, 500) 
-                : JSON.stringify(resp.body).slice(0, 500),
+              label: DiagnosticLabelType.ResponseBody,
+              value: typeof response.body === "string" 
+                ? response.body.slice(0, MAX_BODY_LENGTH) 
+                : JSON.stringify(response.body).slice(0, MAX_BODY_LENGTH),
             });
           }
         }
       }
 
       // Extract success
-      if (log.message.includes("activated successfully")) {
+      if (log.message.includes(LogKeywordType.ActivatedSuccessfully)) {
         entries.push({
           type: DiagnosticEntryType.Info,
-          label: "Status",
-          value: "✓ Plugin activated successfully",
+          label: DiagnosticLabelType.Status,
+          value: DiagnosticLabelType.StatusSuccess,
         });
       }
     }
 
     // If no activation logs found, check for general errors
     if (entries.length === 0) {
-      const errorLogs = logs.filter((l) => l.level === "error");
+      const errorLogs = logs.filter((l) => l.level === LevelType.Error);
       for (const log of errorLogs.slice(0, 3)) {
         entries.push({
           type: DiagnosticEntryType.Error,
-          label: log.step || "Error",
+          label: log.step || DiagnosticLabelType.Error,
           value: log.message,
         });
       }
@@ -141,7 +167,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
   }, [logs]);
 
   const hasErrors = diagnostics.some((d) => d.type === DiagnosticEntryType.Error);
-  const hasSuccess = diagnostics.some((d) => d.value.includes("successfully"));
+  const hasSuccess = diagnostics.some((d) => d.value.includes(LogKeywordType.Successfully));
 
   if (diagnostics.length === 0) {
     return (
@@ -222,7 +248,7 @@ export function ActivationDiagnostics({ logs, className }: ActivationDiagnostics
       </ScrollArea>
 
       {/* Help text for 404 errors */}
-      {diagnostics.some((d) => d.value.includes("404")) && (
+      {diagnostics.some((d) => d.value.includes(LogKeywordType.Error404)) && (
         <div className="p-3 rounded-lg bg-muted/50 border border-border text-xs text-muted-foreground">
           <p className="font-medium mb-1">💡 404 Error Troubleshooting:</p>
           <ul className="list-disc list-inside space-y-1">
