@@ -2,7 +2,7 @@
 /**
  * LogRetrievalTrait — Returns log file contents for remote retrieval.
  *
- * Returns a flat JSON response (NOT envelope-wrapped) to match the Go backend's
+ * Returns a flat Json response (NOT envelope-wrapped) to match the Go backend's
  * direct unmarshalling into LogsRetrievePhpResponse.
  *
  * @package QUpload\Traits\Log

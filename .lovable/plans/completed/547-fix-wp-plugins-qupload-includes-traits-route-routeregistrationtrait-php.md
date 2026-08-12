@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 547: Fix violations in wp-plugins/qupload/includes/Traits/Route/RouteRegistrationTrait.php
 
 Target File: `wp-plugins/qupload/includes/Traits/Route/RouteRegistrationTrait.php`

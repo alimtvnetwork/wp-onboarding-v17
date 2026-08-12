@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 546: Fix violations in wp-plugins/qupload/includes/Traits/Machine/MachineApprovalTrait.php
 
 Target File: `wp-plugins/qupload/includes/Traits/Machine/MachineApprovalTrait.php`

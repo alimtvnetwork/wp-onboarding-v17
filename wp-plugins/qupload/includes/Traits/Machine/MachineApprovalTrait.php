@@ -1,6 +1,6 @@
 <?php
 /**
- * MachineApprovalTrait — Remote machine approval via REST API.
+ * MachineApprovalTrait — Remote machine approval via REST Api.
  *
  * PUT /machines/approve: Adds a machine name to the approved_machines list
  * stored in the WordPress option, without requiring plugin redeployment.
@@ -27,7 +27,7 @@ trait MachineApprovalTrait
     /**
      * Handle PUT /machines/approve — add a machine to the approved list.
      *
-     * Expects JSON body: { "machine": "MACHINE-NAME" }
+     * Expects Json body: { "machine": "MACHINE-NAME" }
      * Stores in WP option: {settings_group}.approved_machines[]
      */
     public function handleApproveMachine(WP_REST_Request $request): WP_REST_Response

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 545: Fix violations in wp-plugins/qupload/includes/Traits/Log/LogRetrievalTrait.php
 
 Target File: `wp-plugins/qupload/includes/Traits/Log/LogRetrievalTrait.php`

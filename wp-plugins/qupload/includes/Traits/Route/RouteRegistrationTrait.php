@@ -1,6 +1,6 @@
 <?php
 /**
- * RouteRegistrationTrait — REST API route registration for QUpload.
+ * RouteRegistrationTrait — REST Api route registration for QUpload.
  *
  * @package QUpload\Traits\Route
  * @since   1.0.0
@@ -20,7 +20,7 @@ use QUpload\Enums\PluginConfigType;
 
 trait RouteRegistrationTrait
 {
-    /** Register all REST API routes. */
+    /** Register all REST Api routes. */
     public function registerRoutes(): void {
         $namespace = PluginConfigType::apiFullNamespace();
         $isVerbose = \QUpload\Core\Plugin::isBootVerbose();
