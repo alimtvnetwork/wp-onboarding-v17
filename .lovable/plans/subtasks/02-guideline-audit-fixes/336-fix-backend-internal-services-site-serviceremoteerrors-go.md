@@ -20,7 +20,9 @@ Target File: `backend/internal/services/site/ServiceRemoteErrors.go`
   `// copyOptionalApiFields copies conditionally-present API error fields.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
 - **Line 84**: abbreviations - Invalid abbreviation casing
   `// parseErrorResponseEnvelope parses the JSON response body for structured error details.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

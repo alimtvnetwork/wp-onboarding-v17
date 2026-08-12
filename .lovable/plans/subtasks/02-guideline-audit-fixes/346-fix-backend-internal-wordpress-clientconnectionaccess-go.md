@@ -12,3 +12,5 @@ Target File: `backend/internal/wordpress/ClientConnectionAccess.go`
   `Content: "This draft was created to test API write permissions. You can safely delete it.",`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)
+

@@ -16,3 +16,4 @@ Target File: `backend/internal/services/site/ServiceRemotePlugins.go`
   `s.log.Debug("Remote plugins fetched via Uploader API", "siteId", siteId, "count", len(plugins))`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

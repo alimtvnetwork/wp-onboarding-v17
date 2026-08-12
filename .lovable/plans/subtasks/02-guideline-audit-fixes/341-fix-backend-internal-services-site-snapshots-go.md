@@ -8,3 +8,4 @@ Target File: `backend/internal/services/site/Snapshots.go`
   `// Snapshot proxy methods for site service - proxies to WordPress plugin REST API`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

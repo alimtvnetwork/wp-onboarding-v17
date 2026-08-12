@@ -8,3 +8,4 @@ Target File: `backend/internal/services/site/ServiceConnectionCredentials.go`
   `Message: fmt.Sprintf("Normalized URL: %s", normalizedUrl),`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

@@ -8,3 +8,5 @@ Target File: `backend/internal/services/publish_history/Queries.go`
   `// Package publishhistory — SQL query constants.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)

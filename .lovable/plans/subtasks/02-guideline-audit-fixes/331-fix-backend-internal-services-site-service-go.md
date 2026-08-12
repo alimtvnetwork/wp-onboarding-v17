@@ -8,3 +8,4 @@ Target File: `backend/internal/services/site/Service.go`
   `// SiteCredentials holds decrypted credentials for API access`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

@@ -8,3 +8,5 @@ Target File: `backend/internal/services/site/CrudCredentials.go`
   `// getCredentialById fetches a single credential by ID.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+
+[x] SKIPPED (False Positive)
