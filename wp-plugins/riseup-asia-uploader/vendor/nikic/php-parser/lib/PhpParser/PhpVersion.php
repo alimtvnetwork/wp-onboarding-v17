@@ -6,7 +6,7 @@ namespace PhpParser;
  * A PHP version, representing only the major and minor version components.
  */
 class PhpVersion {
-    /** @var int Version ID in PHP_VERSION_ID format */
+    /** @var int Version Id in PHP_VERSION_ID format */
     public int $id;
 
     /** @var int[] Minimum versions for builtin types */

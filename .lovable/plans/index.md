@@ -278,3 +278,7 @@
 - [Task 637](completed/02-guideline-audit-fixes/637-fix-wp-plugins-riseup-asia-uploader-tests-unit-snapshot-sqliteschemaconvertertest-php.md) - Completed
 - [Task 638](completed/02-guideline-audit-fixes/638-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-internal-tokenpolyfill-php.md) - Completed
 
+- [Task 639](completed/02-guideline-audit-fixes/639-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-jsondecoder-php.md) - Completed
+- [Task 640](completed/02-guideline-audit-fixes/640-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-lexer-php.md) - Completed
+- [Task 641](completed/02-guideline-audit-fixes/641-fix-wp-plugins-riseup-asia-uploader-vendor-nikic-php-parser-lib-phpparser-phpversion-php.md) - Completed
+

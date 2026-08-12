@@ -12,7 +12,7 @@ class Lexer {
      * PHP 8.0. The tokens are instances of PhpParser\Token, to abstract over a polyfill
      * implementation in earlier PHP version.
      *
-     * The token array is terminated by a sentinel token with token ID 0.
+     * The token array is terminated by a sentinel token with token Id 0.
      * The token array does not discard any tokens (i.e. whitespace and comments are included).
      * The token position attributes are against this token array.
      *
@@ -71,7 +71,7 @@ class Lexer {
         // array, and performs certain canonicalizations:
         //  * Use PHP 8.1 T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG and
         //    T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG tokens used to disambiguate intersection types.
-        //  * Add a sentinel token with ID 0.
+        //  * Add a sentinel token with Id 0.
 
         $numTokens = \count($tokens);
         if ($numTokens === 0) {
