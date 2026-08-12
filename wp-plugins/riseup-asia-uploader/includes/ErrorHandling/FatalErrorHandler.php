@@ -1,8 +1,8 @@
 <?php
 /**
- * FatalErrorHandler — Detects fatal PHP errors during REST requests and emits structured JSON.
+ * FatalErrorHandler — Detects fatal Php errors during Rest requests and emits structured Json.
  *
- * Registers a shutdown function to catch fatal errors and return proper JSON
+ * Registers a shutdown function to catch fatal errors and return proper Json
  * error responses instead of blank pages or HTML error output.
  *
  * @package RiseupAsia\ErrorHandling
@@ -11,11 +11,12 @@
 
 namespace RiseupAsia\ErrorHandling;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
 use RiseupAsia\Enums\ContentTypeValueType;
+use RiseupAsia\Enums\HttpHeaderType;
 use RiseupAsia\Enums\HttpStatusType;
 use RiseupAsia\Enums\PathLogFileType;
 use RiseupAsia\Enums\PluginConfigType;
@@ -24,7 +25,7 @@ use RiseupAsia\Helpers\DateHelper;
 use RiseupAsia\Helpers\PathHelper;
 
 /**
- * Detects fatal PHP errors during REST requests and emits structured JSON responses.
+ * Detects fatal Php errors during Rest requests and emits structured Json responses.
  *
  * @since 1.57.0
  */
@@ -41,6 +42,11 @@ class FatalErrorHandler
     private const ERROR_CODE_FATAL = 'FATAL_ERROR';
     private const ERROR_CODE_ENCODING_FAILED = 'FATAL_ERROR_ENCODING_FAILED';
     private const MESSAGE_TRUNCATE_LENGTH = 500;
+    private const MESSAGE_FATAL_ERROR = 'A fatal error occurred in the plugin: ';
+    private const MESSAGE_ENCODING_FAILED = 'Fatal error occurred and Json encoding also failed';
+    private const ERROR_TYPE_UNKNOWN = 'UNKNOWN_ERROR_TYPE';
+    private const PHP_SAPI_CLI = 'cli';
+    private const PHP_SAPI_CLI_SERVER = 'cli-server';
 
     private const ERROR_TYPE_MAP = [
         E_ERROR             => 'E_ERROR',
@@ -63,7 +69,7 @@ class FatalErrorHandler
 
         $isFatalRestError = self::isFatalRestError($error);
 
-        if (!$isFatalRestError) {
+        if ($isFatalRestError === false) {
             return;
         }
 
@@ -79,12 +85,12 @@ class FatalErrorHandler
 
         $isFatalType = in_array($error['type'], self::FATAL_TYPES, true);
 
-        if (!$isFatalType) {
+        if ($isFatalType === false) {
             return false;
         }
 
         // Guard: CLI context has no REQUEST_URI — skip REST detection
-        $isCli = (PHP_SAPI === 'cli' || PHP_SAPI === 'cli-server');
+        $isCli = (PHP_SAPI === self::PHP_SAPI_CLI || PHP_SAPI === self::PHP_SAPI_CLI_SERVER);
 
         if ($isCli) {
             return false;
@@ -101,7 +107,7 @@ class FatalErrorHandler
     }
 
     public static function errorTypeToString(int $type): string {
-        return self::ERROR_TYPE_MAP[$type] ?? 'UNKNOWN_ERROR_TYPE';
+        return self::ERROR_TYPE_MAP[$type] ?? self::ERROR_TYPE_UNKNOWN;
     }
 
     private static function buildResponse(
@@ -113,7 +119,7 @@ class FatalErrorHandler
             ResponseKeyType::Success->value => false,
             ResponseKeyType::Error->value   => [
                 'code'    => self::ERROR_CODE_FATAL,
-                'message' => 'A fatal error occurred in the plugin: ' . $error['message'],
+                'message' => self::MESSAGE_FATAL_ERROR . $error['message'],
                 'details' => FrameBuilder::buildFatalDetails($error, $traceLines, $frames),
             ],
         ];
@@ -148,7 +154,7 @@ class FatalErrorHandler
         $isHeadersUnsent = (headers_sent() === false);
 
         if ($isHeadersUnsent) {
-            header('Content-Type: ' . ContentTypeValueType::JsonUtf8->value);
+            header(sprintf('%s: %s', HttpHeaderType::ContentType->value, ContentTypeValueType::JsonUtf8->value));
             http_response_code(HttpStatusType::InternalServerError->value);
         }
 
@@ -171,7 +177,7 @@ class FatalErrorHandler
             ResponseKeyType::Success->value => false,
             ResponseKeyType::Error->value   => [
                 'code'    => self::ERROR_CODE_ENCODING_FAILED,
-                'message' => 'Fatal error occurred and JSON encoding also failed',
+                'message' => self::MESSAGE_ENCODING_FAILED,
                 'details' => [
                     'originalMessage' => substr($error['message'], 0, self::MESSAGE_TRUNCATE_LENGTH),
                     'file'            => basename($error['file']),
@@ -184,7 +190,7 @@ class FatalErrorHandler
 }
 
 // Guard: Only register shutdown handler in web context (not CLI)
-$isWebContext = (PHP_SAPI !== 'cli' && PHP_SAPI !== 'cli-server');
+$isWebContext = (PHP_SAPI !== self::PHP_SAPI_CLI && PHP_SAPI !== self::PHP_SAPI_CLI_SERVER);
 
 if ($isWebContext) {
     register_shutdown_function([FatalErrorHandler::class, 'handle']);

@@ -50,9 +50,11 @@ enum UserMetaKeyType: string
         return in_array($this, self::socialCases(), true);
     }
 
+    private const YOAST_PREFIX = 'wpseo_';
+
     public function isYoast(): bool
     {
-        return str_starts_with($this->value, 'wpseo_');
+        return str_starts_with($this->value, self::YOAST_PREFIX);
     }
 
     /** @return self[] */
@@ -93,7 +95,7 @@ enum UserMetaKeyType: string
     }
 
     /**
-     * JSON key name used in API responses.
+     * Json key name used in Api responses.
      */
     public function jsonKey(): string
     {

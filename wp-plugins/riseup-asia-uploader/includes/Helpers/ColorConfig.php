@@ -1,9 +1,9 @@
 <?php
 /**
- * ColorConfig — JSON-driven color configuration loader with static caching.
+ * ColorConfig — Json-driven color configuration loader with static caching.
  *
  * Loads color definitions from data/colors.json and provides typed lookups
- * by group and key. The JSON is read once and cached in a static variable.
+ * by group and key. The Json is read once and cached in a static variable.
  *
  * @package RiseupAsia\Helpers
  * @since   1.64.0
@@ -104,7 +104,7 @@ class ColorConfig {
         return self::get(ColorGroupType::Status, $status);
     }
 
-    /** Get a WP admin theme color. */
+    /** Get a Wp admin theme color. */
     public static function wpAdmin(string $key): string {
         return self::get(ColorGroupType::WpAdmin, $key);
     }
