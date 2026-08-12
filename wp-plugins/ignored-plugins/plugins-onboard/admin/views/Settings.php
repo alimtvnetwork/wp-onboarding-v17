@@ -37,7 +37,7 @@ $success = isset($_GET['success']) ? sanitize_text_field($_GET['success']) : '';
                     <td>
                         <input type="email" name="admin_email" id="admin_email" class="regular-text"
                             value="<?php echo esc_attr(isset($settings['admin_email']) ? $settings['admin_email'] : get_option('admin_email')); ?>">
-                        <p class="description"><?php esc_html_e('Email address for IP approval notifications.', 'plugins-onboard'); ?></p>
+                        <p class="description"><?php esc_html_e('Email address for Ip approval notifications.', 'plugins-onboard'); ?></p>
                     </td>
                 </tr>
             </table>
@@ -107,17 +107,17 @@ $success = isset($_GET['success']) ? sanitize_text_field($_GET['success']) : '';
                         <label>
                             <input type="checkbox" name="require_https" value="1"
                                 <?php checked(!empty($settings['require_https'])); ?>>
-                            <?php esc_html_e('Require HTTPS for all API requests', 'plugins-onboard'); ?>
+                            <?php esc_html_e('Require HTTPS for all Api requests', 'plugins-onboard'); ?>
                         </label>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e('IP Whitelist', 'plugins-onboard'); ?></th>
+                    <th scope="row"><?php esc_html_e('Ip Whitelist', 'plugins-onboard'); ?></th>
                     <td>
                         <label>
                             <input type="checkbox" name="ip_whitelist_enabled" value="1"
                                 <?php checked(!isset($settings['ip_whitelist_enabled']) || $settings['ip_whitelist_enabled']); ?>>
-                            <?php esc_html_e('Enable IP whitelist for mutation requests', 'plugins-onboard'); ?>
+                            <?php esc_html_e('Enable Ip whitelist for mutation requests', 'plugins-onboard'); ?>
                         </label>
                     </td>
                 </tr>

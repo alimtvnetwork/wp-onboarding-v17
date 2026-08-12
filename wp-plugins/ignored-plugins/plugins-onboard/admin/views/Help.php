@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
             </li>
             <li>
                 <strong><?php esc_html_e('Save Credentials', 'plugins-onboard'); ?></strong>
-                <p><?php esc_html_e('Copy the Client ID and Client Secret. The secret is only shown once!', 'plugins-onboard'); ?></p>
+                <p><?php esc_html_e('Copy the Client Id and Client Secret. The secret is only shown once!', 'plugins-onboard'); ?></p>
             </li>
             <li>
                 <strong><?php esc_html_e('Authenticate', 'plugins-onboard'); ?></strong>
@@ -41,10 +41,10 @@ if (!defined('ABSPATH')) {
         </ol>
     </div>
 
-    <!-- API Reference -->
+    <!-- Api Reference -->
     <div class="onboard-section">
-        <h2><?php esc_html_e('API Reference', 'plugins-onboard'); ?></h2>
-        <p><?php esc_html_e('Base URL:', 'plugins-onboard'); ?> <code><?php echo rest_url('onboard-plugin/v1/'); ?></code></p>
+        <h2><?php esc_html_e('Api Reference', 'plugins-onboard'); ?></h2>
+        <p><?php esc_html_e('Base Url:', 'plugins-onboard'); ?> <code><?php echo rest_url('onboard-plugin/v1/'); ?></code></p>
 
         <h3><?php esc_html_e('Authentication Endpoints', 'plugins-onboard'); ?></h3>
         <table class="widefat fixed">
@@ -223,7 +223,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN</code></pre>
         <ul>
             <li><?php esc_html_e('Always use HTTPS in production environments.', 'plugins-onboard'); ?></li>
             <li><?php esc_html_e('Keep client secrets secure and never expose them in client-side code.', 'plugins-onboard'); ?></li>
-            <li><?php esc_html_e('Enable IP whitelisting to restrict API access to known IPs.', 'plugins-onboard'); ?></li>
+            <li><?php esc_html_e('Enable Ip whitelisting to restrict Api access to known Ips.', 'plugins-onboard'); ?></li>
             <li><?php esc_html_e('Regularly review audit logs for suspicious activity.', 'plugins-onboard'); ?></li>
             <li><?php esc_html_e('Set appropriate retention policies for snapshots and logs.', 'plugins-onboard'); ?></li>
             <li><?php esc_html_e('Regenerate client secrets if you suspect they have been compromised.', 'plugins-onboard'); ?></li>
@@ -260,12 +260,12 @@ Authorization: Bearer YOUR_ACCESS_TOKEN</code></pre>
                 <tr>
                     <td><code>ip_pending_approval</code></td>
                     <td>403</td>
-                    <td><?php esc_html_e('IP address requires admin approval', 'plugins-onboard'); ?></td>
+                    <td><?php esc_html_e('Ip address requires admin approval', 'plugins-onboard'); ?></td>
                 </tr>
                 <tr>
                     <td><code>ip_mismatch</code></td>
                     <td>403</td>
-                    <td><?php esc_html_e('Request IP does not match token IP', 'plugins-onboard'); ?></td>
+                    <td><?php esc_html_e('Request Ip does not match token Ip', 'plugins-onboard'); ?></td>
                 </tr>
                 <tr>
                     <td><code>action_mismatch</code></td>

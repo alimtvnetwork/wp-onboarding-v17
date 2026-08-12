@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 512: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Help.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Help.php`

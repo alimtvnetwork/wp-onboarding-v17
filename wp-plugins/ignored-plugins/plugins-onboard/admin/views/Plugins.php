@@ -113,9 +113,9 @@ if (!defined('ABSPATH')) {
     </div>
     <?php endif; ?>
 
-    <!-- API Instructions -->
+    <!-- Api Instructions -->
     <div class="onboard-section">
-        <h2><?php esc_html_e('API Endpoints', 'plugins-onboard'); ?></h2>
+        <h2><?php esc_html_e('Api Endpoints', 'plugins-onboard'); ?></h2>
         <p><?php esc_html_e('Use these endpoints to manage plugins remotely:', 'plugins-onboard'); ?></p>
         <table class="widefat fixed">
             <thead>

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 513: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Plugins.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Plugins.php`

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 514: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/admin/views/Settings.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/admin/views/Settings.php`

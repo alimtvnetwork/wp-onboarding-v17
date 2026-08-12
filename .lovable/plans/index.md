@@ -190,3 +190,6 @@
 - [Task 509](completed/509-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-applications-php.md) - Completed
 - [Task 510](completed/510-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-auditlogs-php.md) - Completed
 - [Task 511](completed/511-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-dashboard-php.md) - Completed
+- [Task 512](completed/512-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-help-php.md) - Completed
+- [Task 513](completed/513-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-plugins-php.md) - Completed
+- [Task 514](completed/514-fix-wp-plugins-ignored-plugins-plugins-onboard-admin-views-settings-php.md) - Completed
