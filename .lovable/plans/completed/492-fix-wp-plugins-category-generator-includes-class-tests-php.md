@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 492: Fix violations in wp-plugins/category-generator/includes/class-tests.php
 
 Target File: `wp-plugins/category-generator/includes/class-tests.php`

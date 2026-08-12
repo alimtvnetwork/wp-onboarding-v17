@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 493: Fix violations in wp-plugins/category-generator/templates/admin-page.php
 
 Target File: `wp-plugins/category-generator/templates/admin-page.php`

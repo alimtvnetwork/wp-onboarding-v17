@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 491: Fix violations in wp-plugins/category-generator/includes/class-snapshot.php
 
 Target File: `wp-plugins/category-generator/includes/class-snapshot.php`

@@ -185,7 +185,7 @@ $auto_snapshot_enabled = $settings->get('auto_snapshot_before_generate', false);
                         <?php _e('FAQ Variations (Random Selection + Schema)', 'category-generator'); ?>
                     </h4>
                     <p class="cg-hint" style="margin-bottom: 12px;">
-                        <?php _e('Each FAQ variation generates both visible HTML and FAQPage Schema.org JSON-LD. One variation is randomly selected during generation.', 'category-generator'); ?>
+                        <?php _e('Each FAQ variation generates both visible HTML and FAQPage Schema.org Json-LD. One variation is randomly selected during generation.', 'category-generator'); ?>
                     </p>
                     
                     <?php for ($i = 1; $i <= 4; $i++): ?>
@@ -211,7 +211,7 @@ $auto_snapshot_enabled = $settings->get('auto_snapshot_before_generate', false);
                     
                     <label class="cg-checkbox-label" style="margin-top: 12px;">
                         <input type="checkbox" id="cg-include-faq-schema" checked>
-                        <span><?php _e('Generate FAQPage Schema.org JSON-LD for FAQ content', 'category-generator'); ?></span>
+                        <span><?php _e('Generate FAQPage Schema.org Json-LD for FAQ content', 'category-generator'); ?></span>
                     </label>
                 </div>
             </div>
@@ -287,13 +287,13 @@ $auto_snapshot_enabled = $settings->get('auto_snapshot_before_generate', false);
             <div class="cg-card">
                 <h2>
                     <span class="cg-step-number">4</span>
-                    <?php _e('Local Business Schema (JSON-LD)', 'category-generator'); ?>
+                    <?php _e('Local Business Schema (Json-LD)', 'category-generator'); ?>
                 </h2>
                 
                 <div class="cg-options-grid" style="margin-bottom: 15px;">
                     <label class="cg-checkbox-label">
                         <input type="checkbox" id="cg-include-schema">
-                        <span><?php _e('Include Schema.org JSON-LD in category description (wrapped in div)', 'category-generator'); ?></span>
+                        <span><?php _e('Include Schema.org Json-LD in category description (wrapped in div)', 'category-generator'); ?></span>
                     </label>
                     
                     <label class="cg-checkbox-label">

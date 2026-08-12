@@ -281,7 +281,7 @@ class CG_Snapshot {
     /**
      * Restore categories from a snapshot (merge mode)
      * 
-     * @param int $snapshot_id Snapshot ID from database
+     * @param int $snapshot_id Snapshot Id from database
      * @return array Result with success status and message
      */
     public function restore_snapshot($snapshot_id) {

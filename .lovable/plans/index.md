@@ -169,3 +169,6 @@
 - [Task 488](completed/488-fix-wp-plugins-category-generator-includes-class-import-export-php.md) - Completed
 - [Task 489](completed/489-fix-wp-plugins-category-generator-includes-class-inner-templates-php.md) - Completed
 - [Task 490](completed/490-fix-wp-plugins-category-generator-includes-class-settings-php.md) - Completed
+- [Task 491](completed/491-fix-wp-plugins-category-generator-includes-class-snapshot-php.md) - Completed
+- [Task 492](completed/492-fix-wp-plugins-category-generator-includes-class-tests-php.md) - Completed
+- [Task 493](completed/493-fix-wp-plugins-category-generator-templates-admin-page-php.md) - Completed

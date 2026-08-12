@@ -74,7 +74,7 @@ class CG_Tests {
         // ==================== INNER TEMPLATE TESTS ====================
         $this->run_test('Inner Template Create', [$this, 'test_inner_template_create']);
         $this->run_test('Inner Template Process', [$this, 'test_inner_template_process']);
-        $this->run_test('Inner Template By ID', [$this, 'test_inner_template_by_id']);
+        $this->run_test('Inner Template By Id', [$this, 'test_inner_template_by_id']);
         $this->run_test('Inner Template By Name', [$this, 'test_inner_template_by_name']);
         $this->run_test('Inner Template Nested', [$this, 'test_inner_template_nested']);
         $this->run_test('Inner Template With Variables', [$this, 'test_inner_template_with_variables']);
@@ -83,7 +83,7 @@ class CG_Tests {
         $this->run_test('CSV Export', [$this, 'test_csv_export']);
         $this->run_test('CSV Escaping', [$this, 'test_csv_escaping']);
         $this->run_test('Import Validation', [$this, 'test_import_validation']);
-        $this->run_test('JSON Export', [$this, 'test_json_export']);
+        $this->run_test('Json Export', [$this, 'test_json_export']);
         $this->run_test('Import Merge Mode', [$this, 'test_import_merge']);
         
         // ==================== TEMPLATE TESTS ====================
@@ -158,8 +158,8 @@ class CG_Tests {
         $this->run_test('Spacing Constants', [$this, 'test_spacing_constants']);
         $this->run_test('Icon Size Constants', [$this, 'test_icon_size_constants']);
         
-        // ==================== REMOTE API TESTS ====================
-        $this->run_test('Remote API URL Validation', [$this, 'test_remote_api_url_validation']);
+        // ==================== REMOTE Api TESTS ====================
+        $this->run_test('Remote Api Url Validation', [$this, 'test_remote_api_url_validation']);
         
         // ==================== AJAX HANDLER TESTS ====================
         $this->run_test('AJAX Actions Defined', [$this, 'test_ajax_actions_defined']);
@@ -178,7 +178,7 @@ class CG_Tests {
         
         // ==================== INPUT VALIDATION TESTS ====================
         $this->run_test('Input XSS Prevention', [$this, 'test_input_xss_prevention']);
-        $this->run_test('Input SQL Injection Prevention', [$this, 'test_input_sql_injection_prevention']);
+        $this->run_test('Input Sql Injection Prevention', [$this, 'test_input_sql_injection_prevention']);
         $this->run_test('Input Max Length Validation', [$this, 'test_input_max_length_validation']);
         
         return $this->test_results;
@@ -583,7 +583,7 @@ class CG_Tests {
         $zip_path = $ie->export(['html_templates'], 'json');
         
         if (!$zip_path || !file_exists($zip_path)) {
-            return 'JSON export failed to create file';
+            return 'Json export failed to create file';
         }
         
         unlink($zip_path);
@@ -1168,7 +1168,7 @@ class CG_Tests {
         return $retrieved && isset($retrieved['content']);
     }
     
-    // ==================== REMOTE API TESTS ====================
+    // ==================== REMOTE Api TESTS ====================
     
     private function test_remote_api_url_validation() {
         $valid_urls = [
@@ -1184,7 +1184,7 @@ class CG_Tests {
         
         foreach ($valid_urls as $url) {
             if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                return "Valid URL failed: {$url}";
+                return "Valid Url failed: {$url}";
             }
         }
         
@@ -1304,7 +1304,7 @@ class CG_Tests {
     }
     
     private function test_ajax_response_format() {
-        // Test JSON response structure
+        // Test Json response structure
         $success_response = [
             'success' => true,
             'data' => ['message' => 'Test']
@@ -1424,7 +1424,7 @@ class CG_Tests {
             if (gettype($items) !== 'array') continue;
             foreach ($items as $key => $id) {
                 if (strpos($id, 'cg-') !== 0) {
-                    return "ID '{$id}' doesn't start with 'cg-' prefix";
+                    return "Id '{$id}' doesn't start with 'cg-' prefix";
                 }
             }
         }
@@ -1486,7 +1486,7 @@ class CG_Tests {
     }
     
     private function test_input_sql_injection_prevention() {
-        // Test SQL injection prevention via escaping
+        // Test Sql injection prevention via escaping
         $sql_attempts = [
             "'; DROP TABLE users; --",
             "1 OR 1=1",
@@ -1499,7 +1499,7 @@ class CG_Tests {
             $escaped = $wpdb->prepare('%s', $attempt);
             // Prepared statements should quote the input
             if ($escaped === $attempt) {
-                return "SQL injection not prevented: {$attempt}";
+                return "Sql injection not prevented: {$attempt}";
             }
         }
         
