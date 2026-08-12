@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 458: Fix violations in src/lib/api/methods.ts
 
 Target File: `src/lib/api/methods.ts`

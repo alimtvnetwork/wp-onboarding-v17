@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 459: Fix violations in src/lib/api/types.ts
 
 Target File: `src/lib/api/types.ts`

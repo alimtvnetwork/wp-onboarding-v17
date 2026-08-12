@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 460: Fix violations in src/lib/apiHelpers.ts
 
 Target File: `src/lib/apiHelpers.ts`

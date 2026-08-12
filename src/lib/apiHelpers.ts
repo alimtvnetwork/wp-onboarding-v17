@@ -23,7 +23,7 @@ export function requireSuccessWithEnvelope<T>(
     response.error ||
     ({
       code: "E9999",
-      message: "Unknown API error",
+      message: "Unknown Api error",
       timestamp: new Date().toISOString(),
     } as ApiError);
   throw new ApiClientError(apiError, meta);

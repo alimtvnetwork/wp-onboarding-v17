@@ -1,4 +1,4 @@
-// API types — all interfaces and type aliases for the WP Plugin Publish API.
+// Api types — all interfaces and type aliases for the WP Plugin Publish Api.
 //
 // Envelope Schema: spec/response-envelope/envelope.schema.json v1.0.0
 // See spec/response-envelope/README.md for full specification.
@@ -109,7 +109,7 @@ export interface ErrorDiagnosticContext {
 
 /** Structured request payload — named alias per GE-1 for request bodies */
 export interface RequestPayload {
-  /** Common fields observed across API request bodies */
+  /** Common fields observed across Api request bodies */
   pluginId?: number;
   siteId?: number;
   path?: string;
@@ -199,7 +199,7 @@ export interface BulkPublishResponse {
 }
 
 // ---------------------------------------------------------------------------
-// Core API types
+// Core Api types
 // ---------------------------------------------------------------------------
 
 export interface ApiResponse<T> {
@@ -688,7 +688,7 @@ export interface SnapshotRecord {
   error?: string;
   /** 'full' | 'incremental' — derived from scope or tables_json metadata */
   snapshotType?: SnapshotType;
-  /** For incrementals: the parent full snapshot's ID */
+  /** For incrementals: the parent full snapshot's Id */
   parentId?: number;
   /** For incrementals: the master directory name */
   parentDir?: string;
@@ -786,8 +786,8 @@ export interface SnapshotCronSyncResult {
 
 // Site Health Types
 // NOTE: Canonical site health types live in src/types/siteHealth.ts
-// The API methods use those types via the hook layer.
-// These are lightweight types for the raw API response shape.
+// The Api methods use those types via the hook layer.
+// These are lightweight types for the raw Api response shape.
 export type SiteHealthStatus = "Healthy" | "Degraded" | "Down" | "Unknown";
 
 export interface SiteHealthCheckResult {

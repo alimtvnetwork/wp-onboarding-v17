@@ -136,3 +136,6 @@
 - [Task 455](completed/455-fix-src-lib-api-index-ts.md) - Completed
 - [Task 456](completed/456-fix-src-lib-api-keytransform-test-ts.md) - Completed
 - [Task 457](completed/457-fix-src-lib-api-keytransform-ts.md) - Completed
+- [Task 458](completed/458-fix-src-lib-api-methods-ts.md) - Completed
+- [Task 459](completed/459-fix-src-lib-api-types-ts.md) - Completed
+- [Task 460](completed/460-fix-src-lib-apihelpers-ts.md) - Completed
