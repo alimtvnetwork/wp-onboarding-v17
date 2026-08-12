@@ -138,11 +138,15 @@ enum ActionType: string
     public function isCloudStorageAccountAdd(): bool    { return $this->isEqual(self::CloudStorageAccountAdd); }
     public function isCloudStorageAccountRemove(): bool { return $this->isEqual(self::CloudStorageAccountRemove); }
 
+    public const PREFIX_SNAPSHOT = 'Snapshot';
+    public const PREFIX_AGENT = 'Agent';
+    public const PREFIX_CLOUD_STORAGE = 'CloudStorage';
+
     // ── Group is*() Helpers ─────────────────────────────────────────
 
-    public function isSnapshot(): bool     { return str_starts_with($this->value, 'Snapshot'); }
-    public function isAgent(): bool        { return str_starts_with($this->value, 'Agent'); }
-    public function isCloudStorage(): bool { return str_starts_with($this->value, 'CloudStorage'); }
+    public function isSnapshot(): bool     { return str_starts_with($this->value, self::PREFIX_SNAPSHOT); }
+    public function isAgent(): bool        { return str_starts_with($this->value, self::PREFIX_AGENT); }
+    public function isCloudStorage(): bool { return str_starts_with($this->value, self::PREFIX_CLOUD_STORAGE); }
 
     public function isLifecycle(): bool
     {
@@ -193,7 +197,7 @@ enum ActionType: string
             self::AgentRemove              => 'Agent Remove',
             self::AgentTest                => 'Agent Test',
             self::AgentSync                => 'Agent Sync',
-            self::AgentApiError            => 'Agent API Error',
+            self::AgentApiError            => 'Agent Api Error',
             self::SnapshotCreate           => 'Snapshot Create',
             self::SnapshotRestore          => 'Snapshot Restore',
             self::SnapshotDelete           => 'Snapshot Delete',
@@ -203,9 +207,9 @@ enum ActionType: string
             self::SnapshotFullBackup       => 'Snapshot Full Backup',
             self::SnapshotIncremental      => 'Snapshot Incremental',
             self::SnapshotSettingsUpdate   => 'Snapshot Settings Update',
-            self::SnapshotZipBuild         => 'Snapshot ZIP Build',
-            self::SnapshotZipExpire        => 'Snapshot ZIP Expire',
-            self::SnapshotZipDownload      => 'Snapshot ZIP Download',
+            self::SnapshotZipBuild         => 'Snapshot Zip Build',
+            self::SnapshotZipExpire        => 'Snapshot Zip Expire',
+            self::SnapshotZipDownload      => 'Snapshot Zip Download',
             self::CloudStorageUpload       => 'Cloud Storage Upload',
             self::CloudStorageDelete       => 'Cloud Storage Delete',
             self::CloudStorageRotation     => 'Cloud Storage Rotation',

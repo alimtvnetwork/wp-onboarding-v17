@@ -1,6 +1,6 @@
 <?php
 /**
- * EndpointType — REST API endpoint path fragments.
+ * EndpointType — Rest Api endpoint path fragments.
  *
  * @package RiseupAsia\Enums
  * @since   1.58.0

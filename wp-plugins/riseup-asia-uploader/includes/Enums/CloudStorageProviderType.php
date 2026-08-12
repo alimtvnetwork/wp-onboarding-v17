@@ -32,13 +32,21 @@ enum CloudStorageProviderType: string
     /** Whether this provider uses a Personal Access Token. */
     public function isPat(): bool { return $this->isGitHub() || $this->isGitLab(); }
 
-    /** API base URL for this provider. */
+    public const API_URL_GITHUB = 'https://api.github.com';
+    public const API_URL_GITLAB = 'https://gitlab.com/api/v4';
+    public const API_URL_GOOGLE_DRIVE = 'https://www.googleapis.com/drive/v3';
+
+    public const LABEL_GITHUB = 'GitHub';
+    public const LABEL_GITLAB = 'GitLab';
+    public const LABEL_GOOGLE_DRIVE = 'Google Drive';
+
+    /** Api base Url for this provider. */
     public function apiBaseUrl(): string
     {
         return match($this) {
-            self::GitHub      => 'https://api.github.com',
-            self::GitLab      => 'https://gitlab.com/api/v4',
-            self::GoogleDrive => 'https://www.googleapis.com/drive/v3',
+            self::GitHub      => self::API_URL_GITHUB,
+            self::GitLab      => self::API_URL_GITLAB,
+            self::GoogleDrive => self::API_URL_GOOGLE_DRIVE,
         };
     }
 
@@ -46,9 +54,9 @@ enum CloudStorageProviderType: string
     public function label(): string
     {
         return match($this) {
-            self::GitHub      => 'GitHub',
-            self::GitLab      => 'GitLab',
-            self::GoogleDrive => 'Google Drive',
+            self::GitHub      => self::LABEL_GITHUB,
+            self::GitLab      => self::LABEL_GITLAB,
+            self::GoogleDrive => self::LABEL_GOOGLE_DRIVE,
         };
     }
 }
