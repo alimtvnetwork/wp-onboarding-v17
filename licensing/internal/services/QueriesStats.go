@@ -1,6 +1,6 @@
 package services
 
-// SQL query constants for license statistics.
+// Sql query constants for license statistics.
 
 const statsCountSql = `
 	SELECT

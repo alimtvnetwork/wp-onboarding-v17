@@ -70,7 +70,7 @@ func newTestDB(t *testing.T) *sql.DB {
 	return db
 }
 
-// seedLicense inserts a license and returns its ID.
+// seedLicense inserts a license and returns its Id.
 func seedLicense(t *testing.T, db *sql.DB) int64 {
 	t.Helper()
 

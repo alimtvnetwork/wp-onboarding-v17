@@ -1,6 +1,6 @@
 package services
 
-// SQL query constants for the licensing service layer.
+// Sql query constants for the licensing service layer.
 
 const licenseSelectSql = `
 	SELECT id, key, email, product, type, status, max_activations, notes, created_at, expires_at, updated_at

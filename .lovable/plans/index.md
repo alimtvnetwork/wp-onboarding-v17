@@ -61,3 +61,6 @@
 - [Task 377](completed/377-fix-licensing-internal-handlers-publichandlers-go.md) - Completed
 - [Task 378](completed/378-fix-licensing-internal-handlers-publichandlersactivation-go.md) - Completed
 - [Task 379](completed/379-fix-licensing-internal-manifest-handler-go.md) - Completed
+- [Task 380](completed/380-fix-licensing-internal-middleware-ratelimit-go.md) - Completed
+- [Task 381](completed/381-fix-licensing-internal-services-activationservice-go.md) - Completed
+- [Task 382](completed/382-fix-licensing-internal-services-licenseservice-go.md) - Completed
