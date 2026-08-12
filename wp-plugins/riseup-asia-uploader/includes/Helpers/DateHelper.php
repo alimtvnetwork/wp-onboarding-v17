@@ -11,7 +11,7 @@
 
 namespace RiseupAsia\Helpers;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -46,6 +46,17 @@ class DateHelper {
     /** Log display format: 15-Jan-24 9:30 AM */
     public const LOG_DISPLAY = 'd-M-y g:i A';
 
+    public const TIMEZONE_UTC = 'UTC';
+    public const OPTION_TIMEZONE_STRING = 'timezone_string';
+    public const OPTION_GMT_OFFSET = 'gmt_offset';
+    public const RELATIVE_TODAY = 'today';
+    public const RELATIVE_YESTERDAY = 'yesterday';
+
+    private const SECONDS_PER_HOUR = 3600;
+    private const MINUTES_PER_HOUR = 60;
+    private const DATETIME_NOW = 'now';
+    private const STR_YESTERDAY = '-1 day';
+
     /** Cached timezone instance to avoid repeated WP option lookups. */
     private static ?\DateTimeZone $cachedTimezone = null;
 
@@ -62,7 +73,7 @@ class DateHelper {
             return self::$cachedTimezone;
         }
 
-        $timezoneString = get_option('timezone_string', '');
+        $timezoneString = get_option(self::OPTION_TIMEZONE_STRING, '');
         $hasTimezoneString = ($timezoneString !== '' && $timezoneString !== false);
 
         if ($hasTimezoneString) {
@@ -75,26 +86,26 @@ class DateHelper {
             }
         }
 
-        $gmtOffset = (float) get_option('gmt_offset', 0);
+        $gmtOffset = (float) get_option(self::OPTION_GMT_OFFSET, 0);
         $isZeroOffset = ($gmtOffset === 0.0);
 
         if ($isZeroOffset) {
-            self::$cachedTimezone = new \DateTimeZone('UTC');
+            self::$cachedTimezone = new \DateTimeZone(self::TIMEZONE_UTC);
 
             return self::$cachedTimezone;
         }
 
-        $offsetSeconds = (int) ($gmtOffset * 3600);
+        $offsetSeconds = (int) ($gmtOffset * self::SECONDS_PER_HOUR);
         $sign = ($offsetSeconds >= 0) ? '+' : '-';
         $absSeconds = abs($offsetSeconds);
-        $hours = intdiv($absSeconds, 3600);
-        $minutes = intdiv($absSeconds % 3600, 60);
+        $hours = intdiv($absSeconds, self::SECONDS_PER_HOUR);
+        $minutes = intdiv($absSeconds % self::SECONDS_PER_HOUR, self::MINUTES_PER_HOUR);
         $offsetString = sprintf('%s%02d:%02d', $sign, $hours, $minutes);
 
         try {
             self::$cachedTimezone = new \DateTimeZone($offsetString);
         } catch (\Exception $e) {
-            self::$cachedTimezone = new \DateTimeZone('UTC');
+            self::$cachedTimezone = new \DateTimeZone(self::TIMEZONE_UTC);
         }
 
         return self::$cachedTimezone;
@@ -106,14 +117,14 @@ class DateHelper {
     public static function getTimezoneLabel(): string
     {
         $tz = self::getWpTimezone();
-        $now = new \DateTimeImmutable('now', $tz);
+        $now = new \DateTimeImmutable(self::DATETIME_NOW, $tz);
         $abbr = $now->format('T');
 
         // PHP returns numeric offsets like '+08:00' when no named timezone is set
         $isNumericOffset = (strpos($abbr, '+') === 0 || strpos($abbr, '-') === 0);
 
         if ($isNumericOffset) {
-            return 'UTC' . $abbr;
+            return self::TIMEZONE_UTC . $abbr;
         }
 
         return $abbr;
@@ -127,7 +138,7 @@ class DateHelper {
      */
     public static function formatInWpTimezone(string $format, ?int $utcTimestamp = null): string
     {
-        $utcTz = new \DateTimeZone('UTC');
+        $utcTz = new \DateTimeZone(self::TIMEZONE_UTC);
         $wpTz = self::getWpTimezone();
 
         $hasTimestamp = ($utcTimestamp !== null);
@@ -135,7 +146,7 @@ class DateHelper {
         if ($hasTimestamp) {
             $dt = (new \DateTimeImmutable('@' . $utcTimestamp))->setTimezone($utcTz);
         } else {
-            $dt = new \DateTimeImmutable('now', $utcTz);
+            $dt = new \DateTimeImmutable(self::DATETIME_NOW, $utcTz);
         }
 
         $localDt = $dt->setTimezone($wpTz);
@@ -151,7 +162,7 @@ class DateHelper {
         self::$cachedTimezone = null;
     }
 
-    // ─── UTC methods (for storage / API responses) ──────────────────────
+    // ─── Utc methods (for storage / Api responses) ──────────────────────
 
     /**
      * Current UTC timestamp in ISO 8601 format with Z suffix.
@@ -279,12 +290,14 @@ class DateHelper {
     public static function relativeDayKey(int $timestamp): ?string {
         $date = self::formatDateOnly($timestamp);
 
-        if ($date === self::nowDateOnly()) {
-            return 'today';
+        $isToday = ($date === self::nowDateOnly());
+        if ($isToday) {
+            return self::RELATIVE_TODAY;
         }
 
-        if ($date === self::formatDateOnly(strtotime('-1 day'))) {
-            return 'yesterday';
+        $isYesterday = ($date === self::formatDateOnly((int) strtotime(self::STR_YESTERDAY)));
+        if ($isYesterday) {
+            return self::RELATIVE_YESTERDAY;
         }
 
         return null;

@@ -103,12 +103,12 @@ trait PathHelperCoreTrait {
     /** Constants file path ({pluginDir}/includes/constants.php). */
     public static function getConstantsFile(): string { return self::getPluginDir() . '/includes/constants.php'; }
 
-    /** Endpoints reference JSON ({pluginDir}/data/endpoints.json). */
+    /** Endpoints reference Json ({pluginDir}/data/endpoints.json). */
     public static function getEndpointsJsonPath(): string { return self::getPluginDir() . '/data/endpoints.json'; }
 
-    /** OpenAPI spec JSON ({pluginDir}/data/openapi.json). */
+    /** OpenApi spec Json ({pluginDir}/data/openapi.json). */
     public static function getOpenApiJsonPath(): string { return self::getPluginDir() . '/data/openapi.json'; }
 
-    /** Colors config JSON ({pluginDir}/data/colors.json). */
+    /** Colors config Json ({pluginDir}/data/colors.json). */
     public static function getColorsJsonPath(): string { return self::getPluginDir() . '/data/colors.json'; }
 }
