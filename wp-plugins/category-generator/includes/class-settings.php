@@ -153,8 +153,8 @@ class CG_Settings {
             'custom_ai_token' => '',
             'custom_ai_model' => '',
             
-            // Remote Templates API
-            'remote_template_apis' => '[]', // JSON array of API endpoints
+            // Remote Templates Api
+            'remote_template_apis' => '[]', // Json array of Api endpoints
             
             // Yoast Settings
             'yoast_use_default_title' => false,
@@ -214,13 +214,13 @@ class CG_Settings {
     }
     
     /**
-     * Add remote template API
+     * Add remote template Api
      */
     public function add_remote_api($api_config) {
         $apis = $this->get_remote_apis();
         $apis[] = [
             'id' => uniqid('api_'),
-            'name' => $api_config['name'] ?? 'Unnamed API',
+            'name' => $api_config['name'] ?? 'Unnamed Api',
             'url' => $api_config['url'] ?? '',
             'api_key' => $api_config['api_key'] ?? '',
             'oauth_token' => $api_config['oauth_token'] ?? '',
@@ -230,7 +230,7 @@ class CG_Settings {
     }
     
     /**
-     * Remove remote template API
+     * Remove remote template Api
      */
     public function remove_remote_api($api_id) {
         $apis = $this->get_remote_apis();
@@ -241,7 +241,7 @@ class CG_Settings {
     }
     
     /**
-     * Fetch templates from remote API
+     * Fetch templates from remote Api
      */
     public function fetch_remote_templates($api_id) {
         $apis = $this->get_remote_apis();
@@ -255,7 +255,7 @@ class CG_Settings {
         }
         
         if (!$api || empty($api['url'])) {
-            return ['success' => false, 'message' => 'API not found or URL is empty'];
+            return ['success' => false, 'message' => 'Api not found or Url is empty'];
         }
         
         $headers = [];
@@ -276,7 +276,7 @@ class CG_Settings {
         $data = json_decode($body, true);
         
         if (!$data || gettype($data) !== 'array') {
-            return ['success' => false, 'message' => 'Invalid response from API'];
+            return ['success' => false, 'message' => 'Invalid response from Api'];
         }
         
         return ['success' => true, 'templates' => $data];
@@ -348,7 +348,7 @@ class CG_Settings {
     }
     
     /**
-     * Get WordPress site logo URL
+     * Get WordPress site logo Url
      */
     public function get_site_logo_url() {
         $custom_logo_id = get_theme_mod('custom_logo');
@@ -370,7 +370,7 @@ class CG_Settings {
     }
     
     /**
-     * Get site URL
+     * Get site Url
      */
     public function get_site_url() {
         return get_site_url();

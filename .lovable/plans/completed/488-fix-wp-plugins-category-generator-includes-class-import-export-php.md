@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 488: Fix violations in wp-plugins/category-generator/includes/class-import-export.php
 
 Target File: `wp-plugins/category-generator/includes/class-import-export.php`

@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 489: Fix violations in wp-plugins/category-generator/includes/class-inner-templates.php
 
 Target File: `wp-plugins/category-generator/includes/class-inner-templates.php`

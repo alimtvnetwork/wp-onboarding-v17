@@ -481,7 +481,7 @@ class CG_Import_Export {
     private function import_single_record($type, $data, $update_existing) {
         $result = ['status' => 'error', 'message' => ''];
         
-        // Remove ID to force new insert (unless updating)
+        // Remove Id to force new insert (unless updating)
         $original_id = $data['id'] ?? null;
         unset($data['id']);
         
@@ -668,7 +668,7 @@ class CG_Import_Export {
     }
     
     /**
-     * Get download URL for export
+     * Get download Url for export
      */
     public function get_download_url($filename) {
         $upload_dir = wp_upload_dir();

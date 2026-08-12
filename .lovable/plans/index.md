@@ -166,3 +166,6 @@
 - [Task 485](completed/485-fix-tools-consistency-checker-internal-rules-phpversionsync-go.md) - Completed
 - [Task 486](completed/486-fix-wp-plugins-category-generator-category-generator-php.md) - Completed
 - [Task 487](completed/487-fix-wp-plugins-category-generator-includes-class-database-php.md) - Completed
+- [Task 488](completed/488-fix-wp-plugins-category-generator-includes-class-import-export-php.md) - Completed
+- [Task 489](completed/489-fix-wp-plugins-category-generator-includes-class-inner-templates-php.md) - Completed
+- [Task 490](completed/490-fix-wp-plugins-category-generator-includes-class-settings-php.md) - Completed

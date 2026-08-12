@@ -61,7 +61,7 @@ class CG_Inner_Templates {
     }
     
     /**
-     * Get template by ID
+     * Get template by Id
      */
     public function get_template($id) {
         return $this->db->get_inner_template($id);
