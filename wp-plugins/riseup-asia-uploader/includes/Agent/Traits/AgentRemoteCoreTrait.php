@@ -1,6 +1,6 @@
 <?php
 /**
- * AgentRemoteCoreTrait — URL normalization, auth, and API request mechanics.
+ * AgentRemoteCoreTrait — Url normalization, auth, and Api request mechanics.
  *
  * @package RiseupAsia\Agent\Traits
  * @since   2.0.0
@@ -53,7 +53,7 @@ trait AgentRemoteCoreTrait {
         return 'Basic ' . base64_encode($agent->username . ':' . $agent->appPassword);
     }
 
-    /** Make an API request to an agent site. */
+    /** Make an Api request to an agent site. */
     public function apiRequest(
         int $agentId,
         string $method,
@@ -69,7 +69,7 @@ trait AgentRemoteCoreTrait {
         $url = $this->resolveAgentBaseUrl($agent, $endpoint);
         $args = $this->buildAgentRequestArgs($agent, $method, $body);
 
-        $this->fileLogger->debug('Agent API request', [
+        $this->fileLogger->debug('Agent Api request', [
             'agentId' => $agentId,
             'method' => $method,
             'url' => $url,

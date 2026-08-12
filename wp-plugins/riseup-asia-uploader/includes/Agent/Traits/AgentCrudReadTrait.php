@@ -24,12 +24,12 @@ trait AgentCrudReadTrait {
 
     private const AGENT_COUNT_QUERY = 'SELECT COUNT(*) as total FROM AgentSites';
 
-    private const AGENT_LIST_QUERY = <<<'SQL'
+    private const AGENT_LIST_QUERY = <<<'Sql'
         SELECT Id, Name, Url, Username, RedirectUrl, RedirectResolved,
                RedirectResolvedAt, Status, LastSync, LastError,
                CreatedAt, UpdatedAt
         FROM AgentSites
-    SQL;
+    Sql;
 
     public function getAgent(int $id, bool $includePassword = false): ?array {
         return $this->getAgentModel($id, $includePassword)?->toArray();

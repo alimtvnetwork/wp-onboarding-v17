@@ -21,11 +21,11 @@ use RiseupAsia\Helpers\BooleanHelpers;
 use RiseupAsia\Helpers\DateHelper;
 
 trait AgentCrudWriteTrait {
-    // Literal 'Pending' required in SQL heredoc; matches agent status domain value
-    private const AGENT_INSERT_QUERY = <<<'SQL'
+    // Literal 'Pending' required in Sql heredoc; matches agent status domain value
+    private const AGENT_INSERT_QUERY = <<<'Sql'
         INSERT INTO AgentSites (Name, Url, Username, AppPasswordEncrypted, RedirectUrl, Status, CreatedAt)
         VALUES (?, ?, ?, ?, ?, 'Pending', ?)
-    SQL;
+    Sql;
 
     private const AGENT_DELETE_QUERY = 'DELETE FROM AgentSites WHERE Id = ?';
 
@@ -139,7 +139,7 @@ trait AgentCrudWriteTrait {
             return null;
         }
 
-        return new WP_Error(WpErrorCodeType::MissingFields->value, 'Name, URL, username, and application password are required');
+        return new WP_Error(WpErrorCodeType::MissingFields->value, 'Name, Url, username, and application password are required');
     }
 
     private function buildUpdateSets(array $data): array {

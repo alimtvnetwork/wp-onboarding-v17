@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 557: Fix violations in wp-plugins/riseup-asia-uploader/includes/Agent/Traits/AgentCrudReadTrait.php
 
 Target File: `wp-plugins/riseup-asia-uploader/includes/Agent/Traits/AgentCrudReadTrait.php`

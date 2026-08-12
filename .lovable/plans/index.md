@@ -235,3 +235,6 @@
 - [Task 554](completed/554-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminmenuenqueuesnapshotstrait-php.md) - Completed
 - [Task 555](completed/555-fix-wp-plugins-riseup-asia-uploader-includes-admin-traits-adminpagestrait-php.md) - Completed
 - [Task 556](completed/556-fix-wp-plugins-riseup-asia-uploader-includes-agent-agentsite-php.md) - Completed
+- [Task 557](completed/557-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentcrudreadtrait-php.md) - Completed
+- [Task 558](completed/558-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentcrudwritetrait-php.md) - Completed
+- [Task 559](completed/559-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentremotecoretrait-php.md) - Completed

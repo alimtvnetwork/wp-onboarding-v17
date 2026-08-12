@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 559: Fix violations in wp-plugins/riseup-asia-uploader/includes/Agent/Traits/AgentRemoteCoreTrait.php
 
 Target File: `wp-plugins/riseup-asia-uploader/includes/Agent/Traits/AgentRemoteCoreTrait.php`
