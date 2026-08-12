@@ -142,7 +142,7 @@ export function SiteCredentialsPanel({ site, open, onOpenChange }: SiteCredentia
             Credentials — {site.name}
           </DialogTitle>
           <DialogDescription>
-            Manage application passwords for this site. The default credential is used for all API operations.
+            Manage application passwords for this site. The default credential is used for all Api operations.
           </DialogDescription>
         </DialogHeader>
 
