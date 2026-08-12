@@ -1,4 +1,4 @@
-// Package urlutil provides URL normalization utilities.
+// Package urlutil provides Url normalization utilities.
 package urlutil
 
 import (
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// NormalizeWordPressUrl normalizes a WordPress site URL for consistent storage.
+// NormalizeWordPressUrl normalizes a WordPress site Url for consistent storage.
 // It ensures HTTPS, strips common WP paths, and removes query/fragment.
 func NormalizeWordPressUrl(rawUrl string) string {
 	rawUrl = ensureScheme(strings.TrimSpace(rawUrl))
@@ -37,7 +37,7 @@ func ensureScheme(rawUrl string) string {
 	return "https://" + rawUrl
 }
 
-// stripWordPressPaths removes common WordPress path suffixes from a URL path.
+// stripWordPressPaths removes common WordPress path suffixes from a Url path.
 func stripWordPressPaths(path string) string {
 	pathsToStrip := []string{"/wp-admin/", "/wp-admin", "/wp-login.php", "/wp-json/", "/wp-json"}
 	for _, p := range pathsToStrip {

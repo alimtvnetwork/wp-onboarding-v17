@@ -52,3 +52,6 @@
 - [Task 365](completed/365-fix-backend-internal-wordpress-uploaderexport-go.md) - Completed
 - [Task 366](completed/366-fix-backend-internal-wordpress-uploaderexporterrors-go.md) - Completed
 - [Task 367](completed/367-fix-backend-internal-wordpress-uploaderfiles-go.md) - Completed
+- [Task 368](completed/368-fix-backend-internal-wordpress-urlbuilder-go.md) - Completed
+- [Task 369](completed/369-fix-backend-internal-wordpress-usertypes-go.md) - Completed
+- [Task 370](completed/370-fix-backend-pkg-apperror-codes-go.md) - Completed

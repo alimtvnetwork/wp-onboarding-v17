@@ -9,10 +9,10 @@ import (
 // Config holds all licensing server configuration values.
 type Config struct {
 	Port       int    // HTTP server port (default: 8090)
-	DBPath     string // SQLite database file path (default: ./data/licensing.db)
-	HMACSecret string // Shared secret for HMAC request signing (required)
+	DbPath     string // SQLite database file path (default: ./data/licensing.db)
+	HmacSecret string // Shared secret for HMAC request signing (required)
 	AdminToken string // Bearer token for admin endpoints (required)
-	RateLimit  int    // Default requests/min per IP (default: 60)
+	RateLimit  int    // Default requests/min per Ip (default: 60)
 	GraceDays  int    // Grace period after license expiration (default: 7)
 	LogLevel   string // Log verbosity: debug, info, warn, error (default: info)
 }
@@ -21,8 +21,8 @@ type Config struct {
 func Load() Config {
 	return Config{
 		Port:       envInt("LICENSING_PORT", 8090),
-		DBPath:     envStr("LICENSING_DB_PATH", "./data/licensing.db"),
-		HMACSecret: envStr("LICENSING_HMAC_SECRET", ""),
+		DbPath:     envStr("LICENSING_DB_PATH", "./data/licensing.db"),
+		HmacSecret: envStr("LICENSING_HMAC_SECRET", ""),
 		AdminToken: envStr("LICENSING_ADMIN_TOKEN", ""),
 		RateLimit:  envInt("LICENSING_RATE_LIMIT", 60),
 		GraceDays:  envInt("LICENSING_GRACE_DAYS", 7),
@@ -34,10 +34,10 @@ func Load() Config {
 func (c Config) Validate() []string {
 	var missing []string
 
-	isHMACMissing := c.HMACSecret == ""
+	isHmacMissing := c.HmacSecret == ""
 	isAdminTokenMissing := c.AdminToken == ""
 
-	if isHMACMissing {
+	if isHmacMissing {
 		missing = append(missing, "LICENSING_HMAC_SECRET")
 	}
 

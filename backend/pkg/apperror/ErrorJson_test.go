@@ -33,7 +33,7 @@ func TestAppError_JSONRoundTrip(t *testing.T) {
 	assertField(t, "Message", original.Message, restored.Message)
 	assertField(t, "Details", original.Details, restored.Details)
 	if original.Diagnostic.Url != restored.Diagnostic.Url {
-		t.Errorf("URL mismatch: %v vs %v", original.Diagnostic.Url, restored.Diagnostic.Url)
+		t.Errorf("Url mismatch: %v vs %v", original.Diagnostic.Url, restored.Diagnostic.Url)
 	}
 	assertField(t, "Diagnostic.Method", original.Diagnostic.Method, restored.Diagnostic.Method)
 

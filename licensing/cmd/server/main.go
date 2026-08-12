@@ -14,7 +14,7 @@ import (
 func main() {
 	cfg := config.Load()
 
-	db, dbErr := database.Open(cfg.DBPath)
+	db, dbErr := database.Open(cfg.DbPath)
 	if dbErr != nil {
 		log.Fatalf("Failed to open database: %v", dbErr)
 	}
@@ -27,14 +27,14 @@ func main() {
 
 	r := router.New(router.Config{
 		DB:         db,
-		HMACSecret: cfg.HMACSecret,
+		HMACSecret: cfg.HmacSecret,
 		AdminToken: cfg.AdminToken,
 		RateLimit:  cfg.RateLimit,
 	})
 
 	addr := fmt.Sprintf(":%d", cfg.Port)
 	log.Printf("Licensing server starting on %s", addr)
-	log.Printf("Database: %s", cfg.DBPath)
+	log.Printf("Database: %s", cfg.DbPath)
 
 	serverErr := http.ListenAndServe(addr, r)
 	if serverErr != nil {
