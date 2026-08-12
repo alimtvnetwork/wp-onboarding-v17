@@ -84,9 +84,9 @@ class OnboardOAuth {
     }
 
     /**
-     * Get application by client ID.
+     * Get application by client Id.
      *
-     * @param string $client_id Client ID.
+     * @param string $client_id Client Id.
      * @return array|null
      */
     public function get_application_by_client_id($client_id) {
@@ -97,9 +97,9 @@ class OnboardOAuth {
     }
 
     /**
-     * Get application by ID.
+     * Get application by Id.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return array|null
      */
     public function get_application($app_id) {
@@ -121,7 +121,7 @@ class OnboardOAuth {
     /**
      * Update application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @param array  $data   Data to update.
      * @return bool
      */
@@ -157,7 +157,7 @@ class OnboardOAuth {
     /**
      * Delete application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return bool
      */
     public function delete_application($app_id) {
@@ -180,7 +180,7 @@ class OnboardOAuth {
     /**
      * Verify client credentials.
      *
-     * @param string $client_id     Client ID.
+     * @param string $client_id     Client Id.
      * @param string $client_secret Client secret.
      * @return array|false Application if valid, false otherwise.
      */
@@ -204,7 +204,7 @@ class OnboardOAuth {
     /**
      * Generate authorization code.
      *
-     * @param string      $app_id Application ID.
+     * @param string      $app_id Application Id.
      * @param string|null $state  State parameter.
      * @return array
      */
@@ -233,7 +233,7 @@ class OnboardOAuth {
      * Exchange authorization code for tokens.
      *
      * @param string $auth_code     Authorization code.
-     * @param string $client_id     Client ID.
+     * @param string $client_id     Client Id.
      * @param string $client_secret Client secret.
      * @return array|WP_Error
      */
@@ -401,7 +401,7 @@ class OnboardOAuth {
     /**
      * Revoke all tokens for an application.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return int Number of tokens revoked.
      */
     public function revoke_all_tokens($app_id) {
@@ -435,7 +435,7 @@ class OnboardOAuth {
     /**
      * Regenerate client secret.
      *
-     * @param string $app_id Application ID.
+     * @param string $app_id Application Id.
      * @return string|false New client secret or false.
      */
     public function regenerate_secret($app_id) {

@@ -121,8 +121,8 @@ class OnboardPluginManager {
      * Enable a plugin.
      *
      * @param string      $slug       Plugin slug.
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public function enable($slug, $app_id = null, $ip_address = null) {
@@ -192,8 +192,8 @@ class OnboardPluginManager {
      * Disable a plugin.
      *
      * @param string      $slug       Plugin slug.
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public function disable($slug, $app_id = null, $ip_address = null) {
@@ -255,8 +255,8 @@ class OnboardPluginManager {
      * Delete a plugin.
      *
      * @param string      $slug       Plugin slug.
-     * @param string|null $app_id     Application ID.
-     * @param string|null $ip_address IP address.
+     * @param string|null $app_id     Application Id.
+     * @param string|null $ip_address Ip address.
      * @return array|WP_Error
      */
     public function delete($slug, $app_id = null, $ip_address = null) {

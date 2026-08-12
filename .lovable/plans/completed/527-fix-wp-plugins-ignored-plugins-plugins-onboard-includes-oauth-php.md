@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 527: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/OAuth.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/OAuth.php`

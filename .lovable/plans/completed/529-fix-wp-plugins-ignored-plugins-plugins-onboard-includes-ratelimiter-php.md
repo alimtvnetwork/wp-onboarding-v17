@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 529: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/RateLimiter.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/RateLimiter.php`

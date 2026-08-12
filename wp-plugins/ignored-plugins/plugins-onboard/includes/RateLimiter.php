@@ -12,14 +12,14 @@ if (!defined('ABSPATH')) {
 /**
  * Class OnboardRateLimiter
  *
- * Handles rate limiting for API requests.
+ * Handles rate limiting for Api requests.
  */
 class OnboardRateLimiter {
 
     /**
      * Check if request is allowed.
      *
-     * @param string $identifier Unique identifier (IP, app_id, etc.).
+     * @param string $identifier Unique identifier (Ip, app_id, etc.).
      * @param string $action     Action type (auth, mutation, etc.).
      * @param int    $limit      Maximum requests allowed.
      * @param int    $window     Time window in seconds (default 3600).

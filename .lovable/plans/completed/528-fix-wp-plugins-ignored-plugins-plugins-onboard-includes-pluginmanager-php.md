@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 528: Fix violations in wp-plugins/ignored-plugins/plugins-onboard/includes/PluginManager.php
 
 Target File: `wp-plugins/ignored-plugins/plugins-onboard/includes/PluginManager.php`

@@ -205,3 +205,6 @@
 - [Task 524](completed/524-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-includefiles-php.md) - Completed
 - [Task 525](completed/525-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-ipwhitelist-php.md) - Completed
 - [Task 526](completed/526-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-mutationtoken-php.md) - Completed
+- [Task 527](completed/527-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-oauth-php.md) - Completed
+- [Task 528](completed/528-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-pluginmanager-php.md) - Completed
+- [Task 529](completed/529-fix-wp-plugins-ignored-plugins-plugins-onboard-includes-ratelimiter-php.md) - Completed
