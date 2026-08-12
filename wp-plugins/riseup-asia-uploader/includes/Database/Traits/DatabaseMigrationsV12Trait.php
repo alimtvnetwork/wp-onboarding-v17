@@ -21,19 +21,19 @@ use RiseupAsia\Enums\TableType;
 
 trait DatabaseMigrationsV12Trait {
 
-    // ── SQL Constants ────────────────────────────────────────────────
+    // ── Sql Constants ────────────────────────────────────────────────
 
     /** Transactions.Status: lowercase → PascalCase */
-    private const V12_TRANSACTIONS_STATUS_QUERY = <<<'SQL'
+    private const V12_TRANSACTIONS_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'success' THEN 'Success'
             WHEN 'failed'  THEN 'Failed'
         END
         WHERE Status IN ('success', 'failed')
-    SQL;
+    Sql;
 
     /** Transactions.Action: snake_case → PascalCase */
-    private const V12_TRANSACTIONS_ACTION_QUERY = <<<'SQL'
+    private const V12_TRANSACTIONS_ACTION_QUERY = <<<'Sql'
         UPDATE %s SET Action = CASE Action
             WHEN 'upload'                    THEN 'Upload'
             WHEN 'upload_active'             THEN 'UploadActive'
@@ -81,29 +81,29 @@ trait DatabaseMigrationsV12Trait {
             WHEN 'snapshot_zip_download'     THEN 'SnapshotZipDownload'
         END
         WHERE Action = LOWER(Action)
-    SQL;
+    Sql;
 
     /** AgentSites.Status: lowercase → PascalCase */
-    private const V12_AGENT_SITES_STATUS_QUERY = <<<'SQL'
+    private const V12_AGENT_SITES_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'pending'   THEN 'Pending'
             WHEN 'connected' THEN 'Connected'
             WHEN 'error'     THEN 'Error'
         END
         WHERE Status IN ('pending', 'connected', 'error')
-    SQL;
+    Sql;
 
     /** AgentActions.Status: lowercase → PascalCase */
-    private const V12_AGENT_ACTIONS_STATUS_QUERY = <<<'SQL'
+    private const V12_AGENT_ACTIONS_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'success' THEN 'Success'
             WHEN 'failed'  THEN 'Failed'
         END
         WHERE Status IN ('success', 'failed')
-    SQL;
+    Sql;
 
     /** Snapshots.Status: lowercase → PascalCase */
-    private const V12_SNAPSHOTS_STATUS_QUERY = <<<'SQL'
+    private const V12_SNAPSHOTS_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'pending'   THEN 'Pending'
             WHEN 'scheduled' THEN 'Scheduled'
@@ -112,10 +112,10 @@ trait DatabaseMigrationsV12Trait {
             WHEN 'failed'    THEN 'Failed'
         END
         WHERE Status IN ('pending', 'scheduled', 'running', 'complete', 'failed')
-    SQL;
+    Sql;
 
     /** SnapshotProgress.Status: lowercase → PascalCase */
-    private const V12_SNAPSHOT_PROGRESS_STATUS_QUERY = <<<'SQL'
+    private const V12_SNAPSHOT_PROGRESS_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'pending'    THEN 'Pending'
             WHEN 'scheduled'  THEN 'Scheduled'
@@ -124,7 +124,7 @@ trait DatabaseMigrationsV12Trait {
             WHEN 'failed'     THEN 'Failed'
         END
         WHERE Status IN ('pending', 'scheduled', 'running', 'complete', 'failed')
-    SQL;
+    Sql;
 
     /** SnapshotSettings.Value: lowercase/snake_case → PascalCase */
     private const V12_SNAPSHOT_SETTINGS_QUERIES = [
@@ -151,7 +151,7 @@ trait DatabaseMigrationsV12Trait {
     ];
 
     /** ErrorSessions.Level: UPPERCASE → PascalCase */
-    private const V12_ERROR_SESSIONS_LEVEL_QUERY = <<<'SQL'
+    private const V12_ERROR_SESSIONS_LEVEL_QUERY = <<<'Sql'
         UPDATE %s SET Level = CASE Level
             WHEN 'DEBUG'   THEN 'Debug'
             WHEN 'INFO'    THEN 'Info'
@@ -165,17 +165,17 @@ trait DatabaseMigrationsV12Trait {
             WHEN 'error'   THEN 'Error'
         END
         WHERE Level IN ('DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'debug', 'info', 'warn', 'warning', 'error')
-    SQL;
+    Sql;
 
     /** SnapshotExports.Status: lowercase → PascalCase */
-    private const V12_SNAPSHOT_EXPORTS_STATUS_QUERY = <<<'SQL'
+    private const V12_SNAPSHOT_EXPORTS_STATUS_QUERY = <<<'Sql'
         UPDATE %s SET Status = CASE Status
             WHEN 'valid'    THEN 'Valid'
             WHEN 'expired'  THEN 'Expired'
             WHEN 'building' THEN 'Building'
         END
         WHERE Status IN ('valid', 'expired', 'building')
-    SQL;
+    Sql;
 
     // ── Migration Entry Point ────────────────────────────────────────
 

@@ -2,7 +2,7 @@
 /**
  * Riseup Asia Uploader - Database Convenience Trait
  *
- * Thin PDO wrappers for common SQL operations.
+ * Thin Pdo wrappers for common Sql operations.
  *
  * @package RiseupAsia\Database\Traits
  * @since   1.4.0
@@ -10,7 +10,7 @@
 
 namespace RiseupAsia\Database\Traits;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -26,30 +26,33 @@ use PDOStatement;
  */
 trait DatabaseConvenienceTrait {
 
+    private const FALLBACK_INSERT_ID = '0';
+    private const PRAGMA_TABLE_INFO_QUERY = 'PRAGMA table_info(%s)';
+
     /**
      * Execute a SELECT and return all matching rows.
      *
-     * @param string $sql    SQL query with optional placeholders.
+     * @param string $sql    Sql query with optional placeholders.
      * @param array  $params Bound parameters.
      * @param int    $mode   PDO fetch mode.
      * @return array
      */
     public function queryAll(string $sql, array $params = [], int $mode = PDO::FETCH_ASSOC): array {
         $stmt = $this->prepareAndExecute($sql, $params);
-        return $stmt ? $stmt->fetchAll($mode) : [];
+        return $stmt !== false ? $stmt->fetchAll($mode) : [];
     }
 
     /**
      * Execute a SELECT and return a single row.
      *
-     * @param string $sql    SQL query with optional placeholders.
+     * @param string $sql    Sql query with optional placeholders.
      * @param array  $params Bound parameters.
      * @param int    $mode   PDO fetch mode.
      * @return array|false
      */
     public function querySingle(string $sql, array $params = [], int $mode = PDO::FETCH_ASSOC) {
         $stmt = $this->prepareAndExecute($sql, $params);
-        return $stmt ? $stmt->fetch($mode) : false;
+        return $stmt !== false ? $stmt->fetch($mode) : false;
     }
 
     /**
@@ -104,7 +107,7 @@ trait DatabaseConvenienceTrait {
     /**
      * Execute a statement (INSERT, UPDATE, DELETE, or DDL).
      *
-     * @param string $sql    SQL statement.
+     * @param string $sql    Sql statement.
      * @param array  $params Bound parameters.
      * @return bool
      */
@@ -114,31 +117,31 @@ trait DatabaseConvenienceTrait {
     }
 
     /**
-     * Return the last inserted row ID.
+     * Return the last inserted row Id.
      *
      * @return string
      */
     public function lastInsertId(): string {
-        return $this->pdo ? $this->pdo->lastInsertId() : '0';
+        return $this->pdo !== null ? $this->pdo->lastInsertId() : self::FALLBACK_INSERT_ID;
     }
 
     /**
      * Prepare and execute a PDO statement.
      *
-     * @param string $sql    SQL statement.
+     * @param string $sql    Sql statement.
      * @param array  $params Bound parameters.
      * @return PDOStatement|false
      */
     private function prepareAndExecute(string $sql, array $params = []) {
-        $isPdoMissing = !$this->pdo;
+        $isPdoMissing = $this->pdo === null;
 
-        if ($isPdoMissing) {
+        if ($isPdoMissing === true) {
             return false;
         }
 
         return \RiseupAsia\Database\QueryLogger::executeSafely(function () use ($sql, $params) {
             $stmt = $this->pdo->prepare($sql);
-            if ($stmt && $stmt->execute($params)) {
+            if ($stmt !== false && $stmt->execute($params) === true) {
                 return $stmt;
             }
             return false;
@@ -146,7 +149,7 @@ trait DatabaseConvenienceTrait {
     }
 
     /**
-     * Execute SQL only if the given column does not yet exist on the table.
+     * Execute Sql only if the given column does not yet exist on the table.
      *
      * Used by migration traits to safely ADD COLUMN without failing on
      * re-runs or partial migrations.
@@ -156,7 +159,8 @@ trait DatabaseConvenienceTrait {
      * @param string $sql    DDL statement to execute when the column is missing.
      */
     private function execIfColumnMissing(string $table, string $column, string $sql): void {
-        $rows = $this->pdo->query("PRAGMA table_info({$table})")->fetchAll(PDO::FETCH_ASSOC);
+        $query = sprintf(self::PRAGMA_TABLE_INFO_QUERY, $table);
+        $rows = $this->pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
             if (strcasecmp($row['name'], $column) === 0) {

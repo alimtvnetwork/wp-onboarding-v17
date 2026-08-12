@@ -1,6 +1,6 @@
 <?php
 /**
- * Riseup Asia Uploader - Micro ORM
+ * Riseup Asia Uploader - Micro Orm
  *
  * A lightweight Idiorm-style fluent query builder for SQLite.
  * Shell class — logic delegated to domain-specific traits.
@@ -49,7 +49,7 @@ class Orm {
     private static int $paramCounter = 0;
 
     /**
-     * Configure the ORM with a PDO instance.
+     * Configure the Orm with a Pdo instance.
      */
     public static function configure(PDO $pdo): void {
         self::$pdo = $pdo;
@@ -70,10 +70,10 @@ class Orm {
     }
 
     /**
-     * Execute raw SQL query.
+     * Execute raw Sql query.
      */
     public static function rawExecute(string $sql, array $params = []): array {
-        if (!self::$pdo) {
+        if (self::$pdo === null) {
             return [];
         }
 
