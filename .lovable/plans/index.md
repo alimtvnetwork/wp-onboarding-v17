@@ -79,3 +79,7 @@
 - [Task 395](completed/395-fix-src-components-errors-backendsection-tsx.md) - Completed
 - [Task 396](completed/396-fix-src-components-errors-delegatedsection-tsx.md) - Completed
 - [Task 397](completed/397-fix-src-components-errors-errordetailmodal-tsx.md) - Completed
+- [Task 398](completed/398-fix-src-components-errors-errormodalactions-tsx.md) - Completed
+- [Task 401](completed/401-fix-src-components-errors-requestdetails-tsx.md) - Completed
+- [Task 402](completed/402-fix-src-components-errors-sessionlogstab-tsx.md) - Completed
+- [Task 403](completed/403-fix-src-components-errors-delegatedlogformatter-ts.md) - Completed

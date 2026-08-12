@@ -12,6 +12,7 @@ interface RequestDetailsProps {
 }
 
 export function RequestDetails({ error, copySection, sessionDiagnostics }: RequestDetailsProps) {
+  const Json = globalThis.JSON;
   const ctx = error.context || {};
   const requestUrl = typeof ctx.requestUrl === "string" ? ctx.requestUrl : undefined;
   const apiBase = typeof ctx.apiBase === "string" ? ctx.apiBase : undefined;
@@ -56,12 +57,12 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
                   <div className="mt-2">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-muted-foreground font-medium">Request Body</span>
-                      <Button variant="ghost" size="sm" className="h-5 px-1" onClick={() => copySection("Request body", JSON.stringify(error.requestBody, null, 2))}>
+                      <Button variant="ghost" size="sm" className="h-5 px-1" onClick={() => copySection("Request body", Json.stringify(error.requestBody, null, 2))}>
                         <Copy className="h-3 w-3" />
                       </Button>
                     </div>
                     <pre className="text-xs bg-background/60 p-2 rounded mt-1 overflow-x-auto font-mono max-h-32">
-                      {JSON.stringify(error.requestBody, null, 2)}
+                      {Json.stringify(error.requestBody, null, 2)}
                     </pre>
                   </div>
                 )}
@@ -97,7 +98,7 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
                         PHP Response Body
                       </summary>
                       <pre className="text-xs bg-background/60 p-2 rounded mt-1 overflow-x-auto font-mono max-h-48 whitespace-pre-wrap break-all">
-                        {typeof phpResponseBody === "string" ? phpResponseBody : JSON.stringify(phpResponseBody, null, 2)}
+                        {typeof phpResponseBody === "string" ? phpResponseBody : Json.stringify(phpResponseBody, null, 2)}
                       </pre>
                     </details>
                   )}
@@ -120,7 +121,7 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
         <div>
           <h4 className="text-sm font-medium text-muted-foreground mb-1 flex items-center gap-2">
             <Globe className="h-4 w-4" />
-            API Request
+            Api Request
           </h4>
           <div className="bg-muted p-3 rounded-md space-y-2">
             {error.method && error.endpoint && (
@@ -146,12 +147,12 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
               <Network className="h-4 w-4" />
               Request Body
             </h4>
-            <Button variant="ghost" size="sm" onClick={() => copySection("Request body", JSON.stringify(error.requestBody, null, 2))}>
+            <Button variant="ghost" size="sm" onClick={() => copySection("Request body", Json.stringify(error.requestBody, null, 2))}>
               <Copy className="h-4 w-4" />
             </Button>
           </div>
           <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto font-mono max-h-40">
-            {JSON.stringify(error.requestBody, null, 2)}
+            {Json.stringify(error.requestBody, null, 2)}
           </pre>
         </div>
       )}
@@ -159,12 +160,12 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
       {(requestUrl || apiBase || rawViteApiUrl) && (
         <div className="border-t border-border/60 pt-3 space-y-1">
           <h4 className="text-xs text-muted-foreground font-medium mb-1">Environment</h4>
-          {apiBase && <p className="text-xs"><span className="text-muted-foreground">API Base: </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{apiBase}</code></p>}
-          {apiBaseAbsolute && <p className="text-xs"><span className="text-muted-foreground">API Base (absolute): </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{apiBaseAbsolute}</code></p>}
+          {apiBase && <p className="text-xs"><span className="text-muted-foreground">Api Base: </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{apiBase}</code></p>}
+          {apiBaseAbsolute && <p className="text-xs"><span className="text-muted-foreground">Api Base (absolute): </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{apiBaseAbsolute}</code></p>}
           {rawViteApiUrl && <p className="text-xs"><span className="text-muted-foreground">VITE_API_URL: </span><code className="bg-background/60 px-1 py-0.5 rounded">{rawViteApiUrl}</code></p>}
           {rawViteWsUrl && <p className="text-xs"><span className="text-muted-foreground">VITE_WS_URL: </span><code className="bg-background/60 px-1 py-0.5 rounded">{rawViteWsUrl}</code></p>}
           {uiOrigin && <p className="text-xs"><span className="text-muted-foreground">UI Origin: </span><code className="bg-background/60 px-1 py-0.5 rounded">{uiOrigin}</code></p>}
-          {resolvedApiOrigin && <p className="text-xs"><span className="text-muted-foreground">Resolved API Origin: </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{resolvedApiOrigin}</code></p>}
+          {resolvedApiOrigin && <p className="text-xs"><span className="text-muted-foreground">Resolved Api Origin: </span><code className="bg-background/60 px-1 py-0.5 rounded break-all">{resolvedApiOrigin}</code></p>}
         </div>
       )}
 

@@ -12,6 +12,9 @@ import {
 import { cn } from "@/lib/utils";
 import { toClipboardText, unescapeEmbeddedNewlines } from "@/lib/logText";
 
+const Json = globalThis.JSON;
+const Url = globalThis.URL;
+
 interface SessionLogsTabProps {
   sessionId?: string;
   sessionType?: string;
@@ -73,12 +76,12 @@ export function SessionLogsTab({ sessionId, sessionType }: SessionLogsTabProps) 
   const downloadLogs = () => {
     if (!state.logs || !sessionId) return;
     const blob = new Blob([state.logs], { type: "text/plain" });
-    const url = window.URL.createObjectURL(blob);
+    const url = Url.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = `session-${(sessionId ?? '').slice(0, 8)}-${new Date().toISOString().slice(0, 10)}.log`;
     link.click();
-    window.URL.revokeObjectURL(url);
+    Url.revokeObjectURL(url);
     toast.success("Session logs downloaded");
   };
 
@@ -86,7 +89,7 @@ export function SessionLogsTab({ sessionId, sessionType }: SessionLogsTabProps) 
     return (
       <div className="text-center py-8 text-muted-foreground">
         <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-        <p className="text-sm">No session ID associated with this error</p>
+        <p className="text-sm">No session Id associated with this error</p>
         <p className="text-xs mt-1">
           Session logs are available for publish, sync, and connection test operations
         </p>
@@ -230,8 +233,8 @@ function EmptyPanel({ label }: { label: string }) {
 
 function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["request"]> }) {
   const copyJson = () => {
-    navigator.clipboard.writeText(JSON.stringify(request, null, 2));
-    toast.success("Request JSON copied");
+    navigator.clipboard.writeText(Json.stringify(request, null, 2));
+    toast.success("Request Json copied");
   };
 
   return (
@@ -250,7 +253,7 @@ function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["re
       {request.body && Object.keys(request.body).length > 0 && (
         <ScrollArea className="h-48 rounded-md border bg-muted">
           <pre className="p-3 text-xs font-mono whitespace-pre-wrap break-all">
-            {JSON.stringify(request.body, null, 2)}
+            {Json.stringify(request.body, null, 2)}
           </pre>
         </ScrollArea>
       )}
@@ -260,8 +263,8 @@ function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["re
 
 function ResponsePanel({ response }: { response: NonNullable<SessionDiagnostics["response"]> }) {
   const copyJson = () => {
-    navigator.clipboard.writeText(JSON.stringify(response, null, 2));
-    toast.success("Response JSON copied");
+    navigator.clipboard.writeText(Json.stringify(response, null, 2));
+    toast.success("Response Json copied");
   };
 
   const isError = response.statusCode >= 400;
@@ -284,7 +287,7 @@ function ResponsePanel({ response }: { response: NonNullable<SessionDiagnostics[
       {response.body && (
         <ScrollArea className="h-48 rounded-md border bg-muted">
           <pre className="p-3 text-xs font-mono whitespace-pre-wrap break-all">
-            {typeof response.body === "string" ? response.body : JSON.stringify(response.body, null, 2)}
+            {typeof response.body === "string" ? response.body : Json.stringify(response.body, null, 2)}
           </pre>
         </ScrollArea>
       )}

@@ -8,19 +8,21 @@ type DelegatedSessionDiagnostics = {
   };
 } | null | undefined;
 
+const Json = globalThis.JSON;
+
 function stringifyValue(value: unknown): string {
   if (value == null) return "";
 
   if (typeof value === "string") {
     try {
-      return JSON.stringify(JSON.parse(value), null, 2);
+      return Json.stringify(Json.parse(value), null, 2);
     } catch {
       return unescapeEmbeddedNewlines(value);
     }
   }
 
   try {
-    return JSON.stringify(value, null, 2);
+    return Json.stringify(value, null, 2);
   } catch {
     return String(value);
   }
@@ -58,7 +60,7 @@ export function buildDelegatedLogsSection(error: CapturedError): string {
   if (!raw) return "";
 
   try {
-    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const parsed = Json.parse(raw) as Record<string, unknown>;
 
     // Skip successful log-retrieve responses — they contain embedded log content, not error data
     if (Array.isArray(parsed.plugins)) {
@@ -158,8 +160,8 @@ export function buildDelegatedErrorLogSection(
   if (delegatedServer) {
     sections.push([
       "  Delegated Server Info:",
-      `    Endpoint: \"${delegatedServer.DelegatedEndpoint}\"`,
-      `    Method: \"${delegatedServer.Method}\"`,
+      `    Endpoint: "${delegatedServer.DelegatedEndpoint}"`,
+      `    Method: "${delegatedServer.Method}"`,
       `    Status: ${delegatedServer.StatusCode}`,
       ...(delegatedServer.Namespace ? [`    Namespace: ${delegatedServer.Namespace}`] : []),
       ...(delegatedServer.AdditionalMessages ? ["    Additional Message:", `        ${delegatedServer.AdditionalMessages}`] : []),
