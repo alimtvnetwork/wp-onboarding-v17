@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 467: Fix violations in src/lib/retry.ts
 
 Target File: `src/lib/retry.ts`

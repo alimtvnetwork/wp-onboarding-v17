@@ -32,6 +32,9 @@ import {
   ACTIVITY_TYPE_OPTIONS,
 } from "@/lib/activityUtils";
 
+const Json = window['JSON'];
+const Url = window['URL'];
+
 const TYPE_ICONS: Record<ActivityType, React.ElementType> = {
   Publish: Upload,
   Snapshot: Database,
@@ -80,7 +83,7 @@ function errorToActivity(entry: ErrorHistoryRecord): ActivityEntry {
     id: `err-${entry.id}`,
     timestamp: entry.createdAt,
     siteId: 0,
-    siteName: entry.siteUrl ? (() => { try { return new URL(entry.siteUrl).hostname; } catch { return "Local"; } })() : "Local",
+    siteName: entry.siteUrl ? (() => { try { return new Url(entry.siteUrl).hostname; } catch { return "Local"; } })() : "Local",
     type: "Connection",
     action: "error",
     title: `[${entry.code}] ${entry.message.length > 80 ? entry.message.substring(0, 80) + "..." : entry.message}`,
@@ -351,7 +354,7 @@ export default function ActivityFeed() {
                           {getMetadataEntries(entry.metadata).map(([key, val]) => (
                             <p key={key} className="text-muted-foreground">
                               <span className="font-medium text-foreground">{key}:</span>{" "}
-                              {typeof val === "object" ? JSON.stringify(val) : String(val)}
+                              {typeof val === "object" ? Json.stringify(val) : String(val)}
                             </p>
                           ))}
                         </div>

@@ -2,6 +2,8 @@ import { resolveWsUrl } from "@/lib/endpoints";
 import { logger } from "@/lib/logger";
 import { transformKeys } from "@/lib/api/keyTransform";
 
+const Json = window['JSON'];
+
 type EventHandler = (data: unknown) => void;
 
 class WebSocketClient {
@@ -67,7 +69,7 @@ class WebSocketClient {
 
       this.ws.onmessage = (event) => {
         try {
-          const message = JSON.parse(event.data);
+          const message = Json.parse(event.data);
           // WS messages use PascalCase keys from Go — transform the data payload
           const type = message.type || message.Type;
           const rawData = message.data || message.Data;

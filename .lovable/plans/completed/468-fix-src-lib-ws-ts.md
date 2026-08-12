@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 468: Fix violations in src/lib/ws.ts
 
 Target File: `src/lib/ws.ts`

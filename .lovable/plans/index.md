@@ -145,3 +145,6 @@
 - [Task 464](completed/464-fix-src-lib-licensingapi-ts.md) - Completed
 - [Task 465](completed/465-fix-src-lib-logtext-ts.md) - Completed
 - [Task 466](completed/466-fix-src-lib-logger-ts.md) - Completed
+- [Task 467](completed/467-fix-src-lib-retry-ts.md) - Completed
+- [Task 468](completed/468-fix-src-lib-ws-ts.md) - Completed
+- [Task 469](completed/469-fix-src-pages-activityfeed-tsx.md) - Completed

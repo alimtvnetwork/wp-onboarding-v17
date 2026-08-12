@@ -205,7 +205,7 @@ export async function withRetry<T>(
  * const retryableGetSites = createRetryable(
  *   api.getSites,
  *   { maxAttempts: 3 },
- *   { functionName: 'getSites', component: 'API' }
+ *   { functionName: 'getSites', component: 'Api' }
  * );
  */
 export function createRetryable<TArgs extends unknown[], TResult>(

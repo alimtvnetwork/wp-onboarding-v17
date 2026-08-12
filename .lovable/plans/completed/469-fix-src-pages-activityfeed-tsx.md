@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 469: Fix violations in src/pages/ActivityFeed.tsx
 
 Target File: `src/pages/ActivityFeed.tsx`
