@@ -1,5 +1,7 @@
 # Subtask 562: Fix violations in wp-plugins/riseup-asia-uploader/includes/Database/Traits/DatabaseMigrationsV12Trait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Database/Traits/DatabaseMigrationsV12Trait.php`
 
 ## Violations

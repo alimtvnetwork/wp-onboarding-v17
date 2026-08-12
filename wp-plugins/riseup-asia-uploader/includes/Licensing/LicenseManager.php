@@ -11,7 +11,7 @@
 
 namespace RiseupAsia\Licensing;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -23,6 +23,10 @@ class LicenseManager
 {
     private const CACHE_TTL_HOURS = 12;
     private const CRON_INTERVAL = 'twicedaily';
+    private const DEFAULT_API_URL = 'https://license.riseupasia.com';
+    private const DEFAULT_HMAC_SECRET = '';
+    private const DEFAULT_DOMAIN = 'unknown';
+    private const SECONDS_PER_HOUR = 3600;
 
     private LicenseClient $client;
     private static ?self $instance = null;
@@ -40,11 +44,11 @@ class LicenseManager
     {
         $baseUrl = defined('RISEUP_LICENSE_API_URL')
             ? RISEUP_LICENSE_API_URL
-            : 'https://license.riseupasia.com';
+            : self::DEFAULT_API_URL;
 
         $hmacSecret = defined('RISEUP_LICENSE_HMAC_SECRET')
             ? RISEUP_LICENSE_HMAC_SECRET
-            : '';
+            : self::DEFAULT_HMAC_SECRET;
 
         $this->client = new LicenseClient($baseUrl, $hmacSecret);
 
@@ -68,17 +72,17 @@ class LicenseManager
     {
         $hook = HookType::CronLicenseRevalidate->value;
 
-        if (!function_exists('wp_next_scheduled')) {
+        if (function_exists('wp_next_scheduled') === false) {
             return;
         }
 
-        $hasKey = !empty($this->getStoredKey());
+        $hasKey = $this->getStoredKey() !== '';
 
-        if ($hasKey && !wp_next_scheduled($hook)) {
+        if ($hasKey && wp_next_scheduled($hook) === false) {
             wp_schedule_event(time(), self::CRON_INTERVAL, $hook);
         }
 
-        if (!$hasKey && wp_next_scheduled($hook)) {
+        if ($hasKey === false && wp_next_scheduled($hook) !== false) {
             wp_clear_scheduled_hook($hook);
         }
     }
@@ -86,7 +90,7 @@ class LicenseManager
     /**
      * Check whether the current site has a valid, active license.
      *
-     * Uses cached data when available and fresh. Falls back to API call.
+     * Uses cached data when available and fresh. Falls back to Api call.
      */
     public function isLicensed(): bool
     {
@@ -106,7 +110,7 @@ class LicenseManager
     }
 
     /**
-     * Validate the stored license key against the API.
+     * Validate the stored license key against the Api.
      *
      * @return array|null Validation response or null on failure.
      */
@@ -114,7 +118,7 @@ class LicenseManager
     {
         $key = $this->getStoredKey();
 
-        if (empty($key)) {
+        if ($key === '') {
             return null;
         }
 
@@ -138,7 +142,7 @@ class LicenseManager
     {
         $key = $this->getStoredKey();
 
-        if (empty($key)) {
+        if ($key === '') {
             return null;
         }
 
@@ -164,7 +168,7 @@ class LicenseManager
     {
         $key = $this->getStoredKey();
 
-        if (empty($key)) {
+        if ($key === '') {
             return null;
         }
 
@@ -189,7 +193,7 @@ class LicenseManager
     {
         $key = $this->getStoredKey();
 
-        if (empty($key)) {
+        if ($key === '') {
             return null;
         }
 
@@ -229,12 +233,12 @@ class LicenseManager
     {
         $checkedAt = get_option(LicenseOptionType::LicenseCheckedAt->value, '');
 
-        if (empty($checkedAt)) {
+        if ($checkedAt === '') {
             return null;
         }
 
         $elapsed = time() - (int) $checkedAt;
-        $ttlSeconds = self::CACHE_TTL_HOURS * 3600;
+        $ttlSeconds = self::CACHE_TTL_HOURS * self::SECONDS_PER_HOUR;
 
         $isStale = $elapsed > $ttlSeconds;
 
@@ -244,7 +248,7 @@ class LicenseManager
 
         $status = get_option(LicenseOptionType::LicenseStatus->value, '');
 
-        if (empty($status)) {
+        if ($status === '') {
             return null;
         }
 
@@ -256,7 +260,7 @@ class LicenseManager
      */
     private function cacheResult(array $result): void
     {
-        $status = $result['status'] ?? 'unknown';
+        $status = $result['status'] ?? LicenseStatusType::Unknown->value;
         update_option(LicenseOptionType::LicenseStatus->value, $status);
         update_option(LicenseOptionType::LicenseData->value, $result);
         update_option(LicenseOptionType::LicenseCheckedAt->value, (string) time());
@@ -281,13 +285,13 @@ class LicenseManager
     }
 
     /**
-     * Extract the site domain from the WordPress site URL.
+     * Extract the site domain from the WordPress site Url.
      */
     private function getSiteDomain(): string
     {
         $siteUrl = get_site_url();
         $parsed = wp_parse_url($siteUrl);
 
-        return $parsed['host'] ?? 'unknown';
+        return $parsed['host'] ?? self::DEFAULT_DOMAIN;
     }
 }

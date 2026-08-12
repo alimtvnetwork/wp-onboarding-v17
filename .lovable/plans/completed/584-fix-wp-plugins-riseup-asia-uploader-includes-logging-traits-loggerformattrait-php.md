@@ -1,5 +1,7 @@
 # Subtask 584: Fix violations in wp-plugins/riseup-asia-uploader/includes/Logging/Traits/LoggerFormatTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Logging/Traits/LoggerFormatTrait.php`
 
 ## Violations

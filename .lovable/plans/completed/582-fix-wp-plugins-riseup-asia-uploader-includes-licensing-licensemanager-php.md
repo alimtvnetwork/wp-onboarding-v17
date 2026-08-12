@@ -1,5 +1,7 @@
 # Subtask 582: Fix violations in wp-plugins/riseup-asia-uploader/includes/Licensing/LicenseManager.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Licensing/LicenseManager.php`
 
 ## Violations

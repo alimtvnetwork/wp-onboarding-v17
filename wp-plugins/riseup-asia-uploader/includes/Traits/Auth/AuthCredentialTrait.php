@@ -81,7 +81,7 @@ trait AuthCredentialTrait
             return $this->buildAuthError('Invalid credentials', ['username' => $username]);
         }
 
-        wp_set_current_user($user->ID);
+        wp_set_current_user($user->id);
 
         return $user;
     }

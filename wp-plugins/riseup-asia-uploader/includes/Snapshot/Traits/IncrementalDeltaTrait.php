@@ -1,6 +1,6 @@
 <?php
 /**
- * IncrementalDeltaTrait — Delta detection and max-ID resolution.
+ * IncrementalDeltaTrait — Delta detection and max-Id resolution.
  *
  * Supports both old snake_case and new PascalCase root DB schemas.
  *
@@ -248,7 +248,7 @@ trait IncrementalDeltaTrait {
 
             return ($maxId !== null) ? $maxId : 0;
         } catch (Throwable $e) {
-            $this->logWarn($e, 'Could not read master SQLite for max ID', ['table' => $tableName]);
+            $this->logWarn($e, 'Could not read master SQLite for max Id', ['table' => $tableName]);
 
             return (int) $info['rowCount'];
         }

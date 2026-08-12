@@ -52,11 +52,11 @@ trait PostQueryTrait {
 
             foreach ($query->posts as $post) {
                 $posts[] = [
-                    'id'         => $post->ID,
+                    'id'         => $post->Id,
                     'title'      => $post->post_title,
                     'slug'       => $post->post_name,
                     'status'     => $post->post_status,
-                    'permalink'  => get_permalink($post->ID),
+                    'permalink'  => get_permalink($post->Id),
                     ResponseKeyType::CreatedAt->value => $post->post_date_gmt . 'Z',
                     ResponseKeyType::UpdatedAt->value => $post->post_modified_gmt . 'Z',
                 ];

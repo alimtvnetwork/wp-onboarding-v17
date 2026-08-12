@@ -1,5 +1,7 @@
 # Subtask 569: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/CloudStorageProviderType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/CloudStorageProviderType.php`
 
 ## Violations

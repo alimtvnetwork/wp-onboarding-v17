@@ -3,7 +3,7 @@
  * ResultHelper — Lightweight factory for internal service result arrays.
  *
  * Eliminates boilerplate around ResponseKeyType::Success, Error, and Code keys.
- * These are NOT REST API envelopes (use EnvelopeBuilder for that).
+ * These are NOT Rest Api envelopes (use EnvelopeBuilder for that).
  * They are the small arrays passed between services, traits, and internal callers.
  *
  * @package RiseupAsia\Helpers

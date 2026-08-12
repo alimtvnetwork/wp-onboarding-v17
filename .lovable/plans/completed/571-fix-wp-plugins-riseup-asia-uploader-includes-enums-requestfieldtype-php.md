@@ -1,5 +1,7 @@
 # Subtask 571: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/RequestFieldType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/RequestFieldType.php`
 
 ## Violations

@@ -1,5 +1,7 @@
 # Subtask 587: Fix violations in wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/IncrementalDeltaTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/IncrementalDeltaTrait.php`
 
 ## Violations

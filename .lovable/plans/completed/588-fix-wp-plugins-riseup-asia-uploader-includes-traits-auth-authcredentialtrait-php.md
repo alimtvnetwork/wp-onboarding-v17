@@ -1,5 +1,7 @@
 # Subtask 588: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Auth/AuthCredentialTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Auth/AuthCredentialTrait.php`
 
 ## Violations

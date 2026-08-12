@@ -1,6 +1,6 @@
 <?php
 /**
- * ExporterPublicApiTrait — public API methods for snapshot ZIP export.
+ * ExporterPublicApiTrait — public Api methods for snapshot Zip export.
  *
  * @package RiseupAsia\Snapshot\Traits
  * @since   1.57.0
@@ -8,7 +8,7 @@
 
 namespace RiseupAsia\Snapshot\Traits;
 
-if (!defined('ABSPATH')) {
+if (defined('ABSPATH') === false) {
     exit;
 }
 
@@ -27,9 +27,9 @@ use RiseupAsia\Helpers\ResultHelper;
 
 trait ExporterPublicApiTrait {
     /**
-     * Get an existing valid ZIP or build a new one for the given full snapshot.
+     * Get an existing valid Zip or build a new one for the given full snapshot.
      *
-     * @param int $fullSnapshotId The full snapshot's ID.
+     * @param int $fullSnapshotId The full snapshot's Id.
      * @return array {success: bool, export?: array, error?: string}
      */
     public function getOrBuildZip(int $fullSnapshotId): array {
@@ -48,20 +48,20 @@ trait ExporterPublicApiTrait {
         $snapshotDir = dirname($snapshot[ResponseKeyType::FilePath->value]);
         $existing = $this->getValidExport($fullSnapshotId);
 
-        if ($existing && file_exists($existing['ZipPath'])) {
+        if ($existing !== null && $existing !== false && file_exists($existing['ZipPath']) === true) {
             $currentHash = $this->computeContentHash($snapshotDir);
             $storedHash  = $existing['ContentHash'] ?? '';
             $isHashStale = ($storedHash !== '' && $currentHash !== $storedHash);
 
             if ($isHashStale) {
-                $this->log(LogLevelType::Info->value, 'Content hash mismatch — invalidating cached ZIP', [
+                $this->log(LogLevelType::Info->value, 'Content hash mismatch — invalidating cached Zip', [
                     'exportId'   => $existing['Id'],
                     'storedHash' => substr($storedHash, 0, 12),
                     'newHash'    => substr($currentHash, 0, 12),
                 ]);
                 $this->invalidateZip($fullSnapshotId);
             } else {
-                $this->log(LogLevelType::Info->value, 'Returning cached ZIP export (hash valid)', [
+                $this->log(LogLevelType::Info->value, 'Returning cached Zip export (hash valid)', [
                     'exportId' => $existing['Id'],
                     'filename' => $existing['ZipFilename'],
                 ]);
@@ -73,7 +73,7 @@ trait ExporterPublicApiTrait {
             }
         }
 
-        if ($existing && !file_exists($existing['ZipPath'])) {
+        if ($existing !== null && $existing !== false && file_exists($existing['ZipPath']) === false) {
             $this->deleteExportRecord($existing['Id']);
         }
 
@@ -81,10 +81,10 @@ trait ExporterPublicApiTrait {
     }
 
     /**
-     * Invalidate (expire) the cached ZIP for a full snapshot.
+     * Invalidate (expire) the cached Zip for a full snapshot.
      */
     public function invalidateZip(int $fullSnapshotId): bool {
-        $this->log(LogLevelType::Info->value, 'Invalidating ZIP export', [ResponseKeyType::SnapshotId->value => $fullSnapshotId]);
+        $this->log(LogLevelType::Info->value, 'Invalidating Zip export', [ResponseKeyType::SnapshotId->value => $fullSnapshotId]);
 
         $pdo = $this->db->getPdo();
         $isPdoMissing = ($pdo === null);
@@ -101,9 +101,9 @@ trait ExporterPublicApiTrait {
             return false;
         }
 
-        if (file_exists($export['ZipPath'])) {
+        if (file_exists($export['ZipPath']) === true) {
             @unlink($export['ZipPath']);
-            $this->log(LogLevelType::Info->value, 'Deleted cached ZIP file', ['path' => basename($export['ZipPath'])]);
+            $this->log(LogLevelType::Info->value, 'Deleted cached Zip file', ['path' => basename($export['ZipPath'])]);
         }
 
         $stmt = $pdo->prepare('UPDATE ' . TableType::SnapshotExports->value . ' SET Status = ?, ExpiresAt = datetime(\'now\') WHERE Id = ?');
@@ -130,11 +130,11 @@ trait ExporterPublicApiTrait {
         $exports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($exports as $export) {
-            $hasZipPath = (!empty($export['ZipPath']) && file_exists($export['ZipPath']));
+            $hasZipPath = (empty($export['ZipPath']) === false && file_exists($export['ZipPath']) === true);
 
-            if ($hasZipPath) {
+            if ($hasZipPath === true) {
                 @unlink($export['ZipPath']);
-                $this->log(LogLevelType::Debug->value, 'Deleted export ZIP', ['path' => basename($export['ZipPath'])]);
+                $this->log(LogLevelType::Debug->value, 'Deleted export Zip', ['path' => basename($export['ZipPath'])]);
             }
         }
 
@@ -145,7 +145,7 @@ trait ExporterPublicApiTrait {
     }
 
     /**
-     * Generate a time-limited download URL for an export.
+     * Generate a time-limited download Url for an export.
      */
     public function getDownloadUrl(int $exportId): ?string {
         $export = $this->getExportById($exportId);
@@ -189,8 +189,8 @@ trait ExporterPublicApiTrait {
             return null;
         }
 
-        if (PathHelper::isFileMissing($export['ZipPath'])) {
-            $this->log(LogLevelType::Warn->value, 'Export ZIP file missing', ['path' => $export['ZipPath']]);
+        if (PathHelper::isFileMissing($export['ZipPath']) === true) {
+            $this->log(LogLevelType::Warn->value, 'Export Zip file missing', ['path' => $export['ZipPath']]);
             return null;
         }
 

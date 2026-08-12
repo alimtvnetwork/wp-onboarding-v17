@@ -1,5 +1,7 @@
 # Subtask 573: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/SelfUpdateStatusType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/SelfUpdateStatusType.php`
 
 ## Violations

@@ -1,5 +1,7 @@
 # Subtask 579: Fix violations in wp-plugins/riseup-asia-uploader/includes/Helpers/Traits/PathHelperCoreTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Helpers/Traits/PathHelperCoreTrait.php`
 
 ## Violations

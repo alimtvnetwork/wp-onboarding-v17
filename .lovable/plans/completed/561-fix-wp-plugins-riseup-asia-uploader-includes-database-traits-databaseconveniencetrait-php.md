@@ -1,5 +1,7 @@
 # Subtask 561: Fix violations in wp-plugins/riseup-asia-uploader/includes/Database/Traits/DatabaseConvenienceTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Database/Traits/DatabaseConvenienceTrait.php`
 
 ## Violations

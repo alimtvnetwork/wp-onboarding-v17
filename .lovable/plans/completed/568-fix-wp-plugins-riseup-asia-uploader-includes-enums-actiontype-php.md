@@ -1,5 +1,7 @@
 # Subtask 568: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/ActionType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/ActionType.php`
 
 ## Violations

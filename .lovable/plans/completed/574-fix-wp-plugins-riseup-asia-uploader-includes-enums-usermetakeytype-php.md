@@ -1,5 +1,7 @@
 # Subtask 574: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/UserMetaKeyType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/UserMetaKeyType.php`
 
 ## Violations

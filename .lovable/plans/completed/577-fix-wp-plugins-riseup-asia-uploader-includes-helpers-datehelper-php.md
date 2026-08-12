@@ -1,5 +1,7 @@
 # Subtask 577: Fix violations in wp-plugins/riseup-asia-uploader/includes/Helpers/DateHelper.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Helpers/DateHelper.php`
 
 ## Violations

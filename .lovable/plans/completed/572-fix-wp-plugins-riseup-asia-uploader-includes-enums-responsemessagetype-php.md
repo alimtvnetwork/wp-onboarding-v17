@@ -1,5 +1,7 @@
 # Subtask 572: Fix violations in wp-plugins/riseup-asia-uploader/includes/Enums/ResponseMessageType.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Enums/ResponseMessageType.php`
 
 ## Violations

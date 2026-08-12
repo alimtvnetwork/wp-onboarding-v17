@@ -1,5 +1,7 @@
 # Subtask 586: Fix violations in wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/ExporterPublicApiTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Snapshot/Traits/ExporterPublicApiTrait.php`
 
 ## Violations

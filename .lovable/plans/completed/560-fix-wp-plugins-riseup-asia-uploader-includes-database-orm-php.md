@@ -1,5 +1,7 @@
 # Subtask 560: Fix violations in wp-plugins/riseup-asia-uploader/includes/Database/Orm.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Database/Orm.php`
 
 ## Violations

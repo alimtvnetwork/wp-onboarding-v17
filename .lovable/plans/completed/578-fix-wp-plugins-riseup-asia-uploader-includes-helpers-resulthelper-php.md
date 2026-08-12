@@ -1,5 +1,7 @@
 # Subtask 578: Fix violations in wp-plugins/riseup-asia-uploader/includes/Helpers/ResultHelper.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Helpers/ResultHelper.php`
 
 ## Violations
