@@ -125,7 +125,7 @@ class DateHelper {
         self::$cachedTimezone = null;
     }
 
-    // ─── UTC methods (for storage / API responses) ──────────────────────
+    // ─── UTC methods (for storage / Api responses) ──────────────────────
 
     public static function nowUtc(): string {
         return gmdate(self::ISO_8601_UTC);

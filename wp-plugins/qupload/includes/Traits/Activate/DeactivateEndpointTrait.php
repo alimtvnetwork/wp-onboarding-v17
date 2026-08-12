@@ -2,8 +2,8 @@
 /**
  * DeactivateEndpointTrait — PUT /deactivate REST endpoint handler for QUpload.
  *
- * Deactivates an installed plugin by slug via the WordPress REST API.
- * Uses PUT method per API standards (idempotent state mutation).
+ * Deactivates an installed plugin by slug via the WordPress REST Api.
+ * Uses PUT method per Api standards (idempotent state mutation).
  *
  * @package QUpload\Traits\Activate
  * @since   2.12.0

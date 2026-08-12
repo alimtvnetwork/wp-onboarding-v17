@@ -2,7 +2,7 @@
 /**
  * RequestFieldType — HTTP request field name constants.
  *
- * Eliminates magic strings for form/JSON field names used in upload and
+ * Eliminates magic strings for form/Json field names used in upload and
  * activation endpoints.
  *
  * @package QUpload\Enums

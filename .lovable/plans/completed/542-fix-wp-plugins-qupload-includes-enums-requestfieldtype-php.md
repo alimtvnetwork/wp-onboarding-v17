@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 542: Fix violations in wp-plugins/qupload/includes/Enums/RequestFieldType.php
 
 Target File: `wp-plugins/qupload/includes/Enums/RequestFieldType.php`

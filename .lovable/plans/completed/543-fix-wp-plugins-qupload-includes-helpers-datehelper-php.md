@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 543: Fix violations in wp-plugins/qupload/includes/Helpers/DateHelper.php
 
 Target File: `wp-plugins/qupload/includes/Helpers/DateHelper.php`

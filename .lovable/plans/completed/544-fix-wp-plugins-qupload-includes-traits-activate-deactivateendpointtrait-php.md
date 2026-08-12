@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 544: Fix violations in wp-plugins/qupload/includes/Traits/Activate/DeactivateEndpointTrait.php
 
 Target File: `wp-plugins/qupload/includes/Traits/Activate/DeactivateEndpointTrait.php`
