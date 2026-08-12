@@ -141,7 +141,7 @@ func (s *Service) Rollback(ctx context.Context, versionId int64) (*ws.RollbackCo
 		Version:        ver.Version,
 		RolledBackAt:   time.Now().Format(time.RFC3339),
 		Implementation: "pending",
-		Message:        "Rollback initiated - backup restoration requires WordPress API integration",
+		Message:        "Rollback initiated - backup restoration requires WordPress Api integration",
 	}
 
 	if s.wsHub != nil {

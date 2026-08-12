@@ -25,3 +25,6 @@
 - [Task 338](completed/338-fix-backend-internal-services-site-serviceremotelifecycleevents-go.md) - Completed
 - [Task 339](completed/339-fix-backend-internal-services-site-serviceremotelifecycleexec-go.md) - Completed
 - [Task 340](completed/340-fix-backend-internal-services-site-serviceremoteplugins-go.md) - Completed
+- [Task 341](completed/341-fix-backend-internal-services-site-snapshots-go.md) - Completed
+- [Task 342](completed/342-fix-backend-internal-services-site-snapshotsadvanced-go.md) - Completed
+- [Task 343](completed/343-fix-backend-internal-services-site-validator-go.md) - Completed

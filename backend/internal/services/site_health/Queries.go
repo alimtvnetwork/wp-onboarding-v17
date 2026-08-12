@@ -1,4 +1,4 @@
-// Package sitehealth — SQL query constants and builders.
+// Package sitehealth — Sql query constants and builders.
 package sitehealth
 
 import (
