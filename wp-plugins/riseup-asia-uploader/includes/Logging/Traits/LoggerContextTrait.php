@@ -1,6 +1,6 @@
 <?php
 /**
- * Logger Context Trait — user info, IP, source machine resolution.
+ * Logger Context Trait — user info, Ip, source machine resolution.
  *
  * @package RiseupAsia\Logging\Traits
  * @since   1.4.0
@@ -26,7 +26,7 @@ trait LoggerContextTrait {
         return $this->db;
     }
 
-    /** Get client IP address. */
+    /** Get client Ip address. */
     private function getClientIp(): string {
         $ipKeys = ['HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'REMOTE_ADDR'];
 
@@ -73,8 +73,10 @@ trait LoggerContextTrait {
         }
 
         $currentUser = wp_get_current_user();
-        if ($currentUser && $currentUser->ID > 0) {
-            return ['login' => $currentUser->user_login, 'id' => $currentUser->ID];
+        $userId = get_current_user_id();
+        
+        if ($currentUser && $userId > 0) {
+            return ['login' => $currentUser->user_login, 'id' => $userId];
         }
 
         return ['login' => self::ANONYMOUS_LOGIN, 'id' => self::ANONYMOUS_USER_ID];

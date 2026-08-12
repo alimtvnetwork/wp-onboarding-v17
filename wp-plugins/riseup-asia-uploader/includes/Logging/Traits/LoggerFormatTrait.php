@@ -60,7 +60,7 @@ trait LoggerFormatTrait {
         return implode(PHP_EOL, $lines);
     }
 
-    /** Gather HTTP request metadata (method, endpoint, user-agent, IP). */
+    /** Gather Http request metadata (method, endpoint, user-agent, Ip). */
     private function getRequestMetadata(): array {
         if ($this->requestMetadataCache !== null) {
             return $this->requestMetadataCache;
@@ -76,7 +76,7 @@ trait LoggerFormatTrait {
         return $meta;
     }
 
-    /** Build request metadata for CLI context. */
+    /** Build request metadata for Cli context. */
     private function buildCliRequestMeta(): array {
         return [
             'method' => 'CLI',
@@ -84,7 +84,7 @@ trait LoggerFormatTrait {
         ];
     }
 
-    /** Build request metadata for HTTP context. */
+    /** Build request metadata for Http context. */
     private function buildHttpRequestMeta(): array {
         $method    = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'UNKNOWN';
         $uri       = isset($_SERVER['REQUEST_URI']) ? strtok($_SERVER['REQUEST_URI'], '?') : '/';

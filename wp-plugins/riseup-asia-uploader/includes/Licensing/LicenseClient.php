@@ -1,8 +1,8 @@
 <?php
 /**
- * LicenseClient — HTTP client for the licensing server API.
+ * LicenseClient — Http client for the licensing server Api.
  *
- * Handles HMAC-signed requests to validate, activate, and deactivate licenses.
+ * Handles Hmac-signed requests to validate, activate, and deactivate licenses.
  *
  * @package RiseupAsia\Licensing
  * @since   2.7.0
@@ -89,12 +89,12 @@ class LicenseClient
     }
 
     /**
-     * Execute an HMAC-signed HTTP request to the licensing server.
+     * Execute an Hmac-signed Http request to the licensing server.
      *
-     * @param HttpMethodType $method HTTP method.
-     * @param string         $path   API path (e.g. /api/v1/licenses/KEY/validate).
-     * @param array|null     $body   Request body for POST requests.
-     * @return array|null Decoded JSON response or null on failure.
+     * @param HttpMethodType $method Http method.
+     * @param string         $path   Api path (e.g. /api/v1/licenses/KEY/validate).
+     * @param array|null     $body   Request body for Post requests.
+     * @return array|null Decoded Json response or null on failure.
      */
     private function request(HttpMethodType $method, string $path, ?array $body = null): ?array
     {
