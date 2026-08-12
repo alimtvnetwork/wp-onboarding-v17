@@ -110,7 +110,7 @@ class SelfUpdateValidator
     }
 
     /**
-     * Get a structured diagnostics array for REST API responses.
+     * Get a structured diagnostics array for Rest Api responses.
      *
      * @return array{Passed: bool, ErrorCount: int, Errors: array<int, array{code: string, message: string}>}
      */

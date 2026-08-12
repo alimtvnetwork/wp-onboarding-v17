@@ -4,7 +4,7 @@
  *
  * Inspects BootErrorCollector and validates critical runtime state after
  * the new version has been activated. Returns structured diagnostics
- * for the REST API response and rollback decision.
+ * for the Rest Api response and rollback decision.
  *
  * @package RiseupAsia\Update
  * @since   2.4.0
@@ -65,7 +65,7 @@ class SelfUpdateHealthCheck
     }
 
     /**
-     * Get structured diagnostics for REST API responses.
+     * Get structured diagnostics for Rest Api responses.
      *
      * @return array{Healthy: bool, IssueCount: int, Issues: array<int, array{code: string, message: string}>, BootErrors: array}
      */
@@ -161,13 +161,13 @@ class SelfUpdateHealthCheck
     /**
      * Verify that critical WordPress hooks are still registered after activation.
      *
-     * Checks REST API route registration, plugin lifecycle hooks,
+     * Checks Rest Api route registration, plugin lifecycle hooks,
      * and the error response enrichment filter.
      */
     private function checkCriticalFunctions(): void
     {
         $requiredActions = [
-            'rest_api_init'      => 'REST API route registration',
+            'rest_api_init'      => 'Rest Api route registration',
             'activated_plugin'   => 'Plugin activation lifecycle hook',
             'deactivated_plugin' => 'Plugin deactivation lifecycle hook',
         ];

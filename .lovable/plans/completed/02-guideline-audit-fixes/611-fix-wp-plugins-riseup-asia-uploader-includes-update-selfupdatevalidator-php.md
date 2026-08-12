@@ -1,0 +1,2 @@
+Status: completed
+# Subtask 611: Fix violations in wp-plugins/riseup-asia-uploader/includes/Update/SelfUpdateValidator.php  Target File: `wp-plugins/riseup-asia-uploader/includes/Update/SelfUpdateValidator.php`  ## Violations  - **Line 113**: abbreviations - Invalid abbreviation casing   `* Get a structured diagnostics array for REST API responses.`   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL). 

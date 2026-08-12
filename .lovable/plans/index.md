@@ -238,3 +238,7 @@
 - [Task 557](completed/557-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentcrudreadtrait-php.md) - Completed
 - [Task 558](completed/558-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentcrudwritetrait-php.md) - Completed
 - [Task 559](completed/559-fix-wp-plugins-riseup-asia-uploader-includes-agent-traits-agentremotecoretrait-php.md) - Completed
+- [Task 609](completed/02-guideline-audit-fixes/609-fix-wp-plugins-riseup-asia-uploader-includes-traits-user-userreadtrait-php.md) - Completed
+- [Task 610](completed/02-guideline-audit-fixes/610-fix-wp-plugins-riseup-asia-uploader-includes-update-selfupdatehealthcheck-php.md) - Completed
+- [Task 611](completed/02-guideline-audit-fixes/611-fix-wp-plugins-riseup-asia-uploader-includes-update-selfupdatevalidator-php.md) - Completed
+

@@ -23,7 +23,7 @@ trait UserReadTrait {
     private const PARAM_PER_PAGE = 'per_page';
     private const PARAM_ROLE = 'role';
     private const PARAM_SEARCH = 'search';
-    private const PARAM_ID = 'id';
+    private const PARAM_Id = 'id';
 
     private const DEFAULT_PAGE = 1;
     private const DEFAULT_PER_PAGE = 20;
@@ -37,7 +37,7 @@ trait UserReadTrait {
     private const ARG_SEARCH = 'search';
     private const ARG_SEARCH_COLUMNS = 'search_columns';
 
-    private const ORDERBY_ID = 'Id';
+    private const ORDERBY_Id = 'Id';
     private const ORDER_ASC = 'ASC';
 
     private const WILDCARD = '*';
@@ -68,7 +68,7 @@ trait UserReadTrait {
             $queryArgs = [
                 self::ARG_NUMBER  => $perPage,
                 self::ARG_PAGED   => $page,
-                self::ARG_ORDERBY => self::ORDERBY_ID,
+                self::ARG_ORDERBY => self::ORDERBY_Id,
                 self::ARG_ORDER   => self::ORDER_ASC,
             ];
 
@@ -118,7 +118,7 @@ trait UserReadTrait {
      */
     public function handleGetUser(WP_REST_Request $request): WP_REST_Response
     {
-        $userId = (int) $request->get_param(self::PARAM_ID);
+        $userId = (int) $request->get_param(self::PARAM_Id);
         $this->fileLogger->info('User endpoint accessed', ['endpoint' => 'GET /users/{id}', 'userId' => $userId]);
 
         return $this->safeExecute(function () use ($userId) {
