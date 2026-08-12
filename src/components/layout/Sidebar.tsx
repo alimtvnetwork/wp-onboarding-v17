@@ -40,7 +40,7 @@ const navItems = [
   { to: "/logs", label: "Logs", icon: ScrollText },
   { to: "/sessions", label: "Sessions", icon: History },
   { to: "/request-sessions", label: "Request Log", icon: Radio },
-  { to: "/api-explorer", label: "API Explorer", icon: Code2 },
+  { to: "/api-explorer", label: "Api Explorer", icon: Code2 },
   { to: "/errors", label: "Errors", icon: AlertCircle },
   { to: "/settings", label: "Settings", icon: Settings },
 ];

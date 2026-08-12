@@ -31,7 +31,7 @@ const routeNames: Record<string, string> = {
   "/logs": "Logs",
   "/sessions": "Sessions",
   "/request-sessions": "Request Log",
-  "/api-explorer": "API Explorer",
+  "/api-explorer": "Api Explorer",
   "/errors": "Errors",
   "/settings": "Settings",
 };
