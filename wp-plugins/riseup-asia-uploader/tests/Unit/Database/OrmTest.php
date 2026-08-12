@@ -349,7 +349,7 @@ final class OrmTest extends TestCase
     {
         // When PDO is not configured, rawExecute returns empty
         // We can't null-out the static PDO without a reset method,
-        // so we just verify rawExecute handles bad SQL gracefully.
+        // so we just verify rawExecute handles bad Sql gracefully.
         $rows = Orm::rawExecute('SELECT * FROM nonexistent_table_xyz');
 
         $this->assertSame([], $rows);

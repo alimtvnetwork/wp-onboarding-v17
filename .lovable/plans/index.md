@@ -266,3 +266,7 @@
 - [Task 628](completed/02-guideline-audit-fixes/628-fix-wp-plugins-riseup-asia-uploader-templates-partials-settings-section-support-feedback-php.md) - Completed
 - [Task 629](completed/02-guideline-audit-fixes/629-fix-wp-plugins-riseup-asia-uploader-templates-partials-shared-pagination-php.md) - Completed
 
+- [Task 630](completed/02-guideline-audit-fixes/630-fix-wp-plugins-riseup-asia-uploader-tests-unit-database-databaseseedertest-php.md) - Completed
+- [Task 631](completed/02-guideline-audit-fixes/631-fix-wp-plugins-riseup-asia-uploader-tests-unit-database-ormtest-php.md) - Completed
+- [Task 632](completed/02-guideline-audit-fixes/632-fix-wp-plugins-riseup-asia-uploader-tests-unit-database-validationpatterntest-php.md) - Completed
+

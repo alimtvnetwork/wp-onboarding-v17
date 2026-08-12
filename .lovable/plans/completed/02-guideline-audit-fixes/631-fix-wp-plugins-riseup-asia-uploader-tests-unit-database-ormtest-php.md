@@ -1,0 +1,2 @@
+Status: completed
+# Subtask 631: Fix violations in wp-plugins/riseup-asia-uploader/tests/Unit/Database/OrmTest.php  Target File: `wp-plugins/riseup-asia-uploader/tests/Unit/Database/OrmTest.php`  ## Violations  - **Line 352**: abbreviations - Invalid abbreviation casing   `// so we just verify rawExecute handles bad SQL gracefully.`   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL). 

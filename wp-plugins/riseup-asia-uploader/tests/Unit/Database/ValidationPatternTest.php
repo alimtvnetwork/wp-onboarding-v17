@@ -30,7 +30,7 @@ final class ValidationPatternTest extends TestCase
                 $hasBody = ($body !== null && is_array($body));
 
                 if (!$hasBody) {
-                    return ['valid' => false, 'error' => 'Request body must be a JSON object', 'data' => []];
+                    return ['valid' => false, 'error' => 'Request body must be a Json object', 'data' => []];
                 }
 
                 // Required: domain (string)
@@ -85,7 +85,7 @@ final class ValidationPatternTest extends TestCase
         $result = $this->handler->validateCreateTransaction(null);
 
         $this->assertFalse($result['valid']);
-        $this->assertSame('Request body must be a JSON object', $result['error']);
+        $this->assertSame('Request body must be a Json object', $result['error']);
     }
 
     // ── Domain field ────────────────────────────────────────

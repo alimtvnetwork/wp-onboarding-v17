@@ -221,7 +221,7 @@ final class DatabaseSeederTest extends TestCase
 
         $data = json_decode(file_get_contents($tmpFile), true);
 
-        $this->assertNull($data, 'Malformed JSON must return null from json_decode');
+        $this->assertNull($data, 'Malformed Json must return null from json_decode');
 
         unlink($tmpFile);
     }
