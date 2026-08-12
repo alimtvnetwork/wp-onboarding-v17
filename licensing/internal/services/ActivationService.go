@@ -106,7 +106,7 @@ func (s *ActivationService) createNew(input ActivateInput) apperror.Result[*mode
 	return apperror.Ok(existing)
 }
 
-// Deactivate marks an activation as deactivated by license ID and domain.
+// Deactivate marks an activation as deactivated by license Id and domain.
 func (s *ActivationService) Deactivate(licenseId int64, domain string) *apperror.AppError {
 	_, execErr := s.db.Exec(activationDeactivateSql, time.Now(), licenseId, domain)
 	if execErr != nil {

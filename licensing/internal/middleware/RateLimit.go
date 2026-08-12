@@ -6,12 +6,12 @@ import (
 	"riseup-licensing/pkg/ratelimit"
 )
 
-// RateLimit returns middleware that enforces per-IP rate limiting.
+// RateLimit returns middleware that enforces per-Ip rate limiting.
 func RateLimit(limiter *ratelimit.Limiter) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			ip := extractClientIP(r)
+			ip := extractClientIp(r)
 			isAllowed := limiter.Allow(ip)
 
 			if isAllowed {
@@ -27,12 +27,12 @@ func RateLimit(limiter *ratelimit.Limiter) func(http.Handler) http.Handler {
 	}
 }
 
-// extractClientIP returns the client IP from X-Forwarded-For or RemoteAddr.
-func extractClientIP(r *http.Request) string {
+// extractClientIp returns the client Ip from X-Forwarded-For or RemoteAddr.
+func extractClientIp(r *http.Request) string {
 	forwarded := r.Header.Get("X-Forwarded-For")
-	hasForwardedIP := forwarded != ""
+	hasForwardedIp := forwarded != ""
 
-	if hasForwardedIP {
+	if hasForwardedIp {
 
 		return forwarded
 	}

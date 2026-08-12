@@ -60,7 +60,7 @@ func (s *LicenseService) Create(input CreateInput) apperror.Result[*models.Licen
 	return s.GetById(id)
 }
 
-// GetById retrieves a license by its database ID.
+// GetById retrieves a license by its database Id.
 func (s *LicenseService) GetById(id int64) apperror.Result[*models.License] {
 
 	return scanLicense(s.db.QueryRow(licenseSelectByIdSql, id))

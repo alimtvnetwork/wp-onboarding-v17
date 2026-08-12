@@ -58,3 +58,6 @@
 - [Task 374](completed/374-fix-licensing-internal-handlers-adminhandlers-go.md) - Completed
 - [Task 375](completed/375-fix-licensing-internal-handlers-adminhandlersbatch-go.md) - Completed
 - [Task 376](completed/376-fix-licensing-internal-handlers-adminhandlersupdate-go.md) - Completed
+- [Task 377](completed/377-fix-licensing-internal-handlers-publichandlers-go.md) - Completed
+- [Task 378](completed/378-fix-licensing-internal-handlers-publichandlersactivation-go.md) - Completed
+- [Task 379](completed/379-fix-licensing-internal-manifest-handler-go.md) - Completed
