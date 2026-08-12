@@ -173,7 +173,7 @@ export function DelegatedSection({ error, phpStackFrames, copySection }: Delegat
               <Button variant="outline" size="sm" className="absolute top-2 right-2 z-10 h-8 border-border/60 bg-background/70" onClick={() => {
                 const text = typeof delegatedServer.Response === 'string'
                   ? delegatedServer.Response
-                  : JSON.stringify(delegatedServer.Response, null, 2);
+                  : globalThis.JSON.stringify(delegatedServer.Response, null, 2);
                 copySection("Response body", text);
               }}>
                 <Copy className="h-4 w-4" />
@@ -182,7 +182,7 @@ export function DelegatedSection({ error, phpStackFrames, copySection }: Delegat
                 <pre className="text-sm p-4 font-mono whitespace-pre-wrap break-all leading-6">
                   {typeof delegatedServer.Response === 'string'
                     ? delegatedServer.Response
-                    : JSON.stringify(delegatedServer.Response, null, 2)}
+                    : globalThis.JSON.stringify(delegatedServer.Response, null, 2)}
                 </pre>
               </ScrollArea>
             </div>
@@ -201,7 +201,7 @@ export function DelegatedSection({ error, phpStackFrames, copySection }: Delegat
               <Button variant="outline" size="sm" className="absolute top-2 right-2 z-10 h-8 border-border/60 bg-background/70" onClick={() => {
                 const text = typeof delegatedServer.RequestBody === 'string'
                   ? delegatedServer.RequestBody
-                  : JSON.stringify(delegatedServer.RequestBody, null, 2);
+                  : globalThis.JSON.stringify(delegatedServer.RequestBody, null, 2);
                 copySection("Request body", text);
               }}>
                 <Copy className="h-4 w-4" />
@@ -210,7 +210,7 @@ export function DelegatedSection({ error, phpStackFrames, copySection }: Delegat
                 <pre className="text-sm p-4 font-mono whitespace-pre-wrap break-all leading-6">
                   {typeof delegatedServer.RequestBody === 'string'
                     ? delegatedServer.RequestBody
-                    : JSON.stringify(delegatedServer.RequestBody, null, 2)}
+                    : globalThis.JSON.stringify(delegatedServer.RequestBody, null, 2)}
                 </pre>
               </ScrollArea>
             </div>
@@ -281,7 +281,7 @@ export function DelegatedSection({ error, phpStackFrames, copySection }: Delegat
                 <pre className="text-sm p-4 font-mono whitespace-pre-wrap break-all leading-6 text-orange-700 dark:text-orange-300">
                   {(() => {
                     try {
-                      return JSON.stringify(JSON.parse(error.context!.remoteResponseBody as string), null, 2);
+                      return globalThis.JSON.stringify(globalThis.JSON.parse(error.context!.remoteResponseBody as string), null, 2);
                     } catch {
                       return error.context!.remoteResponseBody as string;
                     }

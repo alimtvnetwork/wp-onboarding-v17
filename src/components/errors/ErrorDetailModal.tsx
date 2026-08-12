@@ -57,15 +57,15 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
   // Generate suggested fixes based on error code
   const getSuggestedFixes = (code: string): string[] => {
     const fixes: Record<string, string[]> = {
-      E1001: ["Check JSON syntax in request body", "Ensure Content-Type is application/json"],
-      E1002: ["Verify the ID is a valid number", "Check the URL path for typos"],
-      E2001: ["Verify WordPress REST API is enabled", "Check site URL ends with /wp-json/wp/v2"],
+      E1001: ["Check Json syntax in request body", "Ensure Content-Type is application/json"],
+      E1002: ["Verify the Id is a valid number", "Check the Url path for typos"],
+      E2001: ["Verify WordPress Rest Api is enabled", "Check site Url ends with /wp-json/wp/v2"],
       E2002: ["Verify application password is correct", "Regenerate application password in WordPress"],
       E3001: ["Ensure database is accessible", "Check disk space availability"],
       E3002: ["Verify the plugin path exists", "Check file system permissions"],
       E3003: ["Plugin may have been deleted", "Refresh the plugin list"],
       E4001: ["Verify both local and remote files exist", "Check network connectivity to WordPress site"],
-      E5001: ["Ensure git is installed and accessible", "Verify repository URL is correct"],
+      E5001: ["Ensure git is installed and accessible", "Verify repository Url is correct"],
       E5002: ["Check for uncommitted local changes", "Verify branch exists on remote"],
       E6001: ["Ensure plugin directory is accessible", "Check exclude patterns aren't too broad"],
       E7001: ["Test suite may not be configured", "Check E2E test configuration"],
@@ -193,7 +193,7 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
                             onClick={() => copySection("Request data", 
                               typeof error.context?.requestData === "string" 
                                 ? error.context.requestData 
-                                : JSON.stringify(error.context?.requestData, null, 2)
+                                : globalThis.JSON.stringify(error.context?.requestData, null, 2)
                             )}
                           >
                             <Copy className="h-4 w-4" />
@@ -202,7 +202,7 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
                         <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto font-mono">
                           {typeof error.context.requestData === "string"
                             ? error.context.requestData
-                            : JSON.stringify(error.context.requestData, null, 2)}
+                            : globalThis.JSON.stringify(error.context.requestData, null, 2)}
                         </pre>
                       </div>
                     )}
@@ -220,7 +220,7 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
                             onClick={() => copySection("Response data",
                               typeof error.context?.responseData === "string"
                                 ? error.context.responseData
-                                : JSON.stringify(error.context?.responseData, null, 2)
+                                : globalThis.JSON.stringify(error.context?.responseData, null, 2)
                             )}
                           >
                             <Copy className="h-4 w-4" />
@@ -229,7 +229,7 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
                         <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto font-mono">
                           {typeof error.context.responseData === "string"
                             ? error.context.responseData
-                            : JSON.stringify(error.context.responseData, null, 2)}
+                            : globalThis.JSON.stringify(error.context.responseData, null, 2)}
                         </pre>
                       </div>
                     )}
@@ -238,7 +238,7 @@ export function ErrorDetailModal({ open, onOpenChange, error }: ErrorDetailModal
                       <div>
                         <h4 className="text-sm font-medium text-muted-foreground mb-1">Context</h4>
                         <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto font-mono">
-                          {JSON.stringify(error.context, null, 2)}
+                          {globalThis.JSON.stringify(error.context, null, 2)}
                         </pre>
                       </div>
                     )}

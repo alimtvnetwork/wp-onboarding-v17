@@ -313,12 +313,12 @@ function ErrorLogContent({ error, errorLogContent, errorLogLoading, errorLogErro
                 </Button>
                 <Button variant="outline" size="sm" className="h-9 border-amber-500/30 bg-background/70" onClick={() => {
                   const blob = new Blob([errorLogContent], { type: "text/plain" });
-                  const url = window.URL.createObjectURL(blob);
+                  const url = globalThis.URL.createObjectURL(blob);
                   const link = document.createElement("a");
                   link.href = url;
                   link.download = "error.log.txt";
                   link.click();
-                  window.URL.revokeObjectURL(url);
+                  globalThis.URL.revokeObjectURL(url);
                   toast.success("Downloaded error.log.txt");
                 }}>
                   <Download className="h-4 w-4" />
@@ -420,7 +420,7 @@ function ExecutionContent({ error, envelopeMethodsBackend, hasExecutionContent, 
                 .map(l => {
                   const base = `[${formatTs(l.timestamp)}] [${l.level.toUpperCase()}]${l.step ? ` [${l.step}]` : ''} ${unescapeEmbeddedNewlines(l.message)}`;
                   if (l.details && Object.keys(l.details).length > 0) {
-                    return `${base}\n${unescapeEmbeddedNewlines(JSON.stringify(l.details, null, 2))}`;
+                    return `${base}\n${unescapeEmbeddedNewlines(globalThis.JSON.stringify(l.details, null, 2))}`;
                   }
                   return base;
                 })
@@ -579,7 +579,7 @@ function BackendLogEntry({ log, formatTs }: { log: CapturedError['backendLogs'][
 
       {hasDetails && (!method && !endpoint && !url && !zipPath && !remoteSlug && !status) && (
         <pre className="mt-1 ml-4 text-muted-foreground whitespace-pre-wrap break-words">
-          {unescapeEmbeddedNewlines(JSON.stringify(details, null, 2))}
+          {unescapeEmbeddedNewlines(globalThis.JSON.stringify(details, null, 2))}
         </pre>
       )}
 
@@ -597,7 +597,7 @@ function BackendLogEntry({ log, formatTs }: { log: CapturedError['backendLogs'][
           )}
           {url && (
             <div>
-              <span>URL: </span>
+              <span>Url: </span>
               <code className="text-xs bg-background/60 px-1 py-0.5 rounded break-all">{url}</code>
             </div>
           )}
