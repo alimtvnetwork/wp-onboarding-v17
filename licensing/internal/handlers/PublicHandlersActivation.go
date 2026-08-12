@@ -9,7 +9,7 @@ import (
 	"riseup-licensing/internal/services"
 )
 
-// activateRequest is the JSON body for domain activation.
+// activateRequest is the Json body for domain activation.
 type activateRequest struct {
 	Domain string `json:"domain"`
 }

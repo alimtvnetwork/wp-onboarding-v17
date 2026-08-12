@@ -16,7 +16,7 @@ type PublicHandlers struct {
 	Audit       *services.AuditService
 }
 
-// validateResponse is the JSON response for license validation.
+// validateResponse is the Json response for license validation.
 type validateResponse struct {
 	Valid          bool   `json:"valid"`
 	Status         string `json:"status"`

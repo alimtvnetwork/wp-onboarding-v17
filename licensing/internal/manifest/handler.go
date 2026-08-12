@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-// validateManifestResponse is the JSON envelope for the validation endpoint.
+// validateManifestResponse is the Json envelope for the validation endpoint.
 type validateManifestResponse struct {
 	Success bool              `json:"success"`
 	Result  *ValidationResult `json:"result,omitempty"`
 	Error   string            `json:"error,omitempty"`
 }
 
-// HandleValidateManifest is an HTTP handler that accepts a manifest JSON body
+// HandleValidateManifest is an Http handler that accepts a manifest Json body
 // and returns validation results. Use with POST /api/v1/admin/manifest/validate.
 func HandleValidateManifest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -26,7 +26,7 @@ func HandleValidateManifest(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(validateManifestResponse{ //nolint:errcheck
 			Success: false,
-			Error:   "invalid JSON: " + decodeErr.Error(),
+			Error:   "invalid Json: " + decodeErr.Error(),
 		})
 
 		return
