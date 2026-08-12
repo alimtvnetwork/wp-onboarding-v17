@@ -81,10 +81,10 @@ export function formatDiagnosticsForCopy(info: DiagnosticsInfo): string {
   lines.push("");
   lines.push("--- Resolved/Effective URLs ---");
   lines.push(`UI Origin: ${info.effectiveUiOrigin}`);
-  lines.push(`Resolved API Origin: ${info.resolvedApiOrigin || "(same-origin / not set)"}`);
-  lines.push(`API Base (relative): ${info.apiBase}`);
-  lines.push(`API Base (absolute): ${info.apiBaseAbsolute}`);
-  lines.push(`WebSocket URL: ${info.wsUrl}`);
+  lines.push(`Resolved Api Origin: ${info.resolvedApiOrigin || "(same-origin / not set)"}`);
+  lines.push(`Api Base (relative): ${info.apiBase}`);
+  lines.push(`Api Base (absolute): ${info.apiBaseAbsolute}`);
+  lines.push(`WebSocket Url: ${info.wsUrl}`);
 
   lines.push("");
   lines.push("--- Environment ---");

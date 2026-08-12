@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 461: Fix violations in src/lib/constants.ts
 
 Target File: `src/lib/constants.ts`

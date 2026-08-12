@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 462: Fix violations in src/lib/diagnostics.ts
 
 Target File: `src/lib/diagnostics.ts`

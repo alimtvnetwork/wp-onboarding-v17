@@ -1,3 +1,5 @@
+Status: completed
+
 # Subtask 463: Fix violations in src/lib/endpoints.ts
 
 Target File: `src/lib/endpoints.ts`

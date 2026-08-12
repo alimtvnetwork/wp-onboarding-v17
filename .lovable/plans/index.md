@@ -139,3 +139,6 @@
 - [Task 458](completed/458-fix-src-lib-api-methods-ts.md) - Completed
 - [Task 459](completed/459-fix-src-lib-api-types-ts.md) - Completed
 - [Task 460](completed/460-fix-src-lib-apihelpers-ts.md) - Completed
+- [Task 461](completed/461-fix-src-lib-constants-ts.md) - Completed
+- [Task 462](completed/462-fix-src-lib-diagnostics-ts.md) - Completed
+- [Task 463](completed/463-fix-src-lib-endpoints-ts.md) - Completed

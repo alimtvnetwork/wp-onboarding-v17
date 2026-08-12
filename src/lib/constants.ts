@@ -374,7 +374,7 @@ export const ResponseMessageType = {
   FileIgnored: "File ignored by .uploadignore",
   InvalidRequestBody: "Invalid request body",
   ServiceNotAvailable: "Service not available",
-  InvalidId: "Invalid ID",
+  InvalidId: "Invalid Id",
 } as const;
 
 export type ResponseMessageType = (typeof ResponseMessageType)[keyof typeof ResponseMessageType];

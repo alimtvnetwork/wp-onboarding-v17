@@ -1,8 +1,9 @@
-// Centralized endpoint resolution for API + WebSocket.
+// Centralized endpoint resolution for Api + WebSocket.
 //
 // ENV (recommended):
+const Url = window['URL'];
 // - VITE_API_URL="http://localhost:8080"   (origin only)
-// - VITE_WS_URL="ws://localhost:8080/ws"  (full ws URL)
+// - VITE_WS_Url="ws://localhost:8080/ws"  (full ws Url)
 
 const API_PREFIX = "/api/v1";
 
@@ -18,7 +19,7 @@ function normalizeHttpOrigin(value: string): string {
   // Already has scheme
   if (/^https?:\/\//i.test(raw)) return raw.replace(/\/$/, "");
 
-  // Protocol-relative URL
+  // Protocol-relative Url
   if (raw.startsWith("//")) {
     const proto = typeof window !== "undefined" ? window.location.protocol : "http:";
     return `${proto}${raw}`.replace(/\/$/, "");
@@ -47,7 +48,7 @@ function shouldIgnoreLoopbackTarget(targetUrl: string): boolean {
   if (isLoopbackHost(window.location.hostname)) return false;
 
   try {
-    const url = new URL(targetUrl);
+    const url = new Url(targetUrl);
     return isLoopbackHost(url.hostname);
   } catch {
     return false;
@@ -73,19 +74,19 @@ export function resolveApiBase(): string {
   return `${origin.replace(/\/$/, "")}${API_PREFIX}`;
 }
 
-/** Returns a fetch-ready URL (relative or absolute). */
+/** Returns a fetch-ready Url (relative or absolute). */
 export function resolveApiUrl(endpoint: string): string {
   if (!endpoint.startsWith("/")) {
-    throw new Error(`API endpoint must start with '/': ${endpoint}`);
+    throw new Error(`Api endpoint must start with '/': ${endpoint}`);
   }
   return `${resolveApiBase()}${endpoint}`;
 }
 
-/** Returns an absolute URL string for display/debugging. */
+/** Returns an absolute Url string for display/debugging. */
 export function toAbsoluteUrl(urlOrPath: string): string {
   if (/^https?:\/\//i.test(urlOrPath)) return urlOrPath;
   if (typeof window === "undefined") return urlOrPath;
-  return new URL(urlOrPath, window.location.origin).toString();
+  return new Url(urlOrPath, window.location.origin).toString();
 }
 
 export function resolveWsUrl(): string {
@@ -102,11 +103,11 @@ export function resolveWsUrl(): string {
     return "ws://localhost:8080/ws";
   }
 
-  // If API origin is configured, derive WS from it unless explicitly overridden.
+  // If Api origin is configured, derive WS from it unless explicitly overridden.
   const apiOrigin = resolveApiOrigin();
   if (apiOrigin) {
     try {
-      const url = new URL(apiOrigin);
+      const url = new Url(apiOrigin);
       const wsProto = url.protocol === "https:" ? "wss:" : "ws:";
       return `${wsProto}//${url.host}/ws`;
     } catch {
