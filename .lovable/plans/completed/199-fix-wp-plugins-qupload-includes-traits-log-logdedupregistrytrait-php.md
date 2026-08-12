@@ -20,3 +20,4 @@ Target File: `wp-plugins/qupload/includes/Traits/Log/LogDedupRegistryTrait.php`
   `$hasHashes = gettype($data) === PhpNativeType::PhpArray->value && isset($data['hashes']) && gettype($data['hashes']) === PhpNativeType::PhpArray->value;`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

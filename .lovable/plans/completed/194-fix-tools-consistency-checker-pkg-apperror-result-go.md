@@ -16,3 +16,4 @@ Target File: `tools/consistency-checker/pkg/apperror/Result.go`
   `func Fail[T any](err *AppError) Result[T] {`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

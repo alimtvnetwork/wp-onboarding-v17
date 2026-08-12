@@ -24,3 +24,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminSetting
   `$hasAuthFlag = (gettype($endpointConfig) === PhpNativeType::PhpArray->value && array_key_exists('auth_required', $endpointConfig));`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

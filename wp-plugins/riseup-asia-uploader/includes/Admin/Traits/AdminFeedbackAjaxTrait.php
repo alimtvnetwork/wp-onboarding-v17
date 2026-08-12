@@ -147,7 +147,7 @@ trait AdminFeedbackAjaxTrait {
             $lines[] = str_repeat('-', 50);
             $lines[] = 'System Information';
             $lines[] = str_repeat('-', 50);
-            $lines[] = 'Site URL:        ' . get_site_url();
+            $lines[] = 'Site Url:        ' . get_site_url();
             $lines[] = 'Plugin Version:  ' . PluginConfigType::Version->value;
             $lines[] = 'PHP Version:     ' . phpversion();
             $lines[] = 'WordPress:       ' . get_bloginfo('version');

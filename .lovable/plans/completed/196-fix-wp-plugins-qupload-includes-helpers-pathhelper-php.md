@@ -8,3 +8,4 @@ Target File: `wp-plugins/qupload/includes/Helpers/PathHelper.php`
   `if (gettype($uploadDir) === PhpNativeType::PhpArray->value && isset($uploadDir['basedir']) && gettype($uploadDir['basedir']) === PhpNativeType::PhpString->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

@@ -16,3 +16,4 @@ Target File: `wp-plugins/qupload/includes/Traits/Debug/DebugRoutesTrait.php`
   `* Lists all registered REST API routes for the plugin namespace.`
   **Instruction**: Change the abbreviation to standard PascalCase/camelCase (e.g. Id instead of ID, Url instead of URL).
 
+[x] SKIPPED (False Positive)

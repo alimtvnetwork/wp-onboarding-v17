@@ -26,6 +26,7 @@ use RiseupAsia\Helpers\BooleanHelpers;
 use RiseupAsia\Helpers\DateHelper;
 use RiseupAsia\Helpers\PathHelper;
 use RiseupAsia\Enums\PhpNativeType;
+use Throwable;
 
 trait AdminErrorAjaxTrait {
 
@@ -238,7 +239,7 @@ trait AdminErrorAjaxTrait {
             $logger = FileLogger::getInstance();
             $logger->clearAllLogFiles();
             $riseupResult['files'] = true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $riseupResult['error'] = $e->getMessage();
         }
 
@@ -258,7 +259,7 @@ trait AdminErrorAjaxTrait {
                     $riseupResult['database'] = true;
                 }
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $riseupResult['error'] .= ($riseupResult['error'] ? '; ' : '') . $e->getMessage();
         }
 
@@ -270,7 +271,7 @@ trait AdminErrorAjaxTrait {
                 $quploadLogger = $quploadLoggerClass::getInstance();
                 $quploadLogger->clearAllLogFiles();
                 $quploadResult['cleared'] = true;
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $quploadResult['error'] = $e->getMessage();
             }
         } else {

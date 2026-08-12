@@ -8,3 +8,4 @@ Target File: `wp-plugins/qupload/includes/Traits/Core/ResponseTrait.php`
   `if (gettype($code) === PhpNativeType::PhpInteger->value && $code > 0) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

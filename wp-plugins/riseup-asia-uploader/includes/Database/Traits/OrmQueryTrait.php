@@ -84,7 +84,7 @@ trait OrmQueryTrait {
         return $this;
     }
 
-    /** Find a single record by ID. */
+    /** Find a single record by Id. */
     public function findOne(int $id): ?array {
         $isPdoMissing = (self::$pdo === null);
 
@@ -178,7 +178,7 @@ trait OrmQueryTrait {
         }
     }
 
-    /** Build SELECT SQL. */
+    /** Build SELECT Sql. */
     private function buildSelectSql(): string {
         $columns = implode(', ', $this->selectColumns);
         $sql = "SELECT {$columns} FROM {$this->tableName}";

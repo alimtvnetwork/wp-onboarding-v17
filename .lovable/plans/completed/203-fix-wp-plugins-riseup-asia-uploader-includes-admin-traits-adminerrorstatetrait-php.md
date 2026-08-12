@@ -8,3 +8,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Admin/Traits/AdminErrorSt
   `if ($currentPage === AdminPageType::Errors->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive) - Enum comparisons already using ->value

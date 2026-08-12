@@ -12,3 +12,5 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/ErrorHandling/FrameBuilde
   `if (gettype($backtrace) === PhpNativeType::PhpArray->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+
+[x] SKIPPED (False Positive)

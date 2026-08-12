@@ -8,3 +8,4 @@ Target File: `tools/consistency-checker/internal/scanner/Classify.go`
   `// IsExcluded checks if a relative path matches any exclusion glob.`
   **Instruction**: Replace any/interface{} with a concrete type.
 
+[x] SKIPPED (False Positive)

@@ -8,3 +8,4 @@ Target File: `wp-plugins/qupload/includes/Admin/Traits/AdminMenuTrait.php`
   `if ($currentPage === AdminPageType::Errors->value) {`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)

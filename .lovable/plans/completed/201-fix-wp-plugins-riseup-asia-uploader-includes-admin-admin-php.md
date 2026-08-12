@@ -8,3 +8,4 @@ Target File: `wp-plugins/riseup-asia-uploader/includes/Admin/Admin.php`
   `return array_replace_recursive(self::$defaults, gettype($saved) === PhpNativeType::PhpArray->value ? $saved : []);`
   **Instruction**: Replace === StatusType::Foo with $var->isEqual(StatusType::Foo).
 
+[x] SKIPPED (False Positive)
