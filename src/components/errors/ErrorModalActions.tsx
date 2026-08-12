@@ -33,16 +33,16 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
             const resp = await fetch("/api/v1/errors/bundle", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ report }),
+              body: globalThis.JSON.stringify({ report }),
             });
             if (!resp.ok) throw new Error(`bundle download failed: ${resp.status}`);
             const blob = await resp.blob();
-            const url = window.URL.createObjectURL(blob);
+            const url = globalThis.URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
             link.download = `error-bundle-${new Date().toISOString().slice(0, 10)}.zip`;
             link.click();
-            window.URL.revokeObjectURL(url);
+            globalThis.URL.revokeObjectURL(url);
             toast.success("Downloading error bundle...");
           } catch (err: unknown) {
             console.error(err);
@@ -58,12 +58,12 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
             const resp = await api.getBackendErrorLog();
             if (resp.success && resp.data) {
               const blob = new Blob([resp.data.content], { type: "text/plain" });
-              const url = window.URL.createObjectURL(blob);
+              const url = globalThis.URL.createObjectURL(blob);
               const link = document.createElement("a");
               link.href = url;
               link.download = "error.log.txt";
               link.click();
-              window.URL.revokeObjectURL(url);
+              globalThis.URL.revokeObjectURL(url);
               toast.success("Downloaded error.log.txt");
             } else {
               toast.error(resp.error?.message || "No error log found");
@@ -80,12 +80,12 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
             const resp = await api.getBackendFullLog();
             if (resp.success && resp.data) {
               const blob = new Blob([resp.data.content], { type: "text/plain" });
-              const url = window.URL.createObjectURL(blob);
+              const url = globalThis.URL.createObjectURL(blob);
               const link = document.createElement("a");
               link.href = url;
               link.download = "log.txt";
               link.click();
-              window.URL.revokeObjectURL(url);
+              globalThis.URL.revokeObjectURL(url);
               toast.success("Downloaded log.txt");
             } else {
               toast.error(resp.error?.message || "No full log found");
@@ -101,12 +101,12 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
         <DropdownMenuItem onClick={() => {
           const report = generateErrorReport(error, { appName, appVersion, gitCommit, buildTime });
           const blob = new Blob([report], { type: "text/markdown" });
-          const url = window.URL.createObjectURL(blob);
+          const url = globalThis.URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
           link.download = `error-report-${new Date().toISOString().slice(0, 10)}.md`;
           link.click();
-          window.URL.revokeObjectURL(url);
+          globalThis.URL.revokeObjectURL(url);
           toast.success("Downloaded report as Markdown");
         }}>
           <FileCode2 className="h-4 w-4 mr-2" />
@@ -121,7 +121,7 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
           else if (delegatedParsed) sections.push(`Delegated Logs:\n${delegatedParsed}`);
           const ds = error.envelopeErrors?.DelegatedRequestServer;
           if (ds?.Response) {
-            const resp = typeof ds.Response === "string" ? ds.Response : JSON.stringify(ds.Response, null, 2);
+            const resp = typeof ds.Response === "string" ? ds.Response : globalThis.JSON.stringify(ds.Response, null, 2);
             if (!sections.some(s => s.includes(resp.slice(0, 50)))) sections.push(`Response Body:\n${resp}`);
           }
           if (sections.length === 0) {
@@ -129,12 +129,12 @@ export function DownloadDropdown({ error, appName, appVersion, gitCommit, buildT
             return;
           }
           const blob = new Blob([sections.join("\n\n---\n\n")], { type: "text/plain" });
-          const url = window.URL.createObjectURL(blob);
+          const url = globalThis.URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url;
           link.download = `delegated-diagnostics-${new Date().toISOString().slice(0, 10)}.txt`;
           link.click();
-          window.URL.revokeObjectURL(url);
+          globalThis.URL.revokeObjectURL(url);
           toast.success("Downloaded delegated diagnostics");
         }}>
           <Globe className="h-4 w-4 mr-2 text-orange-500" />
@@ -250,7 +250,7 @@ export function CopyDropdown({ error, appName, appVersion, gitCommit, buildTime,
             if (delegatedServer?.Response) {
               const resp = typeof delegatedServer.Response === "string"
                 ? delegatedServer.Response
-                : JSON.stringify(delegatedServer.Response, null, 2);
+                : globalThis.JSON.stringify(delegatedServer.Response, null, 2);
               if (!sections.some(s => s.includes(resp.slice(0, 50)))) {
                 sections.push(`Response Body:\n${resp}`);
               }

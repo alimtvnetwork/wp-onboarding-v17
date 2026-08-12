@@ -291,7 +291,7 @@ export function FrontendSection({
           <div>
             <div className="flex items-center justify-between mb-1">
               <h4 className="text-sm font-medium text-muted-foreground">Full Error Context</h4>
-              <Button variant="ghost" size="sm" onClick={() => copySection("Context", JSON.stringify(error.context, null, 2))}>
+              <Button variant="ghost" size="sm" onClick={() => copySection("Context", globalThis.JSON.stringify(error.context, null, 2))}>
                 <Copy className="h-4 w-4" />
               </Button>
             </div>

@@ -26,7 +26,7 @@ export enum ActiveSectionType {
 
 /**
  * Parse PHP stack trace frames from a raw remoteResponseBody string.
- * The body is typically a JSON string from WordPress containing error data
+ * The body is typically a Json string from WordPress containing error data
  * with stack traces like: #0 /path/file.php(42): Class->method()
  */
 function parsePhpStackFromRemoteBody(raw: string): PHPStackFrame[] {
@@ -34,7 +34,7 @@ function parsePhpStackFromRemoteBody(raw: string): PHPStackFrame[] {
     // Try to extract the stack trace text — it may be in data.error.message or raw
     let traceText = raw;
     try {
-      const parsed = JSON.parse(raw);
+      const parsed = globalThis.JSON.parse(raw);
       // Skip successful log-retrieve responses — they contain embedded log text with #N patterns
       if (parsed?.plugins || parsed?.Status?.IsSuccess === true) return [];
       const errMsg = parsed?.data?.error?.message;
@@ -108,7 +108,7 @@ export function GlobalErrorModal() {
     if (Array.isArray(ctx.stackTraceFrames)) return ctx.stackTraceFrames as PHPStackFrame[];
     const errorDetails = ctx.errorDetails;
     if (errorDetails && Array.isArray(errorDetails.stackTraceFrames)) return errorDetails.stackTraceFrames as PHPStackFrame[];
-    // 2. Parse from remoteResponseBody (raw PHP error JSON embedded in delegated response)
+    // 2. Parse from remoteResponseBody (raw Php error Json embedded in delegated response)
     const rawBody = ctx.remoteResponseBody;
     if (typeof rawBody === 'string' && rawBody.length > 0) {
       return parsePhpStackFromRemoteBody(rawBody);

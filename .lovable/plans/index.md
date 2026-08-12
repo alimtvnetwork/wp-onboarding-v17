@@ -76,3 +76,6 @@
 - [Task 392](completed/392-fix-src-components-cloud-storage-cloudstorageprovidersettings-tsx.md) - Completed
 - [Task 393](completed/393-fix-src-components-command-palette-commandpalette-tsx.md) - Completed
 - [Task 394](completed/394-fix-src-components-debug-debugroutespanel-tsx.md) - Completed
+- [Task 395](completed/395-fix-src-components-errors-backendsection-tsx.md) - Completed
+- [Task 396](completed/396-fix-src-components-errors-delegatedsection-tsx.md) - Completed
+- [Task 397](completed/397-fix-src-components-errors-errordetailmodal-tsx.md) - Completed
