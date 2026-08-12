@@ -59,7 +59,7 @@ export function useQuickPublish() {
     try {
       const saved = localStorage.getItem("wppp_cloud_storage_accounts");
       if (saved) {
-        const ids = Json.parse(saved) as number[];
+        const ids = JSON.parse(saved) as number[];
         if (ids.length > 0) cloudStorageAccountIds = ids;
       }
     } catch { /* default */ }

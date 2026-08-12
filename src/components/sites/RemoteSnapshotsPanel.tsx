@@ -209,13 +209,13 @@ function SnapshotRow({
                     try {
                       const { blob, filename, cached, size } = await api.downloadSnapshotZip(siteId, snapshot.id);
                       // Trigger browser download
-                      const url = Url.createObjectURL(blob);
+                      const url = URL.createObjectURL(blob);
                       const a = document.createElement("a");
                       a.href = url;
                       a.download = filename;
                       document.body.appendChild(a);
                       a.click();
-                      Url.revokeObjectURL(url);
+                      URL.revokeObjectURL(url);
                       a.remove();
                       toast.success(
                         `ZIP downloaded${cached ? " (cached)" : ""} — ${formatBytes(size)}`,
@@ -326,13 +326,13 @@ function SnapshotDetailContent({ snapshot, siteId }: { snapshot: SnapshotRecord;
       const { blob, filename, cached, size } = await api.downloadSnapshotZip(siteId, snapshot.id);
       setZipMeta({ cached, size, filename });
       // Trigger browser download
-      const url = Url.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      Url.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
       a.remove();
       toast.success(`ZIP downloaded${cached ? " (cached)" : ""} — ${formatBytes(size)}`);
     } catch (err: unknown) {

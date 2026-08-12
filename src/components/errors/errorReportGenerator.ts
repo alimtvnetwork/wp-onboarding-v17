@@ -81,7 +81,7 @@ function buildBackendErrorLogSection(error: CapturedError): string {
     }
     if (delegated.RequestBody) {
       delegatedLines.push(`    RequestBody:`);
-      delegatedLines.push(`        ${typeof delegated.RequestBody === 'string' ? delegated.RequestBody : Json.stringify(delegated.RequestBody, null, 2).split('\n').join('\n        ')}`);
+      delegatedLines.push(`        ${typeof delegated.RequestBody === 'string' ? delegated.RequestBody : JSON.stringify(delegated.RequestBody, null, 2).split('\n').join('\n        ')}`);
     }
     if (delegated.AdditionalMessages) {
       delegatedLines.push(`    Additional Message:`);
@@ -94,7 +94,7 @@ function buildBackendErrorLogSection(error: CapturedError): string {
   if (delegated?.Response) {
     const responseStr = typeof delegated.Response === 'string'
       ? delegated.Response
-      : Json.stringify(delegated.Response, null, 2);
+      : JSON.stringify(delegated.Response, null, 2);
     parts.push(`  Response Body:\n    ${responseStr.split('\n').join('\n    ')}`);
   }
 
@@ -172,7 +172,7 @@ export function generateCompactReport(
 
   // Context
   if (error.context && Object.keys(error.context).length > 0) {
-    sections.push(`\n### Context\n\n\`\`\`json\n${Json.stringify(error.context, null, 2)}\n\`\`\``);
+    sections.push(`\n### Context\n\n\`\`\`json\n${JSON.stringify(error.context, null, 2)}\n\`\`\``);
   }
 
   // Frontend Stack Trace
@@ -271,7 +271,7 @@ export function generateErrorReport(
         error.backendLogs.map(l => {
           const base = `[${formatDateTimeUtc(l.timestamp)}] [${l.level.toUpperCase()}]${l.step ? ` [${l.step}]` : ''} ${unescapeEmbeddedNewlines(l.message)}`;
           if (l.details && Object.keys(l.details).length > 0) {
-            return `${base}\n${unescapeEmbeddedNewlines(Json.stringify(l.details, null, 2))}`;
+            return `${base}\n${unescapeEmbeddedNewlines(JSON.stringify(l.details, null, 2))}`;
           }
           return base;
         }).join('\n\n')
@@ -340,7 +340,7 @@ ${error.message}
 
 ${error.details ? `### Details\n${error.details}\n` : ""}
 ${error.endpoint ? `### Request\n**${error.method || "GET"}** ${error.endpoint}\n${error.responseStatus ? `**Status:** ${error.responseStatus}\n` : ""}` : ""}
-${error.requestBody ? `### Request Body\n\`\`\`json\n${Json.stringify(error.requestBody, null, 2)}\n\`\`\`\n` : ""}
+${error.requestBody ? `### Request Body\n\`\`\`json\n${JSON.stringify(error.requestBody, null, 2)}\n\`\`\`\n` : ""}
 ${backendLogsSection}
 ${backendStackSection}
 ${phpStackFramesSection}
@@ -348,7 +348,7 @@ ${(() => { const dl = buildDelegatedLogsSection(error); return dl ? `### Delegat
 ${executionChainSection}
 ${framesSection}
 ${error.file ? `### Location\n\`${error.file}:${error.line}\` (${error.function})\n` : ""}
-${error.context && Object.keys(error.context).length > 0 ? `### Context\n\`\`\`json\n${Json.stringify(error.context, null, 2)}\n\`\`\`\n` : ""}
+${error.context && Object.keys(error.context).length > 0 ? `### Context\n\`\`\`json\n${JSON.stringify(error.context, null, 2)}\n\`\`\`\n` : ""}
 ${error.stackTrace ? `### Frontend Stack Trace\n\`\`\`\n${error.stackTrace}\n\`\`\`` : ""}
 
 ---

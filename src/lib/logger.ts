@@ -306,7 +306,7 @@ export const logger = {
           entry.functionName ? `${entry.functionName}()` : null,
           entry.action ? `(${entry.action}${entry.duration ? ` ${entry.duration}ms` : ''})` : null,
           entry.message,
-          entry.context ? Json.stringify(entry.context) : null,
+          entry.context ? JSON.stringify(entry.context) : null,
         ]
           .filter(Boolean)
           .join(' ');

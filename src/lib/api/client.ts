@@ -117,7 +117,7 @@ async function fetchRequest<T>(
 
     // Json happy-path
     if (looksLikeJson(raw)) {
-      const parsed = Json.parse(raw);
+      const parsed = JSON.parse(raw);
       // Auto-detect PascalCase universal envelope and convert transparently
       if (isEnvelope(parsed)) {
         return parseEnvelope<T>(parsed);

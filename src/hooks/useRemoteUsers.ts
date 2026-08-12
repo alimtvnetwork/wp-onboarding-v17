@@ -27,14 +27,14 @@ function getUser(siteId: number, userId: number) {
 function createUser(siteId: number, input: UserCreateInput) {
   return request<UserCreateResult>(`/sites/${siteId}/users`, {
     method: "POST",
-    body: Json.stringify(input),
+    body: JSON.stringify(input),
   });
 }
 
 function updateUser(siteId: number, userId: number, input: UserUpdateInput) {
   return request<UserUpdateResult>(`/sites/${siteId}/users/${userId}`, {
     method: "PUT",
-    body: Json.stringify(input),
+    body: JSON.stringify(input),
   });
 }
 

@@ -74,7 +74,7 @@ export function ConnectionTestLogs({ steps, isActive, onClear, debugMode = false
     const logText = steps
       .map((s) => {
         const time = s.timestamp.toLocaleTimeString();
-        const details = s.details !== undefined ? `\n  Details: ${Json.stringify(s.details)}` : "";
+        const details = s.details !== undefined ? `\n  Details: ${JSON.stringify(s.details)}` : "";
         const curl = debugMode === true ? generateCurlCommand(s) : null;
         const curlLine = curl !== null ? `\n  Command: ${curl}` : "";
         return `[${time}] [${s.status.toUpperCase()}] ${s.step}: ${s.message}${details}${curlLine}`;

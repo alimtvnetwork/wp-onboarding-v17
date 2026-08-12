@@ -72,12 +72,12 @@ export function LicenseBatchActions({ selected, onClear, allLicenses }: Props) {
     const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const Url = globalThis.URL;
-    const url = Url.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `licenses-export-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
-    Url.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
     toast.success("CSV exported");
   };
 

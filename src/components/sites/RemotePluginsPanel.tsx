@@ -101,7 +101,7 @@ function extractPhpErrorSnippet(body: string): string | null {
   // Try to parse as Json first (WordPress Rest error envelope)
   try {
     const Json = globalThis.JSON;
-    const parsed = Json.parse(body);
+    const parsed = JSON.parse(body);
     if (parsed?.message) return parsed.message;
     if (parsed?.data?.message) return parsed.data.message;
   } catch {

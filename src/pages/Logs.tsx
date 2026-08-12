@@ -392,12 +392,12 @@ export default function Logs() {
       )
       .join("\n");
     const blob = new Blob([content], { type: "text/plain" });
-    const url = Url.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `logs-${new Date().toISOString().split("T")[0]}.txt`;
     a.click();
-    Url.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
   };
 
   const formatTime = (timestamp: string) => formatTime24h(timestamp);
@@ -630,7 +630,7 @@ export default function Logs() {
                     <CollapsibleTrigger asChild>{row}</CollapsibleTrigger>
                     <CollapsibleContent>
                       <pre className="ml-[120px] text-xs text-muted-foreground bg-muted/50 px-3 py-2 rounded-md mt-1 overflow-x-auto max-h-48">
-                        {Json.stringify(log.details, null, 2)}
+                        {JSON.stringify(log.details, null, 2)}
                       </pre>
                     </CollapsibleContent>
                   </Collapsible>

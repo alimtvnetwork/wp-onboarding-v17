@@ -354,7 +354,7 @@ export default function ActivityFeed() {
                           {getMetadataEntries(entry.metadata).map(([key, val]) => (
                             <p key={key} className="text-muted-foreground">
                               <span className="font-medium text-foreground">{key}:</span>{" "}
-                              {typeof val === "object" ? Json.stringify(val) : String(val)}
+                              {typeof val === "object" ? JSON.stringify(val) : String(val)}
                             </p>
                           ))}
                         </div>

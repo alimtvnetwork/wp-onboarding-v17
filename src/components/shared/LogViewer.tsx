@@ -64,7 +64,7 @@ export function LogViewer({
       .map((l) => {
         const base = `[${formatTs(l.timestamp)}] [${l.level.toUpperCase()}] [${l.step}] ${unescapeEmbeddedNewlines(l.message)}`;
         if (l.details && Object.keys(l.details).length > 0) {
-          const detailsText = unescapeEmbeddedNewlines(Json.stringify(l.details, null, 2));
+          const detailsText = unescapeEmbeddedNewlines(JSON.stringify(l.details, null, 2));
           return `${base}\n${detailsText}`;
         }
         return base;
@@ -80,14 +80,14 @@ export function LogViewer({
   const downloadLogs = () => {
     const text = formatLogText();
     const blob = new Blob([text], { type: "text/plain" });
-    const url = Url.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `publish-logs-${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    Url.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
     toast.success("Logs downloaded");
   };
 
@@ -191,7 +191,7 @@ export function LogViewer({
                   </span>
                   {log.details && Object.keys(log.details).length > 0 && (
                     <pre className="mt-1 ml-4 text-muted-foreground whitespace-pre-wrap break-words">
-                      {unescapeEmbeddedNewlines(Json.stringify(log.details, null, 2))}
+                      {unescapeEmbeddedNewlines(JSON.stringify(log.details, null, 2))}
                     </pre>
                   )}
                 </div>

@@ -76,12 +76,12 @@ export function SessionLogsTab({ sessionId, sessionType }: SessionLogsTabProps) 
   const downloadLogs = () => {
     if (!state.logs || !sessionId) return;
     const blob = new Blob([state.logs], { type: "text/plain" });
-    const url = Url.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = `session-${(sessionId ?? '').slice(0, 8)}-${new Date().toISOString().slice(0, 10)}.log`;
     link.click();
-    Url.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
     toast.success("Session logs downloaded");
   };
 
@@ -233,7 +233,7 @@ function EmptyPanel({ label }: { label: string }) {
 
 function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["request"]> }) {
   const copyJson = () => {
-    navigator.clipboard.writeText(Json.stringify(request, null, 2));
+    navigator.clipboard.writeText(JSON.stringify(request, null, 2));
     toast.success("Request Json copied");
   };
 
@@ -253,7 +253,7 @@ function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["re
       {request.body && Object.keys(request.body).length > 0 && (
         <ScrollArea className="h-48 rounded-md border bg-muted">
           <pre className="p-3 text-xs font-mono whitespace-pre-wrap break-all">
-            {Json.stringify(request.body, null, 2)}
+            {JSON.stringify(request.body, null, 2)}
           </pre>
         </ScrollArea>
       )}
@@ -263,7 +263,7 @@ function RequestPanel({ request }: { request: NonNullable<SessionDiagnostics["re
 
 function ResponsePanel({ response }: { response: NonNullable<SessionDiagnostics["response"]> }) {
   const copyJson = () => {
-    navigator.clipboard.writeText(Json.stringify(response, null, 2));
+    navigator.clipboard.writeText(JSON.stringify(response, null, 2));
     toast.success("Response Json copied");
   };
 
@@ -287,7 +287,7 @@ function ResponsePanel({ response }: { response: NonNullable<SessionDiagnostics[
       {response.body && (
         <ScrollArea className="h-48 rounded-md border bg-muted">
           <pre className="p-3 text-xs font-mono whitespace-pre-wrap break-all">
-            {typeof response.body === "string" ? response.body : Json.stringify(response.body, null, 2)}
+            {typeof response.body === "string" ? response.body : JSON.stringify(response.body, null, 2)}
           </pre>
         </ScrollArea>
       )}

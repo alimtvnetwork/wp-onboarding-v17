@@ -69,7 +69,7 @@ class WebSocketClient {
 
       this.ws.onmessage = (event) => {
         try {
-          const message = Json.parse(event.data);
+          const message = JSON.parse(event.data);
           // WS messages use PascalCase keys from Go — transform the data payload
           const type = message.type || message.Type;
           const rawData = message.data || message.Data;

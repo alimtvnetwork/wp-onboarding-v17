@@ -469,7 +469,7 @@ export default function Sessions() {
                     {"metadata" in selectedSession && selectedSession.metadata && (
                       <ScrollArea className="h-full">
                         <pre className="text-xs font-mono bg-muted/50 p-4 rounded-lg whitespace-pre-wrap break-all">
-                          {Json.stringify(selectedSession.metadata, null, 2)}
+                          {JSON.stringify(selectedSession.metadata, null, 2)}
                         </pre>
                       </ScrollArea>
                     )}

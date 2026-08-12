@@ -30,7 +30,7 @@ export function useSiteFormPersistence() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = Json.parse(saved) as Partial<SiteFormData>;
+        const parsed = JSON.parse(saved) as Partial<SiteFormData>;
         setFormData({
           name: parsed.name || "",
           url: parsed.url || "",
@@ -52,7 +52,7 @@ export function useSiteFormPersistence() {
         // Save everything except password
         localStorage.setItem(
           STORAGE_KEY,
-          Json.stringify({
+          JSON.stringify({
             name: next.name,
             url: next.url,
             username: next.username,

@@ -986,8 +986,8 @@ export default function Settings() {
                   onClick={() => {
                     import("@/components/plugins/demoRemoteLogsData").then(({ createDemoLogsStatus, createDemoRetrieveResult }) => {
                       // Store demo data in sessionStorage for the RemoteLogsPanel to pick up
-                      sessionStorage.setItem("remoteLogs:demoStatus", Json.stringify(createDemoLogsStatus()));
-                      sessionStorage.setItem("remoteLogs:demoRetrieve", Json.stringify(createDemoRetrieveResult()));
+                      sessionStorage.setItem("remoteLogs:demoStatus", JSON.stringify(createDemoLogsStatus()));
+                      sessionStorage.setItem("remoteLogs:demoRetrieve", JSON.stringify(createDemoRetrieveResult()));
                       sessionStorage.setItem("remoteLogs:demoActivate", "true");
                       toast.success("Remote Logs demo data ready — navigate to a site to see the panel in demo mode", {
                         style: {

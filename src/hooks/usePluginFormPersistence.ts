@@ -34,7 +34,7 @@ export function usePluginFormPersistence() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = Json.parse(saved) as Partial<PluginFormData>;
+        const parsed = JSON.parse(saved) as Partial<PluginFormData>;
         setFormData({
           name: parsed.name || "",
           path: parsed.path || "",
@@ -54,7 +54,7 @@ export function usePluginFormPersistence() {
     setFormData((prev) => {
       const next = { ...prev, ...updates };
       try {
-        localStorage.setItem(STORAGE_KEY, Json.stringify(next));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       } catch (e: unknown) {
         console.warn("[PluginFormPersistence] Failed to save form data:", e);
       }

@@ -108,12 +108,12 @@ function formatUnknown(value: unknown): string {
   if (typeof value === "string") {
     // Try to parse and re-format if it's a Json string
     try {
-      return Json.stringify(Json.parse(value), null, 2);
+      return JSON.stringify(JSON.parse(value), null, 2);
     } catch {
       return value;
     }
   }
-  return Json.stringify(value, null, 2);
+  return JSON.stringify(value, null, 2);
 }
 
 function JsonViewer({ content, label }: { content: unknown; label: string }) {
@@ -554,7 +554,7 @@ export default function RequestSessions() {
                       size="sm"
                       title="Copy full session Json"
                       onClick={() => {
-                        navigator.clipboard.writeText(Json.stringify(detail, null, 2));
+                        navigator.clipboard.writeText(JSON.stringify(detail, null, 2));
                         toast.success("Session copied to clipboard");
                       }}
                     >
@@ -564,13 +564,13 @@ export default function RequestSessions() {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        const blob = new Blob([Json.stringify(detail, null, 2)], { type: "application/json" });
-                        const url = Url.createObjectURL(blob);
+                        const blob = new Blob([JSON.stringify(detail, null, 2)], { type: "application/json" });
+                        const url = URL.createObjectURL(blob);
                         const a = document.createElement("a");
                         a.href = url;
                         a.download = `request-session-${detail.id}.json`;
                         a.click();
-                        Url.revokeObjectURL(url);
+                        URL.revokeObjectURL(url);
                       }}
                     >
                       <Download className="h-4 w-4" />

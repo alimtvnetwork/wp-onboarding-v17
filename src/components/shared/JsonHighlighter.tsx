@@ -22,7 +22,7 @@ interface JsonHighlighterProps {
 export function JsonHighlighter({ json, className }: JsonHighlighterProps) {
   const formatted = typeof json === "string" 
     ? json 
-    : Json.stringify(json, null, jsonIndent);
+    : JSON.stringify(json, null, jsonIndent);
   
   const highlighted = formatJsonWithHighlighting(formatted);
   

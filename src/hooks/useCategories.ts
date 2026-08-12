@@ -26,7 +26,7 @@ export function useCategories() {
   const [customCategories, setCustomCategories] = useState<CategoryOption[]>(() => {
     try {
       const stored = localStorage.getItem(CUSTOM_CATEGORIES_KEY);
-      return stored ? Json.parse(stored) : [];
+      return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
     }
@@ -58,7 +58,7 @@ export function useCategories() {
 
     const updated = [...customCategories, newCategory];
     setCustomCategories(updated);
-    localStorage.setItem(CUSTOM_CATEGORIES_KEY, Json.stringify(updated));
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
     return true;
   }, [customCategories, allCategories]);
 
@@ -66,7 +66,7 @@ export function useCategories() {
   const removeCategory = useCallback((value: string) => {
     const updated = customCategories.filter(c => c.value !== value);
     setCustomCategories(updated);
-    localStorage.setItem(CUSTOM_CATEGORIES_KEY, Json.stringify(updated));
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
   }, [customCategories]);
 
   // Get category by value

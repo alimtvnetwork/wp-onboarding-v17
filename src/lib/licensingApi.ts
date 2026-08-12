@@ -40,7 +40,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
     const body = await res.text();
     let message = `Licensing Api error (${res.status})`;
     try {
-      const parsed = Json.parse(body);
+      const parsed = JSON.parse(body);
       if (parsed.error) message = parsed.error;
     } catch {
       // use default message
@@ -66,7 +66,7 @@ export async function createLicense(input: CreateLicenseInput): Promise<License>
   const res = await fetch(buildUrl("/licenses"), {
     method: "POST",
     headers: authHeaders(),
-    body: Json.stringify(input),
+    body: JSON.stringify(input),
   });
   return handleResponse<License>(res);
 }
@@ -75,7 +75,7 @@ export async function updateLicense(id: number, input: UpdateLicenseInput): Prom
   const res = await fetch(buildUrl(`/licenses/${id}`), {
     method: "PATCH",
     headers: authHeaders(),
-    body: Json.stringify(input),
+    body: JSON.stringify(input),
   });
   return handleResponse<License>(res);
 }

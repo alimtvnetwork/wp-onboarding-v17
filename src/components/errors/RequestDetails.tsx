@@ -57,12 +57,12 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
                   <div className="mt-2">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-muted-foreground font-medium">Request Body</span>
-                      <Button variant="ghost" size="sm" className="h-5 px-1" onClick={() => copySection("Request body", Json.stringify(error.requestBody, null, 2))}>
+                      <Button variant="ghost" size="sm" className="h-5 px-1" onClick={() => copySection("Request body", JSON.stringify(error.requestBody, null, 2))}>
                         <Copy className="h-3 w-3" />
                       </Button>
                     </div>
                     <pre className="text-xs bg-background/60 p-2 rounded mt-1 overflow-x-auto font-mono max-h-32">
-                      {Json.stringify(error.requestBody, null, 2)}
+                      {JSON.stringify(error.requestBody, null, 2)}
                     </pre>
                   </div>
                 )}
@@ -98,7 +98,7 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
                         PHP Response Body
                       </summary>
                       <pre className="text-xs bg-background/60 p-2 rounded mt-1 overflow-x-auto font-mono max-h-48 whitespace-pre-wrap break-all">
-                        {typeof phpResponseBody === "string" ? phpResponseBody : Json.stringify(phpResponseBody, null, 2)}
+                        {typeof phpResponseBody === "string" ? phpResponseBody : JSON.stringify(phpResponseBody, null, 2)}
                       </pre>
                     </details>
                   )}
@@ -147,12 +147,12 @@ export function RequestDetails({ error, copySection, sessionDiagnostics }: Reque
               <Network className="h-4 w-4" />
               Request Body
             </h4>
-            <Button variant="ghost" size="sm" onClick={() => copySection("Request body", Json.stringify(error.requestBody, null, 2))}>
+            <Button variant="ghost" size="sm" onClick={() => copySection("Request body", JSON.stringify(error.requestBody, null, 2))}>
               <Copy className="h-4 w-4" />
             </Button>
           </div>
           <pre className="text-xs bg-muted p-3 rounded-md overflow-x-auto font-mono max-h-40">
-            {Json.stringify(error.requestBody, null, 2)}
+            {JSON.stringify(error.requestBody, null, 2)}
           </pre>
         </div>
       )}

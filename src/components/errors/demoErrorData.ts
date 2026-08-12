@@ -118,7 +118,7 @@ export function createDemoError(): CapturedError {
         ],
         AdditionalMessages: "The remote plugin may have a missing dependency or incompatible PHP version. Check the site's PHP error log for details.",
       },
-      RemoteResponseBody: Json.stringify({
+      RemoteResponseBody: JSON.stringify({
         code: "internal_server_error",
         message: "PHP Fatal error: Class 'RiseupAsia\\Uploader\\Core' not found",
         data: { status: 500 },
@@ -146,7 +146,7 @@ export function createDemoError(): CapturedError {
       source: "App.showGlobalError",
       triggerComponent: "PluginCard",
       triggerAction: "activate_clicked",
-      remoteResponseBody: Json.stringify({
+      remoteResponseBody: JSON.stringify({
         code: "internal_server_error",
         message: "PHP Fatal error: Class 'RiseupAsia\\Uploader\\Core' not found",
         data: { status: 500 },
@@ -257,7 +257,7 @@ export function createDemoDelegatedError(): CapturedError {
         ],
         AdditionalMessages: "Check the database connection settings in wp-config.php — the MySQL/MariaDB server may be unreachable.",
       },
-      RemoteResponseBody: Json.stringify(wpResponseBody),
+      RemoteResponseBody: JSON.stringify(wpResponseBody),
     },
     envelopeMethodsStack: {
       Backend: [
@@ -294,7 +294,7 @@ export function createDemoDelegatedError(): CapturedError {
       source: "App.showGlobalError",
       triggerComponent: "Sites",
       triggerAction: "load_providers",
-      remoteResponseBody: Json.stringify(wpResponseBody),
+      remoteResponseBody: JSON.stringify(wpResponseBody),
       requestDelegatedAt: "https://demoat.attoproperty.com.au/wp-json/riseup-asia-api/v1/snapshots/providers",
       delegatedRequestServer: {
         DelegatedEndpoint: "https://demoat.attoproperty.com.au/wp-json/riseup-asia-api/v1/snapshots/providers",

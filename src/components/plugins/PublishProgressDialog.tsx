@@ -138,7 +138,7 @@ function buildErrorReport(
     const base = `[${l.timestamp}] [${l.level.toUpperCase()}] [${l.step}] ${l.message}`;
     if (!l.details || Object.keys(l.details).length === 0) return base;
     try {
-      return `${base}\n  details=${Json.stringify(l.details)}`;
+      return `${base}\n  details=${JSON.stringify(l.details)}`;
     } catch {
       return `${base}\n  details=[unserializable]`;
     }
@@ -198,7 +198,7 @@ function buildDefaultStages(): PublishStage[] {
   try {
     const saved = localStorage.getItem(LocalStorageKeyType.CloudStorageAccounts);
     if (saved) {
-      const ids = Json.parse(saved) as number[];
+      const ids = JSON.parse(saved) as number[];
       if (ids.length > 0) {
         stages.push({ name: PublishStageNameType.CloudUpload, label: STAGE_LABELS[PublishStageNameType.CloudUpload], status: PublishStageStatusType.Pending });
       }
@@ -262,7 +262,7 @@ export function PublishProgressDialog({
     const saved = localStorage.getItem(LocalStorageKeyType.Settings);
     if (saved) {
       try {
-        const settings = Json.parse(saved);
+        const settings = JSON.parse(saved);
         return settings.uploadMode === UploadModeType.FileByFile;
       } catch { /* ignore */ }
     }
@@ -824,9 +824,9 @@ export function PublishProgressDialog({
                     onCheckedChange={(checked) => {
                       setUseFileByFile(checked);
                       const saved = localStorage.getItem(LocalStorageKeyType.Settings);
-                      const settings = saved ? Json.parse(saved) : {};
+                      const settings = saved ? JSON.parse(saved) : {};
                       settings.uploadMode = checked ? UploadModeType.FileByFile : UploadModeType.Zip;
-                      localStorage.setItem(LocalStorageKeyType.Settings, Json.stringify(settings));
+                      localStorage.setItem(LocalStorageKeyType.Settings, JSON.stringify(settings));
                       toast.success(`Upload mode: ${checked ? "File-by-file" : "ZIP"}`);
                     }}
                   />

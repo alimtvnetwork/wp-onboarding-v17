@@ -15,14 +15,14 @@ function stringifyValue(value: unknown): string {
 
   if (typeof value === "string") {
     try {
-      return Json.stringify(Json.parse(value), null, 2);
+      return JSON.stringify(JSON.parse(value), null, 2);
     } catch {
       return unescapeEmbeddedNewlines(value);
     }
   }
 
   try {
-    return Json.stringify(value, null, 2);
+    return JSON.stringify(value, null, 2);
   } catch {
     return String(value);
   }
@@ -60,7 +60,7 @@ export function buildDelegatedLogsSection(error: CapturedError): string {
   if (!raw) return "";
 
   try {
-    const parsed = Json.parse(raw) as Record<string, unknown>;
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
 
     // Skip successful log-retrieve responses — they contain embedded log content, not error data
     if (Array.isArray(parsed.plugins)) {

@@ -130,7 +130,7 @@ export default function ApiExplorer() {
       }
 
       const data = await response.json();
-      addHistoryItem({ ...historyBase, responseBody: Json.stringify(data, null, 2).slice(0, 500) + "..." });
+      addHistoryItem({ ...historyBase, responseBody: JSON.stringify(data, null, 2).slice(0, 500) + "..." });
 
       data.servers = [{
         url: `${baseUrl}/wp-json/riseup-asia-uploader/v1`,
@@ -172,7 +172,7 @@ export default function ApiExplorer() {
       }
 
       const data = await response.json();
-      addHistoryItem({ ...historyBase, responseBody: Json.stringify(data, null, 2).slice(0, 500) + "..." });
+      addHistoryItem({ ...historyBase, responseBody: JSON.stringify(data, null, 2).slice(0, 500) + "..." });
 
       // Inject the correct server base Url so "Try it out" hits the right host
       data.servers = [{

@@ -93,29 +93,29 @@ export const api = {
   getSites: () => request<Site[]>("/sites"),
   getSite: (id: number) => request<Site>(`/sites/${id}`),
   createSite: (site: { name: string; url: string; username: string; applicationPassword: string; category?: string }) =>
-    request<Site>("/sites", { method: "POST", body: Json.stringify(site) }),
+    request<Site>("/sites", { method: "POST", body: JSON.stringify(site) }),
   updateSite: (id: number, site: Partial<Site> & { applicationPassword?: string; category?: string }) =>
-    request<Site>(`/sites/${id}`, { method: "PUT", body: Json.stringify(site) }),
+    request<Site>(`/sites/${id}`, { method: "PUT", body: JSON.stringify(site) }),
   deleteSite: (id: number) =>
     request<void>(`/sites/${id}`, { method: "DELETE" }),
   testConnection: (id: number) =>
     request<{ isSuccess: boolean; wpVersion?: string; message?: string; siteName?: string; canManagePlugins?: boolean }>(`/sites/${id}/test`, { method: "POST" }),
   testCredentials: (credentials: { url: string; username: string; password: string }) =>
-    request<{ isSuccess: boolean; wpVersion?: string; message?: string; siteName?: string; canManagePlugins?: boolean }>("/sites/test", { method: "POST", body: Json.stringify(credentials) }),
+    request<{ isSuccess: boolean; wpVersion?: string; message?: string; siteName?: string; canManagePlugins?: boolean }>("/sites/test", { method: "POST", body: JSON.stringify(credentials) }),
   bootstrapUploader: (siteId: number, uploaderPath?: string) =>
     request<{ isSuccess: boolean; siteId: number; siteName: string; message: string; isActivated: boolean }>(
       `/sites/${siteId}/bootstrap-uploader`,
-      { method: "POST", body: Json.stringify({ uploaderPath }) }
+      { method: "POST", body: JSON.stringify({ uploaderPath }) }
     ),
   bulkBootstrapUploader: (siteIds: number[], uploaderPath?: string) =>
     request<{ results: Array<{ siteId: number; siteName: string; isSuccess: boolean; message: string; isActivated?: boolean; error?: string }> }>(
       `/sites/bulk-bootstrap-uploader`,
-      { method: "POST", body: Json.stringify({ siteIds, uploaderPath }) }
+      { method: "POST", body: JSON.stringify({ siteIds, uploaderPath }) }
     ),
   deployPreflight: (siteIds: number[]) =>
     request<{ results: Array<{ siteId: number; siteName: string; siteUrl: string; isReachable: boolean; riseupAsiaAvailable: boolean; riseupAsiaNamespace?: string; qUploadAvailable: boolean; qUploadNamespace?: string; riseupAsia?: { name: string; available: boolean; namespace?: string; status: string; httpStatus?: number; message?: string; version?: string; wpVersion?: string; phpVersion?: string; pluginName?: string; apiNamespace?: string; serverTime?: string; dbAvailable?: string; remoteSiteUrl?: string }; qUpload?: { name: string; available: boolean; namespace?: string; status: string; httpStatus?: number; message?: string; version?: string; wpVersion?: string; phpVersion?: string; pluginName?: string; apiNamespace?: string; serverTime?: string; dbAvailable?: string; remoteSiteUrl?: string }; error?: string }> }>(
       `/sites/deploy-preflight`,
-      { method: "POST", body: Json.stringify({ siteIds }) }
+      { method: "POST", body: JSON.stringify({ siteIds }) }
     ),
   getSiteCredentials: (siteId: number) =>
     request<{ url: string; username: string; appPassword: string }>(`/sites/${siteId}/credentials`),
@@ -124,9 +124,9 @@ export const api = {
   listSiteCredentials: (siteId: number) =>
     request<SiteCredentialResponse[]>(`/sites/${siteId}/credentials`),
   createSiteCredential: (siteId: number, input: { appName: string; username: string; password: string }) =>
-    request<SiteCredentialResponse>(`/sites/${siteId}/credentials`, { method: "POST", body: Json.stringify(input) }),
+    request<SiteCredentialResponse>(`/sites/${siteId}/credentials`, { method: "POST", body: JSON.stringify(input) }),
   updateSiteCredential: (siteId: number, credId: number, input: { appName: string; username: string; password: string }) =>
-    request<SiteCredentialResponse>(`/sites/${siteId}/credentials/${credId}`, { method: "PUT", body: Json.stringify(input) }),
+    request<SiteCredentialResponse>(`/sites/${siteId}/credentials/${credId}`, { method: "PUT", body: JSON.stringify(input) }),
   deleteSiteCredential: (siteId: number, credId: number) =>
     request<void>(`/sites/${siteId}/credentials/${credId}`, { method: "DELETE" }),
   setDefaultCredential: (siteId: number, credId: number) =>
@@ -146,17 +146,17 @@ export const api = {
     buildCommand?: string;
     forceCreate?: boolean;
   }) =>
-    request<Plugin>("/plugins", { method: "POST", body: Json.stringify(plugin) }),
+    request<Plugin>("/plugins", { method: "POST", body: JSON.stringify(plugin) }),
   updatePlugin: (id: number, plugin: Partial<Plugin>) =>
-    request<Plugin>(`/plugins/${id}`, { method: "PUT", body: Json.stringify(plugin) }),
+    request<Plugin>(`/plugins/${id}`, { method: "PUT", body: JSON.stringify(plugin) }),
   deletePlugin: (id: number) =>
     request<void>(`/plugins/${id}`, { method: "DELETE" }),
   getPluginMappings: (pluginId: number) =>
     request<PluginMapping[]>(`/plugins/${pluginId}/mappings`),
   createPluginMapping: (pluginId: number, mapping: { siteId: number; remoteSlug: string }) =>
-    request<PluginMapping>(`/plugins/${pluginId}/mappings`, { method: "POST", body: Json.stringify(mapping) }),
+    request<PluginMapping>(`/plugins/${pluginId}/mappings`, { method: "POST", body: JSON.stringify(mapping) }),
   updatePluginMappings: (pluginId: number, mapping: { siteIds: number[]; remoteSlug: string }) =>
-    request<PluginMapping[]>(`/plugins/${pluginId}/mappings`, { method: "PUT", body: Json.stringify(mapping) }),
+    request<PluginMapping[]>(`/plugins/${pluginId}/mappings`, { method: "PUT", body: JSON.stringify(mapping) }),
   deletePluginMapping: (mappingId: number) =>
     request<void>(`/mappings/${mappingId}`, { method: "DELETE" }),
   
@@ -166,7 +166,7 @@ export const api = {
   updateSiteMappings: (siteId: number, pluginIds: number[]) =>
     request<PluginMapping[]>(`/sites/${siteId}/mappings`, { 
       method: "PUT", 
-      body: Json.stringify({ pluginIds }) 
+      body: JSON.stringify({ pluginIds }) 
     }),
   
   // Remote plugin management
@@ -175,7 +175,7 @@ export const api = {
   checkRemotePluginExists: (siteId: number, pluginSlug: string) =>
     request<{ exists: boolean; status: string; plugin_file: string; plugin: string }>(
       `/sites/${siteId}/remote-plugins/exists`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug }) }
     ),
   forceSyncRemotePlugins: (siteId: number) =>
     request<RemotePlugin[]>(`/sites/${siteId}/remote-plugins/force-sync`, { method: "POST" }),
@@ -184,17 +184,17 @@ export const api = {
   enableRemotePlugin: (siteId: number, pluginSlug: string, version?: string) =>
     request<{ enabled: boolean; plugin: string }>(
       `/sites/${siteId}/remote-plugins/enable`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
     ),
   disableRemotePlugin: (siteId: number, pluginSlug: string, version?: string) =>
     request<{ disabled: boolean; plugin: string }>(
       `/sites/${siteId}/remote-plugins/disable`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
     ),
   deleteRemotePlugin: (siteId: number, pluginSlug: string, version?: string) =>
     request<{ deleted: boolean; plugin: string }>(
       `/sites/${siteId}/remote-plugins/delete`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug, ...(version ? { version } : {}) }) }
     ),
   uploadRemotePlugin: (siteId: number, file: File, activate: boolean) => {
     const formData = new FormData();
@@ -237,7 +237,7 @@ export const api = {
 
       xhr.addEventListener("load", () => {
         try {
-          const json = Json.parse(xhr.responseText);
+          const json = JSON.parse(xhr.responseText);
           // Handle envelope format
             if (json.Status) {
             if (json.Status.IsSuccess) {
@@ -299,12 +299,12 @@ export const api = {
   getRemotePluginFiles: (siteId: number, pluginSlug: string) =>
     request<RemotePluginFilesResult>(
       `/sites/${siteId}/remote-plugins/files`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug }) }
     ),
   getRemotePluginFileContent: (siteId: number, pluginSlug: string, filePath: string) =>
     request<{ path: string; content: string }>(
       `/sites/${siteId}/remote-plugins/file`,
-      { method: "POST", body: Json.stringify({ plugin: pluginSlug, path: filePath }) }
+      { method: "POST", body: JSON.stringify({ plugin: pluginSlug, path: filePath }) }
     ),
 
   // Git operations
@@ -329,7 +329,7 @@ export const api = {
     }>(`/plugins/${pluginId}/git/status`),
   gitCommit: (pluginId: number, message: string) =>
     request<{ isSuccess: boolean; commitHash: string }>(
-      `/plugins/${pluginId}/git/commit`, { method: "POST", body: Json.stringify({ message }) }
+      `/plugins/${pluginId}/git/commit`, { method: "POST", body: JSON.stringify({ message }) }
     ),
   gitPush: (pluginId: number) =>
     request<{ isSuccess: boolean; pushed: number }>(
@@ -339,11 +339,11 @@ export const api = {
   // Bulk operations
   bulkUpdatePlugins: (pluginIds: number[], update: { watchEnabled?: boolean }) =>
     request<{ updated: number }>(
-      `/plugins/bulk`, { method: "PATCH", body: Json.stringify({ pluginIds, ...update }) }
+      `/plugins/bulk`, { method: "PATCH", body: JSON.stringify({ pluginIds, ...update }) }
     ),
   bulkDeletePlugins: (pluginIds: number[]) =>
     request<{ deleted: number }>(
-      `/plugins/bulk`, { method: "DELETE", body: Json.stringify({ pluginIds }) }
+      `/plugins/bulk`, { method: "DELETE", body: JSON.stringify({ pluginIds }) }
     ),
 
   // File scanning (hybrid watcher)
@@ -373,7 +373,7 @@ export const api = {
       detectionCreated?: boolean;
     }>("/plugins/scan-directory", {
       method: "POST",
-      body: Json.stringify({ path, createDetection }),
+      body: JSON.stringify({ path, createDetection }),
     }),
 
   // Scan multiple directories for WordPress plugins
@@ -399,7 +399,7 @@ export const api = {
       }>;
     }>("/plugins/scan-directories", {
       method: "POST",
-      body: Json.stringify({ paths, createDetection }),
+      body: JSON.stringify({ paths, createDetection }),
     }),
 
   // Sync
@@ -461,7 +461,7 @@ export const api = {
       inFlight.add(key);
       return request<PublishResponse>(`/plugins/${pluginId}/sites/${siteId}/publish`, {
         method: "POST",
-        body: Json.stringify(options),
+        body: JSON.stringify(options),
       }).then(response => {
         if (response.success) {
           cooldowns.set(key, Date.now());
@@ -484,7 +484,7 @@ export const api = {
   }) =>
     request<import('./types').BulkPublishResponse>("/publish/bulk", {
       method: "POST",
-      body: Json.stringify(input),
+      body: JSON.stringify(input),
     }),
 
   previewPublish: (pluginId: number, siteId: number) =>
@@ -498,7 +498,7 @@ export const api = {
     request<{ entries: PublishHistoryEntry[]; total: number }>(`/publish-history${buildQuery(params || {})}`),
   getPublishHistoryStats: () => request<PublishHistoryStats>("/publish-history/stats"),
   deletePublishHistoryEntry: (id: number) => request<void>(`/publish-history/${id}`, { method: "DELETE" }),
-  clearPublishHistory: () => request<void>("/publish-history", { method: "DELETE", body: Json.stringify({ confirm: true }) }),
+  clearPublishHistory: () => request<void>("/publish-history", { method: "DELETE", body: JSON.stringify({ confirm: true }) }),
 
   // Site Health — canonical types from src/types/siteHealth.ts
   checkSiteHealth: (siteId: number) => request<SiteHealthCheckResult>(`/site-health/sites/${siteId}/check`, { method: "POST" }),
@@ -543,11 +543,11 @@ export const api = {
   // Settings
   getSettings: () => request<Settings>("/settings"),
   updateSettings: (settings: Partial<Settings>) =>
-    request<Settings>("/settings", { method: "PUT", body: Json.stringify(settings) }),
+    request<Settings>("/settings", { method: "PUT", body: JSON.stringify(settings) }),
   updateSetting: (key: string, value: string) =>
     request<Settings>(`/settings/${encodeURIComponent(key)}`, { 
       method: "PUT", 
-      body: Json.stringify({ value }) 
+      body: JSON.stringify({ value }) 
     }),
 
   // Sessions
@@ -566,12 +566,12 @@ export const api = {
   getFileDiff: (pluginId: number, siteId: number, filePath: string) =>
     request<{ localContent: string; remoteContent: string; path: string }>(
       `/plugins/${pluginId}/sites/${siteId}/file-diff`,
-      { method: "POST", body: Json.stringify({ path: filePath }) }
+      { method: "POST", body: JSON.stringify({ path: filePath }) }
     ),
   getLocalFileContent: (pluginId: number, filePath: string) =>
     request<{ content: string; path: string }>(
       `/plugins/${pluginId}/file`,
-      { method: "POST", body: Json.stringify({ path: filePath }) }
+      { method: "POST", body: JSON.stringify({ path: filePath }) }
     ),
 
   // E2E Testing
@@ -580,7 +580,7 @@ export const api = {
   startE2ERun: (opts: { suites?: string[]; cases?: string[]; parallel: boolean; stopOnFailure: boolean }) =>
     request<{ runId: string; status: string; totalTests: number }>("/e2e/run", { 
       method: "POST", 
-      body: Json.stringify(opts) 
+      body: JSON.stringify(opts) 
     }),
   abortE2ERun: (runId: string) =>
     request<void>(`/e2e/runs/${runId}/abort`, { method: "POST" }),
@@ -593,7 +593,7 @@ export const api = {
   rerunE2ECase: (caseId: string) =>
     request<{ runId: string }>("/e2e/run", {
       method: "POST",
-      body: Json.stringify({ cases: [caseId], parallel: false, stopOnFailure: false }),
+      body: JSON.stringify({ cases: [caseId], parallel: false, stopOnFailure: false }),
     }),
 
   // Remote Snapshot Management
@@ -604,21 +604,21 @@ export const api = {
   createRemoteSnapshot: (siteId: number, opts?: CreateSnapshotOptions) =>
     request<SnapshotOperationResult>(`/sites/${siteId}/snapshots`, {
       method: "POST",
-      body: Json.stringify(opts || {}),
+      body: JSON.stringify(opts || {}),
     }),
   deleteRemoteSnapshot: (siteId: number, snapshotId: number) =>
     request<{ deleted: boolean }>(`/sites/${siteId}/snapshots/${snapshotId}`, { method: "DELETE" }),
   restoreRemoteSnapshot: (siteId: number, snapshotId: number, opts?: RestoreSnapshotOptions) =>
     request<SnapshotOperationResult>(`/sites/${siteId}/snapshots/${snapshotId}/restore`, {
       method: "POST",
-      body: Json.stringify(opts || {}),
+      body: JSON.stringify(opts || {}),
     }),
   getRemoteSnapshotSettings: (siteId: number) =>
     request<SnapshotSettings>(`/sites/${siteId}/snapshots/settings`),
   updateRemoteSnapshotSettings: (siteId: number, settings: Partial<SnapshotSettings>) =>
     request<SnapshotSettings>(`/sites/${siteId}/snapshots/settings`, {
       method: "PUT",
-      body: Json.stringify(settings),
+      body: JSON.stringify(settings),
     }),
   getRemoteSnapshotProviders: (siteId: number) =>
     request<SnapshotProviderInfo[]>(`/sites/${siteId}/snapshots/providers`),
@@ -635,13 +635,13 @@ export const api = {
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: Json.stringify({ snapshot_id: snapshotId }),
+      body: JSON.stringify({ snapshot_id: snapshotId }),
     });
     if (!res.ok) {
       const text = await res.text();
       let msg = `Download failed (${res.status})`;
       try {
-        const parsed = Json.parse(text);
+        const parsed = JSON.parse(text);
         msg = parsed?.Status?.Message || parsed?.message || msg;
       } catch { /* ignore */ }
       throw new Error(msg);
@@ -662,14 +662,14 @@ export const api = {
   fullBackupRemoteSnapshot: (siteId: number, opts?: CreateSnapshotOptions) =>
     request<SnapshotOperationResult>(`/sites/${siteId}/snapshots/full-backup`, {
       method: "POST",
-      body: Json.stringify(opts || {}),
+      body: JSON.stringify(opts || {}),
     }),
 
   // Incremental backup
   incrementalBackupRemoteSnapshot: (siteId: number, opts?: CreateSnapshotOptions) =>
     request<SnapshotOperationResult>(`/sites/${siteId}/snapshots/incremental`, {
       method: "POST",
-      body: Json.stringify(opts || {}),
+      body: JSON.stringify(opts || {}),
     }),
 
   // Import snapshot from ZIP
@@ -682,7 +682,7 @@ export const api = {
     if (!looksLikeJson(text)) {
       return { success: false, error: { code: "E9005", message: "Non-JSON response", timestamp: new Date().toISOString() } };
     }
-    const parsed = Json.parse(text);
+    const parsed = JSON.parse(text);
     if (isEnvelope(parsed)) {
       return parseEnvelope<SnapshotImportResult>(parsed);
     }
@@ -693,7 +693,7 @@ export const api = {
   cleanupRemoteSnapshots: (siteId: number, opts?: CleanupSnapshotOptions) =>
     request<CleanupSnapshotResult>(`/sites/${siteId}/snapshots/cleanup`, {
       method: "POST",
-      body: Json.stringify(opts || {}),
+      body: JSON.stringify(opts || {}),
     }),
 
   // Snapshot Cron Jobs
@@ -712,7 +712,7 @@ export const api = {
   saveErrorHistory: (input: ErrorHistoryInput) =>
     request<ErrorHistoryRecord>("/error-history", { 
       method: "POST", 
-      body: Json.stringify(input) 
+      body: JSON.stringify(input) 
     }),
   listErrorHistory: (opts?: { limit?: number; offset?: number; code?: string; level?: string; search?: string }) =>
     request<ErrorHistoryListResponse>(`/error-history${buildQuery(opts || {})}`),
@@ -727,7 +727,7 @@ export const api = {
   bulkExportErrorHistory: (ids: number[]) =>
     request<{ report: string; count: number }>("/error-history/bulk-export", { 
       method: "POST", 
-      body: Json.stringify({ ids }) 
+      body: JSON.stringify({ ids }) 
     }),
   getErrorHistoryStats: () =>
     request<ErrorHistoryStats>("/error-history/stats"),
@@ -758,9 +758,9 @@ export const api = {
   clearAllRemoteLogs: (siteId: number) =>
     request<{ riseup: { cleared: boolean; error?: string }; qupload: { cleared: boolean; error?: string } }>(`/sites/${siteId}/remote-logs/clear-all`, { method: "DELETE" }),
   confirmClearRemoteLogs: (siteId: number, token: string) =>
-    request<RemoteLogsClearConfirmResponse>(`/sites/${siteId}/remote-logs/confirm`, { method: "POST", body: Json.stringify({ token }) }),
+    request<RemoteLogsClearConfirmResponse>(`/sites/${siteId}/remote-logs/confirm`, { method: "POST", body: JSON.stringify({ token }) }),
   emailRemoteLogs: (siteId: number, opts?: RemoteLogsEmailOptions) =>
-    request<RemoteLogsEmailResponse>(`/sites/${siteId}/remote-logs/email`, { method: "POST", body: Json.stringify(opts || {}) }),
+    request<RemoteLogsEmailResponse>(`/sites/${siteId}/remote-logs/email`, { method: "POST", body: JSON.stringify(opts || {}) }),
   retrieveRemoteLogs: (siteId: number, params?: { include_info_log?: boolean; include_error_log?: boolean; include_stacktrace?: boolean; max_lines?: number }) => {
     const q = new URLSearchParams();
     if (params?.include_info_log === false) q.set("include_info_log", "false");
@@ -781,24 +781,24 @@ export const api = {
   getCloudStorageAccount: (id: number) =>
     request<{ account: unknown }>(`/cloud-storage/accounts/${id}`),
   createCloudStorageAccount: (body: Record<string, unknown>) =>
-    request<{ account: unknown }>("/cloud-storage/accounts", { method: "POST", body: Json.stringify(body) }),
+    request<{ account: unknown }>("/cloud-storage/accounts", { method: "POST", body: JSON.stringify(body) }),
   updateCloudStorageAccount: (id: number, body: Record<string, unknown>) =>
-    request<{ account: unknown }>(`/cloud-storage/accounts/${id}`, { method: "PUT", body: Json.stringify(body) }),
+    request<{ account: unknown }>(`/cloud-storage/accounts/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   deleteCloudStorageAccount: (id: number) =>
     request<{ success: boolean }>(`/cloud-storage/accounts/${id}`, { method: "DELETE" }),
   testCloudStorageAccount: (accountId: number) =>
     request<{ success: boolean; connectionStatus?: string; username?: string; message?: string; error?: string }>(
       "/cloud-storage/accounts/test",
-      { method: "POST", body: Json.stringify({ AccountId: accountId }) },
+      { method: "POST", body: JSON.stringify({ AccountId: accountId }) },
     ),
   getCloudStorageSettings: (provider: string) =>
     request<Record<string, unknown>>(`/cloud-storage/settings/${provider}`),
   updateCloudStorageSettings: (provider: string, settings: Record<string, unknown>) =>
-    request<Record<string, unknown>>(`/cloud-storage/settings/${provider}`, { method: "PUT", body: Json.stringify(settings) }),
+    request<Record<string, unknown>>(`/cloud-storage/settings/${provider}`, { method: "PUT", body: JSON.stringify(settings) }),
   initiateCloudStorageOAuth: (accountLabel: string) =>
     request<{ success: boolean; oAuthUrl?: string; oAuthState?: string; error?: string }>(
       "/cloud-storage/oauth/initiate",
-      { method: "POST", body: Json.stringify({ AccountLabel: accountLabel }) },
+      { method: "POST", body: JSON.stringify({ AccountLabel: accountLabel }) },
     ),
 
   // Cloud Storage — Phase 5A: Repo & branch browsing
@@ -828,7 +828,7 @@ export const api = {
   restoreCloudStorageBackup: (backupId: number) =>
     request<{ success: boolean; message: string }>(
       "/cloud-storage/restore",
-      { method: "POST", body: Json.stringify({ BackupId: backupId }) },
+      { method: "POST", body: JSON.stringify({ BackupId: backupId }) },
     ),
 
   // Cloud Storage — Rotation
@@ -847,7 +847,7 @@ export const api = {
   updateRemoteSiteSettings: (siteId: number, settings: Partial<SiteSettingsUpdate>) =>
     request<SiteSettingsUpdateResponse>(
       `/sites/${siteId}/site-settings`,
-      { method: "PUT", body: Json.stringify(settings) },
+      { method: "PUT", body: JSON.stringify(settings) },
     ),
   getRemoteSiteHealthSummary: (siteId: number) =>
     request<SiteHealthSummaryResponse>(`/sites/${siteId}/site-health-summary`),

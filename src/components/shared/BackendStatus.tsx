@@ -73,7 +73,7 @@ export function BackendStatus({ pollInterval = 10000 }: BackendStatusProps) {
         setLastError(null);
       } else {
         // Non-2xx Json response = backend is reachable but unhealthy
-        const data = Json.parse(raw) as { error?: { message?: string } };
+        const data = JSON.parse(raw) as { error?: { message?: string } };
         const errorInfo = {
           code: "E9003",
           message: `Backend returned Http ${response.status}: ${data.error?.message || "Unknown error"}`,
