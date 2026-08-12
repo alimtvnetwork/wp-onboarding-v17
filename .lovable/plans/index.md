@@ -10,3 +10,6 @@
 - [Task 259](completed/259-fix-wp-plugins-riseup-asia-uploader-tests-unit-agent-traits-agentloggingtraittest-php.md) - Completed
 - [Task 260](completed/260-fix-wp-plugins-riseup-asia-uploader-tests-unit-sync-syncpushtraittest-php.md) - Completed
 - [Task 325](completed/325-fix-backend-internal-services-publish_history-queries-go.md) - Completed
+- [Task 326](completed/326-fix-backend-internal-services-request_session-store-go.md) - Completed
+- [Task 327](completed/327-fix-backend-internal-services-session-servicelifecycle-go.md) - Completed
+- [Task 328](completed/328-fix-backend-internal-services-session-servicequery-go.md) - Completed
