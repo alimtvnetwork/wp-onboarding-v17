@@ -75,7 +75,7 @@ export function CommandPalette() {
     { id: "logs", label: "Logs", icon: ScrollText, action: () => go("/logs"), group: "Navigation" },
     { id: "sessions", label: "Sessions", icon: History, action: () => go("/sessions"), group: "Navigation" },
     { id: "request-sessions", label: "Request Log", icon: Radio, action: () => go("/request-sessions"), group: "Navigation", keywords: ["requests", "http"] },
-    { id: "api-explorer", label: "API Explorer", icon: Code2, action: () => go("/api-explorer"), group: "Navigation", keywords: ["swagger", "rest"] },
+    { id: "api-explorer", label: "Api Explorer", icon: Code2, action: () => go("/api-explorer"), group: "Navigation", keywords: ["swagger", "rest"] },
     { id: "errors", label: "Errors", icon: AlertCircle, action: () => go("/errors"), group: "Navigation" },
     { id: "settings", label: "Settings", icon: Settings, action: () => go("/settings"), group: "Navigation", keywords: ["config", "preferences"] },
     // Actions

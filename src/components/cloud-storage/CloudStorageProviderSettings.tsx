@@ -207,18 +207,18 @@ export function CloudStorageProviderSettings({
               />
             </div>
 
-            {/* Archive folder ID (for archive_oldest policy) */}
+            {/* Archive folder Id (for archive_oldest policy) */}
             {rotationPolicy === "archive_oldest" && (
               <div className="space-y-2">
-                <Label className="text-sm">Archive Folder ID</Label>
+                <Label className="text-sm">Archive Folder Id</Label>
                 <Input
                   value={archiveFolderId}
                   onChange={(e) => setArchiveFolderId(e.target.value)}
-                  placeholder="Google Drive folder ID"
+                  placeholder="Google Drive folder Id"
                   className="font-mono text-sm"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Folder ID where old backups will be moved instead of deleted
+                  Folder Id where old backups will be moved instead of deleted
                 </p>
               </div>
             )}

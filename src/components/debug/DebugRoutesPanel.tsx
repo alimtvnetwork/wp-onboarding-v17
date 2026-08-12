@@ -151,7 +151,7 @@ export function DebugRoutesPanel() {
       <CardContent>
         {!selectedSiteId ? (
           <p className="text-sm text-muted-foreground text-center py-8">
-            Select a site to view registered REST API routes
+            Select a site to view registered Rest Api routes
           </p>
         ) : isLoading ? (
           <div className="space-y-2">

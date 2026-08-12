@@ -70,3 +70,6 @@
 - [Task 386](completed/386-fix-licensing-pkg-apperror-codes-go.md) - Completed
 - [Task 387](completed/387-fix-src-app-tsx.md) - Completed
 - [Task 388](completed/388-fix-src-components-api-explorer-requesthistorypanel-tsx.md) - Completed
+- [Task 389](completed/389-fix-src-components-backup-backupprogressdialog-tsx.md) - Completed
+- [Task 390](completed/390-fix-src-components-cloud-storage-cloudstoragebackupselector-tsx.md) - Completed
+- [Task 391](completed/391-fix-src-components-cloud-storage-cloudstoragebackuptimeline-tsx.md) - Completed
