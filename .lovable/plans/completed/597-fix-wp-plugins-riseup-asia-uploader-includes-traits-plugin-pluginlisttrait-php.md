@@ -1,5 +1,7 @@
 # Subtask 597: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Plugin/PluginListTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Plugin/PluginListTrait.php`
 
 ## Violations

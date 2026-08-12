@@ -1,5 +1,7 @@
 # Subtask 605: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/User/UserAppPasswordTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/User/UserAppPasswordTrait.php`
 
 ## Violations

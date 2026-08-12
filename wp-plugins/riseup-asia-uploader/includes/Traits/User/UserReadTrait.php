@@ -19,6 +19,33 @@ use RiseupAsia\Helpers\EnvelopeBuilder;
 
 trait UserReadTrait {
 
+    private const PARAM_PAGE = 'page';
+    private const PARAM_PER_PAGE = 'per_page';
+    private const PARAM_ROLE = 'role';
+    private const PARAM_SEARCH = 'search';
+    private const PARAM_ID = 'id';
+
+    private const DEFAULT_PAGE = 1;
+    private const DEFAULT_PER_PAGE = 20;
+    private const MAX_PER_PAGE = 100;
+
+    private const ARG_NUMBER = 'number';
+    private const ARG_PAGED = 'paged';
+    private const ARG_ORDERBY = 'orderby';
+    private const ARG_ORDER = 'order';
+    private const ARG_ROLE = 'role';
+    private const ARG_SEARCH = 'search';
+    private const ARG_SEARCH_COLUMNS = 'search_columns';
+
+    private const ORDERBY_ID = 'Id';
+    private const ORDER_ASC = 'ASC';
+
+    private const WILDCARD = '*';
+
+    private const COLUMN_USER_LOGIN = 'user_login';
+    private const COLUMN_USER_EMAIL = 'user_email';
+    private const COLUMN_DISPLAY_NAME = 'display_name';
+
     /**
      * Handle GET /users — list users with pagination.
      */
@@ -27,35 +54,39 @@ trait UserReadTrait {
         $this->fileLogger->info('User endpoint accessed', ['endpoint' => 'GET /users']);
 
         return $this->safeExecute(function () use ($request) {
-            $page    = (int) ($request->get_param('page') ?: 1);
-            $perPage = (int) ($request->get_param('per_page') ?: 20);
-            $role    = $request->get_param('role') ?: '';
-            $search  = $request->get_param('search') ?: '';
+            $page    = (int) ($request->get_param(self::PARAM_PAGE) ?: self::DEFAULT_PAGE);
+            $perPage = (int) ($request->get_param(self::PARAM_PER_PAGE) ?: self::DEFAULT_PER_PAGE);
+            $role    = $request->get_param(self::PARAM_ROLE) ?: '';
+            $search  = $request->get_param(self::PARAM_SEARCH) ?: '';
 
-            $isPerPageTooHigh = ($perPage > 100);
+            $isPerPageTooHigh = ($perPage > self::MAX_PER_PAGE);
 
             if ($isPerPageTooHigh) {
-                $perPage = 100;
+                $perPage = self::MAX_PER_PAGE;
             }
 
             $queryArgs = [
-                'number'  => $perPage,
-                'paged'   => $page,
-                'orderby' => 'ID',
-                'order'   => 'ASC',
+                self::ARG_NUMBER  => $perPage,
+                self::ARG_PAGED   => $page,
+                self::ARG_ORDERBY => self::ORDERBY_ID,
+                self::ARG_ORDER   => self::ORDER_ASC,
             ];
 
-            $hasRole = !empty($role);
+            $hasRole = ($role !== '');
 
             if ($hasRole) {
-                $queryArgs['role'] = sanitize_text_field($role);
+                $queryArgs[self::ARG_ROLE] = sanitize_text_field($role);
             }
 
-            $hasSearch = !empty($search);
+            $hasSearch = ($search !== '');
 
             if ($hasSearch) {
-                $queryArgs['search'] = '*' . sanitize_text_field($search) . '*';
-                $queryArgs['search_columns'] = ['user_login', 'user_email', 'display_name'];
+                $queryArgs[self::ARG_SEARCH] = self::WILDCARD . sanitize_text_field($search) . self::WILDCARD;
+                $queryArgs[self::ARG_SEARCH_COLUMNS] = [
+                    self::COLUMN_USER_LOGIN,
+                    self::COLUMN_USER_EMAIL,
+                    self::COLUMN_DISPLAY_NAME,
+                ];
             }
 
             $userQuery = new WP_User_Query($queryArgs);
@@ -87,14 +118,14 @@ trait UserReadTrait {
      */
     public function handleGetUser(WP_REST_Request $request): WP_REST_Response
     {
-        $userId = (int) $request->get_param('id');
+        $userId = (int) $request->get_param(self::PARAM_ID);
         $this->fileLogger->info('User endpoint accessed', ['endpoint' => 'GET /users/{id}', 'userId' => $userId]);
 
         return $this->safeExecute(function () use ($userId) {
             $user = get_userdata($userId);
-            $isUserFound = ($user !== false);
+            $isUserMissing = ($user === false);
 
-            if (!$isUserFound) {
+            if ($isUserMissing) {
                 $this->fileLogger->warn('User not found', ['userId' => $userId]);
 
                 return EnvelopeBuilder::error('User not found', 404)

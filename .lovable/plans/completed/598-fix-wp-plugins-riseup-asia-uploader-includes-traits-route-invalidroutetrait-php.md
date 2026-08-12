@@ -1,5 +1,7 @@
 # Subtask 598: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Route/InvalidRouteTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Route/InvalidRouteTrait.php`
 
 ## Violations

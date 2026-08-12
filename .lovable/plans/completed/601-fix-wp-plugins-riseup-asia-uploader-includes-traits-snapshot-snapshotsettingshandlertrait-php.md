@@ -1,5 +1,7 @@
 # Subtask 601: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Snapshot/SnapshotSettingsHandlerTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Snapshot/SnapshotSettingsHandlerTrait.php`
 
 ## Violations

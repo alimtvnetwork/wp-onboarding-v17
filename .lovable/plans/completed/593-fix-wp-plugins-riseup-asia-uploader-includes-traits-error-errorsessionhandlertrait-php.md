@@ -1,5 +1,7 @@
 # Subtask 593: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Error/ErrorSessionHandlerTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Error/ErrorSessionHandlerTrait.php`
 
 ## Violations

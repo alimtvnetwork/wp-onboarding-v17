@@ -1,5 +1,7 @@
 # Subtask 591: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Core/LifecycleHooksTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Core/LifecycleHooksTrait.php`
 
 ## Violations

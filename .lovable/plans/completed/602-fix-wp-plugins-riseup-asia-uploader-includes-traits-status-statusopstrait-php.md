@@ -1,5 +1,7 @@
 # Subtask 602: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Status/StatusOpsTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Status/StatusOpsTrait.php`
 
 ## Violations

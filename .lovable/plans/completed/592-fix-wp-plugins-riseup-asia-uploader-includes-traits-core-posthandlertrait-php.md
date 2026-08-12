@@ -1,5 +1,7 @@
 # Subtask 592: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Core/PostHandlerTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Core/PostHandlerTrait.php`
 
 ## Violations

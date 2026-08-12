@@ -1,5 +1,7 @@
 # Subtask 594: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Log/LogRetrievalTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Log/LogRetrievalTrait.php`
 
 ## Violations

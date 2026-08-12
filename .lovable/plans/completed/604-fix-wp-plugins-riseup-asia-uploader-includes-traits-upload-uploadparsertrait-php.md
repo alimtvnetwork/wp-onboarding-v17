@@ -1,5 +1,7 @@
 # Subtask 604: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Upload/UploadParserTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Upload/UploadParserTrait.php`
 
 ## Violations

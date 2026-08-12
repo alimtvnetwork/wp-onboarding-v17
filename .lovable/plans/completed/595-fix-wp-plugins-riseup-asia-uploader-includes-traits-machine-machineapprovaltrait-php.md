@@ -1,5 +1,7 @@
 # Subtask 595: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Machine/MachineApprovalTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Machine/MachineApprovalTrait.php`
 
 ## Violations

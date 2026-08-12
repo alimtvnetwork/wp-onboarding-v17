@@ -1,5 +1,7 @@
 # Subtask 600: Fix violations in wp-plugins/riseup-asia-uploader/includes/Traits/Snapshot/SnapshotCrudRestoreTrait.php
 
+Status: completed
+
 Target File: `wp-plugins/riseup-asia-uploader/includes/Traits/Snapshot/SnapshotCrudRestoreTrait.php`
 
 ## Violations
