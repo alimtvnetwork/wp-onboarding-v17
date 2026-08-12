@@ -1,5 +1,5 @@
-// Package wordpress provides snapshot management via the Riseup Asia Uploader REST API.
-// All endpoints use fixed paths with IDs passed in JSON request bodies.
+// Package wordpress provides snapshot management via the Riseup Asia Uploader REST Api.
+// All endpoints use fixed paths with Ids passed in Json request bodies.
 package wordpress
 
 import (
@@ -14,7 +14,7 @@ import (
 
 // SnapshotRecord represents a database snapshot record from the WordPress plugin.
 type SnapshotRecord struct {
-	Id        int64  `json:"id"`        // external key (Riseup Asia snapshot API)
+	Id        int64  `json:"id"`        // external key (Riseup Asia snapshot Api)
 	Sequence  int    `json:"sequence"`  // external key
 	Filename  string `json:"filename"`  // external key
 	Scope     string `json:"scope"`     // external key
@@ -29,7 +29,7 @@ type SnapshotRecord struct {
 
 // SnapshotSettings represents snapshot configuration on the WordPress site.
 type SnapshotSettings struct {
-	Provider      string `json:"provider"`            // external key (Riseup Asia snapshot API)
+	Provider      string `json:"provider"`            // external key (Riseup Asia snapshot Api)
 	Schedule      string `json:"schedule"`            // external key
 	ScheduleTime  string `json:"scheduleTime,omitempty"` // external key
 	ScheduleDay   string `json:"scheduleDay,omitempty"`  // external key
@@ -43,19 +43,19 @@ type SnapshotSettings struct {
 
 // SnapshotIdRequest holds a snapshot Id for POST endpoints.
 type SnapshotIdRequest struct {
-	Id int64 `json:"id"` // external key (Riseup Asia snapshot API)
+	Id int64 `json:"id"` // external key (Riseup Asia snapshot Api)
 }
 
 // SnapshotCreateOptions holds options for creating a snapshot.
 type SnapshotCreateOptions struct {
-	Scope  string   `json:"scope,omitempty"`  // external key (Riseup Asia snapshot API)
+	Scope  string   `json:"scope,omitempty"`  // external key (Riseup Asia snapshot Api)
 	Tables []string `json:"tables,omitempty"` // external key
 	Type   string   `json:"type,omitempty"`   // external key
 }
 
 // SnapshotCreateResult holds the result of a create snapshot request.
 type SnapshotCreateResult struct {
-	Success    bool   `json:"success"`              // external key (Riseup Asia snapshot API)
+	Success    bool   `json:"success"`              // external key (Riseup Asia snapshot Api)
 	SnapshotId int64  `json:"snapshotId,omitempty"` // external key
 	Message    string `json:"message,omitempty"`    // external key
 	Status     string `json:"status,omitempty"`     // external key
@@ -63,13 +63,13 @@ type SnapshotCreateResult struct {
 
 // SnapshotRestoreOptions holds options for restoring a snapshot.
 type SnapshotRestoreOptions struct {
-	Id      int64 `json:"id"`      // external key (Riseup Asia snapshot API)
+	Id      int64 `json:"id"`      // external key (Riseup Asia snapshot Api)
 	Confirm bool  `json:"confirm"` // external key
 }
 
 // SnapshotRestoreResult holds the result of a restore request.
 type SnapshotRestoreResult struct {
-	Success bool   `json:"success"`           // external key (Riseup Asia snapshot API)
+	Success bool   `json:"success"`           // external key (Riseup Asia snapshot Api)
 	Message string `json:"message,omitempty"` // external key
 	Status  string `json:"status,omitempty"`  // external key
 }
@@ -131,7 +131,7 @@ func trySnapshotArrayFallback(c *Client, endpoint string) apperror.Result[[]Snap
 	return apperror.Ok(snapshots)
 }
 
-// GetSnapshot returns details for a specific snapshot (ID in JSON body).
+// GetSnapshot returns details for a specific snapshot (Id in Json body).
 func (c *Client) GetSnapshot(snapshotId int64) apperror.Result[SnapshotRecord] {
 	return DoApiCall[SnapshotRecord](c, ApiCallInput{
 		Method:    httpmethod.Post,
@@ -152,7 +152,7 @@ func (c *Client) CreateSnapshot(opts SnapshotCreateOptions) apperror.Result[Snap
 	})
 }
 
-// DeleteSnapshot removes a snapshot from the remote site (ID in JSON body).
+// DeleteSnapshot removes a snapshot from the remote site (Id in Json body).
 func (c *Client) DeleteSnapshot(snapshotId int64) *apperror.AppError {
 	rawResult := c.doApiCallRaw(ApiCallInput{
 		Method:     httpmethod.Post,
@@ -165,7 +165,7 @@ func (c *Client) DeleteSnapshot(snapshotId int64) *apperror.AppError {
 	return rawResult.AppError()
 }
 
-// RestoreSnapshot triggers a restore from a snapshot on the remote site (ID in JSON body).
+// RestoreSnapshot triggers a restore from a snapshot on the remote site (Id in Json body).
 func (c *Client) RestoreSnapshot(snapshotId int64) apperror.Result[SnapshotRestoreResult] {
 	return DoApiCall[SnapshotRestoreResult](c, ApiCallInput{
 		Method:    httpmethod.Post,

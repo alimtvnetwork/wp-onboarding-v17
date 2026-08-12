@@ -40,3 +40,6 @@
 - [Task 353](completed/353-fix-backend-internal-wordpress-constants-go.md) - Completed
 - [Task 354](completed/354-fix-backend-internal-wordpress-endpointmap-go.md) - Completed
 - [Task 355](completed/355-fix-backend-internal-wordpress-httpstatustype-go.md) - Completed
+- [Task 356](completed/356-fix-backend-internal-wordpress-logsretrievetypes-go.md) - Completed
+- [Task 357](completed/357-fix-backend-internal-wordpress-logstypes-go.md) - Completed
+- [Task 358](completed/358-fix-backend-internal-wordpress-powershell-go.md) - Completed

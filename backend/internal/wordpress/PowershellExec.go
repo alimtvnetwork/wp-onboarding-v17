@@ -43,7 +43,7 @@ func buildPsResult(cmd *exec.Cmd, stdout, stderr *bytes.Buffer) *PowerShellResul
 	return result
 }
 
-// parsePsJsonOutput parses JSON from PowerShell stdout quiet mode.
+// parsePsJsonOutput parses Json from PowerShell stdout quiet mode.
 func parsePsJsonOutput(result *PowerShellResult) {
 	isStdoutEmpty := result.Stdout == ""
 

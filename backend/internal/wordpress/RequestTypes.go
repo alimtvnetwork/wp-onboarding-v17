@@ -1,9 +1,9 @@
-// Package wordpress — typed request body structs for WordPress API calls.
+// Package wordpress — typed request body structs for WordPress Api calls.
 // These replace inline map[string]string literals at call sites,
 // ensuring type safety per the Generic Enforce Pattern (GE-1).
 package wordpress
 
-// PluginSlugRequest is the request body for plugin-slug-only API calls.
+// PluginSlugRequest is the request body for plugin-slug-only Api calls.
 //
 // Compatibility note:
 // - Legacy helpers accept `plugin`
@@ -21,29 +21,29 @@ func NewPluginSlugRequest(slug string) PluginSlugRequest {
 	return PluginSlugRequest{Plugin: slug, PluginSlug: slug}
 }
 
-// PluginFileRequest is the request body for single-file read API calls.
+// PluginFileRequest is the request body for single-file read Api calls.
 type PluginFileRequest struct {
-	Plugin string `json:"plugin"` // external key (Riseup Asia Uploader API)
+	Plugin string `json:"plugin"` // external key (Riseup Asia Uploader Api)
 	Path   string `json:"path"`   // external key
 }
 
-// PluginFileDeleteRequest is the request body for file deletion API calls.
+// PluginFileDeleteRequest is the request body for file deletion Api calls.
 type PluginFileDeleteRequest struct {
-	Plugin string `json:"plugin"` // external key (Riseup Asia Uploader API)
+	Plugin string `json:"plugin"` // external key (Riseup Asia Uploader Api)
 	Path   string `json:"path"`   // external key
 	Action string `json:"action"` // external key
 }
 
-// PluginFileReplaceRequest is the request body for file replacement API calls.
+// PluginFileReplaceRequest is the request body for file replacement Api calls.
 type PluginFileReplaceRequest struct {
-	Plugin  string `json:"plugin"`  // external key (Riseup Asia Uploader API)
+	Plugin  string `json:"plugin"`  // external key (Riseup Asia Uploader Api)
 	Path    string `json:"path"`    // external key
 	Content string `json:"content"` // external key (base64 encoded)
 }
 
-// SyncRequestBody is the request body for delta sync API calls.
+// SyncRequestBody is the request body for delta sync Api calls.
 type SyncRequestBody struct {
-	Plugin string     `json:"plugin"` // external key (Riseup Asia Uploader API)
+	Plugin string     `json:"plugin"` // external key (Riseup Asia Uploader Api)
 	Files  []SyncFile `json:"files"`  // external key
 }
 
