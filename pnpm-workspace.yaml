@@ -1,6 +1,7 @@
 nodeLinker: isolated
 
 packageImportMethod: auto
+storeDir: D:\work\wp-onboarding\..\.pnpm-store
 
 symlink: true
 

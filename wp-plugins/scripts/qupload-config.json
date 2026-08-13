@@ -1,5 +1,5 @@
 {
-  "pluginFolderPath": "D:\\wp-work\\your-project\\wp-plugins\\qupload",
+  "pluginFolderPath": "../qupload",
   "wordPressSiteURL": "https://your-site.example.com",
   "username": "your-username",
   "appPassword": "xxxx xxxx xxxx xxxx xxxx xxxx",

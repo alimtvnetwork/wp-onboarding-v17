@@ -25,8 +25,8 @@
       "slug": "alim",
       "name": "Alim Plugin",
       "paths": {
-        "windows": "D:\\wp-work\\riseup-asia\\wp-alim\\alim",
-        "unix": "/Users/dev/wp-work/riseup-asia/wp-alim/alim"
+        "windows": "../../../wp-alim/alim",
+        "unix": "../../../wp-alim/alim"
       },
       "activate": true,
       "pingEndpoint": "/wp-json/alim/v1/ping"

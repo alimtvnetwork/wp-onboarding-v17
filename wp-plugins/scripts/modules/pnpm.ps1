@@ -34,9 +34,18 @@ function Configure-PnpmStore {
         if ($driveExists) {
             Write-Host "  Configuring pnpm store path: $PnpmStorePath" -ForegroundColor Gray
             if (-not (Test-Path $PnpmStorePath)) {
-                New-Item -ItemType Directory -Path $PnpmStorePath -Force | Out-Null
+                try {
+                    New-Item -ItemType Directory -Path $PnpmStorePath -Force -ErrorAction Stop | Out-Null
+                } catch {
+                    Write-Host "  WARNING: Failed to create store directory '$PnpmStorePath' ($($_.Exception.Message)). Using pnpm default store." -ForegroundColor Yellow
+                    pnpm config delete --location=project store-dir 2>$null
+                    $storeDirConfigFailed = $true
+                }
             }
-            pnpm config set --location=project store-dir $PnpmStorePath 2>$null
+            
+            if (-not $storeDirConfigFailed) {
+                pnpm config set --location=project store-dir $PnpmStorePath 2>$null
+            }
         } else {
             Write-Host "  WARNING: Drive '$storeDriveRoot' not found — skipping store-dir config ($PnpmStorePath). Using pnpm default store." -ForegroundColor Yellow
             # Override any storeDir in pnpm-workspace.yaml by unsetting project-level store-dir

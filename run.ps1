@@ -540,7 +540,7 @@ if ($deploy) {
 
     if (-not $wpPluginsChanged) {
         Write-Host ""
-        Write-Host "[Deploy] All plugins up to date — skipping PHP upload & status" -ForegroundColor Green
+        Write-Host "[Deploy] All plugins up to date - skipping PHP upload & status" -ForegroundColor Green
     } else {
         Write-Host ""
         Write-Host "[Deploy] $($pluginsNeedingDeploy.Count) plugin(s) need deployment: $($pluginsNeedingDeploy -join ', ')" -ForegroundColor Yellow
@@ -728,7 +728,7 @@ if ($uas) {
     if ($pas) {
         Write-Host ""
         Write-Host "========================================" -ForegroundColor Cyan
-        Write-Host "  Upload complete — running plugin status check on all sites..." -ForegroundColor Cyan
+        Write-Host "  Upload complete - running plugin status check on all sites..." -ForegroundColor Cyan
         Write-Host "========================================" -ForegroundColor Cyan
         Write-Host ""
         $pluginstatusall = $true
@@ -741,7 +741,7 @@ if ($uas) {
     if ($clearlogsall) {
         Write-Host ""
         Write-Host "========================================" -ForegroundColor Cyan
-        Write-Host "  Status complete — clearing logs on all sites..." -ForegroundColor Cyan
+        Write-Host "  Status complete - clearing logs on all sites..." -ForegroundColor Cyan
         Write-Host "========================================" -ForegroundColor Cyan
         Write-Host ""
         Invoke-ClearLogsMode -ForceAll -PluginFilter $logplugin -TypeFilter $logtype -AuditMode:$audit -VerboseMode:$verbose
@@ -751,7 +751,7 @@ if ($uas) {
     if ($clearallsites -or $purge) {
         Write-Host ""
         Write-Host "========================================" -ForegroundColor Cyan
-        Write-Host "  Chained — purging all logs on all sites..." -ForegroundColor Cyan
+        Write-Host "  Chained - purging all logs on all sites..." -ForegroundColor Cyan
         Write-Host "========================================" -ForegroundColor Cyan
         Write-Host ""
         Invoke-PurgeMode -SkipConfirm:$yes -VerboseMode:$verbose
@@ -761,7 +761,7 @@ if ($uas) {
     if ($clearlogs) {
         Write-Host ""
         Write-Host "========================================" -ForegroundColor Cyan
-        Write-Host "  Chained — clearing logs..." -ForegroundColor Cyan
+        Write-Host "  Chained - clearing logs..." -ForegroundColor Cyan
         Write-Host "========================================" -ForegroundColor Cyan
         Write-Host ""
         Invoke-ClearLogsMode -PluginFilter $logplugin -TypeFilter $logtype -AuditMode:$audit -VerboseMode:$verbose
