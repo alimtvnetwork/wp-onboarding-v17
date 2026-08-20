@@ -82,7 +82,8 @@ func TestList(t *testing.T) {
 	svc := NewLicenseService(db)
 
 	for i := 0; i < 3; i++ {
-		key, _ := GenerateKey()
+		keyRes := GenerateKey()
+		key := keyRes.Value()
 		svc.Create(CreateInput{
 			Key:            key,
 			Email:          "list@example.com",
@@ -115,7 +116,7 @@ func TestUpdate(t *testing.T) {
 		MaxActivations: 1,
 	})
 	lic := reslic.Value()
-	_ := reslic.AppError()
+	_ = reslic.AppError()
 
 	newStatus := licensestatustype.Suspended
 	newMax := 10
@@ -155,9 +156,11 @@ func TestUpdateNoChanges(t *testing.T) {
 		MaxActivations: 1,
 	})
 	lic := reslic.Value()
-	_ := reslic.AppError()
+	_ = reslic.AppError()
 
 	resresult := svc.Update(lic.Id, UpdateInput{})
+	result := resresult.Value()
+	err := resresult.AppError()
 	if err != nil {
 		t.Fatalf("update no-op: %v", err)
 	}
@@ -170,22 +173,24 @@ func TestDelete(t *testing.T) {
 	db := newTestDB(t)
 	svc := NewLicenseService(db)
 
-	lic, _ := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-DELT-AAAA-BBBB-CCCC",
 		Email:          "del@example.com",
 		Product:        producttype.RiseupUploader,
 		Type:           licensetype.Standard,
 		MaxActivations: 1,
 	})
-	result := resresult.Value()
-	err := resresult.AppError()
+	lic := reslic.Value()
+	_ = reslic.AppError()
 
-	err = svc.Delete(lic.Id)
+	err := svc.Delete(lic.Id)
+	
 	if err != nil {
 		t.Fatalf("delete: %v", err)
 	}
 
-	_, err = svc.GetById(lic.Id)
+	getRes := svc.GetById(lic.Id)
+	err = getRes.AppError()
 	if err == nil {
 		t.Error("expected error after delete, got nil")
 	}
@@ -205,11 +210,11 @@ func TestLicenseIsExpired(t *testing.T) {
 		ExpiresAt:      &past,
 	})
 	lic := reslic.Value()
-	_ := reslic.AppError()
+	_ = reslic.AppError()
 
 	resfetched := svc.GetById(lic.Id)
 	fetched := resfetched.Value()
-	_ := resfetched.AppError()
+	_ = resfetched.AppError()
 	if !fetched.IsExpired() {
 		t.Error("expected license to be expired")
 	}
@@ -230,11 +235,11 @@ func TestLicenseNotExpiredWhenNoExpiry(t *testing.T) {
 		MaxActivations: 1,
 	})
 	lic := reslic.Value()
-	_ := reslic.AppError()
+	_ = reslic.AppError()
 
 	resfetched := svc.GetById(lic.Id)
 	fetched := resfetched.Value()
-	_ := resfetched.AppError()
+	_ = resfetched.AppError()
 	if fetched.IsExpired() {
 		t.Error("license without expiry should not be expired")
 	}
