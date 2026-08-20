@@ -229,7 +229,7 @@ export function PublishProgressDialog({
   const [stages, setStages] = useState<PublishStage[]>(buildDefaultStages);
   const [overallProgress, setOverallProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isFail, setIsFail] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [filesUpdated, setFilesUpdated] = useState<number | null>(null);
   const [backendStackTrace, setBackendStackTrace] = useState<string | null>(null);
@@ -314,7 +314,7 @@ export function PublishProgressDialog({
       setStages(buildDefaultStages());
       setOverallProgress(0);
       setIsComplete(false);
-      setIsSuccess(false);
+      setIsFail(false);
       setErrorMessage(null);
       setFilesUpdated(null);
       setBackendStackTrace(null);
@@ -406,7 +406,7 @@ export function PublishProgressDialog({
         const wasSuccessful = payload.isSuccess ?? payload.success ?? (payload.status === PayloadStatusType.Completed || payload.status === PayloadStatusType.Success);
         
         setIsComplete(true);
-        setIsSuccess(wasSuccessful);
+        setIsFail(!wasSuccessful);
         setFilesUpdated(payload.filesUpdated ?? null);
         setOverallProgress(100);
         
@@ -555,7 +555,7 @@ export function PublishProgressDialog({
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Upload className="h-5 w-5 text-primary" />
-            {isComplete ? (isSuccess ? "Publish Complete" : "Publish Failed") : "Publishing..."}
+            {isComplete ? (!isFail ? "Publish Complete" : "Publish Failed") : "Publishing..."}
           </DialogTitle>
           <DialogDescription className="flex items-center gap-2 flex-wrap min-h-0">
             <span className="truncate">Deploying <strong>{pluginName}</strong> to <strong className="truncate max-w-[200px] inline-block align-bottom">{siteName}</strong></span>
@@ -691,7 +691,7 @@ export function PublishProgressDialog({
                 </div>
 
                 {/* Success Message */}
-                {isComplete && isSuccess && filesUpdated !== null && (
+                {isComplete && !isFail && filesUpdated !== null && (
                   <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
                     <div className="flex items-center gap-2">
                       <Check className="h-5 w-5 text-primary" />
@@ -714,7 +714,7 @@ export function PublishProgressDialog({
                 )}
 
                 {/* Error Message */}
-                {isComplete && isSuccess === false && errorMessage && (
+                {isComplete && isFail && errorMessage && (
                   <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-3">
                     <div className="flex items-start gap-2">
                       <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />

@@ -16,7 +16,7 @@ func TestActivateNew(t *testing.T) {
 		UserAgent: "TestAgent/1.0",
 	})
 	act := res.Value()
-	err := res.Error()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("activate: %v", err)
 	}
@@ -39,7 +39,7 @@ func TestActivateReactivation(t *testing.T) {
 
 	res := svc.Activate(ActivateInput{LicenseId: licId, Domain: "reactivate.com", IpAddress: "2.2.2.2", UserAgent: "B"})
 	act := res.Value()
-	err := res.Error()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("reactivate: %v", err)
 	}
@@ -84,7 +84,7 @@ func TestCountActive(t *testing.T) {
 
 	res := svc.CountActive(licId)
 	count := res.Value()
-	err := res.Error()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("count: %v", err)
 	}
@@ -103,7 +103,7 @@ func TestListByLicense(t *testing.T) {
 
 	res := svc.ListByLicense(licId)
 	list := res.Value()
-	err := res.Error()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("list: %v", err)
 	}
@@ -117,11 +117,14 @@ func TestDuplicateActivationReturnsExisting(t *testing.T) {
 	licId := seedLicense(t, db)
 	svc := NewActivationService(db)
 
-	first, _ := svc.Activate(ActivateInput{LicenseId: licId, Domain: "dup.com", IpAddress: "1.1.1.1", UserAgent: "A"})
-	second, err := svc.Activate(ActivateInput{LicenseId: licId, Domain: "dup.com", IpAddress: "2.2.2.2", UserAgent: "B"})
+	firstRes := svc.Activate(ActivateInput{LicenseId: licId, Domain: "dup.com", IpAddress: "1.1.1.1", UserAgent: "A"})
+	secondRes := svc.Activate(ActivateInput{LicenseId: licId, Domain: "dup.com", IpAddress: "2.2.2.2", UserAgent: "B"})
+	err := secondRes.AppError()
 	if err != nil {
 		t.Fatalf("duplicate activate: %v", err)
 	}
+	first := firstRes.Value()
+	second := secondRes.Value()
 
 	if first.Id != second.Id {
 		t.Errorf("expected same activation id, got %d and %d", first.Id, second.Id)

@@ -24,6 +24,7 @@ use WP_REST_Response;
 use RiseupAsia\Enums\OptionNameType;
 use RiseupAsia\Helpers\EnvelopeBuilder;
 use RiseupAsia\Enums\PhpNativeType;
+use RiseupAsia\Database\WpDbQueryWrapper;
 
 trait SiteHealthSummaryTrait
 {
@@ -196,7 +197,9 @@ trait SiteHealthSummaryTrait
         $dbSize = 0;
         $tableCount = 0;
 
-        $tables = $wpdb->get_results("SHOW TABLE STATUS", ARRAY_A);
+        $tables = WpDbQueryWrapper::execute($wpdb, function ($db) {
+            return $db->get_results("SHOW TABLE STATUS", ARRAY_A);
+        }, "SHOW TABLE STATUS");
         if (gettype($tables) === PhpNativeType::PhpArray->value) {
             $tableCount = count($tables);
             foreach ($tables as $table) {

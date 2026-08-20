@@ -20,6 +20,7 @@ use WP_REST_Response;
 use RiseupAsia\Enums\UserMetaKeyType;
 use RiseupAsia\Helpers\EnvelopeBuilder;
 use RiseupAsia\Enums\PhpNativeType;
+use RiseupAsia\Database\WpDbQueryWrapper;
 
 trait UserImportCsvTrait {
 
@@ -168,7 +169,9 @@ trait UserImportCsvTrait {
 
         if ($isPreHashed) {
             global $wpdb;
-            $wpdb->update($wpdb->users, ['user_pass' => $passwordHash], ['ID' => $newUserId]);
+            WpDbQueryWrapper::execute($wpdb, function ($db) use ($passwordHash, $newUserId) {
+                return $db->update($db->users, ['user_pass' => $passwordHash], ['ID' => $newUserId]);
+            }, "update user password");
             wp_cache_delete($newUserId, 'users');
         }
 
@@ -203,7 +206,9 @@ trait UserImportCsvTrait {
 
             if ($isPreHashed) {
                 global $wpdb;
-                $wpdb->update($wpdb->users, ['user_pass' => $passwordHash], ['ID' => $userId]);
+                WpDbQueryWrapper::execute($wpdb, function ($db) use ($passwordHash, $userId) {
+                    return $db->update($db->users, ['user_pass' => $passwordHash], ['ID' => $userId]);
+                }, "update existing user password");
                 wp_cache_delete($userId, 'users');
             } else {
                 $userdata['user_pass'] = $passwordHash;

@@ -76,7 +76,7 @@ func seedLicense(t *testing.T, db *sql.DB) int64 {
 
 	svc := NewLicenseService(db)
 
-	lic, err := svc.Create(CreateInput{
+	res := svc.Create(CreateInput{
 		Key:            "RISEUP-TEST-AAAA-BBBB-CCCC",
 		Email:          "test@example.com",
 		Product:        producttype.RiseupUploader,
@@ -84,6 +84,8 @@ func seedLicense(t *testing.T, db *sql.DB) int64 {
 		MaxActivations: 3,
 		Notes:          "seed license",
 	})
+	lic := res.Value()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("seed license: %v", err)
 	}

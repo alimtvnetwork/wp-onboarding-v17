@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
 
 use PDO;
 use Throwable;
+use RiseupAsia\Database\WpDbQueryWrapper;
 
 use RiseupAsia\Enums\LogLevelType;
 use RiseupAsia\Enums\PluginConfigType;
@@ -196,7 +197,9 @@ trait RootDbSchemaTrait {
 
     public function populateMetadata(PDO $pdo, array $config): void {
         global $wpdb;
-        $mysqlVersion = $wpdb->get_var("SELECT VERSION()");
+        $mysqlVersion = WpDbQueryWrapper::execute($wpdb, function ($db) {
+            return $db->get_var("SELECT VERSION()");
+        }, "SELECT VERSION()");
         $wpVersion = get_bloginfo('version');
 
         $stmt = $this->prepareMetadataInsert($pdo);

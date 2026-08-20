@@ -8,7 +8,7 @@ import (
 func TestGenerateKeyFormat(t *testing.T) {
 	res := GenerateKey()
 	key := res.Value()
-	err := res.Error()
+	err := res.AppError()
 	if err != nil {
 		t.Fatalf("generate: %v", err)
 	}
@@ -34,7 +34,8 @@ func TestGenerateKeyFormat(t *testing.T) {
 }
 
 func TestGenerateKeyCharset(t *testing.T) {
-	key, _ := GenerateKey()
+	reskey := GenerateKey()
+	key := reskey.Value()
 	body := strings.TrimPrefix(key, KeyPrefix+"-")
 	body = strings.ReplaceAll(body, "-", "")
 
@@ -52,7 +53,7 @@ func TestGenerateKeyUniqueness(t *testing.T) {
 	for i := 0; i < count; i++ {
 		res := GenerateKey()
 	key := res.Value()
-	err := res.Error()
+	err := res.AppError()
 		if err != nil {
 			t.Fatalf("generate %d: %v", i, err)
 		}

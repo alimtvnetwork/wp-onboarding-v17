@@ -68,7 +68,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
     queryKey: [QueryKeyType.Plugins],
     queryFn: async () => {
       const response = await api.getPlugins();
-      return response.success === true ? response.data || [] : [];
+      return response.success ? response.data || [] : [];
     },
   });
 
@@ -78,7 +78,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
     queryFn: async () => {
       if (site?.id === undefined) return [];
       const response = await api.getSiteMappings(site.id);
-      return response.success === true ? response.data || [] : [];
+      return response.success ? response.data || [] : [];
     },
     enabled: !!site?.id,
   });
@@ -132,7 +132,7 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
 
     try {
       const response = await api.testConnection(site.id);
-      if (response.success === true && response.data?.isSuccess === true) {
+      if (response.success && response.data?.isSuccess) {
         setTestSuccess(true);
         toast.success(`Connection successful! WP ${response.data.wpVersion}`);
         queryClient.invalidateQueries({ queryKey: [QueryKeyType.Sites] });
@@ -178,10 +178,10 @@ export function EditSiteDialog({ open, onOpenChange, site }: EditSiteDialogProps
         ...formData,
         category: formData.category || undefined,
       });
-      if (response.success === true) {
+      if (response.success) {
         // Use the new robust endpoint to update all site mappings in one call
         const mappingRes = await api.updateSiteMappings(site.id, selectedPlugins);
-        if (mappingRes.success === false && mappingRes.error !== undefined) {
+        if (!mappingRes.success && mappingRes.error !== undefined) {
           console.warn("[EditSiteDialog] Mapping update warning:", mappingRes.error.message);
           toast.warning("Site saved, but some plugin mappings may not have updated");
         } else {

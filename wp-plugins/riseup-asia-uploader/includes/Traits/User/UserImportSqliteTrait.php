@@ -20,6 +20,7 @@ use WP_REST_Response;
 use ZipArchive;
 use RiseupAsia\Enums\UserMetaKeyType;
 use RiseupAsia\Helpers\EnvelopeBuilder;
+use RiseupAsia\Database\WpDbQueryWrapper;
 
 trait UserImportSqliteTrait {
     private const ERR_ZIP_REQUIRED = 'ZIP file is required';
@@ -178,7 +179,9 @@ trait UserImportSqliteTrait {
 
         if ($hasPasswordHash) {
             global $wpdb;
-            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $newUserId]);
+            WpDbQueryWrapper::execute($wpdb, function ($db) use ($sqliteUser, $newUserId) {
+                return $db->update($db->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $newUserId]);
+            }, "update user password");
             wp_cache_delete($newUserId, 'users');
         }
 
@@ -216,7 +219,9 @@ trait UserImportSqliteTrait {
 
         if ($hasPasswordHash) {
             global $wpdb;
-            $wpdb->update($wpdb->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $userId]);
+            WpDbQueryWrapper::execute($wpdb, function ($db) use ($sqliteUser, $userId) {
+                return $db->update($db->users, ['user_pass' => $sqliteUser['password_hash']], ['Id' => $userId]);
+            }, "update user password");
             wp_cache_delete($userId, 'users');
         }
 

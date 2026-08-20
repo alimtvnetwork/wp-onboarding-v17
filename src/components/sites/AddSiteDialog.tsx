@@ -186,8 +186,8 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
         password: formData.password,
       });
 
-      if (response.success === true && response.data !== undefined) {
-        if (response.data.isSuccess === true) {
+      if (response.success && response.data !== undefined) {
+        if (response.data.isSuccess) {
           setCredentialsTestResult({
             success: true,
             message: response.data.message || "Connection successful",
@@ -256,7 +256,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
       applicationPassword: formData.password,
       category: category || undefined,
       // If connection was tested successfully, pass that info
-      ...(credentialsTestResult?.success === true && {
+      ...(credentialsTestResult?.success && {
         connectionStatus: ConnectionStatusType.Connected,
         testedAt: credentialsTestResult.testedAt,
       }),
@@ -265,7 +265,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
     setIsSubmitting(true);
     try {
       const response = await api.createSite(requestBody);
-      if (response.success === true && response.data !== undefined) {
+      if (response.success && response.data !== undefined) {
         const newSiteId = response.data.id;
         
         // Create plugin mappings for selected plugins
@@ -274,7 +274,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             try {
               const plugin = allPlugins?.find((p) => p.id === pluginId);
               const pluginMappingsRes = await api.getPluginMappings(pluginId);
-              if (pluginMappingsRes.success === true && pluginMappingsRes.data !== undefined) {
+              if (pluginMappingsRes.success && pluginMappingsRes.data !== undefined) {
                 const currentSiteIds = pluginMappingsRes.data.map((m) => m.siteId);
                 if (currentSiteIds.includes(newSiteId) === false) {
                   const remoteSlug = pluginMappingsRes.data[0]?.remoteSlug || 
@@ -338,7 +338,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             Add WordPress Site
-            {credentialsTestResult?.success === true && (
+            {credentialsTestResult?.success && (
               <span className="inline-flex items-center gap-1 text-xs font-normal text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                 <CheckCircle className="h-3 w-3" />
                 Connected
@@ -422,7 +422,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    {credentialsTestResult.success === true ? (
+                    {credentialsTestResult.success ? (
                       <CheckCircle className="h-4 w-4 text-primary" />
                     ) : (
                       <XCircle className="h-4 w-4 text-destructive" />
@@ -430,10 +430,10 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
                     <span
                       className={cn(
                         "text-sm font-medium",
-                        credentialsTestResult.success === true ? "text-primary" : "text-destructive"
+                        credentialsTestResult.success ? "text-primary" : "text-destructive"
                       )}
                     >
-                      {credentialsTestResult.success === true ? "Connected" : "Connection Failed"}
+                      {credentialsTestResult.success ? "Connected" : "Connection Failed"}
                     </span>
                   </div>
                   {credentialsTestResult.success && (
@@ -470,7 +470,7 @@ export function AddSiteDialog({ open, onOpenChange, debugMode = false }: AddSite
             )}
 
             {/* Test Button */}
-            {credentialsTestResult?.success !== true && (
+            {!credentialsTestResult?.success && (
               <Button
                 variant="secondary"
                 className="w-full"

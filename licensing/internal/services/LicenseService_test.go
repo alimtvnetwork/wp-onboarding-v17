@@ -15,7 +15,7 @@ func TestCreateAndGetById(t *testing.T) {
 
 	expires := time.Now().Add(30 * 24 * time.Hour)
 
-	lic, err := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-AAAA-BBBB-CCCC-DDDD",
 		Email:          "user@example.com",
 		Product:        producttype.RiseupUploader,
@@ -24,6 +24,8 @@ func TestCreateAndGetById(t *testing.T) {
 		Notes:          "test note",
 		ExpiresAt:      &expires,
 	})
+	lic := reslic.Value()
+	err := reslic.AppError()
 	if err != nil {
 		t.Fatalf("create: %v", err)
 	}
@@ -41,7 +43,9 @@ func TestCreateAndGetById(t *testing.T) {
 		t.Errorf("status = %q, want active", lic.Status)
 	}
 
-	fetched, err := svc.GetById(lic.Id)
+	resfetched := svc.GetById(lic.Id)
+	fetched := resfetched.Value()
+	err = resfetched.AppError()
 	if err != nil {
 		t.Fatalf("get by id: %v", err)
 	}
@@ -62,7 +66,9 @@ func TestGetByKey(t *testing.T) {
 		MaxActivations: 1,
 	})
 
-	lic, err := svc.GetByKey("RISEUP-FIND-MEBY-KEYY-PLZZ")
+	reslic := svc.GetByKey("RISEUP-FIND-MEBY-KEYY-PLZZ")
+	lic := reslic.Value()
+	err := reslic.AppError()
 	if err != nil {
 		t.Fatalf("get by key: %v", err)
 	}
@@ -86,7 +92,9 @@ func TestList(t *testing.T) {
 		})
 	}
 
-	all, err := svc.List()
+	resall := svc.List()
+	all := resall.Value()
+	err := resall.AppError()
 	if err != nil {
 		t.Fatalf("list: %v", err)
 	}
@@ -99,23 +107,27 @@ func TestUpdate(t *testing.T) {
 	db := newTestDB(t)
 	svc := NewLicenseService(db)
 
-	lic, _ := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-UPDT-AAAA-BBBB-CCCC",
 		Email:          "upd@example.com",
 		Product:        producttype.RiseupUploader,
 		Type:           licensetype.Standard,
 		MaxActivations: 1,
 	})
+	lic := reslic.Value()
+	_ := reslic.AppError()
 
 	newStatus := licensestatustype.Suspended
 	newMax := 10
 	newNotes := "updated notes"
 
-	updated, err := svc.Update(lic.Id, UpdateInput{
+	resupdated := svc.Update(lic.Id, UpdateInput{
 		Status:         &newStatus,
 		MaxActivations: &newMax,
 		Notes:          &newNotes,
 	})
+	updated := resupdated.Value()
+	err := resupdated.AppError()
 	if err != nil {
 		t.Fatalf("update: %v", err)
 	}
@@ -135,15 +147,17 @@ func TestUpdateNoChanges(t *testing.T) {
 	db := newTestDB(t)
 	svc := NewLicenseService(db)
 
-	lic, _ := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-NOOP-AAAA-BBBB-CCCC",
 		Email:          "noop@example.com",
 		Product:        producttype.RiseupUploader,
 		Type:           licensetype.Standard,
 		MaxActivations: 1,
 	})
+	lic := reslic.Value()
+	_ := reslic.AppError()
 
-	result, err := svc.Update(lic.Id, UpdateInput{})
+	resresult := svc.Update(lic.Id, UpdateInput{})
 	if err != nil {
 		t.Fatalf("update no-op: %v", err)
 	}
@@ -163,8 +177,10 @@ func TestDelete(t *testing.T) {
 		Type:           licensetype.Standard,
 		MaxActivations: 1,
 	})
+	result := resresult.Value()
+	err := resresult.AppError()
 
-	err := svc.Delete(lic.Id)
+	err = svc.Delete(lic.Id)
 	if err != nil {
 		t.Fatalf("delete: %v", err)
 	}
@@ -180,7 +196,7 @@ func TestLicenseIsExpired(t *testing.T) {
 	svc := NewLicenseService(db)
 
 	past := time.Now().Add(-24 * time.Hour)
-	lic, _ := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-EXPD-AAAA-BBBB-CCCC",
 		Email:          "exp@example.com",
 		Product:        producttype.RiseupUploader,
@@ -188,8 +204,12 @@ func TestLicenseIsExpired(t *testing.T) {
 		MaxActivations: 1,
 		ExpiresAt:      &past,
 	})
+	lic := reslic.Value()
+	_ := reslic.AppError()
 
-	fetched, _ := svc.GetById(lic.Id)
+	resfetched := svc.GetById(lic.Id)
+	fetched := resfetched.Value()
+	_ := resfetched.AppError()
 	if !fetched.IsExpired() {
 		t.Error("expected license to be expired")
 	}
@@ -202,15 +222,19 @@ func TestLicenseNotExpiredWhenNoExpiry(t *testing.T) {
 	db := newTestDB(t)
 	svc := NewLicenseService(db)
 
-	lic, _ := svc.Create(CreateInput{
+	reslic := svc.Create(CreateInput{
 		Key:            "RISEUP-NOEX-AAAA-BBBB-CCCC",
 		Email:          "noex@example.com",
 		Product:        producttype.RiseupUploader,
 		Type:           licensetype.Standard,
 		MaxActivations: 1,
 	})
+	lic := reslic.Value()
+	_ := reslic.AppError()
 
-	fetched, _ := svc.GetById(lic.Id)
+	resfetched := svc.GetById(lic.Id)
+	fetched := resfetched.Value()
+	_ := resfetched.AppError()
 	if fetched.IsExpired() {
 		t.Error("license without expiry should not be expired")
 	}

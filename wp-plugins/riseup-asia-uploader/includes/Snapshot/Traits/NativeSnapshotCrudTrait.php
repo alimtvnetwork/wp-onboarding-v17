@@ -35,7 +35,7 @@ trait NativeSnapshotCrudTrait {
         $filepath = $snapshot['Filepath'];
 
         if (PathHelper::fileExists($filepath)) {
-            $isDeleteFailed = (PathHelper::deleteFile($filepath) === false);
+            $isDeleteFailed = !PathHelper::deleteFile($filepath);
             if ($isDeleteFailed) {
                 $this->log(LogLevelType::Error->value, 'Failed to delete snapshot file', ['filepath' => $filepath]);
 

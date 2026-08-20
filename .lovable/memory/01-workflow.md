@@ -84,6 +84,7 @@ All specs are indexed at `spec/readme.md`. Key spec folders:
 12. **Never create silent catch blocks** — every catch must log with trace
 13. **Boot-time catch blocks must re-throw** — use `logCriticalException()` or `errorLogAndThrow()`
 14. **Never modify `.release/` folder** — read-only
+15. **Never use concrete/absolute paths in configuration or seed files (`backend/config.json`, `wp-plugins/scripts/*-config.json`)** — Always use relative paths (e.g. `../wp-plugins/riseup-asia-uploader`). The root cause of backend crashes on startup was SQLite being seeded with old absolute paths (`D:\wp-work\...`) which then failed to resolve against updated relative paths, causing `exit status 1` due to "sql: no rows in result set" during site-plugin mapping.
 
 ---
 

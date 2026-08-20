@@ -311,9 +311,9 @@ func TestHandlerValidManifest(t *testing.T) {
 	var resp validateManifestResponse
 	json.NewDecoder(rec.Body).Decode(&resp)
 
-	isSuccess := resp.Success
+	isFail := !resp.Success
 
-	if !isSuccess {
+	if isFail {
 		t.Errorf("expected success=true, got false")
 	}
 }

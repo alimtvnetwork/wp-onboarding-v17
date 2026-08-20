@@ -36,7 +36,7 @@ function parsePhpStackFromRemoteBody(raw: string): PHPStackFrame[] {
     try {
       const parsed = globalThis.JSON.parse(raw);
       // Skip successful log-retrieve responses — they contain embedded log text with #N patterns
-      if (parsed?.plugins || parsed?.Status?.IsSuccess === true) return [];
+      if (parsed?.plugins || parsed?.Status?.IsSuccess) return [];
       const errMsg = parsed?.data?.error?.message;
       if (typeof errMsg === 'string') traceText = errMsg;
       else if (parsed?.Errors?.Backend && Array.isArray(parsed.Errors.Backend)) {

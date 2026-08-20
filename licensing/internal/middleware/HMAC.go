@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 
@@ -49,6 +50,8 @@ func readBody(r *http.Request) []byte {
 	}
 
 	body, readErr := io.ReadAll(r.Body)
+	r.Body = io.NopCloser(bytes.NewReader(body))
+
 	if readErr != nil {
 
 		return []byte{}
