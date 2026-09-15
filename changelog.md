@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.2.0] - 2026-09-15
+
+### Added
+- Adopt canonical folder structure, sync prompts, skills, ai-scripts, and restructure spec
+
+
 ## [1.12.0] - 2026-02-04
 
 ### Fixed
