@@ -1,6 +1,6 @@
 // Package envelope provides a universal response envelope for all API responses.
 // Both the Go backend and PHP WordPress plugin must emit responses conforming
-// to this structure. See spec/response-envelope/README.md for the full spec.
+// to this structure. See 02-spec/response-envelope/README.md for the full spec.
 package envelope
 
 import (

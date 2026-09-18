@@ -63,7 +63,7 @@ func phpContext(lineCount, maxLines int) engine.CheckContext {
 			Id:        "php-file-size",
 			Severity:  "warning",
 			Params:    map[string]json.RawMessage{"max_lines": json.RawMessage(fmt.Sprintf("%d", maxLines))},
-			Reference: "spec/03-rules.md#php-file-size",
+			Reference: "02-spec/03-rules.md#php-file-size",
 		},
 	}
 }

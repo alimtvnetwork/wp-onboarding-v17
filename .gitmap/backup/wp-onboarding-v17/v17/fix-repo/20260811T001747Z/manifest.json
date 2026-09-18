@@ -7,8 +7,8 @@
   "files": [
     "CHANGELOG.md",
     "backend/config.json",
-    "spec/08-error-manage/02-error-modal/copy-formats.md",
-    "spec/08-error-manage/05-response-envelope/envelope-error.json",
+    "02-spec/08-error-manage/02-error-modal/copy-formats.md",
+    "02-spec/08-error-manage/05-response-envelope/envelope-error.json",
     "src/components/settings/AboutPanel.tsx",
     "wp-plugins/scripts/wp-plugin-config.json"
   ]

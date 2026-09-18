@@ -79,7 +79,7 @@ This changelog is synchronized with [`public/version.json`](../../public/version
 - 🐛 Fixed `-am` and `-check` showing "NOT READY (no version in response)" on all sites despite valid API responses
 - 🛡️ Replaced `Invoke-RestMethod` with `Invoke-WebRequest` in `mode-approve-machine.ps1` and `mode-check.ps1` to handle PHP deprecation notices prepended to JSON
 - 📦 Version now correctly extracted from envelope `Results[0].Version` instead of non-existent top-level `.version` property
-- 📋 Root cause issue documented in `spec/issues/2027-status-parsing-php-noise.md`
+- 📋 Root cause issue documented in `02-spec/issues/2027-status-parsing-php-noise.md`
 - 🧠 Memory rule added: never use `Invoke-RestMethod` for WordPress REST calls
 
 ## [2.27.0] — 2026-03-19

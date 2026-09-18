@@ -1,0 +1,267 @@
+# Error Diagnostics Enhancement Plan v3
+
+**Created: 2026-02-06**
+**Priority: HIGH - Critical for debugging and user experience**
+
+---
+
+## Issue Summary
+
+Multiple issues identified from error report `E9003`:
+
+1. **404 on plugin deactivation** - `DeactivatePlugin` doesn't resolve plugin identifier
+2. **"Not implemented" toast** - Download dropdown items showing not implemented
+3. **No error history persistence** - Errors lost on page refresh
+4. **Missing backend context** - Backend tab doesn't auto-fetch error logs
+5. **No multi-error selection** - Can't copy/view multiple errors at once
+6. **Missing UI context** - No tracking of user click path leading to error
+
+---
+
+## Phase 1: Critical Bug Fix - DeactivatePlugin ✅
+
+**File:** `backend/internal/wordpress/client.go`
+
+The `DeactivatePlugin` function doesn't call `ResolvePluginIdentifier` like `ActivatePlugin` does:
+
+```go
+// Current (broken):
+func (c *Client) DeactivatePlugin(slug string) error {
+    endpoint := "/wp/v2/plugins/" + escapePathSegmentPreservingPercent(slug)
+    // ...
+}
+
+// Fixed:
+func (c *Client) DeactivatePlugin(slug string) error {
+    resolvedID, resolveErr := c.ResolvePluginIdentifier(slug)
+    if resolveErr != nil {
+        resolvedID = slug
+    }
+    endpoint := "/wp/v2/plugins/" + escapePathSegmentPreservingPercent(resolvedID)
+    // ...
+}
+```
+
+---
+
+## Phase 2: Error History Database (Backend) ✅ COMPLETE
+
+**Priority: HIGH**
+**Completed: 2026-02-06**
+
+### 2.1 SQLite Schema
+
+```sql
+CREATE TABLE IF NOT EXISTS ErrorHistory (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ErrorId TEXT NOT NULL UNIQUE,
+    Code TEXT NOT NULL,
+    Level TEXT NOT NULL DEFAULT 'error',
+    Message TEXT NOT NULL,
+    Details TEXT,
+    ContextJson TEXT,
+    StackTrace TEXT,
+    Endpoint TEXT,
+    Method TEXT,
+    RequestBodyJson TEXT,
+    ResponseStatus INTEGER,
+    SessionId TEXT,
+    SessionType TEXT,
+    PhpStackFramesJson TEXT,
+    BackendLogsJson TEXT,
+    BackendStackTrace TEXT,
+    SiteUrl TEXT,
+    TriggerComponent TEXT,
+    TriggerAction TEXT,
+    InvocationChainJson TEXT,
+    UiClickPath TEXT,
+    CreatedAt TEXT DEFAULT (datetime('now')),
+    UNIQUE(ErrorId)
+);
+
+CREATE INDEX idx_error_history_created ON ErrorHistory(CreatedAt DESC);
+CREATE INDEX idx_error_history_code ON ErrorHistory(Code);
+```
+
+### 2.2 Backend Endpoints
+
+- `POST /api/v1/errors` - Save error to history
+- `GET /api/v1/errors` - List errors (paginated, with filters)
+- `GET /api/v1/errors/{id}` - Get single error with full details
+- `DELETE /api/v1/errors` - Clear all errors
+- `DELETE /api/v1/errors/{id}` - Delete single error
+- `POST /api/v1/errors/bulk-copy` - Get multiple errors as markdown
+
+### 2.3 Backend Service
+
+```go
+type ErrorHistoryService interface {
+    Save(error *ErrorRecord) error
+    List(limit, offset int, filters ErrorFilters) ([]ErrorRecord, error)
+    GetByID(id string) (*ErrorRecord, error)
+    Delete(id string) error
+    Clear() error
+    BulkExport(ids []string) (string, error)
+}
+```
+
+---
+
+## Phase 3: Frontend Error Persistence ✅ COMPLETE
+
+**Priority: HIGH**
+**Completed: 2026-02-06**
+
+### 3.1 Auto-Save to Backend
+
+Modify `errorStore.ts` to:
+1. On `captureError`/`captureException`, POST to `/api/v1/errors`
+2. Load initial history from backend on app mount
+3. Sync recentErrors with backend
+
+### 3.2 Error History Drawer
+
+New component: `ErrorHistoryDrawer.tsx`
+
+Features:
+- List all historical errors
+- Multi-select with checkboxes
+- "Copy Selected" button
+- "Copy All" button
+- Filter by code, level, date range
+- Click to open in GlobalErrorModal
+
+### 3.3 Error Queue Badge
+
+Show count of errors in session (in header/status bar):
+- Click opens ErrorHistoryDrawer
+- Badge shows error count
+
+---
+
+## Phase 4: Backend Tab Auto-Fetch ✅ COMPLETE
+
+**Priority: MEDIUM**
+**Completed: 2026-02-06**
+
+### 4.1 Auto-fetch on Tab Focus ✅
+
+In `GlobalErrorModal.tsx`, the Backend tab now:
+1. Auto-fetches `error.log.txt` content on tab focus/hover
+2. Shows loading state with spinner
+3. Caches content for duration of modal open
+4. Has refresh, copy, and download buttons
+
+### 4.2 Backend Tab Content ✅
+
+The Backend tab displays (in order):
+- **Target Site URL** - If available from error context
+- **Backend Error Log (error.log.txt)** - Auto-fetched, with refresh/copy/download
+- **Execution Logs** - Backend logs captured during operations
+- **Go Stack Trace** - Backend stack trace if available
+
+---
+
+## Phase 5: UI Click Path Tracking ✅ COMPLETE
+
+**Priority: MEDIUM**
+**Completed: 2026-02-06**
+
+### 5.1 Click Tracker Hook ✅
+
+Created `src/hooks/useClickTracker.ts`:
+- Global click/submit/change event listeners
+- Captures element type, text, CSS path, route
+- Zustand store for click history (last 20 events)
+- `getClickPathForError()` function for error capture
+
+### 5.2 Integration with Error Capture ✅
+
+Updated `src/stores/errorStore.ts`:
+- Added `uiClickPath` and `uiClickPathString` fields to CapturedError
+- Both `captureError` and `captureException` now capture click path
+- Click path included in error context automatically
+
+### 5.3 UI Display ✅
+
+Updated `GlobalErrorModal.tsx` Overview tab:
+- Shows "User Interaction Path" with step numbers
+- Displays element type, text, action type, and route
+- Copy button for click path string
+- Last 10 interactions shown (most recent highlighted)
+
+---
+
+## Phase 6: Multi-Error Queue UI ✅ COMPLETE
+
+**Priority: MEDIUM**
+**Completed: 2026-02-06**
+
+### 6.1 Error Queue State ✅
+
+Added to errorStore.ts:
+
+```typescript
+interface ErrorQueueState {
+  errorQueue: CapturedError[];
+  currentQueueIndex: number;
+}
+```
+
+### 6.2 Modal Navigation ✅
+
+- Shows "1 / 3" indicator when multiple errors in queue
+- Previous/Next buttons to navigate (with wrap-around)
+- "Copy All" button for bulk markdown export
+
+### 6.3 Bulk Copy ✅
+
+- `getQueuedErrorsMarkdown()` generates combined report
+- "View Selected" button in ErrorHistoryDrawer opens queue
+- ErrorHistoryDrawer integrates with queue via `openErrorQueue()`
+
+---
+
+## Implementation Order
+
+| Order | Phase | Description | Priority | Est. Hours |
+|-------|-------|-------------|----------|------------|
+| 1 | Phase 1 | Fix DeactivatePlugin | CRITICAL | 0.5 |
+| 2 | Phase 4 | Backend tab auto-fetch | HIGH | 1 |
+| 3 | Phase 2 | Error history database | HIGH | 3 |
+| 4 | Phase 3 | Frontend persistence | HIGH | 2 |
+| 5 | Phase 6 | Multi-error queue | MEDIUM | 2 |
+| 6 | Phase 5 | Click path tracking | LOW | 1 |
+
+**Total: ~9.5 hours**
+
+---
+
+## Files to Create/Modify
+
+### Backend
+- `backend/internal/models/error_history.go` (new)
+- `backend/internal/database/migrations.go` (add table)
+- `backend/internal/services/errorhistory/service.go` (new)
+- `backend/internal/api/handlers/error_handlers.go` (extend)
+- `backend/internal/wordpress/client.go` (fix DeactivatePlugin)
+
+### Frontend
+- `src/stores/errorStore.ts` (add persistence)
+- `src/components/errors/GlobalErrorModal.tsx` (enhance Backend tab)
+- `src/components/errors/ErrorHistoryDrawer.tsx` (new)
+- `src/components/errors/ErrorQueueBadge.tsx` (new)
+- `src/hooks/useClickTracker.ts` (new)
+- `src/hooks/useErrorHistory.ts` (new)
+
+---
+
+## Memory Updates Required
+
+- `.ai-memory/memory/features/error-history/persistence.md`
+- `.ai-memory/memory/features/error-history/multi-error-ui.md`
+- `.ai-memory/memory/architecture/frontend/click-tracking.md`
+
+---
+
+*Plan created: 2026-02-06*

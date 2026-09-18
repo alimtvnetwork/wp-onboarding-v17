@@ -6,7 +6,7 @@ import "encoding/json"
 // It provides a backward-compatible parser that works with both legacy (flat)
 // and envelope (PascalCase) response formats.
 //
-// Schema: spec/response-envelope/envelope.schema.json v1.0.0
+// Schema: 02-spec/response-envelope/envelope.schema.json v1.0.0
 // NOTE: Navigation and MethodsStack are handled at the HTTP handler layer,
 // not in this parsing utility which focuses on WordPress ↔ Go communication.
 type Envelope struct {

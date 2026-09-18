@@ -21,7 +21,7 @@ func TestVariantsMatchPhpEndpointType(t *testing.T) {
 		t.Fatal("parsed zero PHP enum values — check the file path or regex")
 	}
 
-	// Known asymmetries (documented in spec/02-app-issues/16-unused-php-enum-cases.md)
+	// Known asymmetries (documented in 02-spec/02-app-issues/16-unused-php-enum-cases.md)
 	// WpJson is a URL-building prefix in PHP, not an API endpoint.
 	phpOnly := map[string]bool{"wp-json/": true}
 	// PostsById is a Go-only parameterised route; PHP handles it via /posts + body ID.

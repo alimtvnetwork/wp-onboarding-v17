@@ -37,7 +37,7 @@ A full-stack WordPress plugin deployment system — React dashboard, Go backend 
 | **WordPress Plugins** | PHP 8.2+ · PSR-4 · REST API · WordPress Application Passwords | `wp-plugins/` |
 | **Automation** | PowerShell 5.1+ · Self-linting · JSON config · Semantic versioning | `run.ps1`, `wp-plugins/scripts/` |
 | **Quality Gates** | 15 lint scripts · PHPStan L6 · `go vet` · CI workflows · Pre-commit hook | `scripts/`, `.github/workflows/` |
-| **Specifications** | 17 spec directories · Coding standards · Architecture decisions | `spec/` |
+| **Specifications** | 17 spec directories · Coding standards · Architecture decisions | `02-spec/` |
 | **Tools** | Go-based consistency checker for cross-stack enum/endpoint drift | `tools/` |
 
 ---
@@ -290,7 +290,7 @@ The `run.ps1` script is the **single entry point** for all operations. Every inv
 | Static analysis | PHPStan level 6 (blocks deployment) |
 | Booleans | Positive naming (`$isValid`, not `$isNotValid`) |
 
-> Full spec: [`spec/07-php-standards/`](./spec/07-php-standards/)
+> Full spec: [`02-spec/07-php-standards/`](./02-spec/07-php-standards/)
 
 ### Go (Backend & Licensing)
 
@@ -303,7 +303,7 @@ The `run.ps1` script is the **single entry point** for all operations. Every inv
 | Error handling | Typed error results with stack traces |
 | Spacing | Blank line before `return`, `if`, and block statements |
 
-> Full spec: [`spec/06-golang-standards/`](./spec/06-golang-standards/)
+> Full spec: [`02-spec/06-golang-standards/`](./02-spec/06-golang-standards/)
 
 ### TypeScript (Frontend)
 
@@ -314,7 +314,7 @@ The `run.ps1` script is the **single entry point** for all operations. Every inv
 | Components | shadcn/ui + Tailwind CSS |
 | Data fetching | TanStack Query |
 
-> Full spec: [`spec/05-typescript-standards/`](./spec/05-typescript-standards/)
+> Full spec: [`02-spec/05-typescript-standards/`](./02-spec/05-typescript-standards/)
 
 ### PowerShell (Automation)
 
@@ -326,7 +326,7 @@ The `run.ps1` script is the **single entry point** for all operations. Every inv
 | Self-lint | Scripts validate own syntax before execution |
 | Versioning | `[version]` type casting for semver comparison |
 
-> Full spec: [`spec/13-powershell-integration/`](./spec/13-powershell-integration/)
+> Full spec: [`02-spec/13-powershell-integration/`](./02-spec/13-powershell-integration/)
 
 ---
 
@@ -392,7 +392,7 @@ All versions are synchronized via `bump-version.ps1`. Current version: **`2.28.3
 .\wp-plugins\scripts\bump-version.ps1 -Target all -Bump patch -DryRun
 ```
 
-> Full versioning docs: [`.lovable/memory/architecture/dev-environment/powershell-versioning.md`](.lovable/memory/architecture/dev-environment/powershell-versioning.md)
+> Full versioning docs: [`.ai-memory/memory/architecture/dev-environment/powershell-versioning.md`](.ai-memory/memory/architecture/dev-environment/powershell-versioning.md)
 
 ---
 
@@ -449,25 +449,25 @@ Main configuration for `run.ps1`. Defines paths, build commands, prerequisites, 
 
 ## Specifications
 
-All coding standards and architecture decisions are documented in [`spec/`](./spec/readme.md):
+All coding standards and architecture decisions are documented in [`02-spec/`](./spec/readme.md):
 
 | Spec | Directory | Description |
 |------|-----------|-------------|
-| App | [`spec/01-app/`](./spec/01-app/) | Application overview and features |
-| App Issues | [`spec/02-app-issues/`](./spec/02-app-issues/) | Bug reports and RCA write-ups |
-| Coding Guidelines | [`spec/04-coding-guidelines/`](./spec/04-coding-guidelines/) | DRY principles, strict typing, naming rules |
-| TypeScript | [`spec/05-typescript-standards/`](./spec/05-typescript-standards/) | Zero-`any`, catch narrowing, generic envelopes |
-| Go Standards | [`spec/06-golang-standards/`](./spec/06-golang-standards/) | No `interface{}`, typed structs, error diagnostics |
-| PHP Standards | [`spec/07-php-standards/`](./spec/07-php-standards/) | PSR-4, backed enums, `Throwable`, forbidden patterns |
-| Error System | [`spec/08-error-manage/`](./spec/08-error-manage/) | Cross-stack error handling, response envelope |
-| WordPress | [`spec/09-wordpress/`](./spec/09-wordpress/) | Plugin architecture and REST API design |
-| Features | [`spec/10-features/`](./spec/10-features/) | Feature specifications |
-| Audits | [`spec/11-audits/`](./spec/11-audits/) | Code audit reports |
-| Feedback | [`spec/12-feedback-report-feature/`](./spec/12-feedback-report-feature/) | Bug report submission feature |
-| PowerShell | [`spec/13-powershell-integration/`](./spec/13-powershell-integration/) | Runner spec, config schema, script reference |
-| User Mgmt | [`spec/16-user-management/`](./spec/16-user-management/) | User CRUD, app passwords, bulk ops |
-| Parallel PS | [`spec/17-parallel-powershell-scripts/`](./spec/17-parallel-powershell-scripts/) | Parallel deployment architecture |
-| Issues | [`spec/issues/`](./spec/issues/) | Root cause analysis write-ups |
+| App | [`02-spec/01-app/`](./02-spec/01-app/) | Application overview and features |
+| App Issues | [`02-spec/02-app-issues/`](./02-spec/02-app-issues/) | Bug reports and RCA write-ups |
+| Coding Guidelines | [`02-spec/04-coding-guidelines/`](./02-spec/04-coding-guidelines/) | DRY principles, strict typing, naming rules |
+| TypeScript | [`02-spec/05-typescript-standards/`](./02-spec/05-typescript-standards/) | Zero-`any`, catch narrowing, generic envelopes |
+| Go Standards | [`02-spec/06-golang-standards/`](./02-spec/06-golang-standards/) | No `interface{}`, typed structs, error diagnostics |
+| PHP Standards | [`02-spec/07-php-standards/`](./02-spec/07-php-standards/) | PSR-4, backed enums, `Throwable`, forbidden patterns |
+| Error System | [`02-spec/08-error-manage/`](./02-spec/08-error-manage/) | Cross-stack error handling, response envelope |
+| WordPress | [`02-spec/09-wordpress/`](./02-spec/09-wordpress/) | Plugin architecture and REST API design |
+| Features | [`02-spec/10-features/`](./02-spec/10-features/) | Feature specifications |
+| Audits | [`02-spec/11-audits/`](./02-spec/11-audits/) | Code audit reports |
+| Feedback | [`02-spec/12-feedback-report-feature/`](./02-spec/12-feedback-report-feature/) | Bug report submission feature |
+| PowerShell | [`02-spec/13-powershell-integration/`](./02-spec/13-powershell-integration/) | Runner spec, config schema, script reference |
+| User Mgmt | [`02-spec/16-user-management/`](./02-spec/16-user-management/) | User CRUD, app passwords, bulk ops |
+| Parallel PS | [`02-spec/17-parallel-powershell-scripts/`](./02-spec/17-parallel-powershell-scripts/) | Parallel deployment architecture |
+| Issues | [`02-spec/issues/`](./02-spec/issues/) | Root cause analysis write-ups |
 
 ---
 

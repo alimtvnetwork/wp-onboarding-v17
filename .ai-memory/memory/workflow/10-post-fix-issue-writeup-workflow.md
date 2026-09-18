@@ -1,0 +1,47 @@
+# Memory: workflow/post-fix-issue-writeup-workflow
+
+Updated: 2026-03-12
+
+## Mandatory Post-Fix Workflow
+
+Every time a mistake is identified and fixed, the following steps are **mandatory** before the fix is considered complete:
+
+1. **Create issue write-up** at `/02-spec/02-app-issues/{NN}-{issue-slug-name}.md` using the template at `/02-spec/02-app-issues/TEMPLATE.md`.
+2. **Update the relevant spec** under `/02-spec/01-app/` with corrected behavior, explicit constraints, and acceptance criteria.
+3. **Update memory** — add the mistake summary and prevention rule to this file's Prevention Rules Registry, and update the issue index at `/02-spec/02-app-issues/README.md`.
+4. **Record iterations** — if multiple attempts were needed, document each in the Iterations History section.
+
+## File Naming Rules for Issue Slugs
+
+- Lowercase only, hyphen-separated, short, descriptive, stable.
+- No spaces or special characters.
+- Example: `01-hourly-frequency-missing-from-consumers`
+
+## Key Locations
+
+- App specs: `/02-spec/01-app/`
+- Issue write-ups: `/02-spec/02-app-issues/`
+- Issue template: `/02-spec/02-app-issues/TEMPLATE.md`
+- Enum consumer checklist: `/02-spec/01-app/enum-consumer-checklist.md`
+- Formatting rules reference: `/02-spec/01-app/formatting-rules-reference.md`
+
+## Prevention Rules Registry
+
+| Rule | Source Issue | Spec Reference |
+|------|-------------|----------------|
+| When adding a new enum case, update ALL consumers in the same changeset (validation, UI, JS constants, switch statements, cron, migration helper, memory). | `03-hourly-frequency-missing-from-consumers` | `/02-spec/01-app/enum-consumer-checklist.md` |
+| PHP array literals with >2 items must be written line-by-line (R9c). | `04-r9c-array-literal-formatting` | `/02-spec/01-app/formatting-rules-reference.md` |
+| Blank line mandatory before `if`/`foreach`/`switch`/`match` after assignments (R10). | `05-r10-activation-handler-formatting` | `/02-spec/01-app/formatting-rules-reference.md` |
+| Arrays/calls with >2 items must be one item per line with trailing comma (R9). Applies to all files retroactively. | `06-r9-multi-file-array-formatting` | `/02-spec/01-app/formatting-rules-reference.md` |
+| Any new structured array key must be added to `ResponseKeyType` before use. No raw strings for domain-level keys. Fixed bug: `$analysis['seed_order']` used wrong snake_case key. | `07-response-key-type-expansion` | `/02-spec/01-app/enum-consumer-checklist.md` |
+| WordPress i18n text domain must be a literal string — never replace with enum/constant. `make-pot` requires static analysis. | `08-i18n-text-domain-literal-requirement` | `/02-spec/01-app/enum-consumer-checklist.md` |
+| When a DB migration renames columns, ALL consumer code reading from those tables must be updated in the same commit. Search for old column names with grep. | `09-snake-case-db-column-references-after-v13` | `/02-spec/01-app/enum-consumer-checklist.md` |
+| Every namespaced PHP file must follow strict statement ordering: `<?php` → PHPDoc → `namespace` → ABSPATH guard → `use` → class body. Placing ABSPATH guard before `namespace` is a fatal ParseError. | `12-namespace-before-abspath-fatal-error` | `.ai-memory/memory/architecture/php/coding-standards-semantic-and-safety.md` |
+| All abbreviations in PHP identifiers must use PascalCase (`Wp` not `WP`, `Api` not `API`). Class names must exactly match filenames for PSR-4. | `13-wpreset-class-name-case-mismatch` | `.ai-memory/memory/coding-standards/php-modernization` |
+| Coverage tools must parse `coverage.out` profile file for package identification. Never derive package names from `go test` stdout (which shows test package names). Packages ending in `tests` must be excluded. | `17-coverage-report-wrong-package-filtering` | `tools/coverage/README.md` |
+| PHP backed enums must never have two cases with the same backing value. Use a static method alias instead. | `18-php-enum-duplicate-value-fatal` | `02-spec/02-app-issues/18-php-enum-duplicate-value-fatal.md` |
+| Every PHPDoc block must have complete `/** ... */` delimiters. Run `php -l` on all modified files before deployment to catch parse errors that the autoloader silently swallows. | `19-missing-phpdoc-opening-trait-parse-error` | `02-spec/02-app-issues/19-missing-phpdoc-opening-trait-parse-error.md` |
+| All cross-references in MD files must use relative markdown links or absolute project-root paths. The `System memory` shorthand format is prohibited — it is not verifiable. | `20-broken-cross-references-in-memory-files` | `02-spec/02-app-issues/20-broken-cross-references-in-memory-files.md` |
+| REST API endpoint URLs in scripts must match the PHP `PluginConfigType::ApiNamespace` enum. Never hardcode API paths. Add auth pre-check before upload to catch 404/401 early. | `21-wrong-qupload-api-namespace-in-script` | `02-spec/02-app-issues/21-wrong-qupload-api-namespace-in-script.md` |
+| All `catch` blocks must use `Throwable`, never `Exception`. All type references must be imported via `use` — no leading backslash on `Throwable`. | `23-catch-exception-to-throwable-migration` | `.ai-memory/memory/coding-standards/php-exception-handling.md` |
+| Never use `is_array()`, `is_string()`, `is_int()`, `is_bool()`, `is_float()`, `is_object()`, `is_null()` or `array()` constructor in any WordPress plugin PHP file. Use `gettype($var) === PhpNativeType::*->value` and `[]` short syntax. | `43-qupload-php-compatibility-refactoring` | `wp-plugins/riseup-asia-uploader/.ai-instructions`, `wp-plugins/qupload/.ai-instructions` |

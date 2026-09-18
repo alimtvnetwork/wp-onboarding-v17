@@ -52,7 +52,7 @@ Each rule entry in `rules.json`:
     "max_lines": 300
   },
   "exclude": ["*_test.go", "vendor/**"],
-  "reference": "spec/03-rules.md#go-file-size"
+  "reference": "02-spec/03-rules.md#go-file-size"
 }
 ```
 
@@ -81,6 +81,6 @@ Each finding includes:
   "message": "File has 423 lines (max 300)",
   "severity": "error",
   "suggestion": "Split into smaller files: Service.go, ServiceHelpers.go",
-  "reference": "spec/03-rules.md#go-file-size"
+  "reference": "02-spec/03-rules.md#go-file-size"
 }
 ```

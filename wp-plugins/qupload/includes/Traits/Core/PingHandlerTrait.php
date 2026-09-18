@@ -3,7 +3,7 @@
  * PingHandlerTrait — Lightweight /ping endpoint returning author, company, and version.
  *
  * Supports both authorized and public modes via permission callback.
- * Spec: spec/18-how-to-write-wordpress-plugin/14-rest-api-conventions.md
+ * Spec: 02-spec/18-how-to-write-wordpress-plugin/14-rest-api-conventions.md
  *
  * @package QUpload\Traits\Core
  * @since   2.32.0

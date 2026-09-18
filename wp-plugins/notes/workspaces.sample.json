@@ -1,5 +1,5 @@
 {
-    "$schema": "https://api.lovable.dev/GetWorkspacesOutputBody.json",
+    "$schema": "https://api.ai-memory.dev/GetWorkspacesOutputBody.json",
     "workspaces": [
         {
             "id": "xIPaBC3UMkaLqPwBVtEV",

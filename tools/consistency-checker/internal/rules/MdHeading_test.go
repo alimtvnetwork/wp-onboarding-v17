@@ -68,7 +68,7 @@ func mdContext(lines []string) engine.CheckContext {
 			Id:        "md-heading",
 			Severity:  "info",
 			Params:    map[string]json.RawMessage{},
-			Reference: "spec/03-rules.md#md-heading",
+			Reference: "02-spec/03-rules.md#md-heading",
 		},
 	}
 }

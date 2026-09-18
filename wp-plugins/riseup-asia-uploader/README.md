@@ -245,7 +245,7 @@ Each directory is secured with `.htaccess` (`Deny from all`) and `index.php` (si
 | **Booleans** | Positive naming only (`$isValid`, not `$isNotValid`) |
 | **Constants** | Backed enums only — no `define()` or `const` |
 
-> Full standards: [`spec/07-php-standards/`](../../spec/07-php-standards/)
+> Full standards: [`02-spec/07-php-standards/`](../../02-spec/07-php-standards/)
 
 ---
 
@@ -275,9 +275,9 @@ Each directory is secured with `.htaccess` (`Deny from all`) and `index.php` (si
 |----------|------|
 | **Changelog** | [`CHANGELOG.md`](./CHANGELOG.md) |
 | **CLI Reference** | [`wp-plugins/scripts/README.md`](../scripts/README.md) |
-| **Coding Guidelines** | [`spec/07-php-standards/`](../../spec/07-php-standards/) |
-| **WordPress Plugin Spec** | [`spec/09-wordpress/`](../../spec/09-wordpress/) |
-| **PowerShell Integration** | [`spec/13-powershell-integration/`](../../spec/13-powershell-integration/) |
+| **Coding Guidelines** | [`02-spec/07-php-standards/`](../../02-spec/07-php-standards/) |
+| **WordPress Plugin Spec** | [`02-spec/09-wordpress/`](../../02-spec/09-wordpress/) |
+| **PowerShell Integration** | [`02-spec/13-powershell-integration/`](../../02-spec/13-powershell-integration/) |
 
 ---
 

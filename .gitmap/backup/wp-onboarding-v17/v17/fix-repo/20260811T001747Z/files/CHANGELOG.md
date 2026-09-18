@@ -209,7 +209,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Absolute API base URL
 
 ### Documentation
-- Created `spec/error-resolution/` folder for AI/developer retrospectives
+- Created `02-spec/error-resolution/` folder for AI/developer retrospectives
 - Updated `11-rest-api-endpoints.md` with health and index endpoint specs
 - Updated `26-ui-patterns.md` with improved BackendStatus detection rules
 

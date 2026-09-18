@@ -34,9 +34,9 @@
       "date": "2026-04-18",
       "title": "Spec: Response Shape Consistency Documentation",
       "changes": [
-        "New spec/15-generic-enforce/response-shape-consistency.md: self-contained spec covering the hard 'mixed shape' rule, both soft warnings (bare map[string]any/bool/interface{} literals + anonymous struct{...}{...} literals), the non-blocking lint-response-shape-advisory CI job, exemptions (nil, empty slices, same-type branches), and the RESPONSE_SHAPE_STRICT=1 opt-in path.",
+        "New 02-spec/15-generic-enforce/response-shape-consistency.md: self-contained spec covering the hard 'mixed shape' rule, both soft warnings (bare map[string]any/bool/interface{} literals + anonymous struct{...}{...} literals), the non-blocking lint-response-shape-advisory CI job, exemptions (nil, empty slices, same-type branches), and the RESPONSE_SHAPE_STRICT=1 opt-in path.",
         "Includes detection regexes, example warning output, PR-status decision matrix, version history (v2.37.0 → v2.45.0), and a quick-reference cheatsheet.",
-        "Cross-linked to spec/15-generic-enforce/readme.md (GE-2 Zero Loose Types) so handoff AIs and contributors discover the rule from the generic-enforce index without reading the lint script."
+        "Cross-linked to 02-spec/15-generic-enforce/readme.md (GE-2 Zero Loose Types) so handoff AIs and contributors discover the rule from the generic-enforce index without reading the lint script."
       ]
     },
     {
@@ -279,7 +279,7 @@
         "\ud83d\udc1b Fixed -am and -check showing 'NOT READY (no version in response)' on all sites despite valid API responses",
         "\ud83d\udee1\ufe0f Replaced Invoke-RestMethod with Invoke-WebRequest in mode-approve-machine.ps1 and mode-check.ps1 to handle PHP deprecation notices prepended to JSON",
         "\ud83d\udce6 Version now correctly extracted from envelope Results[0].Version instead of non-existent top-level .version property",
-        "\ud83d\udccb Root cause issue documented in spec/issues/2027-status-parsing-php-noise.md",
+        "\ud83d\udccb Root cause issue documented in 02-spec/issues/2027-status-parsing-php-noise.md",
         "\ud83e\udde0 Memory rule added: never use Invoke-RestMethod for WordPress REST calls",
         "\ud83d\udd22 Version bump across all components to 2.28.0"
       ]

@@ -15,7 +15,7 @@ func makeEnumCtx(filePath string, lines []string) engine.CheckContext {
 		Spec: config.RuleSpec{
 			Id:        "php-enum-naming",
 			Severity:  "warning",
-			Reference: "spec/03-rules.md#php-enum-naming",
+			Reference: "02-spec/03-rules.md#php-enum-naming",
 		},
 	}
 }

@@ -1492,7 +1492,7 @@
     "schemas": {
       "SuccessEnvelope": {
         "type": "object",
-        "description": "Universal Response Envelope — all API responses use this structure. See spec/response-envelope/README.md.",
+        "description": "Universal Response Envelope — all API responses use this structure. See 02-spec/response-envelope/README.md.",
         "properties": {
           "Status": {
             "$ref": "#/components/schemas/EnvelopeStatus"

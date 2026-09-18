@@ -111,7 +111,7 @@ export function useRemoteSnapshots(siteId: number, enabled = true) {
   });
 
   // Surface query errors with toast + error modal link
-  // Fix: spec/02-app-issues/41-snapshot-401-missing-auth-header.md
+  // Fix: 02-spec/02-app-issues/41-snapshot-401-missing-auth-header.md
   // Passive captureException alone is insufficient — users see empty states with no feedback
   useEffect(() => {
     const queries = [

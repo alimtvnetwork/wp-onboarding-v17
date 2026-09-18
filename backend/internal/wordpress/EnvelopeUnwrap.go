@@ -1,7 +1,7 @@
 // EnvelopeUnwrap provides helpers to extract data from PHP envelope responses
 // that would otherwise be double-wrapped when the Go handler adds its own envelope.
 //
-// See: spec/02-app-issues/34-double-envelope-wrapping-health-logs.md
+// See: 02-spec/02-app-issues/34-double-envelope-wrapping-health-logs.md
 package wordpress
 
 // UnwrapPhpEnvelope extracts the inner data from a PHP envelope response.

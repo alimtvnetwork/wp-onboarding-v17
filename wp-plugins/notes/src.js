@@ -143,7 +143,7 @@ Object.freeze(window.marco);
   },
   "creditStatus": {
     "api": {
-      "baseUrl": "https://api.lovable.dev",
+      "baseUrl": "https://api.ai-memory.dev",
       "authMode": "cookieSession"
     },
     "timing": {
@@ -1029,7 +1029,7 @@ try {
   // Credit API Config — reads from combo.js shared localStorage or uses defaults
   // Uses same API endpoint as combo.js for consistent credit data
   // ============================================
-  const CREDIT_API_BASE = 'https://api.lovable.dev';
+  const CREDIT_API_BASE = 'https://api.ai-memory.dev';
   const CREDIT_CACHE_TTL_S = 30;
 
   const loopCreditState = {
@@ -5718,8 +5718,8 @@ try {
       { name: 'Rejog the Memory v1', text: 'Read and synthesize existing repository context from the Lovable memory folder and the full specification set, then produce a reliability risk report before any implementation work begins. Do not implement anything. Only produce a report and specification-side artifacts for memory, suggestions, and planning.' },
       { name: 'Unified AI Prompt v4', text: 'Read and synthesize existing repository context from the Lovable memory folder and the full specification set. Follow the Required Execution Order: scan repo, read memory, read specs, reconstruct context, produce reliability report, propose corrections, update memory, update plan, ask user which task to implement next.' },
       { name: 'Issues Tracking', text: 'Do not implement any code changes. Update specifications and documentation only. Enforce a strict workflow so the same mistakes do not repeat, and ensure every fix is recorded in a standardized issue write-up file and reflected in memory.' },
-      { name: 'Unit Test Failing', text: 'Fix failing tests: 1) Check code, 2) Check actual method implementation, 3) Check logical implementation of the test, 4) Check test case, 5) Fix logically either the implementation or the test. Document at /spec/05-failing-tests/{seq}-failing-test-name.md with root cause and solution.' },
-      { name: 'Audit Spec v1', text: 'Perform a comprehensive audit of every specification file. Score each spec on Completeness, Consistency, Implementation Alignment, Clarity, Maintainability, and Test Coverage (1-10 scale). Produce a scorecard, detailed findings for specs below 8.0, cross-spec dependency map, and priority fix list. Write report to .lovable/memory/audit/spec-audit-report.md.' },
+      { name: 'Unit Test Failing', text: 'Fix failing tests: 1) Check code, 2) Check actual method implementation, 3) Check logical implementation of the test, 4) Check test case, 5) Fix logically either the implementation or the test. Document at /02-spec/05-failing-tests/{seq}-failing-test-name.md with root cause and solution.' },
+      { name: 'Audit Spec v1', text: 'Perform a comprehensive audit of every specification file. Score each spec on Completeness, Consistency, Implementation Alignment, Clarity, Maintainability, and Test Coverage (1-10 scale). Produce a scorecard, detailed findings for specs below 8.0, cross-spec dependency map, and priority fix list. Write report to .ai-memory/memory/audit/spec-audit-report.md.' },
       { name: 'Minor Bump', text: 'Bump all Minor versions for all', category: 'versioning' },
       { name: 'Major Bump', text: 'Bump all Major versions for all', category: 'versioning' },
       { name: 'Patch Bump', text: 'Bump all Patch versions for all', category: 'versioning' }

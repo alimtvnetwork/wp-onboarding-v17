@@ -15,7 +15,7 @@ func makeMethodsCtx(filePath string, lines []string) engine.CheckContext {
 		Spec: config.RuleSpec{
 			Id:        "php-enum-methods",
 			Severity:  "warning",
-			Reference: "spec/03-rules.md#php-enum-methods",
+			Reference: "02-spec/03-rules.md#php-enum-methods",
 		},
 	}
 }

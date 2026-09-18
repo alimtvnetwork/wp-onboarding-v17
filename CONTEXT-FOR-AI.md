@@ -8,7 +8,7 @@
 
 ## 🎯 Start Here
 
-This file provides essential context for AI agents working on this codebase. For comprehensive details, see `.lovable/memory/` and the spec folders.
+This file provides essential context for AI agents working on this codebase. For comprehensive details, see `.ai-memory/memory/` and the spec folders.
 
 ---
 
@@ -108,7 +108,7 @@ db.Raw("SELECT * FROM projects.db JOIN settings.db...")
 
 ### 2. Seedable Configuration Pattern
 
-**Memory:** `.lovable/memory/features/seedable-configuration.md`
+**Memory:** `.ai-memory/memory/features/seedable-configuration.md`
 
 Configuration values are managed through versioned JSON seed files with database persistence.
 
@@ -139,25 +139,25 @@ THEN seed the value
 
 | Path | Purpose |
 |------|---------|
-| `.lovable/memory/` | AI memory index and feature specs |
-| `.lovable/memory/architecture/` | System architecture patterns |
-| `.lovable/memory/features/` | Feature-specific documentation |
-| `.lovable/memory/suggestions/` | Improvement tracking |
-| `.lovable/memory/workflow/` | Workflow plans and conventions |
-| `spec/` | Product specifications |
+| `.ai-memory/memory/` | AI memory index and feature specs |
+| `.ai-memory/memory/architecture/` | System architecture patterns |
+| `.ai-memory/memory/features/` | Feature-specific documentation |
+| `.ai-memory/memory/suggestions/` | Improvement tracking |
+| `.ai-memory/memory/workflow/` | Workflow plans and conventions |
+| `02-spec/` | Product specifications |
 
 ---
 
 ## 🧠 Memory Quick Links
 
 ### Architecture
-- [Split Database System](.lovable/memory/architecture/split-database-system.md) (if applicable to Spec Builder v3)
+- [Split Database System](.ai-memory/memory/architecture/split-database-system.md) (if applicable to Spec Builder v3)
 
 ### Key References
-- [Project Context](.lovable/memory/02-project-context.md)
-- [Workflow Guidelines](.lovable/memory/01-workflow.md)
-- [Suggestions Tracker](.lovable/memory/suggestions/01-suggestions-tracker.md)
-- [Reliability Risk Report](.lovable/memory/03-reliability-risk-report.md)
+- [Project Context](.ai-memory/memory/02-project-context.md)
+- [Workflow Guidelines](.ai-memory/memory/01-workflow.md)
+- [Suggestions Tracker](.ai-memory/memory/suggestions/01-suggestions-tracker.md)
+- [Reliability Risk Report](.ai-memory/memory/03-reliability-risk-report.md)
 
 ---
 
@@ -174,15 +174,15 @@ THEN seed the value
 
 To train an external AI model on this project:
 
-1. **Minimum:** Feed `CONTEXT-FOR-AI.md` (this file) + `.lovable/memory/02-project-context.md`
-2. **Complete:** Feed entire `.lovable/memory/` folder + `spec/` folder
+1. **Minimum:** Feed `CONTEXT-FOR-AI.md` (this file) + `.ai-memory/memory/02-project-context.md`
+2. **Complete:** Feed entire `.ai-memory/memory/` folder + `02-spec/` folder
 3. **Roadmap:** Feed `plan.md` (repo root) for future work
 
 ---
 
 ## Cross-Reference
 
-- Memory index: `.lovable/memory/01-workflow.md`
+- Memory index: `.ai-memory/memory/01-workflow.md`
 - Master spec index: `spec/readme.md`
 - Future work roadmap: `plan.md` (repo root)
-- Risk report: `.lovable/memory/03-reliability-risk-report.md`
+- Risk report: `.ai-memory/memory/03-reliability-risk-report.md`

@@ -6,7 +6,7 @@
 // Go Api route that initiated the call and the WordPress Rest
 // endpoint that receives it.
 //
-// See spec/wp-plugin-publish/05-endpoint-mapping.md for full documentation.
+// See 02-spec/wp-plugin-publish/05-endpoint-mapping.md for full documentation.
 package wordpress
 
 import (

@@ -190,7 +190,7 @@ if ($bumpScript) {
         $content = Get-Content $specOverviewPath -Raw
         $content = $content -replace "Script Version:\s*[0-9]+\.[0-9]+\.[0-9]+", "Script Version: $newScriptVersion"
         if (-not $DryRun) { $content | Set-Content $specOverviewPath -Encoding UTF8 -NoNewline }
-        Write-Change "spec/12-powershell-integration/00-overview.md" $currentScriptVersion $newScriptVersion
+        Write-Change "02-spec/12-powershell-integration/00-overview.md" $currentScriptVersion $newScriptVersion
         $changeCount++
     }
 }

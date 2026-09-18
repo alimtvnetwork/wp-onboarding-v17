@@ -1,7 +1,7 @@
 // Api types — all interfaces and type aliases for the WP Plugin Publish Api.
 //
-// Envelope Schema: spec/response-envelope/envelope.schema.json v1.0.0
-// See spec/response-envelope/README.md for full specification.
+// Envelope Schema: 02-spec/response-envelope/envelope.schema.json v1.0.0
+// See 02-spec/response-envelope/README.md for full specification.
 
 // ---------------------------------------------------------------------------
 // Universal Response Envelope types (PascalCase, matches Go backend)
@@ -76,7 +76,7 @@ export interface EnvelopeMeta {
 
 // ---------------------------------------------------------------------------
 // GE-1 Named Domain Types (replacing Record<string, unknown> violations)
-// See spec/14-generic-enforce/README.md
+// See 02-spec/14-generic-enforce/README.md
 // ---------------------------------------------------------------------------
 
 /** HTTP header map — named alias per GE-4 (used 3+ times across codebase) */

@@ -15,7 +15,7 @@ func makeCaseCtx(filePath string, lines []string) engine.CheckContext {
 		Spec: config.RuleSpec{
 			Id:        "php-enum-case-values",
 			Severity:  "warning",
-			Reference: "spec/03-rules.md#php-enum-case-values",
+			Reference: "02-spec/03-rules.md#php-enum-case-values",
 		},
 	}
 }

@@ -18,7 +18,7 @@
         "max_lines": 300
       },
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-file-size"
+      "reference": "02-spec/03-rules.md#go-file-size"
     },
     {
       "id": "go-func-size",
@@ -30,7 +30,7 @@
         "max_lines": 15
       },
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-func-size"
+      "reference": "02-spec/03-rules.md#go-func-size"
     },
     {
       "id": "go-single-return",
@@ -40,7 +40,7 @@
       "languages": ["go"],
       "params": {},
       "exclude": ["*_test.go", "pkg/apperror/**"],
-      "reference": "spec/03-rules.md#go-single-return"
+      "reference": "02-spec/03-rules.md#go-single-return"
     },
     {
       "id": "go-import-groups",
@@ -52,7 +52,7 @@
         "groups": 3
       },
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-import-groups"
+      "reference": "02-spec/03-rules.md#go-import-groups"
     },
     {
       "id": "go-param-count",
@@ -64,7 +64,7 @@
         "max_params": 3
       },
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-param-count"
+      "reference": "02-spec/03-rules.md#go-param-count"
     },
     {
       "id": "go-inline-if",
@@ -74,7 +74,7 @@
       "languages": ["go"],
       "params": {},
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-inline-if"
+      "reference": "02-spec/03-rules.md#go-inline-if"
     },
     {
       "id": "file-naming",
@@ -86,7 +86,7 @@
         "convention": "PascalCase"
       },
       "exclude": ["*_test.go", "go.mod", "go.sum", "**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#file-naming"
+      "reference": "02-spec/03-rules.md#file-naming"
     },
     {
       "id": "go-abbr-casing",
@@ -98,7 +98,7 @@
         "abbreviations": ["Id", "Url", "Http", "Json", "Api", "Php", "Pid"]
       },
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-abbr-casing"
+      "reference": "02-spec/03-rules.md#go-abbr-casing"
     },
     {
       "id": "go-struct-field-casing",
@@ -108,7 +108,7 @@
       "languages": ["go"],
       "params": {},
       "exclude": ["*_test.go"],
-      "reference": "spec/03-rules.md#go-struct-field-casing"
+      "reference": "02-spec/03-rules.md#go-struct-field-casing"
     },
     {
       "id": "go-raw-error",
@@ -118,7 +118,7 @@
       "languages": ["go"],
       "params": {},
       "exclude": ["*_test.go", "pkg/apperror/**", "pkg/pathutil/**", "internal/database/dbops/**", "internal/enums/**", "cmd/**"],
-      "reference": "spec/03-rules.md#go-raw-error"
+      "reference": "02-spec/03-rules.md#go-raw-error"
     },
     {
       "id": "php-file-size",
@@ -130,7 +130,7 @@
         "max_lines": 500
       },
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-file-size"
+      "reference": "02-spec/03-rules.md#php-file-size"
     },
     {
       "id": "php-func-size",
@@ -142,7 +142,7 @@
         "max_lines": 20
       },
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-func-size"
+      "reference": "02-spec/03-rules.md#php-func-size"
     },
     {
       "id": "php-import-groups",
@@ -154,7 +154,7 @@
         "groups": 2
       },
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-import-groups"
+      "reference": "02-spec/03-rules.md#php-import-groups"
     },
     {
       "id": "php-global-imports",
@@ -164,7 +164,7 @@
       "languages": ["php"],
       "params": {},
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-global-imports"
+      "reference": "02-spec/03-rules.md#php-global-imports"
     },
     {
       "id": "php-enum-naming",
@@ -174,7 +174,7 @@
       "languages": ["php"],
       "params": {},
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-enum-naming"
+      "reference": "02-spec/03-rules.md#php-enum-naming"
     },
     {
       "id": "php-enum-case-values",
@@ -184,7 +184,7 @@
       "languages": ["php"],
       "params": {},
       "exclude": ["**/plugins-onboard/**", "**/BackupType.php", "**/RequestFieldType.php"],
-      "reference": "spec/03-rules.md#php-enum-case-values"
+      "reference": "02-spec/03-rules.md#php-enum-case-values"
     },
     {
       "id": "php-enum-methods",
@@ -194,7 +194,7 @@
       "languages": ["php"],
       "params": {},
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/03-rules.md#php-enum-methods"
+      "reference": "02-spec/03-rules.md#php-enum-methods"
     },
     {
       "id": "php-version-sync",
@@ -204,7 +204,7 @@
       "languages": ["php"],
       "params": {},
       "exclude": ["**/plugins-onboard/**"],
-      "reference": "spec/09-wordpress/05-qupload-plugin/01-endpoints.md"
+      "reference": "02-spec/09-wordpress/05-qupload-plugin/01-endpoints.md"
     },
     {
       "id": "md-heading",
@@ -214,7 +214,7 @@
       "languages": ["md"],
       "params": {},
       "exclude": [],
-      "reference": "spec/03-rules.md#md-heading"
+      "reference": "02-spec/03-rules.md#md-heading"
     }
   ]
 }

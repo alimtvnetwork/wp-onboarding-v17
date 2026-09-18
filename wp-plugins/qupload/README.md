@@ -151,7 +151,7 @@ Same standards as Riseup Asia Uploader:
 - PHPStan level 6 static analysis
 - `Throwable`-first error handling
 
-> Full standards: [`spec/07-php-standards/`](../../spec/07-php-standards/)
+> Full standards: [`02-spec/07-php-standards/`](../../02-spec/07-php-standards/)
 
 ---
 
@@ -181,8 +181,8 @@ Same standards as Riseup Asia Uploader:
 |----------|------|
 | **Changelog** | [`CHANGELOG.md`](./CHANGELOG.md) |
 | **CLI Reference** | [`wp-plugins/scripts/README.md`](../scripts/README.md) |
-| **PHP Standards** | [`spec/07-php-standards/`](../../spec/07-php-standards/) |
-| **PowerShell Integration** | [`spec/13-powershell-integration/`](../../spec/13-powershell-integration/) |
+| **PHP Standards** | [`02-spec/07-php-standards/`](../../02-spec/07-php-standards/) |
+| **PowerShell Integration** | [`02-spec/13-powershell-integration/`](../../02-spec/13-powershell-integration/) |
 
 ---
 

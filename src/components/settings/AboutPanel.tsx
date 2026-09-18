@@ -10,7 +10,7 @@ const DEFAULT_APP_VERSION = "0.0.0";
 const GIT_COMMIT_START_INDEX = 0;
 const GIT_COMMIT_END_INDEX = 7;
 const APP_CHANGELOG_URL = "https://github.com/riseup-asia/wp-onboarding-v17/blob/main/CHANGELOG.md";
-const SCRIPT_CHANGELOG_URL = "https://github.com/riseup-asia/wp-onboarding-v17/blob/main/spec/powershell-integration/CHANGELOG.md";
+const SCRIPT_CHANGELOG_URL = "https://github.com/riseup-asia/wp-onboarding-v17/blob/main/02-spec/powershell-integration/CHANGELOG.md";
 
 export function AboutPanel() {
   const { data: versionInfo } = useVersionInfo();
