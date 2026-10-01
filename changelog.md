@@ -1,10 +1,16 @@
 # Changelog
 
+## [v0.2.8] - 2026-10-01
+
+### Added
+- Synchronize V6 prompts, SQLite task manager, skills, and coding guidelines
+
+---
+
 ## [v0.2.0] - 2026-09-15
 
 ### Added
 - Adopt canonical folder structure, sync prompts, skills, ai-scripts, and restructure spec
-
 
 ## [1.12.0] - 2026-02-04
 
@@ -153,7 +159,6 @@
 - SiteCard component with self-contained connection testing and retest button
 
 ---
-
 
 All notable changes to **WP Plugin Publish** (frontend dashboard) will be documented in this file.
 
