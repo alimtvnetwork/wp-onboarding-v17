@@ -40,3 +40,11 @@ dist/
 .gitmap/release-assets
 release-assets
 .ai-memory/temp/
+
+
+# GitMap & Task Persistence
+.gitmap/backup/
+antigravity-resume_task.json
+.antigravity_resume_task.json
+antigravity_resume_task.json
+.antigravity-resume_task.json
