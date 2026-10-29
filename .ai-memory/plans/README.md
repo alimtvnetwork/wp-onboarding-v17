@@ -44,3 +44,7 @@
 2. ~~Remove define() aliases from constants.php~~ ✅ Already complete (file deleted)
 3. Go backend interface{} type-safety (~2,680 instances across 58 files)
 4. ~~Naming convention phases 5-6~~ — Verify status
+
+## Recent Completed Tasks Register
+
+- 2026-10-29 — Recorded the warm-up gate session. Sequences 08 through 13 remain pending catalogs. The live gate engine is in go-email-reader commit `f3864ee`.
