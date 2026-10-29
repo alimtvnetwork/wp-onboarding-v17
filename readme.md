@@ -497,3 +497,9 @@ All coding standards and architecture decisions are documented in [`02-spec/`](.
 ## License
 
 GPL v2 or later
+
+## Memory
+
+- .ai-memory/memory/readme.md
+- .ai-memory/memory/learned/01-recent-session-2026-10-29.md
+- .ai-memory/plans/readme.md

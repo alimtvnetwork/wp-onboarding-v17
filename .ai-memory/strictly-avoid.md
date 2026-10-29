@@ -572,3 +572,5 @@ Allowed work:
 
 **Why:** Architectural specs are canonical contracts. Summarizing or shrinking them destroys domain nuance and leads to hallucinations.
 
+- Do not store a personal access token inside a git remote URL. Use SSH.
+- Do not commit Go coverage profiles or SQLite `-shm` and `-wal` sidecars.
