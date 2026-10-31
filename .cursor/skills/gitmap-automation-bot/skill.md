@@ -16,12 +16,12 @@ This skill manages automated identity switching, sandboxed bot configurations, a
 > 
 > AI agents are **STRICTLY FORBIDDEN** from committing under human developer credentials (`MD ALIM UL KARIM`, personal emails, etc.). Commits authored under human accounts in automated sessions cause misplaced attribution, pollute repository history, and violate the autonomous audit invariant.
 >
-> **Invocation:** `@[gitmap-automation-bot](file;.cursor/skills/gitmap-automation-bot)`  
+> **Invocation:** `@[gitmap-automation-bot](file;.agents/skills/gitmap-automation-bot)`  
 
 ### Trigger Keywords & Directives
 - `automation bot`, `autobot`, `gitmap automation`, `ai automation bot`
 - `change user to bot`, `switch to bot`, `headless commit`, `bot identity`
-- Prompt reference: `[gitmap-automation-bot](file;.cursor/skills/gitmap-automation-bot)`
+- Prompt reference: `[gitmap-automation-bot](file;.agents/skills/gitmap-automation-bot)`
 
 ---
 
@@ -123,7 +123,7 @@ When operating under bot mode, all commits must adhere to GitMap semantic commit
    - Touch only files assigned to the active subtask.
    - Run pre-flight pull (`gitmap pull`) before writing changes.
 4. **Time-Restriction Flag Integration**:
-   - In automated bot workflows governed by `[gitmap-time-restriction](file;.cursor/skills/gitmap-time-restriction)`, always supply `--tz`, `--auto-window`, and `--non-interactive` to prevent interactive blocks and maintain schedule compliance.
+   - In automated bot workflows governed by `[gitmap-time-restriction](file;.agents/skills/gitmap-time-restriction)`, always supply `--tz`, `--auto-window`, and `--non-interactive` to prevent interactive blocks and maintain schedule compliance.
 
 ---
 
@@ -132,7 +132,7 @@ When operating under bot mode, all commits must adhere to GitMap semantic commit
 When authoring code, scripts, or plans supporting the automation bot:
 
 1. **Strict Relative Git Paths**:
-   - Always reference `.cursor/skills/gitmap-automation-bot/skill.md`, `02-spec/...`, `.ai-memory/...`.
+   - Always reference `.agents/skills/gitmap-automation-bot/skill.md`, `02-spec/...`, `.ai-memory/...`.
    - Never use absolute paths (`C:\...`, `D:\...`).
 2. **Positive Boolean Naming**:
    - Use `isAutobotActive`, `hasLocalScope`, `isRestored`, `isValidProfile`, `hasTimeRestriction`, `hasAutoWindow`, `isHeadless`.
@@ -151,8 +151,8 @@ Validate the skill installation and compliance:
 
 ```bash
 # Verify skill file presence
-gitmap find "skill.md" .cursor/skills/gitmap-automation-bot
+gitmap find "skill.md" .agents/skills/gitmap-automation-bot
 
 # Validate YAML frontmatter
-gitmap cat .cursor/skills/gitmap-automation-bot/skill.md
+gitmap cat .agents/skills/gitmap-automation-bot/skill.md
 ```
